@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/twitter/follow/Projectx?style=flat&label=%40projectxy&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
   </a>
   <a href="https://github.com/meglerhagen/projectx/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/your-github/NextjsNextify?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
+    <img src="https://img.shields.io/github/license/meglerhagen/projectx?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
   </a>
 </p>
 
@@ -94,8 +94,8 @@ yarn dev
 
 We love our contributors! Here's how you can contribute:
 
-- [Open an issue](https://github.com/meglerhagen/Nextify/issues) if you believe you've encountered a bug.
-- Make a [pull request](https://github.com/meglerhagen/Nextify/pull) to add new features/make quality-of-life improvements/fix bugs.
+- [Open an issue](https://github.com/meglerhagen/projectx/issues) if you believe you've encountered a bug.
+- Make a [pull request](https://github.com/meglerhagen/projectx/pull) to add new features/make quality-of-life improvements/fix bugs.
 
 <a href="https://github.com/meglerhagen/projectx/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=meglerhagen/projectx" />
