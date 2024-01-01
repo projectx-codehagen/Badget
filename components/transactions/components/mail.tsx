@@ -103,14 +103,14 @@ export function Mail({
                 title: "Dashboard",
                 label: "",
                 icon: LayoutDashboard,
-                variant: "default",
+                variant: "ghost",
                 link: "/dashboard/",
               },
               {
                 title: "Transactions",
                 label: "9",
                 icon: Layers,
-                variant: "ghost",
+                variant: "default",
                 link: "/dashboard/transactions",
               },
               {
