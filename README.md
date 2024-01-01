@@ -1,5 +1,4 @@
 <a href="https://projectx-eight-gilt.vercel.app/">
-  <img alt="Projectx" src="public/og.jpg">
   <h1 align="center">ProjectX (Placeholder Name)</h1>
 </a>
 
