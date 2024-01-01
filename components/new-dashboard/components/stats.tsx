@@ -1,6 +1,7 @@
 import { useTheme } from "next-themes";
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer } from "recharts";
 
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const data = [
@@ -37,6 +38,16 @@ const data = [
     subscription: 189,
   },
 ];
+
+// Function to calculate percentage change (if you have the previous values)
+function calculateChange(current, previous) {
+  if (previous === 0) return 0;
+  return ((current - previous) / previous) * 100;
+}
+
+// Example static values for assets and debt changes
+const assetsChange = calculateChange(32685, 34000); // replace with real data if needed
+const debtChange = calculateChange(10936, 10500); // replace with real data if needed
 
 export function CardsStats() {
   return (
@@ -87,10 +98,33 @@ export function CardsStats() {
           <CardTitle className="text-base font-normal">Assets & Debt</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">+2350</div>
-          <p className="text-xs text-muted-foreground">
-            +180.1% from last month
-          </p>
+          <div className="flex justify-between">
+            {/* Assets */}
+            <div className="flex flex-col">
+              <div className="text-2xl font-bold">$32,685</div>
+              <p className="text-xs text-muted-foreground">Assets</p>
+              <div className="flex items-center">
+                <Badge variant={assetsChange >= 0 ? "default" : "destructive"}>
+                  {assetsChange >= 0
+                    ? `▲ ${assetsChange.toFixed(2)}%`
+                    : `▼ ${Math.abs(assetsChange).toFixed(2)}%`}
+                </Badge>
+              </div>
+            </div>
+
+            {/* Debt */}
+            <div className="flex flex-col">
+              <div className="text-2xl font-bold">$10,936</div>
+              <p className="text-xs text-muted-foreground">Debt</p>
+              <div className="flex items-center">
+                <Badge variant={debtChange < 0 ? "destructive" : "default"}>
+                  {debtChange < 0
+                    ? `▼ ${Math.abs(debtChange).toFixed(2)}%`
+                    : `▲ ${debtChange.toFixed(2)}%`}
+                </Badge>
+              </div>
+            </div>
+          </div>
           <div className="mt-4 h-[80px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data}>

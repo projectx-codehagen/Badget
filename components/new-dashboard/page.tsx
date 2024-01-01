@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 
-import { Dashboard } from "./components/mail";
+import { Dashboard } from "./components/dashboard-1";
 import { accounts, mails } from "./data";
 
 function isValidJSONString(str) {
