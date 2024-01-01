@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 
-import { Mail } from "./components/mail";
+import { Dashboard } from "./components/mail";
 import { accounts, mails } from "./data";
 
 function isValidJSONString(str) {
@@ -45,7 +45,7 @@ export default function MailPage() {
         />
       </div>
       <div className="hidden flex-col md:flex">
-        <Mail
+        <Dashboard
           accounts={accounts}
           mails={mails}
           defaultLayout={defaultLayout}
