@@ -33,7 +33,7 @@ export default async function IndexPage() {
             style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
           >
             <Balancer>
-              List Smarter, Sell Faster: Discover{" "}
+              Budget Better, Gain More Experience{" "}
               <span className="relative bg-gradient-to-r from-indigo-500 to-purple-500/80 bg-clip-text font-extrabold text-transparent">
                 Projectx
               </span>
@@ -45,8 +45,8 @@ export default async function IndexPage() {
             style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
           >
             <Balancer>
-              Elevate your real estate business with cutting-edge AI technology
-              designed to streamline your listings and close deals faster.
+              Empower your financial management with AI-driven insights, making
+              tracking and optimizing your finances effortless.
             </Balancer>
           </p>
 

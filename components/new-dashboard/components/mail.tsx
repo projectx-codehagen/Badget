@@ -13,6 +13,17 @@ import {
   ShoppingCart,
   Trash2,
   Users2,
+  CreditCard,
+  Layers,
+  LayoutDashboard,
+  BarChart,
+  Tag,
+  Repeat2,
+  DollarSign,
+  PiggyBank,
+  Building,
+  Briefcase,
+  BadgeDollarSign,
 } from "lucide-react"
 
 import { MailList } from "./mail-list"
@@ -90,38 +101,38 @@ export function Mail({
             links={[
               {
                 title: "Dashboard",
-                label: "128",
-                icon: Inbox,
+                label: "",
+                icon: LayoutDashboard,
                 variant: "default",
               },
               {
                 title: "Transactions",
                 label: "9",
-                icon: File,
+                icon: Layers,
                 variant: "ghost",
               },
               {
                 title: "Accounts",
-                label: "",
-                icon: Send,
+                label: "3",
+                icon: CreditCard,
                 variant: "ghost",
               },
               {
                 title: "Investments",
-                label: "23",
-                icon: ArchiveX,
+                label: "",
+                icon: BarChart,
                 variant: "ghost",
               },
               {
                 title: "Categories",
                 label: "",
-                icon: Trash2,
+                icon: Tag,
                 variant: "ghost",
               },
               {
                 title: "Recurring",
                 label: "",
-                icon: Archive,
+                icon: Repeat2,
                 variant: "ghost",
               },
             ]}
@@ -131,33 +142,51 @@ export function Mail({
             isCollapsed={isCollapsed}
             links={[
               {
-                title: "Social",
+                title: "Credit Card",
                 label: "972",
-                icon: Users2,
+                icon: CreditCard,
                 variant: "ghost",
               },
               {
-                title: "Updates",
+                title: "Credit Card",
                 label: "342",
-                icon: AlertCircle,
+                icon: CreditCard,
                 variant: "ghost",
               },
               {
-                title: "Forums",
+                title: "Checking",
                 label: "128",
-                icon: MessagesSquare,
+                icon: DollarSign,
                 variant: "ghost",
               },
               {
-                title: "Shopping",
+                title: "Savings",
                 label: "8",
-                icon: ShoppingCart,
+                icon: PiggyBank,
                 variant: "ghost",
               },
               {
-                title: "Promotions",
+                title: "Banking",
                 label: "21",
-                icon: Archive,
+                icon: Building,
+                variant: "ghost",
+              },
+            ]}
+          />
+          <Separator />
+          <Nav
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Funds",
+                label: "483",
+                icon: Briefcase,
+                variant: "ghost",
+              },
+              {
+                title: "Coinbase",
+                label: "145",
+                icon: BadgeDollarSign,
                 variant: "ghost",
               },
             ]}

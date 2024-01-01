@@ -11,39 +11,39 @@ import { Balancer } from "react-wrap-balancer";
 
 const features = [
   {
-    name: "Revolutionizing Real Estate: AI-Powered Listings",
+    name: "Revolutionizing Finance: AI-Powered Analysis",
     description:
-      "Instantly draft standout property listings with our advanced AI editor, designed to captivate and attract potential buyers through eloquent, detail-rich descriptions.",
+      "Harness advanced AI to analyze financial trends and patterns, offering you actionable insights for smarter decision-making.",
     icon: CloudArrowUpIcon,
   },
   {
-    name: "Elevate Your Realty Game with Projectx",
+    name: "Secure Your Finances with Projectx",
     description:
-      "Empower your real estate business with Projectx's SSL encryption, ensuring that all client information and property data are secure and protected.",
+      "Protect your financial data with top-tier encryption, ensuring your sensitive information is safe from unauthorized access.",
     icon: LockClosedIcon,
   },
   {
-    name: "Next-Gen Property Management: AI Meets Real Estate",
+    name: "Automate Your Finances: AI and Efficiency",
     description:
-      "Our platform simplifies property management by automating follow-ups and updates, freeing you to focus on what you do best – closing deals.",
+      "Streamline your financial management with AI-driven automation for bill payments, budget tracking, and more.",
     icon: ArrowPathIcon,
   },
   {
-    name: "AI-Enhanced Listings for Smart Agents",
+    name: "Stay Ahead with AI-Enhanced Financial Monitoring",
     description:
-      "Stay ahead of security threats with real-time monitoring and automatic updates, safeguarding your listings with the latest in AI technology.",
+      "Get real-time updates and security alerts on your financial portfolio, keeping you informed and proactive.",
     icon: FingerPrintIcon,
   },
   {
-    name: "Maximize Sales with Intelligent Real Estate Solutions",
+    name: "Seamless Integration Financial Ecosystem",
     description:
-      "Integrate Projectx's comprehensive API with your current tools for a seamless experience that enhances your workflow and maximizes efficiency.",
+      "Easily connect Projectx with your existing financial tools for a unified and efficient financial management experience.",
     icon: Cog6ToothIcon,
   },
   {
-    name: "Unlock Real Estate Potential with AI Efficiency",
+    name: "Reliable Financial Data Management with Projectx",
     description:
-      "Ensure your listings are always current and never lost with our reliable backup solutions, providing peace of mind and data security.",
+      "Access your financial data anytime, anywhere, with our secure cloud backup and recovery solutions.",
     icon: ServerIcon,
   },
 ];
@@ -63,7 +63,7 @@ export default function Featuressection() {
             className="animate-fade-up font-urban text-3xl font-extrabold tracking-tight opacity-0 sm:text-4xl md:text-5xl lg:text-6xl"
             style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
           >
-            <Balancer>Streamlined Real Estate Efficiency</Balancer>
+            <Balancer>Revolutionize Your Financial Management</Balancer>
           </h1>
 
           <p
@@ -71,11 +71,9 @@ export default function Featuressection() {
             style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
           >
             <Balancer>
-              Projectx redefines property listing management with
-              state-of-the-art AI, delivering unparalleled efficiency and
-              precision. Experience the future of real estate—where technology
-              enhances every transaction, every client interaction, and every
-              sale
+              Projectx reimagines financial tracking and optimization with
+              leading-edge AI, offering a new era of precision and ease in
+              personal finance.
             </Balancer>
           </p>
         </div>
