@@ -70,7 +70,15 @@ This project uses MySQL database on PlanetScale. To setup a DB for your local de
 You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
 1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
 2. run `docker-compose --env-file .env.local up` to start the DB.
-3. run `yarn run prisma:push`
+3. run `yarn run prisma:push`.
+
+## Email provider
+This project uses [Resend](https://resend.com/) to handle transactional emails. You need to add create an account and get an api key needed for authentication. 
+
+Please be aware that the Resend is designed to send test emails exclusively to the email address registered with the account, or to `delivered@resend.dev`, where they are logged on their dashboard. 
+
+The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you have the option to change it to the email address that is associated with your Resend account.
+
 
 ## Roadmap
 

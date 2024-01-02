@@ -12,6 +12,7 @@ export const env = createEnv({
     GITHUB_OAUTH_TOKEN: z.string().min(1),
     DATABASE_URL: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
+    TEST_EMAIL_ADDRESS: z.string().min(1),
     STRIPE_API_KEY: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
   },
@@ -30,6 +31,7 @@ export const env = createEnv({
     GITHUB_OAUTH_TOKEN: process.env.GITHUB_OAUTH_TOKEN,
     DATABASE_URL: process.env.DATABASE_URL,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    TEST_EMAIL_ADDRESS: process.env.TEST_EMAIL_ADDRESS,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     // Stripe
     STRIPE_API_KEY: process.env.STRIPE_API_KEY,
