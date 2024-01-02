@@ -17,6 +17,8 @@ export default function TransactionsPage() {
   const layout = cookies().get("react-resizable-panels:layout");
   const collapsed = cookies().get("react-resizable-panels:collapsed");
 
+  //TODO Fix this - Draw bar right is not working. Look at documentation
+
   const defaultLayout =
     layout && isValidJSONString(layout.value)
       ? JSON.parse(layout.value)

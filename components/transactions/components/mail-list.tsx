@@ -82,6 +82,10 @@ function getBadgeVariantFromLabel(
     return "default";
   }
 
+  if (["Reccuring"].includes(label.toLowerCase())) {
+    return "default";
+  }
+
   if (["personal"].includes(label.toLowerCase())) {
     return "outline";
   }
