@@ -15,7 +15,11 @@
     "lint": "next lint",
     "preview": "next build && next start",
     "postinstall": "prisma generate",
-    "email": "email dev --dir emails --port 3333"
+    "email": "email dev --dir emails --port 3333",
+    "prisma:generate": "dotenv -e .env.local prisma generate",
+    "prisma:migrate:dev": "dotenv -e .env.local prisma migrate dev",
+    "prisma:studio": "dotenv -e .env.local prisma studio",
+    "prisma:push": "dotenv -e .env.local prisma db push"
   },
   "dependencies": {
     "@edgestore/react": "^0.1.4",
@@ -68,6 +72,7 @@
     "concurrently": "^8.2.2",
     "contentlayer": "^0.3.4",
     "date-fns": "^2.30.0",
+    "dotenv-cli": "^7.3.0",
     "jotai": "^2.6.1",
     "lucide-react": "^0.292.0",
     "ms": "^2.1.3",
