@@ -88,13 +88,18 @@ export function Dashboard({
           collapsible={true}
           minSize={15}
           maxSize={20}
-          //TODO Look at this issue regarding the cookie setting - Not collapsing sidebar.
-          // onCollapse={(collapsed) => {
-          //   setIsCollapsed(collapsed)
-          //   document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-          //     collapsed
-          //   )}`
-          // }}
+          onCollapse={() => {
+            setIsCollapsed(true);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+              true,
+            )}`;
+          }}
+          onExpand={() => {
+            setIsCollapsed(false);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+              false,
+            )}`;
+          }}
           className={cn(
             isCollapsed &&
               "min-w-[50px] transition-all duration-300 ease-in-out",
