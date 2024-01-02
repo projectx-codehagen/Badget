@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { userAuthSchema } from "@/lib/validations/auth"
@@ -32,6 +33,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
+  const router = useRouter()
 
   async function onSubmit(data: FormData) {
     setIsLoading(true)
@@ -43,6 +45,11 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
     })
 
     setIsLoading(false)
+
+    if (signInResult?.ok) {
+      router.push('/dashboard');
+      return;
+    }
 
     // TODO: replace shadcn toast by react-hot-toast
     if (!signInResult?.ok) {
