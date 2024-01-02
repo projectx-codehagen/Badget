@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import {
   AlertCircle,
   Archive,
@@ -9,9 +10,11 @@ import {
   BarChart,
   Briefcase,
   Building,
+  Cog,
   CreditCard,
   DollarSign,
   File,
+  HelpCircle,
   Inbox,
   Layers,
   LayoutDashboard,
@@ -21,6 +24,7 @@ import {
   Repeat2,
   Search,
   Send,
+  Settings,
   ShoppingCart,
   Tag,
   Trash2,
@@ -217,6 +221,26 @@ export function Dashboard({
                 title: "Coinbase",
                 label: "145",
                 icon: BadgeDollarSign,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+            ]}
+          />
+          <Separator />
+          <Nav
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Get help",
+                label: "",
+                icon: HelpCircle,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+              {
+                title: "Settings",
+                label: "",
+                icon: Settings,
                 variant: "ghost",
                 link: "/dashboard/",
               },

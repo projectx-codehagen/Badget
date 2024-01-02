@@ -57,7 +57,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 <span className="sr-only">Archive</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Archive</TooltipContent>
+            <TooltipContent>Split</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -66,7 +66,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 <span className="sr-only">Move to junk</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Move to junk</TooltipContent>
+            <TooltipContent>Recurring</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -212,11 +212,28 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             )}
           </div>
           <Separator />
+          <div className="p-4">
+            <form>
+              <div className="grid gap-4">
+                <Textarea
+                  className="p-4"
+                  placeholder={`Notes about ${mail.name} transaction...`}
+                />
+                <div className="flex items-center">
+                  <Button size="sm" className="ml-auto">
+                    Send
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <Separator />
+
           <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
             {mail.text}
           </div>
           <Separator className="mt-auto" />
-          <div className="p-4">
+          {/* <div className="p-4">
             <form>
               <div className="grid gap-4">
                 <Textarea
@@ -237,7 +254,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 </div>
               </div>
             </form>
-          </div>
+          </div> */}
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">

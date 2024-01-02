@@ -24,7 +24,7 @@ export default async function DashboardLayout({
       <NavBar user={user} items={dashboardConfig.mainNav} scroll={false} />
 
       {children}
-      <SiteFooter className="border-t" />
+      {/* <SiteFooter className="border-t" /> */}
     </div>
   );
 }

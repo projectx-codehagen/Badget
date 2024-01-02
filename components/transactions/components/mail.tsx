@@ -24,6 +24,8 @@ import {
   Building,
   Briefcase,
   BadgeDollarSign,
+  HelpCircle,
+  Settings,
 } from "lucide-react"
 
 import { MailList } from "./mail-list"
@@ -204,6 +206,26 @@ export function Mail({
                 title: "Coinbase",
                 label: "145",
                 icon: BadgeDollarSign,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+            ]}
+          />
+          <Separator />
+          <Nav
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Get help",
+                label: "",
+                icon: HelpCircle,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+              {
+                title: "Settings",
+                label: "",
+                icon: Settings,
                 variant: "ghost",
                 link: "/dashboard/",
               },

@@ -7,7 +7,7 @@ export const mails = [
     text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
     date: "2024-01-01T09:00:00",
     read: true,
-    labels: ["meeting", "Reccuring", "work", "important"],
+    labels: ["Reccuring"],
   },
   {
     id: "110e8400-e29b-11d4-a716-446655440000",
