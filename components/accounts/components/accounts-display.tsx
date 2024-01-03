@@ -53,51 +53,9 @@ interface MailDisplayProps {
   mail: Mail | null;
 }
 
-const data = [
-  {
-    income: 10400,
-    change: 2,
-    limit: 25000,
-  },
-  {
-    income: 14405,
-    change: 2,
-    limit: 25000,
-  },
-  {
-    income: 9400,
-    change: 2,
-    limit: 25000,
-  },
-  {
-    income: 8200,
-    change: 2,
-    limit: 25000,
-  },
-  {
-    income: 7000,
-    change: 2,
-    limit: 25000,
-  },
-  {
-    income: 9600,
-    change: 2,
-    limit: 25000,
-  },
-  {
-    income: 11244,
-    change: 2,
-    limit: 25000,
-  },
-  {
-    income: 26475,
-    change: 2,
-    limit: 25000,
-  },
-];
-
 export function AccountsDisplay({ mail }: MailDisplayProps) {
   const today = new Date();
+  const data = mail ? mail.monthlyIncomeData : [];
 
   return (
     <div className="flex h-full flex-col">
@@ -272,19 +230,19 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
             {mail.date && (
               <div className="flex flex-col items-end">
                 <Badge
-                  variant={data[0].change >= 0 ? "default" : "destructive"}
+                  variant={mail.change >= 0 ? "default" : "destructive"}
                   className="self-end"
                 >
-                  {data[0].change >= 0
-                    ? `▲ ${data[0].change.toFixed(2)}%`
-                    : `▼ ${Math.abs(data[0].change).toFixed(2)}%`}
+                  {mail.change >= 0
+                    ? `▲ ${mail.change.toFixed(2)}%`
+                    : `▼ ${Math.abs(mail.change).toFixed(2)}%`}
                 </Badge>
                 <div className="mt-2 flex items-baseline">
                   <span className="text-m font-semibold">
-                    {formatCurrency(data[0].income)}
+                    {formatCurrency(mail.income as number)}
                   </span>
                   <span className="text-m text-muted-foreground">
-                    / {formatCurrency(data[0].limit)}
+                    / {formatCurrency(mail.limit as number)}
                   </span>
                 </div>
               </div>
@@ -335,7 +293,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
           </div>
 
           <Separator className="" />
-          <AccountsReviewTable />
+          <AccountsReviewTable mailId={mail ? mail.id : null} />
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">

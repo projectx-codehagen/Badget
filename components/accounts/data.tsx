@@ -1,3 +1,19 @@
+type MonthlyIncomeData = {
+  income: number;
+  change: number;
+  limit: number;
+};
+
+const generateMonthlyIncomeData = (baseIncome: number): MonthlyIncomeData[] => {
+  let monthlyData: MonthlyIncomeData[] = [];
+  for (let i = 0; i < 12; i++) {
+    const change = Math.floor(Math.random() * 20) - 10;
+    const income = baseIncome + (baseIncome * change) / 100;
+    monthlyData.push({ income, change, limit: 25000 });
+  }
+  return monthlyData;
+};
+
 export const mails = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
@@ -10,6 +26,9 @@ export const mails = [
     labels: ["Reccuring"],
     category: "Credit Card",
     paymentIds: ["m5gr84i9"],
+    income: 10400,
+    limit: 25000,
+    monthlyIncomeData: generateMonthlyIncomeData(1052),
   },
   {
     id: "110e8400-e29b-11d4-a716-446655440000",
@@ -21,6 +40,9 @@ export const mails = [
     labels: ["Reccuring"],
     category: "Credit Card",
     paymentIds: ["3u1reuv4"],
+    income: 14405,
+    limit: 25000,
+    monthlyIncomeData: generateMonthlyIncomeData(500),
   },
   {
     id: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
@@ -32,6 +54,9 @@ export const mails = [
     read: true,
     labels: ["Reccuring"],
     category: "Credit Card",
+    income: 9400,
+    limit: 25000,
+    monthlyIncomeData: generateMonthlyIncomeData(790),
   },
   {
     id: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
@@ -43,6 +68,7 @@ export const mails = [
     read: true,
     labels: ["Reccuring"],
     category: "Savings",
+    monthlyIncomeData: generateMonthlyIncomeData(758),
   },
   {
     id: "3e7c3f6d-bdf5-46ae-8d90-17112333",
@@ -65,6 +91,7 @@ export const mails = [
     read: true,
     labels: ["Reccuring"],
     category: "Investments",
+    monthlyIncomeData: generateMonthlyIncomeData(500),
   },
   {
     id: "3e7c3f6d-bdf5-4sdae-8d90-17131231231",
@@ -76,6 +103,7 @@ export const mails = [
     read: true,
     labels: ["Reccuring"],
     category: "Investments",
+    monthlyIncomeData: generateMonthlyIncomeData(500),
   },
 ];
 
@@ -91,6 +119,22 @@ export const payments = [
     mailId: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
   },
   {
+    id: "m5gr84i9",
+    amount: 29,
+    status: "Amazon",
+    label: "Subscriptions",
+    date: "2024-12-31T09:00:00",
+    mailId: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
+  },
+  {
+    id: "3u1reuv4",
+    amount: 242,
+    status: "Food",
+    label: "Food",
+    date: "2024-01-01T09:00:00",
+    mailId: "110e8400-e29b-11d4-a716-446655440000",
+  },
+  {
     id: "3u1reuv4",
     amount: 242,
     status: "Gas",
@@ -99,11 +143,44 @@ export const payments = [
     mailId: "110e8400-e29b-11d4-a716-446655440000",
   },
   {
+    id: "3u1reuv4",
+    amount: 242,
+    status: "Screws",
+    label: "House",
+    date: "2024-01-01T09:00:00",
+    mailId: "110e8400-e29b-11d4-a716-446655440000",
+  },
+  {
+    id: "3u1reuv4",
+    amount: 242,
+    status: "Pizzamania",
+    label: "Food",
+    date: "2024-01-01T09:00:00",
+    mailId: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
+  },
+  {
+    id: "3u1reuv4",
+    amount: 242,
+    status: "Fixed car",
+    label: "Car",
+    date: "2024-01-01T09:00:00",
+    mailId: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
+  },
+  {
+    id: "3u1reuv4",
+    amount: 242,
+    status: "Home supplies",
+    label: "House",
+    date: "2024-01-01T09:00:00",
+    mailId: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
+  },
+  {
     id: "derv1ws0",
     amount: 837,
     status: "Electrical bill",
     label: "House",
     date: "2024-01-01T09:00:00",
+    mailId: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
   },
   {
     id: "5kma53ae",

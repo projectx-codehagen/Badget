@@ -69,43 +69,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "Spotify",
-    label: "Subscriptions",
-    date: "2024-01-01T09:00:00",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "Gas",
-    label: "Car",
-    date: "2024-01-01T09:00:00",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "Electrical bill",
-    label: "House",
-    date: "2024-01-01T09:00:00",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "Pizza",
-    label: "Food",
-    date: "2023-10-01T09:00:00",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "Meme-food",
-    label: "Food",
-    date: "2023-12-01T09:00:00",
-  },
-];
+import { payments } from "../data";
 
 export type Payment = {
   id: string;
@@ -269,7 +233,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function AccountsReviewTable() {
+export function AccountsReviewTable({ mailId }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -277,9 +241,12 @@ export function AccountsReviewTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const filteredPayments = React.useMemo(() => {
+    return payments.filter((payment) => payment.mailId === mailId);
+  }, [mailId]);
 
   const table = useReactTable({
-    data,
+    data: filteredPayments,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -299,7 +266,7 @@ export function AccountsReviewTable() {
 
   const groupedData = React.useMemo(() => {
     // First sort the items by date
-    const sortedItems = data.sort((a, b) =>
+    const sortedItems = filteredPayments.sort((a, b) =>
       compareAsc(parseISO(b.date), parseISO(a.date)),
     );
 
@@ -315,7 +282,7 @@ export function AccountsReviewTable() {
       },
       {} as Record<string, Payment[]>,
     );
-  }, [data]);
+  }, [filteredPayments]);
 
   return (
     <div className="mt-4">
