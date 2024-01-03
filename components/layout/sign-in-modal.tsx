@@ -34,7 +34,10 @@ export const SignInModal = () => {
             disabled={signInClicked}
             onClick={() => {
               setSignInClicked(true);
-              signIn("google", { redirect: false }).then(() =>
+              signIn("google", {
+                redirect: false,
+                callbackUrl: "/dashboard",
+              }).then(() =>
                 // TODO: fix this without setTimeOut(), modal closes too quickly. Idea: update value before redirect
                 setTimeout(() => {
                   signInModal.onClose();
