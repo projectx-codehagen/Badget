@@ -1,10 +1,10 @@
-import React, { ComponentProps } from "react";
+import React from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { ChevronRight } from "lucide-react";
 
 import { formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { Mail } from "../data";
@@ -39,17 +39,19 @@ export function AccountsList({ items }: MailListProps) {
               <Card
                 key={item.id}
                 onClick={() => setMail({ ...mail, selected: item.id })}
-                className="group flex items-center justify-between p-3 hover:bg-gray-100"
+                className="flex items-center justify-between p-3 group hover:bg-gray-100/10"
               >
-                <div className="flex grow flex-col">
-                  <CardTitle className="font-bold">{item.name}</CardTitle>
+                <div className="flex flex-col grow">
+                  <CardTitle className="font-bold text-md">
+                    {item.name}
+                  </CardTitle>
                   <p className="text-sm text-gray-500">
                     {formatDistanceToNow(new Date(item.date), {
                       addSuffix: true,
                     })}
                   </p>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-4">
                   <Badge
                     variant={item.change >= 0 ? "default" : "destructive"}
                     className="self-start"
@@ -58,10 +60,10 @@ export function AccountsList({ items }: MailListProps) {
                       ? `▲ ${item.change}%`
                       : `▼ ${Math.abs(item.change)}%`}
                   </Badge>
-                  <p className="flex-1 truncate text-sm font-medium">
+                  <p className="flex-1 text-sm font-medium truncate">
                     {formatCurrency(item.available)}
                   </p>
-                  <ChevronRight className="h-5 w-5 text-gray-400" />
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
                 </div>
               </Card>
             ))}
