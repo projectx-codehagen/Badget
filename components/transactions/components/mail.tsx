@@ -77,7 +77,7 @@ export function Mail({
             sizes
           )}`
         }}
-        className="h-full max-h-[800px] items-stretch"
+        className="h-full max-h-[1200px] items-stretch"
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
@@ -125,7 +125,7 @@ export function Mail({
                 label: "3",
                 icon: CreditCard,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/accounts",
               },
               {
                 title: "Investments",

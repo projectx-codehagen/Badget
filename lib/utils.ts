@@ -1,26 +1,25 @@
-import { ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { ClassValue, clsx } from "clsx";
 import ms from "ms";
+import { twMerge } from "tailwind-merge";
 
-import { env } from "@/env.mjs"
+import { env } from "@/env.mjs";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function formatDate(input: string | number): string {
-  const date = new Date(input)
+  const date = new Date(input);
   return date.toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
-  })
+  });
 }
 
 export function absoluteUrl(path: string) {
-  return `${env.NEXT_PUBLIC_APP_URL}${path}`
+  return `${env.NEXT_PUBLIC_APP_URL}${path}`;
 }
-
 
 // Utils from precedent.dev
 
@@ -84,4 +83,11 @@ export function capitalize(str: string) {
 export const truncate = (str: string, length: number) => {
   if (!str || str.length <= length) return str;
   return `${str.slice(0, length)}...`;
+};
+
+export const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(value);
 };
