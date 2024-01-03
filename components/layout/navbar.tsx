@@ -36,7 +36,7 @@ export function NavBar({
         scroll ? (scrolled ? "border-b" : "bg-background/0") : "border-b"
       }`}
     >
-      <div className="container flex h-16 items-center justify-between py-4">
+      <div className="w-full p-4 flex h-16 items-center justify-between">
         <MainNav items={items}>{children}</MainNav>
 
         <div className="flex items-center space-x-3">
