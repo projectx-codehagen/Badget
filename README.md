@@ -50,13 +50,35 @@ yarn install
 cp .env.example .env.local
 ```
 
-3. Input everything you need for the env.
+3. Input everything you need for the env. 
 
 4. Start the development server:
 
 ```sh
 yarn dev
 ```
+
+## Database
+
+This project uses MySQL database on PlanetScale. To setup a DB for your local dev:
+1. Create a free account and a [new Database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database)
+2. From the dashboard, create a branch and click "Connect" button.
+3. Hit `Create password` and select `Prisma` in `Connect with` dropdown
+4. Copy the url to `.env.local` file
+5. run `yarn run prisma:push` (Be mindfull prisma migrate won't work because it requires more privilliges for the database user).
+
+You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
+1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
+2. run `docker-compose --env-file .env.local up` to start the DB.
+3. run `yarn run prisma:push`.
+
+## Email provider
+This project uses [Resend](https://resend.com/) to handle transactional emails. You need to add create an account and get an api key needed for authentication. 
+
+Please be aware that the Resend is designed to send test emails exclusively to the email address registered with the account, or to `delivered@resend.dev`, where they are logged on their dashboard. 
+
+The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you have the option to change it to the email address that is associated with your Resend account.
+
 
 ## Roadmap
 
