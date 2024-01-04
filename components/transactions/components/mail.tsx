@@ -132,7 +132,7 @@ export function Mail({
                 label: "",
                 icon: BarChart,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/investments",
               },
               {
                 title: "Categories",

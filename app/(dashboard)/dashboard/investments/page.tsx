@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
-import TransactionsPage from "@/components/transactions/page";
+import InvestmentsPage from "@/components/investments/page";
 
 export const metadata = {
   title: "Transactions",
@@ -16,5 +16,5 @@ export default async function DashboardPage() {
     redirect(authOptions?.pages?.signIn || "/login");
   }
 
-  return <TransactionsPage />;
+  return <InvestmentsPage />;
 }
