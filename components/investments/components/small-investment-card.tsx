@@ -10,7 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const investmentData = [
   {
     id: 1,
-    title: "DIS",
+    ticker: "DIS",
     name: "Disney",
     dataPoints: [
       { time: "2021-Q1", revenue: 4000 },
@@ -23,7 +23,7 @@ const investmentData = [
   },
   {
     id: 2,
-    title: "AAPL",
+    ticker: "AAPL",
     name: "Apple",
     dataPoints: [
       { time: "2021-Q1", revenue: 8000 },
@@ -36,8 +36,8 @@ const investmentData = [
   },
   {
     id: 3,
-    title: "DIS",
-    name: "Disney",
+    ticker: "MSFT",
+    name: "Microsoft",
     dataPoints: [
       { time: "2021-Q1", revenue: 4000 },
       { time: "2021-Q2", revenue: 10400 },
@@ -49,8 +49,8 @@ const investmentData = [
   },
   {
     id: 4,
-    title: "AAPL",
-    name: "Apple",
+    ticker: "AMZN",
+    name: "Amazon",
     dataPoints: [
       { time: "2021-Q1", revenue: 8000 },
       { time: "2021-Q2", revenue: 10400 },
@@ -60,18 +60,57 @@ const investmentData = [
     revenue: 14405,
     subscription: 300,
   },
-
+  {
+    id: 5,
+    ticker: "GOOGL",
+    name: "Alphabet",
+    dataPoints: [
+      { time: "2021-Q1", revenue: 8000 },
+      { time: "2021-Q2", revenue: 10400 },
+      { time: "2021-Q2", revenue: 4000 },
+      { time: "2021-Q2", revenue: 12000 },
+    ],
+    revenue: 14405,
+    subscription: 300,
+  },
+  {
+    id: 6,
+    ticker: "TSLA",
+    name: "Tesla",
+    dataPoints: [
+      { time: "2021-Q1", revenue: 8000 },
+      { time: "2021-Q2", revenue: 10400 },
+      { time: "2021-Q2", revenue: 4000 },
+      { time: "2021-Q2", revenue: 12000 },
+    ],
+    revenue: 14405,
+    subscription: 300,
+  },
+  {
+    id: 7,
+    ticker: "FB",
+    name: "Facebook",
+    dataPoints: [
+      { time: "2021-Q1", revenue: 7000 },
+      { time: "2021-Q2", revenue: 10400 },
+      { time: "2021-Q2", revenue: 4000 },
+      { time: "2021-Q2", revenue: 700 },
+    ],
+    revenue: 14405,
+    subscription: 300,
+  },
   // Add more items as needed
 ];
 
 export function SmallInvestmentCard() {
   return (
+    //TODO Not working Scrollarea
     <ScrollArea className=" ">
       <div className="flex w-max gap-4 p-4">
         {investmentData.map((item) => (
-          <Card key={item.id} className="bg-dark-card shrink-0">
+          <Card key={item.id} className="bg-dark-card w-[100px] shrink-0">
             <CardHeader className="flex  justify-between p-2">
-              <CardTitle className="text-sm">{item.title}</CardTitle>
+              <CardTitle className="text-sm">{item.ticker}</CardTitle>
             </CardHeader>
             <CardContent className="p-2">
               <div className="text-lg font-bold">{item.name}</div>

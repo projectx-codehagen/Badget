@@ -42,14 +42,12 @@ export function TotalBalanceCard() {
     <div className="">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-base font-normal">
-            Monthly Spending
-          </CardTitle>
+          <CardTitle className="text-base font-normal">Total balance</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">$1,241 left</div>
+          <div className="text-2xl font-bold">$10,241 </div>
           <p className="text-xs text-muted-foreground">
-            out of $4,120 budgeted
+            you have gained 47% last month
           </p>
           <div className="h-[80px]">
             <ResponsiveContainer width="100%" height="100%">

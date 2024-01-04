@@ -17,14 +17,14 @@ const generateMonthlyIncomeData = (baseIncome: number): MonthlyIncomeData[] => {
 export const mails = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
-    name: "American Express",
+    name: "Robin Hood",
     available: 7665,
     change: 12,
     subject: "placehioderlahrure",
     date: "2024-01-01T09:00:00",
     read: true,
     labels: ["Reccuring"],
-    category: "Credit Card",
+    category: "Accounts",
     paymentIds: ["m5gr84i9"],
     income: 10400,
     limit: 25000,
@@ -32,13 +32,13 @@ export const mails = [
   },
   {
     id: "110e8400-e29b-11d4-a716-446655440000",
-    name: "Chase Credit Card",
+    name: "Wealthfront",
     available: 4566,
     change: -3,
     date: "2023-12-12T09:00:00",
     read: true,
     labels: ["Reccuring"],
-    category: "Credit Card",
+    category: "Accounts",
     paymentIds: ["3u1reuv4"],
     income: 14405,
     limit: 25000,
@@ -53,58 +53,58 @@ export const mails = [
     date: "2023-12-31T09:00:00",
     read: true,
     labels: ["Reccuring"],
-    category: "Credit Card",
+    category: "Accounts",
     income: 9400,
     limit: 25000,
     monthlyIncomeData: generateMonthlyIncomeData(790),
   },
-  {
-    id: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
-    name: "Regular Savings",
-    available: 4568,
-    change: 14,
-    text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
-    date: "2023-12-31T09:00:00",
-    read: true,
-    labels: ["Reccuring"],
-    category: "Savings",
-    monthlyIncomeData: generateMonthlyIncomeData(758),
-  },
-  {
-    id: "3e7c3f6d-bdf5-46ae-8d90-17112333",
-    name: "Checkings Account",
-    available: 8574,
-    change: -2,
-    text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
-    date: "2023-12-31T09:00:00",
-    read: true,
-    labels: ["Reccuring"],
-    category: "Savings",
-  },
-  {
-    id: "3e7c3f6d-bdf5-46ae-8d90-17131231231",
-    name: "Robinhood",
-    available: 5010,
-    change: -26,
-    text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
-    date: "2023-12-31T09:00:00",
-    read: true,
-    labels: ["Reccuring"],
-    category: "Investments",
-    monthlyIncomeData: generateMonthlyIncomeData(500),
-  },
-  {
-    id: "3e7c3f6d-bdf5-4sdae-8d90-17131231231",
-    name: "Wealthfront",
-    available: 10708,
-    change: 19,
-    text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
-    date: "2023-12-31T09:00:00",
-    read: true,
-    labels: ["Reccuring"],
-    category: "Investments",
-    monthlyIncomeData: generateMonthlyIncomeData(500),
-  },
+  // {
+  //   id: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
+  //   name: "Regular Savings",
+  //   available: 4568,
+  //   change: 14,
+  //   text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
+  //   date: "2023-12-31T09:00:00",
+  //   read: true,
+  //   labels: ["Reccuring"],
+  //   category: "Savings",
+  //   monthlyIncomeData: generateMonthlyIncomeData(758),
+  // },
+  // {
+  //   id: "3e7c3f6d-bdf5-46ae-8d90-17112333",
+  //   name: "Checkings Account",
+  //   available: 8574,
+  //   change: -2,
+  //   text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
+  //   date: "2023-12-31T09:00:00",
+  //   read: true,
+  //   labels: ["Reccuring"],
+  //   category: "Savings",
+  // },
+  // {
+  //   id: "3e7c3f6d-bdf5-46ae-8d90-17131231231",
+  //   name: "Robinhood",
+  //   available: 5010,
+  //   change: -26,
+  //   text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
+  //   date: "2023-12-31T09:00:00",
+  //   read: true,
+  //   labels: ["Reccuring"],
+  //   category: "Investments",
+  //   monthlyIncomeData: generateMonthlyIncomeData(500),
+  // },
+  // {
+  //   id: "3e7c3f6d-bdf5-4sdae-8d90-17131231231",
+  //   name: "Wealthfront",
+  //   available: 10708,
+  //   change: 19,
+  //   text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
+  //   date: "2023-12-31T09:00:00",
+  //   read: true,
+  //   labels: ["Reccuring"],
+  //   category: "Investments",
+  //   monthlyIncomeData: generateMonthlyIncomeData(500),
+  // },
 ];
 
 export type Mail = (typeof mails)[number];
@@ -241,87 +241,49 @@ export const accounts = [
 
 export type Account = (typeof accounts)[number];
 
-export const contacts = [
-  {
-    name: "Emma Johnson",
-    email: "emma.johnson@example.com",
-  },
-  {
-    name: "Liam Wilson",
-    email: "liam.wilson@example.com",
-  },
-  {
-    name: "Olivia Davis",
-    email: "olivia.davis@example.com",
-  },
-  {
-    name: "Noah Martinez",
-    email: "noah.martinez@example.com",
-  },
-  {
-    name: "Ava Taylor",
-    email: "ava.taylor@example.com",
-  },
-  {
-    name: "Lucas Brown",
-    email: "lucas.brown@example.com",
-  },
-  {
-    name: "Sophia Smith",
-    email: "sophia.smith@example.com",
-  },
-  {
-    name: "Ethan Wilson",
-    email: "ethan.wilson@example.com",
-  },
-  {
-    name: "Isabella Jackson",
-    email: "isabella.jackson@example.com",
-  },
-  {
-    name: "Mia Clark",
-    email: "mia.clark@example.com",
-  },
-  {
-    name: "Mason Lee",
-    email: "mason.lee@example.com",
-  },
-  {
-    name: "Layla Harris",
-    email: "layla.harris@example.com",
-  },
-  {
-    name: "William Anderson",
-    email: "william.anderson@example.com",
-  },
-  {
-    name: "Ella White",
-    email: "ella.white@example.com",
-  },
-  {
-    name: "James Thomas",
-    email: "james.thomas@example.com",
-  },
-  {
-    name: "Harper Lewis",
-    email: "harper.lewis@example.com",
-  },
-  {
-    name: "Benjamin Moore",
-    email: "benjamin.moore@example.com",
-  },
-  {
-    name: "Aria Hall",
-    email: "aria.hall@example.com",
-  },
-  {
-    name: "Henry Turner",
-    email: "henry.turner@example.com",
-  },
-  {
-    name: "Scarlett Adams",
-    email: "scarlett.adams@example.com",
-  },
-];
+export type DataPoint = {
+  time: string;
+  revenue: number;
+};
 
-export type Contact = (typeof contacts)[number];
+export type InvestmentData = {
+  id: number;
+  title: string;
+  name: string;
+  dataPoints: DataPoint[];
+  revenue: number;
+  subscription: number;
+};
+
+// Placeholder function for generating random data points
+const generateDataPoints = (count: number): DataPoint[] => {
+  const dataPoints: DataPoint[] = [];
+  for (let i = 0; i < count; i++) {
+    dataPoints.push({
+      time: `2021-Q${i + 1}`,
+      revenue: Math.floor(Math.random() * 20000 + 5000),
+    });
+  }
+  return dataPoints;
+};
+
+// Placeholder data for investments
+export const investmentData: InvestmentData[] = [
+  {
+    id: 1,
+    title: "DIS",
+    name: "Disney",
+    dataPoints: generateDataPoints(4),
+    revenue: 10400,
+    subscription: 240,
+  },
+  {
+    id: 2,
+    title: "AAPL",
+    name: "Apple",
+    dataPoints: generateDataPoints(4),
+    revenue: 14405,
+    subscription: 300,
+  },
+  // Add more items as needed...
+];
