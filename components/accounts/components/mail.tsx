@@ -1,50 +1,27 @@
 "use client"
-import * as React from "react"
 import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
-  File,
-  Inbox,
-  MessagesSquare,
-  PenBox,
-  Search,
-  Send,
-  ShoppingCart,
-  Trash2,
-  Users2,
-  CreditCard,
-  Layers,
-  LayoutDashboard,
-  BarChart,
-  Tag,
-  Repeat2,
-  DollarSign,
-  PiggyBank,
-  Building,
-  Briefcase,
-  BadgeDollarSign,
-  HelpCircle,
-  Settings,
+  BadgeDollarSign, BarChart, Briefcase, Building, CreditCard, DollarSign, HelpCircle, Layers,
+  LayoutDashboard, PiggyBank, Repeat2, Search, Settings, Tag
 } from "lucide-react"
+import * as React from "react"
 
-import { AccountsList } from "./accounts-list"
-import { Nav } from "./nav"
-import { AccountSwitcher } from "./account-switcher"
-import { AccountsDisplay } from "./accounts-display"
-import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { Separator } from "@/components/ui/separator"
 import {
   Tabs,
   TabsContent,
   TabsList,
-  TabsTrigger,
+  TabsTrigger
 } from "@/components/ui/tabs"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { cn } from "@/lib/utils"
 import { Mail } from "../data"
 import { useMail } from "../use-mail"
+import { AccountSwitcher } from "./account-switcher"
+import { AccountsDisplay } from "./accounts-display"
+import { AccountsList } from "./accounts-list"
+import { Nav } from "./nav"
 
 interface MailProps {
   accounts: {

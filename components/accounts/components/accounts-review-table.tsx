@@ -1,11 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -25,30 +21,19 @@ import {
   Building,
   Car,
   Check,
-  CreditCard,
   Divide,
   Mail,
   MessageSquare,
   PlusCircle,
   Repeat2,
-  Settings,
   ShoppingCartIcon,
-  UserPlus,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -59,7 +44,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -168,7 +152,7 @@ export const columns: ColumnDef<Payment>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium text-right">{formatted}</div>;
     },
   },
   {
@@ -180,9 +164,9 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="w-8 h-8 p-0">
               <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
+              <DotsHorizontalIcon className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -190,37 +174,37 @@ export const columns: ColumnDef<Payment>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              <Check className="mr-2 h-4 w-4" />
+              <Check className="w-4 h-4 mr-2" />
               <span>Review</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Divide className="mr-2 h-4 w-4" />
+              <Divide className="w-4 h-4 mr-2" />
               <span>Split</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Repeat2 className="mr-2 h-4 w-4" />
+              <Repeat2 className="w-4 h-4 mr-2" />
               <span>Recurring</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <ArrowRightLeftIcon className="mr-2 h-4 w-4" />
+                <ArrowRightLeftIcon className="w-4 h-4 mr-2" />
                 <span>Transaction Type</span>
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
-                    <Mail className="mr-2 h-4 w-4" />
+                    <Mail className="w-4 h-4 mr-2" />
                     <span>Internal transfer</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <MessageSquare className="mr-2 h-4 w-4" />
+                    <MessageSquare className="w-4 h-4 mr-2" />
                     <span>Regular</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <PlusCircle className="mr-2 h-4 w-4" />
+                    <PlusCircle className="w-4 h-4 mr-2" />
                     <span>More...</span>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
