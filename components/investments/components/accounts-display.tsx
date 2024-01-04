@@ -220,9 +220,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
                     addSuffix: true,
                   })}
                 </p>
-                <h1 className="text-xl font-semibold text-black">
-                  {mail.name}
-                </h1>
+                <h1 className="text-xl font-semibold ">{mail.name}</h1>
               </div>
             </div>
 
