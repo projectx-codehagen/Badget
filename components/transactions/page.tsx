@@ -1,17 +1,10 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 
+import { isValidJSONString } from "@/lib/utils";
+
 import { Mail } from "./components/mail";
 import { accounts, mails } from "./data";
-
-function isValidJSONString(str) {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
 
 export default function TransactionsPage() {
   const layout = cookies().get("react-resizable-panels:layout");
