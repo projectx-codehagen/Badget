@@ -22,9 +22,10 @@ export const SignInModal = () => {
           </a>
           <h3 className="font-urban text-2xl font-bold">Sign In</h3>
           <p className="text-sm text-gray-500">
-            Join our community and unlock the full potential of Projectx. Sign
-            in effortlessly with Google to start managing your property listings
-            with the power of AI.
+            Unlock AI-Powered Money Management. Sign in seamlessly with your
+            Google account with one simple click to access tailored financial
+            insights, customized budget tracking and spending analysis from
+            ProjectX.
           </p>
         </div>
 
