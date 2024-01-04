@@ -38,7 +38,7 @@ interface MailProps {
 export function Mail({
   accounts,
   mails,
-  defaultLayout = [265, 440, 655],
+  defaultLayout = [265, 440, 500],
   defaultCollapsed = false,
   navCollapsedSize,
 }: MailProps) {
@@ -212,7 +212,7 @@ export function Mail({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <Tabs defaultValue="all">
-            <div className="flex items-center px-4 py-2">
+            <div className="flex items-center px-4 py-2 h-[52px]">
               <h1 className="text-xl font-bold">Accounts</h1>
               <TabsList className="ml-auto">
                 <TabsTrigger value="all" className="text-zinc-600 dark:text-zinc-200">All accounts</TabsTrigger>
