@@ -22,9 +22,8 @@ export default async function DashboardLayout({
   return (
     <div className="flex min-h-screen flex-col space-y-6">
       <NavBar user={user} items={dashboardConfig.mainNav} scroll={false} />
-
-      {children}
-      <SiteFooter className="border-t" />
+      <div className="flex-1">{children}</div>
+      <SiteFooter />
     </div>
   );
 }
