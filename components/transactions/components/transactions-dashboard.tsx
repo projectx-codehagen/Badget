@@ -1,72 +1,73 @@
-"use client"
-import * as React from "react"
+"use client";
+
+import * as React from "react";
 import {
   AlertCircle,
   Archive,
   ArchiveX,
-  File,
-  Inbox,
-  MessagesSquare,
-  PenBox,
-  Search,
-  Send,
-  ShoppingCart,
-  Trash2,
-  Users2,
+  BadgeDollarSign,
+  BarChart,
+  Briefcase,
+  Building,
   CreditCard,
+  DollarSign,
+  File,
+  HelpCircle,
+  Inbox,
   Layers,
   LayoutDashboard,
-  BarChart,
-  Tag,
-  Repeat2,
-  DollarSign,
+  MessagesSquare,
+  PenBox,
   PiggyBank,
-  Building,
-  Briefcase,
-  BadgeDollarSign,
-  HelpCircle,
+  Repeat2,
+  Search,
+  Send,
   Settings,
-} from "lucide-react"
+  ShoppingCart,
+  Tag,
+  Trash2,
+  Users2,
+} from "lucide-react";
 
-import { MailList } from "./mail-list"
-import { Nav } from "./nav"
-import { AccountSwitcher } from "./account-switcher"
-import { MailDisplay } from "./mail-display"
-import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
-import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
-import { Mail } from "../data"
-import { useMail } from "../use-mail"
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-interface MailProps {
+import { Mail } from "../data";
+import { useMail } from "../use-mail";
+import { AccountSwitcher } from "./account-switcher";
+import { MailDisplay } from "./mail-display";
+import { MailList } from "./mail-list";
+import { Nav } from "./nav";
+
+interface TransactionsDashboardProps {
   accounts: {
-    label: string
-    email: string
-    icon: React.ReactNode
-  }[]
-  mails: Mail[]
-  defaultLayout: number[] | undefined
-  defaultCollapsed?: boolean
-  navCollapsedSize: number
+    label: string;
+    email: string;
+    icon: React.ReactNode;
+  }[];
+  mails: Mail[];
+  defaultLayout: number[] | undefined;
+  defaultCollapsed?: boolean;
+  navCollapsedSize: number;
 }
 
-export function Mail({
+export function TransactionsDashboard({
   accounts,
   mails,
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
-}: MailProps) {
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
-  const [mail] = useMail()
+}: TransactionsDashboardProps) {
+  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
+  const [mail] = useMail();
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -74,8 +75,8 @@ export function Mail({
         direction="horizontal"
         onLayout={(sizes: number[]) => {
           document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes
-          )}`
+            sizes,
+          )}`;
         }}
         className="h-full max-h-[1200px] items-stretch"
       >
@@ -97,9 +98,17 @@ export function Mail({
               false,
             )}`;
           }}
-          className={cn(isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out")}
+          className={cn(
+            isCollapsed &&
+              "min-w-[50px] transition-all duration-300 ease-in-out",
+          )}
         >
-          <div className={cn("flex h-[52px] items-center justify-center", isCollapsed ? 'h-[52px]': 'px-2')}>
+          <div
+            className={cn(
+              "flex h-[52px] items-center justify-center",
+              isCollapsed ? "h-[52px]" : "px-2",
+            )}
+          >
             <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
           </div>
           <Separator />
@@ -238,8 +247,18 @@ export function Mail({
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Transactions</h1>
               <TabsList className="ml-auto">
-                <TabsTrigger value="all" className="text-zinc-600 dark:text-zinc-200">All transactions</TabsTrigger>
-                <TabsTrigger value="unread" className="text-zinc-600 dark:text-zinc-200">Unread</TabsTrigger>
+                <TabsTrigger
+                  value="all"
+                  className="text-zinc-600 dark:text-zinc-200"
+                >
+                  All transactions
+                </TabsTrigger>
+                <TabsTrigger
+                  value="unread"
+                  className="text-zinc-600 dark:text-zinc-200"
+                >
+                  Unread
+                </TabsTrigger>
               </TabsList>
             </div>
             <Separator />
@@ -267,5 +286,5 @@ export function Mail({
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
-  )
+  );
 }
