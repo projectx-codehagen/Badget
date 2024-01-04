@@ -103,7 +103,7 @@ const data = [
   },
   {
     id: "5",
-    name: "Google (Alphabet Inc.)",
+    name: "Alphabet Inc.(Google)",
     ticker: "GOOGL",
     current: 280,
     totalpercentage: 15,
@@ -148,6 +148,12 @@ const iconMap = {
   Coffee: <CoffeeIcon className="mr-2 h-5 w-5" />,
   // ... add other icon mappings
 };
+const iconMaptoCDN = (iconName: string) => {
+  const sanitizedWord = iconName
+    .split(/\W+/)[0]
+    .toLowerCase();
+  return <img className="mr-2 h-5 w-5" src={`https://s3-symbol-logo.tradingview.com/${sanitizedWord}--big.svg`} alt={`${sanitizedWord}`} />
+};
 
 export const columns: ColumnDef<Category>[] = [
   {
@@ -157,6 +163,7 @@ export const columns: ColumnDef<Category>[] = [
       const name = row.getValue("name") as string;
       return (
         <div className="flex items-center">
+          {iconMaptoCDN(name)}
           <div className="capitalize">{name}</div>
         </div>
       );
