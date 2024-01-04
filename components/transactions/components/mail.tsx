@@ -235,7 +235,7 @@ export function Mail({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <Tabs defaultValue="all">
-            <div className="flex items-center px-4 py-2">
+            <div className="flex items-center px-4 py-2 h-[52px]">
               <h1 className="text-xl font-bold">Transactions</h1>
               <TabsList className="ml-auto">
                 <TabsTrigger value="all" className="text-zinc-600 dark:text-zinc-200">All transactions</TabsTrigger>
