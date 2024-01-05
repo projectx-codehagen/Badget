@@ -4,7 +4,7 @@ import { Bar, BarChart, Line, LineChart, ResponsiveContainer } from "recharts";
 import { formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 // Sample data structure
 const investmentData = [
@@ -104,8 +104,7 @@ const investmentData = [
 
 export function SmallInvestmentCard() {
   return (
-    //TODO Not working Scrollarea
-    <ScrollArea className=" ">
+    <ScrollArea>
       <div className="flex w-max gap-4 p-4">
         {investmentData.map((item) => (
           <Card key={item.id} className="bg-dark-card w-[100px] shrink-0">
@@ -142,6 +141,7 @@ export function SmallInvestmentCard() {
           </Card>
         ))}
       </div>
+      <ScrollBar orientation="horizontal" />
     </ScrollArea>
   );
 }
