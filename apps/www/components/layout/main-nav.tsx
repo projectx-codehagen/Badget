@@ -3,11 +3,12 @@
 import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { MobileNav } from "@/apps/www/components/layout/mobile-nav";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { siteConfig } from "@/apps/www/config/site";
-import { cn } from "@/apps/www/lib/utils";
-import { MainNavItem } from "@/apps/www/types";
+import { MainNavItem } from "@/types";
+
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+import { MobileNav } from "@/components/layout/mobile-nav";
+import { Icons } from "@/components/shared/icons";
 
 interface MainNavProps {
   items?: MainNavItem[];

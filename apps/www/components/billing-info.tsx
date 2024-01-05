@@ -2,7 +2,10 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { buttonVariants } from "@/apps/www/components/ui/button";
+import { UserSubscriptionPlan } from "@/types";
+
+import { cn, formatDate } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,9 +13,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/apps/www/components/ui/card";
-import { cn, formatDate } from "@/apps/www/lib/utils";
-import { UserSubscriptionPlan } from "@/apps/www/types";
+} from "@/components/ui/card";
 
 interface BillingInfoProps extends React.HTMLAttributes<HTMLFormElement> {
   subscriptionPlan: UserSubscriptionPlan;

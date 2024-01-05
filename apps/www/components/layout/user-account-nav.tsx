@@ -1,17 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { UserAvatar } from "@/apps/www/components/shared/user-avatar";
+import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
+import type { User } from "next-auth";
+import { signOut } from "next-auth/react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/apps/www/components/ui/dropdown-menu";
-import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
-import type { User } from "next-auth";
-import { signOut } from "next-auth/react";
+} from "@/components/ui/dropdown-menu";
+import { UserAvatar } from "@/components/shared/user-avatar";
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">;

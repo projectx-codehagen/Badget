@@ -1,13 +1,13 @@
-import sendOnboardingEmail from "@/apps/www/actions/send-onboarding-email";
-import { siteConfig } from "@/apps/www/config/site";
-import MagicLinkEmail from "@/apps/www/emails/magic-link-email";
-import { prisma } from "@/apps/www/lib/db";
+import sendOnboardingEmail from "@/actions/send-onboarding-email";
+import MagicLinkEmail from "@/emails/magic-link-email";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "@/env.mjs";
+import { siteConfig } from "@/config/site";
+import { prisma } from "@/lib/db";
 
 import { resend } from "./email";
 

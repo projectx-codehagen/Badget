@@ -1,4 +1,4 @@
-import { SubscriptionPlan } from "@/apps/www/types";
+import { SubscriptionPlan } from "@/types";
 
 import { env } from "@/env.mjs";
 

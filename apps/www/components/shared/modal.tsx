@@ -1,9 +1,10 @@
 "use client";
 
-import { Dialog, DialogContent } from "@/apps/www/components/ui/dialog";
-import useMediaQuery from "@/apps/www/hooks/use-media-query";
-import { cn } from "@/apps/www/lib/utils";
 import { Drawer } from "vaul";
+
+import { cn } from "@/lib/utils";
+import useMediaQuery from "@/hooks/use-media-query";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface ModalProps {
   children: React.ReactNode;

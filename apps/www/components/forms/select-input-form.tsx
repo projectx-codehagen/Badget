@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "@/apps/www/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+
+import { toast } from "@/components/ui/use-toast";
 
 import {
   Card,

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+
 import {
   Table,
   TableBody,
@@ -9,7 +10,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-} from "@/apps/www/components/ui/table";
+} from "@/components/ui/table";
 
 const PropertiesTable = ({ properties }) => {
   const [sortKey, setSortKey] = useState("createdAt"); // default sort key

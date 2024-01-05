@@ -1,6 +1,7 @@
-import { Icons } from "@/apps/www/components/shared/icons";
 import { User } from "@prisma/client";
 import type { Icon } from "lucide-react";
+
+import { Icons } from "@/components/shared/icons";
 
 export type NavItem = {
   title: string;

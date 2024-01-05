@@ -1,10 +1,11 @@
 "use client";
 
 import { useTransition } from "react";
-import { generateUserStripe } from "@/apps/www/actions/generate-user-stripe";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { Button } from "@/apps/www/components/ui/button";
-import { SubscriptionPlan, UserSubscriptionPlan } from "@/apps/www/types";
+import { generateUserStripe } from "@/actions/generate-user-stripe";
+import { SubscriptionPlan, UserSubscriptionPlan } from "@/types";
+
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/shared/icons";
 
 interface BillingFormButtonProps {
   offer: SubscriptionPlan;

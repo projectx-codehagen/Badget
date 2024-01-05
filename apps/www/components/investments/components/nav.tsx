@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { buttonVariants } from "@/apps/www/components/ui/button";
+import { LucideIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/apps/www/components/ui/tooltip";
-import { cn } from "@/apps/www/lib/utils";
-import { LucideIcon } from "lucide-react";
+} from "@/components/ui/tooltip";
 
 interface NavProps {
   isCollapsed: boolean;

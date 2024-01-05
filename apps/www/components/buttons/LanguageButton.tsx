@@ -1,9 +1,9 @@
 "use client";
 
-import { Button, buttonVariants } from "@/apps/www/components/ui/button";
-import { useLanguageModal } from "@/apps/www/hooks/use-language-modal";
-import { useSigninModal } from "@/apps/www/hooks/use-signin-modal";
-import { cn } from "@/apps/www/lib/utils";
+import { cn } from "@/lib/utils";
+import { useLanguageModal } from "@/hooks/use-language-modal";
+import { useSigninModal } from "@/hooks/use-signin-modal";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export function LanugageButton({ userId }) {
   const signInModal = useLanguageModal();

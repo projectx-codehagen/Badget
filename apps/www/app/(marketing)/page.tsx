@@ -1,14 +1,15 @@
 import Link from "next/link";
-import { GetStartedButton } from "@/apps/www/components/buttons/GetStartedButton";
-import { BusinessLine } from "@/apps/www/components/dashboard/businessline";
-import CallToActionComponent from "@/apps/www/components/dashboard/calltoaction";
-import FeatureSection1 from "@/apps/www/components/dashboard/featuresection1";
-import Featuressection from "@/apps/www/components/dashboard/feautressection";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { buttonVariants } from "@/apps/www/components/ui/button";
-import { siteConfig } from "@/apps/www/config/site";
-import { cn, nFormatter } from "@/apps/www/lib/utils";
 import Balancer from "react-wrap-balancer";
+
+import { siteConfig } from "@/config/site";
+import { cn, nFormatter } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { GetStartedButton } from "@/components/buttons/GetStartedButton";
+import { BusinessLine } from "@/components/dashboard/businessline";
+import CallToActionComponent from "@/components/dashboard/calltoaction";
+import FeatureSection1 from "@/components/dashboard/featuresection1";
+import Featuressection from "@/components/dashboard/feautressection";
+import { Icons } from "@/components/shared/icons";
 
 export default async function IndexPage() {
   return (

@@ -1,12 +1,14 @@
 "use client";
 
 import { useTransition } from "react";
-import {
-  updateUserName,
-  type FormData,
-} from "@/apps/www/actions/update-user-name";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { buttonVariants } from "@/apps/www/components/ui/button";
+import { updateUserName, type FormData } from "@/actions/update-user-name";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@prisma/client";
+import { useForm } from "react-hook-form";
+
+import { cn } from "@/lib/utils";
+import { userNameSchema } from "@/lib/validations/user";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,15 +16,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/apps/www/components/ui/card";
-import { Input } from "@/apps/www/components/ui/input";
-import { Label } from "@/apps/www/components/ui/label";
-import { toast } from "@/apps/www/components/ui/use-toast";
-import { cn } from "@/apps/www/lib/utils";
-import { userNameSchema } from "@/apps/www/lib/validations/user";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "@prisma/client";
-import { useForm } from "react-hook-form";
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
+import { Icons } from "@/components/shared/icons";
 
 interface UserNameFormProps {
   user: Pick<User, "id" | "name">;

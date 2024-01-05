@@ -1,6 +1,7 @@
-import { BlogPosts } from "@/apps/www/components/blog-posts";
 import { allPosts } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
+
+import { BlogPosts } from "@/components/blog-posts";
 
 export const metadata = {
   title: "Projectx Blog - Revolutionizing Real Estate with AI",

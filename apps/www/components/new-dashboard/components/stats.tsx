@@ -1,12 +1,8 @@
-import { Badge } from "@/apps/www/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/apps/www/components/ui/card";
 import { useTheme } from "next-themes";
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer } from "recharts";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const data = [
   {

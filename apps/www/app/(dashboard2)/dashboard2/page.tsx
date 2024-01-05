@@ -1,10 +1,11 @@
 import { redirect } from "next/navigation";
-import { DashboardHeader } from "@/apps/www/components/dashboard/header";
-import { DashboardShell } from "@/apps/www/components/dashboard/shell";
-import { EmptyPlaceholder } from "@/apps/www/components/shared/empty-placeholder";
-import { Button } from "@/apps/www/components/ui/button";
-import { authOptions } from "@/apps/www/lib/auth";
-import { getCurrentUser } from "@/apps/www/lib/session";
+
+import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/session";
+import { Button } from "@/components/ui/button";
+import { DashboardHeader } from "@/components/dashboard/header";
+import { DashboardShell } from "@/components/dashboard/shell";
+import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
 export const metadata = {
   title: "Dasboard",

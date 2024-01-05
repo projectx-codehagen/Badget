@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/apps/www/components/ui/button";
+
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,9 +9,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/apps/www/components/ui/dialog";
-import { Input } from "@/apps/www/components/ui/input";
-import { Label } from "@/apps/www/components/ui/label";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function SubmitProperty() {
   return (

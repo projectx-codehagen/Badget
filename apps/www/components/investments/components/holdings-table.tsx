@@ -1,15 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Progress } from "@/apps/www/components/ui/progress";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/apps/www/components/ui/table";
 import { BoltIcon } from "@heroicons/react/20/solid";
 import {
   ColumnDef,
@@ -46,6 +37,16 @@ import {
   UserPlus,
 } from "lucide-react";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
+
+import { Progress } from "@/components/ui/progress";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const data = [
   {

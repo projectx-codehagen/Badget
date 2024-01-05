@@ -1,15 +1,16 @@
 import "@/styles/globals.css";
 
 import { Metadata } from "next";
-import { fontHeading, fontSans, fontUrban } from "@/apps/www/assets/fonts";
-import { Analytics } from "@/apps/www/components/analytics";
-import { ModalProvider } from "@/apps/www/components/modal-provider";
-import { Providers } from "@/apps/www/components/providers";
-import { TailwindIndicator } from "@/apps/www/components/tailwind-indicator";
-import { Toaster } from "@/apps/www/components/ui/toaster";
-import { siteConfig } from "@/apps/www/config/site";
-import { EdgeStoreProvider } from "@/apps/www/lib/edgestore";
-import { cn } from "@/apps/www/lib/utils";
+import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
+
+import { siteConfig } from "@/config/site";
+import { EdgeStoreProvider } from "@/lib/edgestore";
+import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@/components/analytics";
+import { ModalProvider } from "@/components/modal-provider";
+import { Providers } from "@/components/providers";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
 
 interface RootLayoutProps {
   children: React.ReactNode;

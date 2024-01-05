@@ -2,11 +2,12 @@
 
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+
+import { useEdgeStore } from "@/lib/edgestore";
 import {
   MultiFileDropzone,
   type FileState,
-} from "@/apps/www/components/fileupload/MultiFileDropzone";
-import { useEdgeStore } from "@/apps/www/lib/edgestore";
+} from "@/components/fileupload/MultiFileDropzone";
 
 import { Icons } from "../shared/icons";
 import { useToast } from "../ui/use-toast";

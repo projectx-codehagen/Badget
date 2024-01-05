@@ -1,10 +1,11 @@
+import Balancer from "react-wrap-balancer";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/apps/www/components/ui/accordion";
-import Balancer from "react-wrap-balancer";
+} from "@/components/ui/accordion";
 
 const pricingFaqData = [
   {

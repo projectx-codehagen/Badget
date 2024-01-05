@@ -1,7 +1,7 @@
 "use client";
 
-import { AddFilesButton } from "@/apps/www/components/buttons/AddFilesButton";
-import { EmptyPlaceholder } from "@/apps/www/components/shared/empty-placeholder";
+import { AddFilesButton } from "@/components/buttons/AddFilesButton";
+import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
 export default function NoSummaryPlaceholder({ propertyId, slug }) {
   return (

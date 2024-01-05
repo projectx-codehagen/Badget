@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, buttonVariants } from "@/apps/www/components/ui/button";
-import { useSigninModal } from "@/apps/www/hooks/use-signin-modal";
-import { cn } from "@/apps/www/lib/utils";
+import { cn } from "@/lib/utils";
+import { useSigninModal } from "@/hooks/use-signin-modal";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export function GetStartedButton() {
   const signInModal = useSigninModal();

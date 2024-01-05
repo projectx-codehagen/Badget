@@ -1,4 +1,4 @@
-import { PropertyConfig } from "@/apps/www/types";
+import { PropertyConfig } from "@/types";
 
 export const propertyConfig: PropertyConfig = {
   mainNav: [

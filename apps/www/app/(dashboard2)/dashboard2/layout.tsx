@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
-import { DashboardNav } from "@/apps/www/components/layout/nav";
-import { NavBar } from "@/apps/www/components/layout/navbar";
-import { SiteFooter } from "@/apps/www/components/layout/site-footer";
-import { dashboardConfig } from "@/apps/www/config/dashboard";
-import { getCurrentUser } from "@/apps/www/lib/session";
+
+import { dashboardConfig } from "@/config/dashboard";
+import { getCurrentUser } from "@/lib/session";
+import { DashboardNav } from "@/components/layout/nav";
+import { NavBar } from "@/components/layout/navbar";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;

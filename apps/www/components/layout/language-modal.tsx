@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Modal } from "@/apps/www/components/shared/modal";
+
+import { useLanguageModal } from "@/hooks/use-language-modal";
 import {
   Select,
   SelectContent,
@@ -10,8 +11,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/apps/www/components/ui/select";
-import { useLanguageModal } from "@/apps/www/hooks/use-language-modal";
+} from "@/components/ui/select";
+import { Modal } from "@/components/shared/modal";
 
 import { Button } from "../ui/button";
 

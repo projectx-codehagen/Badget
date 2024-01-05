@@ -1,4 +1,4 @@
-import { SiteConfig } from "@/apps/www/types";
+import { SiteConfig } from "@/types";
 
 import { env } from "@/env.mjs";
 

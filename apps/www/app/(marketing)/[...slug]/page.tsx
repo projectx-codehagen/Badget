@@ -1,14 +1,15 @@
 import { notFound } from "next/navigation";
-import { Mdx } from "@/apps/www/components/content/mdx-components";
 import { allPages } from "contentlayer/generated";
+
+import { Mdx } from "@/components/content/mdx-components";
 
 import "@/styles/mdx.css";
 
 import { Metadata } from "next";
-import { siteConfig } from "@/apps/www/config/site";
-import { absoluteUrl } from "@/apps/www/lib/utils";
 
 import { env } from "@/env.mjs";
+import { siteConfig } from "@/config/site";
+import { absoluteUrl } from "@/lib/utils";
 
 interface PageProps {
   params: {

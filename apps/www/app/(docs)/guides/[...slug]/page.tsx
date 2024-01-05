@@ -1,19 +1,20 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Mdx } from "@/apps/www/components/content/mdx-components";
-import { DocsPageHeader } from "@/apps/www/components/docs/page-header";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { DashboardTableOfContents } from "@/apps/www/components/shared/toc";
-import { getTableOfContents } from "@/apps/www/lib/toc";
 import { allGuides } from "contentlayer/generated";
+
+import { getTableOfContents } from "@/lib/toc";
+import { Mdx } from "@/components/content/mdx-components";
+import { DocsPageHeader } from "@/components/docs/page-header";
+import { Icons } from "@/components/shared/icons";
+import { DashboardTableOfContents } from "@/components/shared/toc";
 
 import "@/styles/mdx.css";
 
 import { Metadata } from "next";
-import { buttonVariants } from "@/apps/www/components/ui/button";
-import { absoluteUrl, cn } from "@/apps/www/lib/utils";
 
 import { env } from "@/env.mjs";
+import { absoluteUrl, cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 interface GuidePageProps {
   params: {

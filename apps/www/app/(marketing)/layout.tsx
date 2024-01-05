@@ -1,8 +1,9 @@
 import { Suspense } from "react";
-import { NavBar } from "@/apps/www/components/layout/navbar";
-import { SiteFooter } from "@/apps/www/components/layout/site-footer";
-import { marketingConfig } from "@/apps/www/config/marketing";
-import { getCurrentUser } from "@/apps/www/lib/session";
+
+import { marketingConfig } from "@/config/marketing";
+import { getCurrentUser } from "@/lib/session";
+import { NavBar } from "@/components/layout/navbar";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 interface MarketingLayoutProps {
   children: React.ReactNode;

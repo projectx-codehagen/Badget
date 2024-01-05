@@ -1,10 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { authOptions } from "@/apps/www/lib/auth";
-import { prisma } from "@/apps/www/lib/db";
-import { userNameSchema } from "@/apps/www/lib/validations/user";
 import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/db";
+import { userNameSchema } from "@/lib/validations/user";
 
 export type FormData = {
   name: string;

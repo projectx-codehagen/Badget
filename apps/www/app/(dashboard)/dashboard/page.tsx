@@ -1,11 +1,12 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Dashboard } from "@/apps/www/components/new-dashboard/components/dashboard-1";
-import { accounts, mails } from "@/apps/www/components/new-dashboard/data";
-import { authOptions } from "@/apps/www/lib/auth";
-import { getCurrentUser } from "@/apps/www/lib/session";
-import { isValidJSONString } from "@/apps/www/lib/utils";
+
+import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/session";
+import { isValidJSONString } from "@/lib/utils";
+import { Dashboard } from "@/components/new-dashboard/components/dashboard-1";
+import { accounts, mails } from "@/components/new-dashboard/data";
 
 export const metadata = {
   title: "Dasboard",

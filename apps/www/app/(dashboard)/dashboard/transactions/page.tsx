@@ -1,11 +1,12 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { TransactionsDashboard } from "@/apps/www/components/transactions/components/transactions-dashboard";
-import { accounts, mails } from "@/apps/www/components/transactions/data";
-import { authOptions } from "@/apps/www/lib/auth";
-import { getCurrentUser } from "@/apps/www/lib/session";
-import { isValidJSONString } from "@/apps/www/lib/utils";
+
+import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/session";
+import { isValidJSONString } from "@/lib/utils";
+import { TransactionsDashboard } from "@/components/transactions/components/transactions-dashboard";
+import { accounts, mails } from "@/components/transactions/data";
 
 export const metadata = {
   title: "Transactions",

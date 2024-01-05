@@ -1,14 +1,10 @@
 import React from "react";
-import { Badge } from "@/apps/www/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/apps/www/components/ui/card";
-import { ScrollArea } from "@/apps/www/components/ui/scroll-area";
-import { formatCurrency } from "@/apps/www/lib/utils";
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer } from "recharts";
+
+import { formatCurrency } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Sample data structure
 const investmentData = [

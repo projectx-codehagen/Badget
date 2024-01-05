@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Badge } from "@/apps/www/components/ui/badge";
-import { Button } from "@/apps/www/components/ui/button";
-import { Checkbox } from "@/apps/www/components/ui/checkbox";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,9 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/apps/www/components/ui/dropdown-menu";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+} from "@/components/ui/dropdown-menu";
 
 import { propertyLabels, propertyStatuses } from "./propertystatus";
 

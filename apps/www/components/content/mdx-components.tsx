@@ -1,9 +1,10 @@
 import * as React from "react";
 import NextImage, { ImageProps } from "next/image";
-import { MdxCard } from "@/apps/www/components/content/mdx-card";
-import { Callout } from "@/apps/www/components/shared/callout";
-import { cn } from "@/apps/www/lib/utils";
 import { useMDXComponent } from "next-contentlayer/hooks";
+
+import { cn } from "@/lib/utils";
+import { MdxCard } from "@/components/content/mdx-card";
+import { Callout } from "@/components/shared/callout";
 
 const components = {
   h1: ({ className, ...props }) => (

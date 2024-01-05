@@ -1,21 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Input } from "@/apps/www/components/ui/input";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/apps/www/components/ui/resizable";
-import { Separator } from "@/apps/www/components/ui/separator";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/apps/www/components/ui/tabs";
-import { TooltipProvider } from "@/apps/www/components/ui/tooltip";
-import { cn } from "@/apps/www/lib/utils";
 import {
   AlertCircle,
   Archive,
@@ -43,6 +28,17 @@ import {
   Trash2,
   Users2,
 } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";

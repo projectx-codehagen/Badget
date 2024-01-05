@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Button, buttonVariants } from "@/apps/www/components/ui/button";
-import useScroll from "@/apps/www/hooks/use-scroll";
-import { useSigninModal } from "@/apps/www/hooks/use-signin-modal";
-import { cn } from "@/apps/www/lib/utils";
-import { MainNavItem } from "@/apps/www/types";
+import { MainNavItem } from "@/types";
 import { User } from "next-auth";
+
+import { cn } from "@/lib/utils";
+import useScroll from "@/hooks/use-scroll";
+import { useSigninModal } from "@/hooks/use-signin-modal";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 import { MainNav } from "./main-nav";
 import { UserAccountNav } from "./user-account-nav";

@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { DocsSearch } from "@/apps/www/components/docs/search";
-import { DocsSidebarNav } from "@/apps/www/components/docs/sidebar-nav";
-import { NavBar } from "@/apps/www/components/layout/navbar";
-import { SiteFooter } from "@/apps/www/components/layout/site-footer";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { docsConfig } from "@/apps/www/config/docs";
-import { siteConfig } from "@/apps/www/config/site";
-import { getCurrentUser } from "@/apps/www/lib/session";
+
+import { docsConfig } from "@/config/docs";
+import { siteConfig } from "@/config/site";
+import { getCurrentUser } from "@/lib/session";
+import { DocsSearch } from "@/components/docs/search";
+import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
+import { NavBar } from "@/components/layout/navbar";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { Icons } from "@/components/shared/icons";
 
 interface DocsLayoutProps {
   children: React.ReactNode;

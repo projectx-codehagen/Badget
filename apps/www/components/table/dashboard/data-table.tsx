@@ -1,22 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/apps/www/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/apps/www/components/ui/dropdown-menu";
-import { Input } from "@/apps/www/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/apps/www/components/ui/table";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -29,6 +13,23 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 import { DataTableToolbar } from "./data-table-toolbar";
 

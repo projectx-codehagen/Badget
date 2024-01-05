@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { DashboardHeader } from "@/apps/www/components/dashboard/header";
-import { DashboardShell } from "@/apps/www/components/dashboard/shell";
-import NoPhotoPlaceholder from "@/apps/www/components/properties/NoPhotoPlaceholder copy";
+
+import { DashboardHeader } from "@/components/dashboard/header";
+import { DashboardShell } from "@/components/dashboard/shell";
+import NoPhotoPlaceholder from "@/components/properties/NoPhotoPlaceholder copy";
 
 export default function PropertyPage(props: { params: { slug: string } }) {
   //change this to true to test

@@ -1,18 +1,19 @@
 import { notFound } from "next/navigation";
-import { Mdx } from "@/apps/www/components/content/mdx-components";
 import { allAuthors, allPosts } from "contentlayer/generated";
+
+import { Mdx } from "@/components/content/mdx-components";
 
 import "@/styles/mdx.css";
 
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { buttonVariants } from "@/apps/www/components/ui/button";
-import { absoluteUrl, cn, formatDate } from "@/apps/www/lib/utils";
 import Balancer from "react-wrap-balancer";
 
 import { env } from "@/env.mjs";
+import { absoluteUrl, cn, formatDate } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { Icons } from "@/components/shared/icons";
 
 interface PostPageProps {
   params: {

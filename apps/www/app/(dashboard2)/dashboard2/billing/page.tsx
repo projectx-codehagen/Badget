@@ -1,17 +1,14 @@
 import { redirect } from "next/navigation";
-import { BillingInfo } from "@/apps/www/components/billing-info";
-import { LanugageButton } from "@/apps/www/components/buttons/LanguageButton";
-import { DashboardHeader } from "@/apps/www/components/dashboard/header";
-import { DashboardShell } from "@/apps/www/components/dashboard/shell";
-import { Icons } from "@/apps/www/components/shared/icons";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/apps/www/components/ui/alert";
-import { authOptions } from "@/apps/www/lib/auth";
-import { getCurrentUser } from "@/apps/www/lib/session";
-import { getUserSubscriptionPlan } from "@/apps/www/lib/subscription";
+
+import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/session";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { BillingInfo } from "@/components/billing-info";
+import { LanugageButton } from "@/components/buttons/LanguageButton";
+import { DashboardHeader } from "@/components/dashboard/header";
+import { DashboardShell } from "@/components/dashboard/shell";
+import { Icons } from "@/components/shared/icons";
 
 export const metadata = {
   title: "Projectx Billing - Subscription Management",

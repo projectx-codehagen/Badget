@@ -2,15 +2,6 @@
 
 import * as React from "react";
 import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/apps/www/components/ui/resizable";
-import { ScrollArea } from "@/apps/www/components/ui/scroll-area";
-import { Separator } from "@/apps/www/components/ui/separator";
-import { TooltipProvider } from "@/apps/www/components/ui/tooltip";
-import { cn } from "@/apps/www/lib/utils";
-import {
   BadgeDollarSign,
   BarChart,
   Briefcase,
@@ -25,6 +16,16 @@ import {
   Settings,
   Tag,
 } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";

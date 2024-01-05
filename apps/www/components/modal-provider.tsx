@@ -1,7 +1,7 @@
 "use client";
 
-import { SignInModal } from "@/apps/www/components/layout/sign-in-modal";
-import { useMounted } from "@/apps/www/hooks/use-mounted";
+import { useMounted } from "@/hooks/use-mounted";
+import { SignInModal } from "@/components/layout/sign-in-modal";
 
 import { LanguageModal } from "./layout/language-modal";
 

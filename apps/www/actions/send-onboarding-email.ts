@@ -1,9 +1,10 @@
 "use server";
 
 // src/utils/sendOnboardingEmail.ts
-import WelcomeEmail from "@/apps/www/emails/welcome-email";
-import { prisma } from "@/apps/www/lib/db";
-import { resend } from "@/apps/www/lib/email";
+import WelcomeEmail from "@/emails/welcome-email";
+
+import { prisma } from "@/lib/db";
+import { resend } from "@/lib/email";
 
 async function sendOnboardingEmail(email: string, name: string) {
   try {

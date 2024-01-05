@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { Modal } from "@/apps/www/components/shared/modal";
-import { Button } from "@/apps/www/components/ui/button";
-import { siteConfig } from "@/apps/www/config/site";
-import { useSigninModal } from "@/apps/www/hooks/use-signin-modal";
 import { signIn } from "next-auth/react";
+
+import { siteConfig } from "@/config/site";
+import { useSigninModal } from "@/hooks/use-signin-modal";
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/shared/icons";
+import { Modal } from "@/components/shared/modal";
 
 export const SignInModal = () => {
   const signInModal = useSigninModal();

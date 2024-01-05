@@ -2,14 +2,15 @@
 
 import { Suspense, useState } from "react";
 import Link from "next/link";
-import { BillingFormButton } from "@/apps/www/components/forms/billing-form-button";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { Button, buttonVariants } from "@/apps/www/components/ui/button";
-import { Switch } from "@/apps/www/components/ui/switch";
-import { pricingData } from "@/apps/www/config/subscriptions";
-import { useSigninModal } from "@/apps/www/hooks/use-signin-modal";
-import { UserSubscriptionPlan } from "@/apps/www/types";
+import { UserSubscriptionPlan } from "@/types";
 import Balancer from "react-wrap-balancer";
+
+import { pricingData } from "@/config/subscriptions";
+import { useSigninModal } from "@/hooks/use-signin-modal";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { BillingFormButton } from "@/components/forms/billing-form-button";
+import { Icons } from "@/components/shared/icons";
 
 interface PricingCardsProps {
   userId?: string;

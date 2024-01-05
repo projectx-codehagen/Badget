@@ -1,15 +1,16 @@
 "use client";
 
 import * as React from "react";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { Button } from "@/apps/www/components/ui/button";
+import { useTheme } from "next-themes";
+
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/apps/www/components/ui/dropdown-menu";
-import { useTheme } from "next-themes";
+} from "@/components/ui/dropdown-menu";
+import { Icons } from "@/components/shared/icons";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();

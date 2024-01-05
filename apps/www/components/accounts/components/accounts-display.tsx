@@ -1,32 +1,3 @@
-import { TransactionsReviewTable } from "@/apps/www/components/new-dashboard/components/transaction-review-table";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/apps/www/components/ui/avatar";
-import { Badge } from "@/apps/www/components/ui/badge";
-import { Button } from "@/apps/www/components/ui/button";
-import { Calendar } from "@/apps/www/components/ui/calendar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/apps/www/components/ui/dropdown-menu";
-import { Label } from "@/apps/www/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/apps/www/components/ui/popover";
-import { Separator } from "@/apps/www/components/ui/separator";
-import { Textarea } from "@/apps/www/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/apps/www/components/ui/tooltip";
-import { formatCurrency } from "@/apps/www/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 import addDays from "date-fns/addDays";
 import addHours from "date-fns/addHours";
@@ -48,6 +19,32 @@ import {
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
 } from "recharts";
+
+import { formatCurrency } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { TransactionsReviewTable } from "@/components/new-dashboard/components/transaction-review-table";
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";

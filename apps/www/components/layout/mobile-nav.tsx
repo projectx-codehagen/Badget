@@ -1,10 +1,11 @@
 import * as React from "react";
 import Link from "next/link";
-import { Icons } from "@/apps/www/components/shared/icons";
-import { siteConfig } from "@/apps/www/config/site";
-import { useLockBody } from "@/apps/www/hooks/use-lock-body";
-import { cn } from "@/apps/www/lib/utils";
-import { MainNavItem } from "@/apps/www/types";
+import { MainNavItem } from "@/types";
+
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+import { useLockBody } from "@/hooks/use-lock-body";
+import { Icons } from "@/components/shared/icons";
 
 interface MobileNavProps {
   items: MainNavItem[];

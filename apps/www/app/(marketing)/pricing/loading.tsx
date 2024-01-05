@@ -1,4 +1,4 @@
-import { Skeleton } from "@/apps/www/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
   return (

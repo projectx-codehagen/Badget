@@ -1,10 +1,11 @@
 import React from "react";
-import { Badge } from "@/apps/www/components/ui/badge";
-import { Card, CardTitle } from "@/apps/www/components/ui/card";
-import { ScrollArea } from "@/apps/www/components/ui/scroll-area";
-import { formatCurrency } from "@/apps/www/lib/utils";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { ChevronRight } from "lucide-react";
+
+import { formatCurrency } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";

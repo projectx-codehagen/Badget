@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { formatDate } from "@/apps/www/lib/utils";
 import Balancer from "react-wrap-balancer";
+
+import { formatDate } from "@/lib/utils";
 
 export function BlogPosts({ posts }) {
   return (
