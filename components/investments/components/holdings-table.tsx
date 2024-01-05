@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { BoltIcon } from "@heroicons/react/20/solid";
 import {
   ColumnDef,
@@ -152,7 +153,7 @@ const iconMaptoCDN = (iconName: string) => {
   const sanitizedWord = iconName
     .split(/\W+/)[0]
     .toLowerCase();
-  return <img className="mr-2 h-5 w-5" src={`https://s3-symbol-logo.tradingview.com/${sanitizedWord}--big.svg`} alt={`${sanitizedWord}`} />
+  return <Image className="mr-2 h-5 w-5" src={`https://s3-symbol-logo.tradingview.com/${sanitizedWord}--big.svg`} alt={`${sanitizedWord}`} />
 };
 
 export const columns: ColumnDef<Category>[] = [
