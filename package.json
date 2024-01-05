@@ -13,6 +13,7 @@
     "turbo": "next dev --turbo",
     "start": "next start",
     "lint": "next lint",
+    "format:check": "prettier . --check",
     "preview": "next build && next start",
     "postinstall": "prisma generate",
     "email": "email dev --dir emails --port 3333",
