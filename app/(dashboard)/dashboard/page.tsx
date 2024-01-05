@@ -50,7 +50,7 @@ export default async function DashboardPage() {
           className="block dark:hidden"
         />
       </div>
-      <div className="hidden flex-col md:flex">
+      <div className="hidden grow flex-col md:flex">
         <Dashboard
           accounts={accounts}
           mails={mails}
