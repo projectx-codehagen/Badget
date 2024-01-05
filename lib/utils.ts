@@ -91,3 +91,12 @@ export const formatCurrency = (value: number) => {
     currency: "USD",
   }).format(value);
 };
+
+export function isValidJSONString(str: string) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}

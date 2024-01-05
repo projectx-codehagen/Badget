@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -26,20 +25,17 @@ import {
 } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
 import { AccountSwitcher } from "./account-switcher";
-import { MailDisplay } from "./mail-display";
-import { MailList } from "./mail-list";
 import { Nav } from "./nav";
 import { CardsStats } from "./stats";
 import { TopCategoriesTable } from "./top-categories-table";
 import { TransactionsReviewTable } from "./transaction-review-table";
 
-interface MailProps {
+interface DashboardProps {
   accounts: {
     label: string;
     email: string;
@@ -57,7 +53,7 @@ export function Dashboard({
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
-}: MailProps) {
+}: DashboardProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
   const [mail] = useMail();
 
