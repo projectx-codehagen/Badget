@@ -150,10 +150,16 @@ const iconMap = {
   // ... add other icon mappings
 };
 const iconMaptoCDN = (iconName: string) => {
-  const sanitizedWord = iconName
-    .split(/\W+/)[0]
-    .toLowerCase();
-  return <Image className="mr-2 h-5 w-5" src={`https://s3-symbol-logo.tradingview.com/${sanitizedWord}--big.svg`} alt={`${sanitizedWord}`} />
+  const sanitizedWord = iconName.split(/\W+/)[0].toLowerCase();
+  return (
+    <Image
+      className="mr-2 h-5 w-5"
+      width={20}
+      height={20}
+      src={`https://s3-symbol-logo.tradingview.com/${sanitizedWord}--big.svg`}
+      alt={`${sanitizedWord}`}
+    />
+  );
 };
 
 export const columns: ColumnDef<Category>[] = [
