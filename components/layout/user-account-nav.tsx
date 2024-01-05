@@ -45,12 +45,12 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
             <p className="text-sm">Dashboard</p>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
+        {/* <DropdownMenuItem asChild>
           <Link href="/dashboard2" className="flex items-center space-x-2.5">
             <LayoutDashboard className="h-4 w-4" />
             <p className="text-sm">Another layout</p>
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuItem asChild>
           <Link
             href="/dashboard/billing"
