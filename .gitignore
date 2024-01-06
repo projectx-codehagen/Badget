@@ -43,3 +43,6 @@ next-env.d.ts
 .contentlayer
 
 venv
+
+# Turbo
+.turbo

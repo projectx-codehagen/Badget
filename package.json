@@ -7,9 +7,18 @@
     "name": "Christer",
     "url": "https://twitter.com/Codehagen"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "format": "turbo format",
+    "type-check": "turbo type-check"
+  },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "turbo": "^1.11.3"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
