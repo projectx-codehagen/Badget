@@ -26,9 +26,18 @@
 
 ## Introduction
 
-Lets goooo - Next.js 14, Prisma, Planetscale, Auth.js, Resend, React Email, Shadcn/ui, and Stripe.
+Lets goooo - Next.js 14, Turborepo, Prisma, Planetscale, Auth.js, Resend, React Email, Shadcn/ui, and Stripe.
 <br/>
 All seamlessly integrated with the Projectx to accelerate the development.
+
+## Directory Structure
+
+ProjectX is a monorepo managed by [Turborepo](https://turbo.fish/). The monorepo is split between `apps` and `packages` directories.
+
+- **Apps** are the Next.js apps that are deployed to Vercel (this is where most development is done).
+- **Packages** are the shared packages that are used by the apps (e.g. `@projectx/components`)
+
+````
 
 ## Installation
 
@@ -36,31 +45,43 @@ Clone & create this repo locally with the following command:
 
 ```bash
 git clone https://github.com/meglerhagen/projectx.git
-```
+````
 
-1. Install dependencies using pnpm:
+1. Install dependencies using yarn:
 
 ```sh
 yarn install
 ```
 
-2. Copy `.env.example` to `.env` and update the variables.
+2. Move into the app directory (this is where the next.js app lives):
+
+```sh
+cd apps/www
+```
+
+3. Copy `.env.example` to `.env.local` and update the variables.
 
 ```sh
 cp .env.example .env.local
 ```
 
-3. Input everything you need for the env. 
+4. Input everything you need for the env.
 
-4. Start the development server:
+5. Start the development server from either yarn or turbo:
 
 ```sh
+# At the root of the mono repo
+yarn dev
+
+# Or from the app directory
+cd apps/www
 yarn dev
 ```
 
 ## Database
 
 This project uses MySQL database on PlanetScale. To setup a DB for your local dev:
+
 1. Create a free account and a [new Database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database)
 2. From the dashboard, create a branch and click "Connect" button.
 3. Hit `Create password` and select `Prisma` in `Connect with` dropdown
@@ -68,22 +89,23 @@ This project uses MySQL database on PlanetScale. To setup a DB for your local de
 5. run `yarn run prisma:push` (Be mindfull prisma migrate won't work because it requires more privilliges for the database user).
 
 You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
+
 1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
 2. run `docker-compose --env-file .env.local up` to start the DB.
 3. run `yarn run prisma:push`.
 
 ## Email provider
-This project uses [Resend](https://resend.com/) to handle transactional emails. You need to add create an account and get an api key needed for authentication. 
 
-Please be aware that the Resend is designed to send test emails exclusively to the email address registered with the account, or to `delivered@resend.dev`, where they are logged on their dashboard. 
+This project uses [Resend](https://resend.com/) to handle transactional emails. You need to add create an account and get an api key needed for authentication.
+
+Please be aware that the Resend is designed to send test emails exclusively to the email address registered with the account, or to `delivered@resend.dev`, where they are logged on their dashboard.
 
 The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you have the option to change it to the email address that is associated with your Resend account.
 
-
 ## Roadmap
 
-- [x] ~Inital setup~  
-- [ ] Start removing templete  
+- [x] ~Inital setup~
+- [ ] Start removing templete
 - [ ] Update UI to match the product
 - [ ] XXXXXXXX
 
