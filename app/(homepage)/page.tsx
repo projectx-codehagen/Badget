@@ -9,7 +9,7 @@ import CallToActionComponent from "@/components/dashboard/calltoaction";
 import Featuressection from "@/components/dashboard/feautressection";
 import { Icons } from "@/components/shared/icons";
 
-export default async function IndexPage() {
+export default async function HomePage() {
   return (
     <>
       <section className="space-y-6 pb-12 pt-16 lg:py-28">
