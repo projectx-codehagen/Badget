@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { BoltIcon } from "@heroicons/react/20/solid";
 import {
   ColumnDef,
@@ -151,8 +152,10 @@ const iconMap = {
 const iconMaptoCDN = (iconName: string) => {
   const sanitizedWord = iconName.split(/\W+/)[0].toLowerCase();
   return (
-    <img
+    <Image
       className="mr-2 h-5 w-5"
+      width={20}
+      height={20}
       src={`https://s3-symbol-logo.tradingview.com/${sanitizedWord}--big.svg`}
       alt={`${sanitizedWord}`}
     />

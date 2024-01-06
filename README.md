@@ -86,7 +86,7 @@ This project uses MySQL database on PlanetScale. To setup a DB for your local de
 2. From the dashboard, create a branch and click "Connect" button.
 3. Hit `Create password` and select `Prisma` in `Connect with` dropdown
 4. Copy the url to `.env.local` file
-5. run `yarn run prisma:push` (Be mindfull prisma migrate won't work because it requires more privilliges for the database user).
+5. run `yarn run prisma:push` (Be mindful prisma migrate won't work because it requires more privileges for the database user).
 
 You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
 
@@ -104,8 +104,8 @@ The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you h
 
 ## Roadmap
 
-- [x] ~Inital setup~
-- [ ] Start removing templete
+- [x] ~Initial setup~
+- [ ] Start removing template
 - [ ] Update UI to match the product
 - [ ] XXXXXXXX
 
