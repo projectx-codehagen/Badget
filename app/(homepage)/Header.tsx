@@ -3,6 +3,12 @@ import Link from 'next/link'
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/shared/icons";
 import { ModeToggle } from "@/components/layout/mode-toggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 function NavLink({
   href,
@@ -18,6 +24,42 @@ function NavLink({
     >
       {children}
     </Link>
+  )
+}
+
+const MobileNavigation = () => {
+  return (
+    <DropdownMenu >
+      <DropdownMenuTrigger>
+        <svg
+          aria-hidden="true"
+          className="h-3.5 w-3.5 overflow-visible stroke-slate-700"
+          fill="none"
+          strokeWidth={2}
+          strokeLinecap="round"
+        >
+          <path
+            d="M0 1H14M0 7H14M0 13H14"
+            className="origin-center transition"
+          />
+          <path
+            d="M2 2L12 12M12 2L2 12"
+            className="origin-center transition scale-90 opacity-0"
+          />
+        </svg>
+      </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>
+        <Link href="#features">Features</Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <Link href="/pricing">Pricing</Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <Link href="/blog">Blog</Link>
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
   )
 }
 
@@ -55,8 +97,8 @@ export const Header = () => {
               <div className="hidden md:block">
                 <ModeToggle />
               </div>
-              <div className="-mr-1 md:hidden">
-                {/* <MobileNavigation /> */}
+              <div className="md:hidden">
+                <MobileNavigation />
               </div>
             </div>
           </nav>  
