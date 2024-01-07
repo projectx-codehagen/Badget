@@ -1,9 +1,7 @@
 import { cn } from "@/lib/utils";
 import Link from 'next/link'
 import { siteConfig } from "@/config/site";
-import { Icons } from "@/components/shared/icons"
-import { useSigninModal } from "@/hooks/use-signin-modal";
-import useScroll from "@/hooks/use-scroll";
+import { Icons } from "@/components/shared/icons";
 import { ModeToggle } from "@/components/layout/mode-toggle";
 
 function NavLink({
@@ -25,14 +23,14 @@ function NavLink({
 
 export const Header = () => {
     return (
-        <header className="py-10">
-            <div className={cn('mx-auto max-w-7xl px-4 sm:px-6 lg:px-8')}>
+        <header className="py-8 sticky top-0 z-40 bg-background/60 backdrop-blur-xl transition-all">
+          <div className={cn('mx-auto max-w-7xl px-4 sm:px-6 lg:px-8')}>
             <nav className="relative z-50 flex justify-between">
               <div className="flex items-center md:gap-x-12">
                 <Link href="/" aria-label="Home">
                     <div className="w-auto flex align-baseline gap-2">
                       <Icons.logo />
-                      <span className="hidden  font-semibold sm:inline-block">
+                      <span className="font-semibold inline-block">
                         {siteConfig.name}
                       </span>
                     </div>
@@ -54,7 +52,9 @@ export const Header = () => {
                   Sign Up
                 </span>
               </Link>
-              <ModeToggle />
+              <div className="hidden md:block">
+                <ModeToggle />
+              </div>
               <div className="-mr-1 md:hidden">
                 {/* <MobileNavigation /> */}
               </div>
