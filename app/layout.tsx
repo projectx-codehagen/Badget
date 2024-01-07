@@ -57,15 +57,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-          fontUrban.variable,
-          fontHeading.variable,
-        )}
-      >
+      className={cn(
+      'h-full scroll-smooth bg-white antialiased',
+      fontSans.variable,
+      fontUrban.variable,
+      fontHeading.variable,
+    )}>
         <Providers attribute="class" defaultTheme="system" enableSystem>
-          <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          <EdgeStoreProvider>
+            {children}
+          </EdgeStoreProvider>
           <Analytics />
           <Toaster />
           <ModalProvider />
