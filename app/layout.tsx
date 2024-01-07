@@ -55,14 +55,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
+    <html lang="en" suppressHydrationWarning   
       className={cn(
-      'h-full scroll-smooth bg-white antialiased',
-      fontSans.variable,
-      fontUrban.variable,
-      fontHeading.variable,
-    )}>
+        'h-full scroll-smooth bg-white antialiased',
+        fontSans.variable,
+        fontUrban.variable,
+        fontHeading.variable,
+      )}>
+      <body>
         <Providers attribute="class" defaultTheme="system" enableSystem>
           <EdgeStoreProvider>
             {children}
