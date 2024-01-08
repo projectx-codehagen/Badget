@@ -2,22 +2,23 @@ import { Balancer } from "react-wrap-balancer";
 
 import { GetStartedButton } from "../buttons/GetStartedButton";
 
-export const CallToAction = () => {
+const CallToActionComponent = () => {
   return (
-    <div className="container mx-auto px-6 py-20 text-center">
+    <div className="container mx-auto px-6 py-12 text-center">
       <h2
         className="animate-fade-up font-urban text-3xl font-extrabold tracking-tight opacity-0 sm:text-4xl md:text-5xl"
         style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
       >
-        <Balancer>Make Smarter Financial Decisions</Balancer>
+        <Balancer>Boost your productivity today</Balancer>
       </h2>
       <p
         className="mt-2 animate-fade-up leading-normal text-muted-foreground opacity-0"
         style={{ animationDelay: "0.45s", animationFillMode: "forwards" }}
       >
         <Balancer>
-          Get easy, personalized advice to manage your spending, saving, and investing effectively. With just a few clicks, gain insights that lead to better financial choices. 
-          Start now and take a step towards a more secure financial life.
+          Streamline your property listings and client interactions with the
+          precision of AI. Projectx delivers a suite of tools that elevate your
+          efficiency and let you focus on closing deals – not on paperwork.
         </Balancer>
       </p>
       <div
@@ -29,3 +30,5 @@ export const CallToAction = () => {
     </div>
   );
 };
+
+export default CallToActionComponent;

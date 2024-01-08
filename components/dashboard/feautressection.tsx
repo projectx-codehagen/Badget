@@ -9,8 +9,6 @@ import {
 } from "@heroicons/react/20/solid";
 import { Balancer } from "react-wrap-balancer";
 
-import dashboardPic from "@/public/images/dashboard.png";
-
 const features = [
   {
     name: "Revolutionizing Finance: AI-Powered Analysis",
@@ -83,7 +81,7 @@ export default function Featuressection() {
       <div className="relative overflow-hidden pt-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Image
-            src={dashboardPic}
+            src="https://tailwindui.com/img/component-images/project-app-screenshot.png"
             alt="App screenshot"
             className="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-gray-900/10"
             width={2432}
