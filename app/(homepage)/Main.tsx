@@ -1,33 +1,19 @@
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
 
-import { siteConfig } from "@/config/site";
-import { cn, nFormatter } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { GetStartedButton } from "@/components/buttons/GetStartedButton";
 import { BusinessLine } from "@/components/dashboard/businessline";
-import CallToActionComponent from "@/components/dashboard/calltoaction";
-import FeatureSection1 from "@/components/dashboard/featuresection1";
+import { CallToAction } from "@/components/dashboard/calltoaction";
+
 import Featuressection from "@/components/dashboard/feautressection";
-import { Icons } from "@/components/shared/icons";
 
-export default async function IndexPage() {
-  return (
-    <>
-      <section className="space-y-6 pb-12 pt-16 lg:py-28">
+export const Main = () => {
+    return (
+        <>
+            <section className="space-y-6 pb-12 pt-16 lg:py-28">
         <div className="container flex max-w-[64rem] flex-col items-center gap-5 text-center">
-          <Link
-            href="https://twitter.com/codehagen"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "sm" }),
-              "animate-fade-up opacity-0",
-            )}
-            style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
-            target="_blank"
-          >
-            Introducing on <Icons.twitter className="ml-2 h-4 w-4" />
-          </Link>
-
           <h1
             className="animate-fade-up font-urban text-4xl font-extrabold tracking-tight opacity-0 sm:text-5xl md:text-6xl lg:text-7xl"
             style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
@@ -56,17 +42,15 @@ export default async function IndexPage() {
           >
             <GetStartedButton />
             <Link
-              href="https://Projectx.com"
-              target="_blank"
+              href="#features"
               rel="noreferrer"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "px-4",
               )}
             >
-              <Icons.chevrondown className="mr-2 h-4 w-4" />
               <p>
-                <span className="hidden sm:inline-block">Lets explore</span>{" "}
+                <span className="hidden sm:inline-block">Let&apos;s explore</span>{" "}
                 Projectx{" "}
               </p>
             </Link>
@@ -74,15 +58,12 @@ export default async function IndexPage() {
         </div>
       </section>
       <BusinessLine />
-      <section>
+      <section id="features">
         <Featuressection />
       </section>
       <section>
-        <CallToActionComponent />
+        <CallToAction />
       </section>
-      {/* <section>
-        <FeatureSection1 />
-      </section> */}
     </>
-  );
+    )
 }

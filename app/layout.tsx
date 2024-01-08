@@ -16,7 +16,7 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
@@ -55,18 +55,18 @@ export const metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-          fontUrban.variable,
-          fontHeading.variable,
-        )}
-      >
+    <html lang="en" suppressHydrationWarning   
+      className={cn(
+        'h-full scroll-smooth bg-white antialiased',
+        fontSans.variable,
+        fontUrban.variable,
+        fontHeading.variable,
+      )}>
+      <body>
         <Providers attribute="class" defaultTheme="system" enableSystem>
-          <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          <EdgeStoreProvider>
+            {children}
+          </EdgeStoreProvider>
           <Analytics />
           <Toaster />
           <ModalProvider />
