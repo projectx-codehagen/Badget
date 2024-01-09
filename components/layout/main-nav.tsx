@@ -64,16 +64,6 @@ export function MainNav({ items, children }: MainNavProps) {
             </Link>
           ))}
           <AskAIComponent />
-          {/*<div*/}
-          {/*  className={*/}
-          {/*    "flex items-center text-lg font-medium text-muted-foreground transition-colors hover:text-foreground/80  sm:text-sm "*/}
-          {/*  }*/}
-          {/*>*/}
-          {/*  Press{" "}*/}
-          {/*  <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">*/}
-          {/*    <span className="text-xs">⌘</span>J*/}
-          {/*  </kbd>*/}
-          {/*</div>*/}
         </nav>
       ) : null}
       <button
