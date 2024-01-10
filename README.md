@@ -50,7 +50,7 @@ yarn install
 cp .env.example .env.local
 ```
 
-3. Input everything you need for the env. 
+3. Input everything you need for the env.
 
 4. Start the development server:
 
@@ -75,17 +75,17 @@ You can also use `docker-compose` to have a Mysql database locally, instead of r
 3. run `yarn run prisma:push`.
 
 ## Email provider
-This project uses [Resend](https://resend.com/) to handle transactional emails. You need to add create an account and get an api key needed for authentication. 
 
-Please be aware that the Resend is designed to send test emails exclusively to the email address registered with the account, or to `delivered@resend.dev`, where they are logged on their dashboard. 
+This project uses [Resend](https://resend.com/) to handle transactional emails. You need to add create an account and get an api key needed for authentication.
+
+Please be aware that the Resend is designed to send test emails exclusively to the email address registered with the account, or to `delivered@resend.dev`, where they are logged on their dashboard.
 
 The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you have the option to change it to the email address that is associated with your Resend account.
 
-
 ## Roadmap
 
-- [x] ~Initial setup~  
-- [ ] Start removing template  
+- [x] ~Initial setup~
+- [ ] Start removing template
 - [ ] Update UI to match the product
 - [ ] XXXXXXXX
 

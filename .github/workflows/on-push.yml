@@ -49,7 +49,7 @@ jobs:
         run: yarn
 
       - name: 🦄 Format
-        run: yarn format:check || true # ignore errors for now
+        run: yarn format:check
 
       - name: 🎨 Lint
         run: yarn lint
