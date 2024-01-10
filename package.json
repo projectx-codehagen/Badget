@@ -13,9 +13,17 @@
     "test": "turbo test",
     "lint": "turbo lint",
     "format": "turbo format",
-    "type-check": "turbo type-check"
+    "type-check": "turbo type-check",
+    "turbo": "next dev --turbo",
+    "start": "next start",
+    "preview": "next build && next start",
+    "postinstall": "prisma generate",
+    "email": "email dev --dir emails --port 3333",
+    "prisma:generate": "dotenv -e .env.local prisma generate",
+    "prisma:migrate:dev": "dotenv -e .env.local prisma migrate dev",
+    "prisma:studio": "dotenv -e .env.local prisma studio",
+    "prisma:push": "dotenv -e .env.local prisma db push"
   },
-  "dependencies": {},
   "devDependencies": {
     "turbo": "^1.11.3"
   },
