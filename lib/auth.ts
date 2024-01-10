@@ -44,8 +44,9 @@ export const authOptions: NextAuthOptions = {
         try {
           const result = await resend.emails.send({
             from: "Projectx App <onboarding@resend.dev>",
-            to: process.env.NODE_ENV === "development"
-                ? process.env.TEST_EMAIL_ADDRESS as string
+            to:
+              process.env.NODE_ENV === "development"
+                ? (process.env.TEST_EMAIL_ADDRESS as string)
                 : identifier,
             subject: authSubject,
             react: MagicLinkEmail({
@@ -80,11 +81,28 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async jwt({ token, user }) {
-      const dbUser = await prisma.user.findFirst({
+      let dbUser = await prisma.user.findFirst({
         where: {
           email: token.email,
         },
+        include: { Workspaces: true },
       });
+
+      console.log("dbUser found:", dbUser);
+
+      // Check if the user exists and has no workspaces
+      if (dbUser && dbUser.Workspaces.length === 0) {
+        console.log("Creating new workspace for existing user");
+
+        const newWorkspace = await prisma.workspace.create({
+          data: {
+            name: "Workspace 1",
+            userId: dbUser.id,
+          },
+        });
+
+        console.log("New workspace created:", newWorkspace);
+      }
 
       if (dbUser && !dbUser.onboardingEmailSent) {
         // Ensure email and name are not null before sending
