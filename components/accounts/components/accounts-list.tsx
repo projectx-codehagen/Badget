@@ -39,10 +39,10 @@ export function AccountsList({ items }: MailListProps) {
               <Card
                 key={item.id}
                 onClick={() => setMail({ ...mail, selected: item.id })}
-                className="flex items-center justify-between p-3 group hover:bg-gray-100/10"
+                className="group flex items-center justify-between p-3 hover:bg-gray-100/10"
               >
-                <div className="flex flex-col grow">
-                  <CardTitle className="font-bold text-md">
+                <div className="flex grow flex-col">
+                  <CardTitle className="text-md font-bold">
                     {item.name}
                   </CardTitle>
                   <p className="text-sm text-gray-500">
@@ -60,10 +60,10 @@ export function AccountsList({ items }: MailListProps) {
                       ? `▲ ${item.change}%`
                       : `▼ ${Math.abs(item.change)}%`}
                   </Badge>
-                  <p className="flex-1 text-sm font-medium truncate">
+                  <p className="flex-1 truncate text-sm font-medium">
                     {formatCurrency(item.available)}
                   </p>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                  <ChevronRight className="h-5 w-5 text-gray-400" />
                 </div>
               </Card>
             ))}

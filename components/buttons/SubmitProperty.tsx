@@ -1,4 +1,6 @@
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,10 +9,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Link from "next/link"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function SubmitProperty() {
   return (
@@ -26,11 +27,11 @@ export function SubmitProperty() {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-        <Link href="/property" passHref>
-          <Button type="submit">Save new property</Button>
-        </Link>
+          <Link href="/property" passHref>
+            <Button type="submit">Save new property</Button>
+          </Link>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

@@ -1,8 +1,8 @@
-import { docsConfig } from "@/config/docs"
-import { DocsSidebarNav } from "@/components/docs/sidebar-nav"
+import { docsConfig } from "@/config/docs";
+import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
 
 interface DocsLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function DocsLayout({ children }: DocsLayoutProps) {
@@ -13,5 +13,5 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
       </aside>
       {children}
     </div>
-  )
+  );
 }

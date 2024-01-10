@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 interface DocsPageHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  heading: string
-  text?: string
+  heading: string;
+  text?: string;
 }
 
 export function DocsPageHeader({
@@ -21,5 +21,5 @@ export function DocsPageHeader({
       </div>
       <hr className="my-4" />
     </>
-  )
+  );
 }

@@ -1,47 +1,48 @@
-import { notFound } from "next/navigation"
-import { allPages } from "contentlayer/generated"
+import { notFound } from "next/navigation";
+import { allPages } from "contentlayer/generated";
 
-import { Mdx } from "@/components/content/mdx-components"
+import { Mdx } from "@/components/content/mdx-components";
 
-import "@/styles/mdx.css"
-import { Metadata } from "next"
+import "@/styles/mdx.css";
 
-import { env } from "@/env.mjs"
-import { siteConfig } from "@/config/site"
-import { absoluteUrl } from "@/lib/utils"
+import { Metadata } from "next";
+
+import { env } from "@/env.mjs";
+import { siteConfig } from "@/config/site";
+import { absoluteUrl } from "@/lib/utils";
 
 interface PageProps {
   params: {
-    slug: string[]
-  }
+    slug: string[];
+  };
 }
 
 async function getPageFromParams(params) {
-  const slug = params?.slug?.join("/")
-  const page = allPages.find((page) => page.slugAsParams === slug)
+  const slug = params?.slug?.join("/");
+  const page = allPages.find((page) => page.slugAsParams === slug);
 
   if (!page) {
-    null
+    null;
   }
 
-  return page
+  return page;
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const page = await getPageFromParams(params)
+  const page = await getPageFromParams(params);
 
   if (!page) {
-    return {}
+    return {};
   }
 
-  const url = env.NEXT_PUBLIC_APP_URL
+  const url = env.NEXT_PUBLIC_APP_URL;
 
-  const ogUrl = new URL(`${url}/api/og`)
-  ogUrl.searchParams.set("heading", page.title)
-  ogUrl.searchParams.set("type", siteConfig.name)
-  ogUrl.searchParams.set("mode", "light")
+  const ogUrl = new URL(`${url}/api/og`);
+  ogUrl.searchParams.set("heading", page.title);
+  ogUrl.searchParams.set("type", siteConfig.name);
+  ogUrl.searchParams.set("mode", "light");
 
   return {
     title: page.title,
@@ -66,20 +67,20 @@ export async function generateMetadata({
       description: page.description,
       images: [ogUrl.toString()],
     },
-  }
+  };
 }
 
 export async function generateStaticParams(): Promise<PageProps["params"][]> {
   return allPages.map((page) => ({
     slug: page.slugAsParams.split("/"),
-  }))
+  }));
 }
 
 export default async function PagePage({ params }: PageProps) {
-  const page = await getPageFromParams(params)
+  const page = await getPageFromParams(params);
 
   if (!page) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -95,5 +96,5 @@ export default async function PagePage({ params }: PageProps) {
       <hr className="my-4" />
       <Mdx code={page.body.code} />
     </article>
-  )
+  );
 }

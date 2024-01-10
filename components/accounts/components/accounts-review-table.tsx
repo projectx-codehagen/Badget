@@ -152,7 +152,7 @@ export const columns: ColumnDef<Payment>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="font-medium text-right">{formatted}</div>;
+      return <div className="text-right font-medium">{formatted}</div>;
     },
   },
   {
@@ -164,9 +164,9 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-8 h-8 p-0">
+            <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="w-4 h-4" />
+              <DotsHorizontalIcon className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -174,37 +174,37 @@ export const columns: ColumnDef<Payment>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              <Check className="w-4 h-4 mr-2" />
+              <Check className="mr-2 h-4 w-4" />
               <span>Review</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Divide className="w-4 h-4 mr-2" />
+              <Divide className="mr-2 h-4 w-4" />
               <span>Split</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Repeat2 className="w-4 h-4 mr-2" />
+              <Repeat2 className="mr-2 h-4 w-4" />
               <span>Recurring</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <ArrowRightLeftIcon className="w-4 h-4 mr-2" />
+                <ArrowRightLeftIcon className="mr-2 h-4 w-4" />
                 <span>Transaction Type</span>
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
-                    <Mail className="w-4 h-4 mr-2" />
+                    <Mail className="mr-2 h-4 w-4" />
                     <span>Internal transfer</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <MessageSquare className="w-4 h-4 mr-2" />
+                    <MessageSquare className="mr-2 h-4 w-4" />
                     <span>Regular</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <PlusCircle className="w-4 h-4 mr-2" />
+                    <PlusCircle className="mr-2 h-4 w-4" />
                     <span>More...</span>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>

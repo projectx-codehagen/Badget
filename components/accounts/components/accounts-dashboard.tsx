@@ -233,7 +233,7 @@ export function AccountsDashboard({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <Tabs defaultValue="all">
-            <div className="flex items-center px-4 py-2 h-[52px]">
+            <div className="flex h-[52px] items-center px-4 py-2">
               <h1 className="text-xl font-bold">Accounts</h1>
               <TabsList className="ml-auto">
                 <TabsTrigger

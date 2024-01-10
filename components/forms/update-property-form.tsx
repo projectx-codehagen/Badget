@@ -1,14 +1,14 @@
 // components/forms/update-property-form.js
 "use client";
 
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormLabel, FormItem } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 const propertyFormSchema = z.object({
   address: z.string(),
@@ -29,7 +29,7 @@ export function UpdatePropertyForm({ propertyId, defaultValues }) {
   const onSubmit = async (data) => {
     // Here you would handle the form submission,
     // likely sending the data to your backend to update the property
-    console.log('Form data submitted:', data);
+    console.log("Form data submitted:", data);
 
     // Example of a server action or API call
     // await updateProperty(propertyId, data);

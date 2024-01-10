@@ -1,8 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
+import Link from "next/link";
 
-import { buttonVariants } from "@/components/ui/button"
+import { UserSubscriptionPlan } from "types";
+import { cn, formatDate } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,19 +13,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { cn, formatDate } from "@/lib/utils"
-import Link from "next/link"
-import { UserSubscriptionPlan } from "types"
+} from "@/components/ui/card";
 
 interface BillingInfoProps extends React.HTMLAttributes<HTMLFormElement> {
   subscriptionPlan: UserSubscriptionPlan;
 }
 
-export function BillingInfo({
-  subscriptionPlan
-}: BillingInfoProps) {
-
+export function BillingInfo({ subscriptionPlan }: BillingInfoProps) {
   return (
     <Card>
       <CardHeader>
@@ -34,10 +31,7 @@ export function BillingInfo({
       </CardHeader>
       <CardContent>{subscriptionPlan.description}</CardContent>
       <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
-        <Link
-          href="/pricing"
-          className={cn(buttonVariants())}
-        >
+        <Link href="/pricing" className={cn(buttonVariants())}>
           {subscriptionPlan.isPaid ? "Manage Subscription" : "Upgrade now"}
         </Link>
 
@@ -51,5 +45,5 @@ export function BillingInfo({
         ) : null}
       </CardFooter>
     </Card>
-  )
+  );
 }

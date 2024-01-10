@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.1"
 
 services:
   mysql:
@@ -6,16 +6,16 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     env_file:
-      - .env.local # This config applies inside the conainer only. Run docker-compose --env-file .env.local up 
+      - .env.local # This config applies inside the conainer only. Run docker-compose --env-file .env.local up
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  
-      MYSQL_DATABASE: ${MYSQL_DATABASE}         
-      MYSQL_USER: ${MYSQL_USER}                   
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}          
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
-      - my-db:/var/lib/mysql            
+      - my-db:/var/lib/mysql
 
 volumes:
   my-db:
