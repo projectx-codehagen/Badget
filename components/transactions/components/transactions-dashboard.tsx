@@ -2,31 +2,20 @@
 
 import * as React from "react";
 import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
   BadgeDollarSign,
   BarChart,
   Briefcase,
   Building,
   CreditCard,
   DollarSign,
-  File,
   HelpCircle,
-  Inbox,
   Layers,
   LayoutDashboard,
-  MessagesSquare,
-  PenBox,
   PiggyBank,
   Repeat2,
   Search,
-  Send,
   Settings,
-  ShoppingCart,
   Tag,
-  Trash2,
-  Users2,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -244,7 +233,7 @@ export function TransactionsDashboard({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <Tabs defaultValue="all">
-            <div className="flex items-center px-4 py-2 h-[52px]">
+            <div className="flex h-[52px] items-center px-4 py-2">
               <h1 className="text-xl font-bold">Transactions</h1>
               <TabsList className="ml-auto">
                 <TabsTrigger

@@ -88,8 +88,6 @@ export const authOptions: NextAuthOptions = {
         include: { Workspaces: true },
       });
 
-      console.log("dbUser found:", dbUser);
-
       // Check if the user exists and has no workspaces
       if (dbUser && dbUser.Workspaces.length === 0) {
         console.log("Creating new workspace for existing user");
