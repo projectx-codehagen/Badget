@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { getUserWorkspaces } from "@/actions/account-switcher/get-workspace";
 
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
@@ -15,6 +16,7 @@ export const metadata = {
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
+  const workspace = await getUserWorkspaces();
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login");
@@ -57,6 +59,7 @@ export default async function DashboardPage() {
           defaultLayout={defaultLayout}
           defaultCollapsed={defaultCollapsed}
           navCollapsedSize={4}
+          workspace={workspace}
         />
       </div>
     </>

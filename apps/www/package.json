@@ -1,25 +1,31 @@
 {
   "name": "www",
   "version": "0.1.0",
-  "license": "AGPL-3.0",
   "private": true,
+  "license": "AGPL-3.0",
   "author": {
     "name": "Christer",
     "url": "https://twitter.com/Codehagen"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
     "build": "contentlayer build && next build",
-    "turbo": "next dev --turbo",
-    "start": "next start",
+    "dev": "next dev",
+    "email": "email dev --dir emails --port 3333",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "postinstall": "prisma generate",
     "lint": "next lint",
     "preview": "next build && next start",
-    "postinstall": "prisma generate",
-    "email": "email dev --dir emails --port 3333",
     "prisma:generate": "dotenv -e .env.local prisma generate",
     "prisma:migrate:dev": "dotenv -e .env.local prisma migrate dev",
+    "prisma:push": "dotenv -e .env.local prisma db push",
     "prisma:studio": "dotenv -e .env.local prisma studio",
-    "prisma:push": "dotenv -e .env.local prisma db push"
+    "start": "next start",
+    "turbo": "next dev --turbo"
   },
   "dependencies": {
     "@edgestore/react": "^0.1.4",
@@ -136,9 +142,5 @@
     "tailwindcss": "^3.3.5",
     "typescript": "5.2.2",
     "unist-util-visit": "^5.0.0"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  }
 }

@@ -13,6 +13,7 @@
     "test": "turbo test",
     "lint": "turbo lint",
     "format": "turbo format",
+    "format:check": "turbo format:check",
     "type-check": "turbo type-check",
     "turbo": "next dev --turbo",
     "start": "next start",

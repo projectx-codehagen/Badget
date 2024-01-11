@@ -1,7 +1,7 @@
 interface DashboardHeaderProps {
-  heading: string
-  text?: string
-  children?: React.ReactNode
+  heading: string;
+  text?: string;
+  children?: React.ReactNode;
 }
 
 export function DashboardHeader({
@@ -17,5 +17,5 @@ export function DashboardHeader({
       </div>
       {children}
     </div>
-  )
+  );
 }

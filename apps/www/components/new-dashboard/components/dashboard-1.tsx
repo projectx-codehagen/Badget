@@ -45,6 +45,7 @@ interface DashboardProps {
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;
+  workspace: {};
 }
 
 export function Dashboard({
@@ -53,6 +54,7 @@ export function Dashboard({
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
+  workspace,
 }: DashboardProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
   const [mail] = useMail();
@@ -97,7 +99,11 @@ export function Dashboard({
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+            <AccountSwitcher
+              isCollapsed={isCollapsed}
+              accounts={accounts}
+              workspace={workspace}
+            />
           </div>
           <Separator />
           <Nav

@@ -2,31 +2,20 @@
 
 import * as React from "react";
 import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
   BadgeDollarSign,
   BarChart,
   Briefcase,
   Building,
   CreditCard,
   DollarSign,
-  File,
   HelpCircle,
-  Inbox,
   Layers,
   LayoutDashboard,
-  MessagesSquare,
-  PenBox,
   PiggyBank,
   Repeat2,
   Search,
-  Send,
   Settings,
-  ShoppingCart,
   Tag,
-  Trash2,
-  Users2,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";

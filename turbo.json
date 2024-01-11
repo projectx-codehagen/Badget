@@ -12,6 +12,14 @@
     "lint": {
       "dependsOn": ["build"],
       "outputs": []
+    },
+    "format": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "format:check": {
+      "dependsOn": ["build"],
+      "outputs": []
     }
   }
 }
