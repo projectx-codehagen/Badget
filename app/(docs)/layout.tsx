@@ -43,7 +43,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
         <DocsSidebarNav items={docsConfig.sidebarNav} />
       </NavBar>
       <div className="container flex-1">{children}</div>
-      <SiteFooter className="border-t" />
+      <SiteFooter />
     </div>
   );
 }
