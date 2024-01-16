@@ -2,31 +2,19 @@
 
 import * as React from "react";
 import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
   BadgeDollarSign,
   BarChart,
   Briefcase,
   Building,
   CreditCard,
   DollarSign,
-  File,
   HelpCircle,
-  Inbox,
   Layers,
   LayoutDashboard,
-  MessagesSquare,
-  PenBox,
   PiggyBank,
   Repeat2,
-  Search,
-  Send,
   Settings,
-  ShoppingCart,
   Tag,
-  Trash2,
-  Users2,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -93,16 +81,10 @@ export function InvestmentsDashboard({
           collapsible={true}
           minSize={15}
           maxSize={20}
-          onCollapse={() => {
-            setIsCollapsed(true);
+          onCollapse={(collapsed) => {
+            setIsCollapsed(collapsed);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true,
-            )}`;
-          }}
-          onExpand={() => {
-            setIsCollapsed(false);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false,
+              collapsed,
             )}`;
           }}
           className={cn(

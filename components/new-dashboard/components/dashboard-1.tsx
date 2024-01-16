@@ -76,16 +76,10 @@ export function Dashboard({
           collapsible={true}
           minSize={15}
           maxSize={20}
-          onCollapse={() => {
-            setIsCollapsed(true);
+          onCollapse={(collapsed) => {
+            setIsCollapsed(collapsed);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true,
-            )}`;
-          }}
-          onExpand={() => {
-            setIsCollapsed(false);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false,
+              collapsed,
             )}`;
           }}
           className={cn(

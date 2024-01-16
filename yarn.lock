@@ -9157,10 +9157,10 @@ react-remove-scroll@2.5.5:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
-react-resizable-panels@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/react-resizable-panels/-/react-resizable-panels-1.0.6.tgz#bc48cea80b3aab89c728f93caf214d8b39bcafb4"
-  integrity sha512-yZQiOP/uW2nTSdESDUBlBkQ1NQjUABpRKfBqonUQnNYSur7qRDy3W2wEEmrEyUY+W3opshpMiHf45zngIduJ0g==
+react-resizable-panels@^0.0.55:
+  version "0.0.55"
+  resolved "https://registry.yarnpkg.com/react-resizable-panels/-/react-resizable-panels-0.0.55.tgz#adf06d35ae09748ab7051a4bd2c5be8087ef1a66"
+  integrity sha512-J/LTFzUEjJiqwSjVh8gjUXkQDA8MRPjARASfn++d2+KOgA+9UcRYUfE3QBJixer2vkk+ffQ4cq3QzWzzHgqYpQ==
 
 react-smooth@^2.0.5:
   version "2.0.5"

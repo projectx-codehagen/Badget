@@ -93,7 +93,7 @@
     "react-email": "1.9.5",
     "react-facebook-pixel": "^1.0.4",
     "react-hook-form": "^7.47.0",
-    "react-resizable-panels": "^1.0.6",
+    "react-resizable-panels": "^0.0.55",
     "react-textarea-autosize": "^8.5.3",
     "react-wrap-balancer": "^1.1.0",
     "recharts": "^2.10.3",
