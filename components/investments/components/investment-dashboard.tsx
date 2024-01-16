@@ -57,7 +57,7 @@ interface MailProps {
 export function InvestmentsDashboard({
   accounts,
   mails,
-  defaultLayout = [265, 440, 655],
+  defaultLayout = [265, 440, 400],
   defaultCollapsed = false,
   navCollapsedSize,
 }: MailProps) {

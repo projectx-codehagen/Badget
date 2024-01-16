@@ -23,17 +23,8 @@ export default async function DashboardPage() {
   const layout = cookies().get("react-resizable-panels:layout");
   const collapsed = cookies().get("react-resizable-panels:collapsed");
 
-  //TODO Fix this - Draw bar right is not working. Look at documentation
-
-  const defaultLayout =
-    layout && isValidJSONString(layout.value)
-      ? JSON.parse(layout.value)
-      : undefined;
-  const defaultCollapsed =
-    collapsed && isValidJSONString(collapsed.value)
-      ? JSON.parse(collapsed.value)
-      : undefined;
-
+  const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
+  const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined;
   return (
     <>
       <div className="flex flex-col">
