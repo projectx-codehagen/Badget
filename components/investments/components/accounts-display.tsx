@@ -48,6 +48,7 @@ import { TransactionsReviewTable } from "@/components/new-dashboard/components/t
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";
+import { PositionsTable } from "./positions-table";
 
 interface MailDisplayProps {
   mail: Mail | null;
@@ -56,10 +57,11 @@ interface MailDisplayProps {
 export function AccountsDisplay({ mail }: MailDisplayProps) {
   const today = new Date();
   const data = mail ? mail.monthlyIncomeData : [];
+  console.log(mail);
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center p-2">
+      {/* <div className="flex items-center p-2">
         <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
@@ -193,7 +195,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
             <DropdownMenuItem>Mute thread</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
+      </div> */}
       <Separator />
 
       {mail ? (
@@ -239,10 +241,8 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
                   <span className="text-m font-semibold">
                     {formatCurrency(mail.income as number)}
                   </span>
-                  <span className="text-m text-muted-foreground">
-                    / {formatCurrency(mail.limit as number)}
-                  </span>
                 </div>
+                Updated at 23:03
               </div>
             )}
           </div>
@@ -291,6 +291,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
           </div>
 
           <Separator className="" />
+          <PositionsTable />
           <AccountsReviewTable mailId={mail ? mail.id : null} />
         </div>
       ) : (

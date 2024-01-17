@@ -17,7 +17,8 @@ const generateMonthlyIncomeData = (baseIncome: number): MonthlyIncomeData[] => {
 export const mails = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
-    name: "Robin Hood",
+    name: "Apple Inc.",
+    ticker: "APPL",
     available: 7665,
     change: 12,
     subject: "placehioderlahrure",
@@ -253,6 +254,7 @@ export type InvestmentData = {
   dataPoints: DataPoint[];
   revenue: number;
   subscription: number;
+  mailId: string;
 };
 
 // Placeholder function for generating random data points
@@ -276,6 +278,7 @@ export const investmentData: InvestmentData[] = [
     dataPoints: generateDataPoints(4),
     revenue: 10400,
     subscription: 240,
+    mailId: "6c84fb90-12c4-11e1-840d-7b25c5ee775a", // Link to a stock
   },
   {
     id: 2,
@@ -284,6 +287,7 @@ export const investmentData: InvestmentData[] = [
     dataPoints: generateDataPoints(4),
     revenue: 14405,
     subscription: 300,
+    mailId: "110e8400-e29b-11d4-a716-446655440000",
   },
   // Add more items as needed...
 ];
