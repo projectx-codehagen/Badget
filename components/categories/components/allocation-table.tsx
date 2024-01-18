@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import { BoltIcon } from "@heroicons/react/20/solid";
 import {
   ColumnDef,
@@ -37,9 +36,9 @@ import {
   StarIcon,
   UserPlus,
 } from "lucide-react";
-import { Line, LineChart, ResponsiveContainer } from "recharts";
 
 import { Progress } from "@/components/ui/progress";
+import { ProgressCategories } from "@/components/ui/progress-categoires";
 import {
   Table,
   TableBody,
@@ -49,107 +48,72 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data = [
+const data: Category[] = [
   {
-    id: "1",
-    name: "Apple Inc.",
-    ticker: "AAPL",
-    current: 150,
-    totalpercentage: 20,
-    dataPoints: [
-      { time: "2022-Q1", value: 100 },
-      { time: "2022-Q2", value: 200 },
-      { time: "2022-Q3", value: 150 },
-      { time: "2022-Q4", value: 120 },
-    ],
+    id: "home",
+    name: "Home",
+    icon: "Home",
+    current: 4000, // Budget
+    spent: 3000, // Under Budget
+    totalpercentage: 2,
   },
   {
-    id: "19",
-    name: "Walmart Inc",
-    ticker: "WMT",
-    current: 150,
-    totalpercentage: 20,
-    dataPoints: [
-      { time: "2022-Q1", value: 100 },
-      { time: "2022-Q2", value: 200 },
-      { time: "2022-Q3", value: 150 },
-      { time: "2022-Q4", value: 120 },
-    ],
+    id: "car",
+    name: "Car & Transportation",
+    icon: "Car",
+    current: 2000, // Budget
+    spent: 5000, // Over Budget
+    totalpercentage: 2,
   },
   {
-    id: "2",
-    name: "Microsoft Corp.",
-    ticker: "MSFT",
-    current: 250,
-    totalpercentage: 25,
-    dataPoints: [
-      { time: "2022-Q1", value: 500 },
-      { time: "2022-Q2", value: 200 },
-      { time: "2022-Q3", value: 100 },
-      { time: "2022-Q4", value: 300 },
-    ],
+    id: "food",
+    name: "Food & Drinks",
+    icon: "Coffee",
+    current: 1500, // Budget
+    spent: 1400, // Near Budget
+    totalpercentage: 2,
   },
   {
-    id: "3",
-    name: "Tesla Inc.",
-    ticker: "TSLA",
-    current: 300,
-    totalpercentage: 15,
-    dataPoints: [
-      { time: "2022-Q1", value: 10 },
-      { time: "2022-Q2", value: 290 },
-      { time: "2022-Q3", value: 300 },
-      { time: "2022-Q4", value: 310 },
-    ],
+    id: "shopping",
+    name: "Shopping",
+    icon: "ShoppingBag",
+    current: 800, // Budget
+    spent: 500, // Under Budget
+    totalpercentage: 2,
   },
   {
-    id: "4",
-    name: "Amazon.com Inc.",
-    ticker: "AMZN",
-    current: 320,
-    totalpercentage: 10,
-    dataPoints: [
-      { time: "2022-Q1", value: 10 },
-      { time: "2022-Q2", value: 330 },
-      { time: "2022-Q3", value: 340 },
-      { time: "2022-Q4", value: 20 },
-    ],
+    id: "entertainment",
+    name: "Entertainment",
+    icon: "Star",
+    current: 1200, // Budget
+    spent: 1300, // Over Budget
+    totalpercentage: 2,
   },
   {
-    id: "5",
-    name: "Alphabet Inc.(Google)",
-    ticker: "GOOGL",
-    current: 280,
-    totalpercentage: 15,
-    dataPoints: [
-      { time: "2022-Q1", value: 700 },
-      { time: "2022-Q2", value: 30 },
-      { time: "2022-Q3", value: 20 },
-      { time: "2022-Q4", value: 10 },
-    ],
+    id: "subscriptions",
+    name: "Subscriptions",
+    icon: "CreditCard",
+    current: 400, // Budget
+    spent: 380, // Near Budget
+    totalpercentage: 2,
   },
   {
-    id: "6",
-    name: "Facebook (Meta Platforms Inc.)",
-    ticker: "FB",
-    current: 200,
-    totalpercentage: 15,
-    dataPoints: [
-      { time: "2022-Q1", value: 220 },
-      { time: "2022-Q2", value: 210 },
-      { time: "2022-Q3", value: 205 },
-      { time: "2022-Q4", value: 200 },
-    ],
+    id: "other",
+    name: "Other",
+    icon: "Settings",
+    current: 1000, // Budget
+    spent: 950, // Near Budget
+    totalpercentage: 2,
   },
 ];
 
 export type Category = {
   id: string;
   name: string;
-  ticker: string;
+  icon: string;
   current: number;
+  spent: number;
   totalpercentage: number;
-  dataPoints: { time: string; value: number }[];
 };
 
 const iconMap = {
@@ -160,83 +124,75 @@ const iconMap = {
   Star: <StarIcon className="mr-2 h-5 w-5" />,
   ShoppingBag: <ShoppingBagIcon className="mr-2 h-5 w-5" />,
   Coffee: <CoffeeIcon className="mr-2 h-5 w-5" />,
-  // ... add other icon mappings
-};
-const iconMaptoCDN = (iconName: string) => {
-  const sanitizedWord = iconName.split(/\W+/)[0].toLowerCase();
-  return (
-    <Image
-      className="mr-2 h-5 w-5"
-      width={20}
-      height={20}
-      src={`https://s3-symbol-logo.tradingview.com/${sanitizedWord}--big.svg`}
-      alt={`${sanitizedWord}`}
-    />
-  );
+  CreditCard: <CreditCard className="mr-2 h-5 w-5" />,
+  Settings: <Settings className="mr-2 h-5 w-5" />,
+  // ... you can add other icons as needed
 };
 
 export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Category",
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
+      const icon = row.original.icon; // Assuming 'icon' is the key in your data for icon names
       return (
         <div className="flex items-center">
-          {iconMaptoCDN(name)}
+          {iconMap[icon]} {/* Render the corresponding icon */}
           <div className="capitalize">{name}</div>
         </div>
       );
     },
   },
   {
-    accessorKey: "max",
-    header: () => <div className="text-right">Total</div>,
+    accessorKey: "spent",
+    header: () => <div className="text-right">Spent</div>,
     cell: ({ row }) => {
-      const max = parseFloat(row.getValue("current"));
+      const spent = parseFloat(row.getValue("spent"));
 
-      // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(max);
+      }).format(spent);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
   },
   {
-    accessorKey: "max",
-    header: () => <div className="text-right">Total</div>,
+    id: "progress",
+    header: "Portfolio Spread",
     cell: ({ row }) => {
-      const max = parseFloat(row.getValue("current"));
+      const current = row.getValue("current") as number;
+      const spent = row.getValue("spent") as number;
 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(max);
+      const progressPercent = current > 0 ? (spent / current) * 100 : 0;
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return (
+        <div className="w-full px-2">
+          <ProgressCategories value={progressPercent} className="w-full" />
+        </div>
+      );
     },
   },
+
   {
-    accessorKey: "max",
-    header: () => <div className="text-right">Total</div>,
+    accessorKey: "current",
+    header: () => <div className="text-right">Budget</div>,
     cell: ({ row }) => {
-      const max = parseFloat(row.getValue("current"));
+      const budget = parseFloat(row.getValue("current"));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(max);
+      }).format(budget);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
   },
 ];
 
-export function PositionsTable() {
+export function CategoriesTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

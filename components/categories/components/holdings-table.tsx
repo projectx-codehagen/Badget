@@ -64,19 +64,6 @@ const data = [
     ],
   },
   {
-    id: "19",
-    name: "Walmart Inc",
-    ticker: "WMT",
-    current: 150,
-    totalpercentage: 20,
-    dataPoints: [
-      { time: "2022-Q1", value: 100 },
-      { time: "2022-Q2", value: 200 },
-      { time: "2022-Q3", value: 150 },
-      { time: "2022-Q4", value: 120 },
-    ],
-  },
-  {
     id: "2",
     name: "Microsoft Corp.",
     ticker: "MSFT",
@@ -190,33 +177,64 @@ export const columns: ColumnDef<Category>[] = [
     },
   },
   {
-    accessorKey: "max",
-    header: () => <div className="text-right">Total</div>,
+    accessorKey: "ticker",
+    header: "Ticker",
     cell: ({ row }) => {
-      const max = parseFloat(row.getValue("current"));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(max);
-
-      return <div className="text-right font-medium">{formatted}</div>;
+      const ticker = row.getValue("ticker") as string;
+      return (
+        <div className="flex items-center">
+          <div className="capitalize">{ticker}</div>
+        </div>
+      );
     },
   },
   {
-    accessorKey: "max",
-    header: () => <div className="text-right">Total</div>,
+    id: "lineChart",
+    header: "Graph",
     cell: ({ row }) => {
-      const max = parseFloat(row.getValue("current"));
+      const dataPoints = row.original.dataPoints; // Assuming you have time series data in 'dataPoints'
 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(max);
+      return (
+        <div className="flex h-[20px] w-[80px] items-center">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={dataPoints}
+              margin={{
+                top: 5,
+                right: 0,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <Line
+                type="monotone"
+                dataKey="value" // Adjust based on your data structure
+                stroke="#82ca9d"
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "current",
+    header: () => <div className="text-right">Change</div>,
+    cell: ({ row }) => {
+      const current = parseFloat(row.getValue("current"));
+      const totalPortfolioValue = data.reduce(
+        (sum, item) => sum + item.current,
+        0,
+      );
+      const categoryPercentage = (current / totalPortfolioValue) * 100;
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      const formattedPercentage = categoryPercentage.toFixed(2) + "%"; // Format the percentage to two decimal places
+
+      return (
+        <div className="text-right font-medium">{formattedPercentage}</div>
+      );
     },
   },
   {
@@ -236,7 +254,7 @@ export const columns: ColumnDef<Category>[] = [
   },
 ];
 
-export function PositionsTable() {
+export function HoldingsTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
