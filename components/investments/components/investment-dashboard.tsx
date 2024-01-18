@@ -137,7 +137,7 @@ export function InvestmentsDashboard({
                 label: "",
                 icon: Tag,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/categories",
               },
               {
                 title: "Recurring",

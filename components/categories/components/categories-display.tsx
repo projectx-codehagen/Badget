@@ -251,10 +251,10 @@ export function CategoriesDisplay({ mail }: MailDisplayProps) {
             {/* Left section with avatar and text */}
             <div className="flex items-center gap-4">
               <Avatar>
-                <AvatarImage
+                {/* <AvatarImage
                   src="/path-to-your-avatar-image.png"
                   alt={mail.name}
-                />
+                /> */}
                 <AvatarFallback delayMs={600}>
                   {mail.name
                     .split(" ")
@@ -275,20 +275,21 @@ export function CategoriesDisplay({ mail }: MailDisplayProps) {
             {/* Right section with badge */}
             {mail.date && (
               <div className="flex flex-col items-end">
-                <Badge
+                {/* <Badge
                   variant={mail.change >= 0 ? "default" : "destructive"}
                   className="self-end"
                 >
                   {mail.change >= 0
                     ? `▲ ${mail.change.toFixed(2)}%`
                     : `▼ ${Math.abs(mail.change).toFixed(2)}%`}
-                </Badge>
+                </Badge> */}
+                <div className="text-m -mb-2 font-semibold">Spent so far</div>
                 <div className="mt-2 flex items-baseline">
                   <span className="text-m font-semibold">
                     {formatCurrency(mail.income as number)}
                   </span>
                 </div>
-                Updated at 23:03
+                <div className="mt-1 text-sm text-gray-500">$1,240.00 over</div>
               </div>
             )}
           </div>

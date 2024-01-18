@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
-import { BoltIcon } from "@heroicons/react/20/solid";
 import {
   ColumnDef,
   ColumnFiltersState,

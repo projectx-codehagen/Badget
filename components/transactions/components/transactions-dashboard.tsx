@@ -131,7 +131,7 @@ export function TransactionsDashboard({
                 label: "",
                 icon: Tag,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/categories",
               },
               {
                 title: "Recurring",

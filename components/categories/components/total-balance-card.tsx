@@ -18,36 +18,51 @@ export function SpentSoFarCard() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-base font-normal">Spent so far</CardTitle>
+          <CardTitle className="text-base font-normal">
+            Total budget
+          </CardTitle>{" "}
         </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">$10,241 </div>
-          <p className="text-xs text-muted-foreground">
-            You have left $1.248 to spend
-          </p>
-          <div className="h-[200px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={data}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                  paddingAngle={5}
-                >
-                  {data.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
+        <CardContent className="flex justify-between">
+          {/* Left side details */}
+          <div>
+            <div className="text-2xl font-bold">$10,241</div>
+            <p className="text-xs text-muted-foreground">
+              You have left $1,248 to spend
+            </p>
+          </div>
+
+          {/* Right side details */}
+          <div>
+            <div className="text-right text-2xl font-bold">$15,000</div>{" "}
+            {/* Assuming this is the total budget */}
+            <p className="text-right text-xs text-muted-foreground">
+              Your total budget
+            </p>
           </div>
         </CardContent>
+        <div className="h-[200px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+                paddingAngle={5}
+              >
+                {data.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       </Card>
     </div>
   );
