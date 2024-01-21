@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/shared/icons";
+import { Suspense } from "react";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: string;
@@ -21,7 +22,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
 
 type FormData = z.infer<typeof userAuthSchema>;
 
-export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
+export function UserAuthFormCard({ className, type, ...props }: UserAuthFormProps) {
   const {
     register,
     handleSubmit,
@@ -125,4 +126,13 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
       </button>
     </div>
   );
+}
+
+export function UserAuthForm(UserAuthFormProps: UserAuthFormProps) {
+  const UserAuthFormFallback = <>Loading...</>
+  return (
+    <Suspense fallback={UserAuthFormFallback}>
+      <UserAuthFormCard {...UserAuthFormProps} />
+    </Suspense>
+  )
 }
