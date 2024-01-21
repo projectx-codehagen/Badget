@@ -22,7 +22,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
 
 type FormData = z.infer<typeof userAuthSchema>;
 
-export function UserAuthFormCard({ className, type, ...props }: UserAuthFormProps) {
+const UserAuthFormCard = ({ className, type, ...props }: UserAuthFormProps) => {
   const {
     register,
     handleSubmit,
