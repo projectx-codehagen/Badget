@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
@@ -14,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/shared/icons";
-import { Suspense } from "react";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: string;
@@ -126,13 +126,13 @@ const UserAuthFormCard = ({ className, type, ...props }: UserAuthFormProps) => {
       </button>
     </div>
   );
-}
+};
 
 export function UserAuthForm(UserAuthFormProps: UserAuthFormProps) {
-  const UserAuthFormFallback = <>Loading...</>
+  const UserAuthFormFallback = <>Loading...</>;
   return (
     <Suspense fallback={UserAuthFormFallback}>
       <UserAuthFormCard {...UserAuthFormProps} />
     </Suspense>
-  )
+  );
 }
