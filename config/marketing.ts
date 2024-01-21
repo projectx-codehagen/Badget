@@ -11,6 +11,11 @@ export const marketingConfig: MarketingConfig = {
       href: "/blog",
       // disabled: true,
     },
+    {
+      title: "Open Source Friends",
+      href: "/oss-friends",
+      // disabled: true,
+    },
     // {
     //   title: "Documentation",
     //   href: "/docs",
