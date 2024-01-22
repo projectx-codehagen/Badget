@@ -83,6 +83,7 @@ const data: Category[] = [
     icon: "Home",
     current: 1000,
     max: 2050,
+    date: "2023-01-01", // Example date in ISO format
   },
   {
     id: "car",
@@ -90,6 +91,7 @@ const data: Category[] = [
     icon: "Car",
     current: 2022,
     max: 2050,
+    date: "2023-01-01", // Example date in ISO format
   },
   {
     id: "rent",
@@ -97,6 +99,7 @@ const data: Category[] = [
     icon: "Key",
     current: 1984,
     max: 2000,
+    date: "2023-01-01", // Example date in ISO format
   },
   {
     id: "utilities",
@@ -104,6 +107,7 @@ const data: Category[] = [
     icon: "Bolt",
     current: 38,
     max: 50,
+    date: "2023-01-01", // Example date in ISO format
   },
   {
     id: "subscriptions",
@@ -111,6 +115,7 @@ const data: Category[] = [
     icon: "Star",
     current: 35,
     max: 200,
+    date: "2023-01-01", // Example date in ISO format
   },
   {
     id: "shopping",
@@ -118,6 +123,7 @@ const data: Category[] = [
     icon: "ShoppingBag",
     current: 15,
     max: 250,
+    date: "2023-01-01", // Example date in ISO format
   },
   {
     id: "food",
@@ -125,6 +131,7 @@ const data: Category[] = [
     icon: "Coffee",
     current: 0,
     max: 450,
+    date: "2023-01-01", // Example date in ISO format
   },
 ];
 
@@ -134,6 +141,7 @@ export type Category = {
   icon: string;
   current: number;
   max: number;
+  date: string; // Add date field
 };
 
 const iconMap = {
@@ -148,6 +156,18 @@ const iconMap = {
 };
 
 export const columns: ColumnDef<Category>[] = [
+  {
+    id: "date",
+    accessorFn: (row) => new Date(row.date), // Accessor function for date
+    header: () => <div>Date</div>,
+    cell: ({ getValue }) => {
+      const date = getValue() as Date;
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }); // Format date as "Jan 1st"
+    },
+  },
   {
     accessorKey: "name",
     header: "Category",

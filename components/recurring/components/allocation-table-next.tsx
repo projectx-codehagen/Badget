@@ -60,7 +60,7 @@ const data: Category[] = [
     current: 15, // Example budget for streaming services
     spent: 15, // Example spent amount
     totalpercentage: 2, // Adjust as needed
-    date: "2023-01-01",
+    date: "2023-02-01",
     paid: true,
   },
   {
@@ -70,69 +70,69 @@ const data: Category[] = [
     current: 50,
     spent: 50,
     totalpercentage: 2,
-    date: "2023-01-02",
+    date: "2023-02-02",
     paid: true,
   },
-  {
-    id: "gym",
-    name: "Gym Membership",
-    icon: "Star", // Change to an appropriate icon
-    current: 25,
-    spent: 25,
-    totalpercentage: 2,
-    date: "2023-01-05",
-    paid: true,
-  },
-  {
-    id: "phone",
-    name: "Phone Bill",
-    icon: "Phone", // Change to an appropriate icon
-    current: 50, // Example budget
-    spent: 50, // Actual spent
-    totalpercentage: 2,
-    date: "2023-01-20",
-    paid: true,
-  },
-  {
-    id: "utilities",
-    name: "Utilities",
-    icon: "Bolt", // Change to an appropriate icon
-    current: 100, // Example budget
-    spent: 95, // Actual spent
-    totalpercentage: 2,
-    date: "2023-01-22",
-    paid: false,
-  },
-  {
-    id: "internet",
-    name: "Internet Service",
-    icon: "Wifi", // Change to an appropriate icon
-    current: 40, // Example budget
-    spent: 40, // Actual spent
-    totalpercentage: 2,
-    date: "2023-01-25",
-    paid: false,
-  },
-  {
-    id: "streamingMusic",
-    name: "Apple Music",
-    icon: "Music", // Change to an appropriate icon
-    current: 10, // Example budget
-    spent: 10, // Actual spent
-    totalpercentage: 2,
-    date: "2023-01-28",
-    paid: false,
-  },
-  {
-    id: "cloudStorage",
-    name: "Cloud Storage",
-    icon: "Cloud", // Change to an appropriate icon
-    current: 5, // Example budget
-    spent: 5, // Actual spent
-    totalpercentage: 2,
-    date: "2023-01-30",
-    paid: false,
-  },
+  // {
+  //   id: "gym",
+  //   name: "Gym Membership",
+  //   icon: "Star", // Change to an appropriate icon
+  //   current: 25,
+  //   spent: 25,
+  //   totalpercentage: 2,
+  //   date: "2023-01-05",
+  //   paid: true,
+  // },
+  // {
+  //   id: "phone",
+  //   name: "Phone Bill",
+  //   icon: "Phone", // Change to an appropriate icon
+  //   current: 50, // Example budget
+  //   spent: 50, // Actual spent
+  //   totalpercentage: 2,
+  //   date: "2023-01-20",
+  //   paid: true,
+  // },
+  // {
+  //   id: "utilities",
+  //   name: "Utilities",
+  //   icon: "Bolt", // Change to an appropriate icon
+  //   current: 100, // Example budget
+  //   spent: 95, // Actual spent
+  //   totalpercentage: 2,
+  //   date: "2023-01-22",
+  //   paid: false,
+  // },
+  // {
+  //   id: "internet",
+  //   name: "Internet Service",
+  //   icon: "Wifi", // Change to an appropriate icon
+  //   current: 40, // Example budget
+  //   spent: 40, // Actual spent
+  //   totalpercentage: 2,
+  //   date: "2023-01-25",
+  //   paid: false,
+  // },
+  // {
+  //   id: "streamingMusic",
+  //   name: "Apple Music",
+  //   icon: "Music", // Change to an appropriate icon
+  //   current: 10, // Example budget
+  //   spent: 10, // Actual spent
+  //   totalpercentage: 2,
+  //   date: "2023-01-28",
+  //   paid: false,
+  // },
+  // {
+  //   id: "cloudStorage",
+  //   name: "Cloud Storage",
+  //   icon: "Cloud", // Change to an appropriate icon
+  //   current: 5, // Example budget
+  //   spent: 5, // Actual spent
+  //   totalpercentage: 2,
+  //   date: "2023-01-30",
+  //   paid: false,
+  // },
 ];
 
 export type Category = {
@@ -219,7 +219,7 @@ export const columns: ColumnDef<Category>[] = [
   },
 ];
 
-export function CategoriesTable() {
+export function RecurringTableNext() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -248,7 +248,7 @@ export function CategoriesTable() {
   });
   return (
     <div className="flex flex-col space-y-1.5 p-6">
-      <h2 className="text-lg font-semibold">This month</h2>
+      <h2 className="text-lg font-semibold">Later</h2>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
