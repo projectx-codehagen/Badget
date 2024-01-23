@@ -5,7 +5,8 @@ import { formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { investmentData } from '@/components/investments/data';
+import { investmentData } from "@/components/investments/data";
+
 import { useMail } from "../use-mail";
 
 // Sample data structure
@@ -110,7 +111,11 @@ export function SmallInvestmentCard() {
     <ScrollArea>
       <div className="flex w-max gap-4 p-4">
         {investmentData.map((item) => (
-          <Card key={item.id} onClick={() => setMail({ ...mail, selected: item.mailId })} className="bg-dark-card w-[100px] shrink-0 hover:bg-gray-100/10">
+          <Card
+            key={item.id}
+            onClick={() => setMail({ ...mail, selected: item.mailId })}
+            className="bg-dark-card w-[100px] shrink-0 hover:bg-gray-100/10"
+          >
             <CardHeader className="flex  justify-between p-2">
               <CardTitle className="text-sm">{item.title}</CardTitle>
             </CardHeader>
