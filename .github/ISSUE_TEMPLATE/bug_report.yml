@@ -41,4 +41,3 @@ body:
     attributes:
       label: Additional context (Is this in dev or production?)
       description: Add any other context about the problem or helpful links here.
-  
