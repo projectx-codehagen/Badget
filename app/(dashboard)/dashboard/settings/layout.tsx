@@ -27,11 +27,11 @@ const sidebarNavItems = [
   },
   {
     title: "Notifications",
-    href: "dashboard/settings/notifications",
+    href: "/dashboard/settings/notifications",
   },
   {
     title: "Display",
-    href: "dashboard/settings/display",
+    href: "/dashboard/settings/display",
   },
 ];
 
