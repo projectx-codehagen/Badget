@@ -57,7 +57,7 @@ export default function BankAccountForm() {
     mode: "onChange",
   });
 
-  function onSubmit(data: ProfileFormValues) {
+  function onSubmit(data: BankAccountFormValues) {
     toast({
       title: "You submitted the following values:",
       description: (
