@@ -190,46 +190,21 @@ export const columns: ColumnDef<Category>[] = [
     },
   },
   {
-    accessorKey: "max",
+    accessorKey: "current", // Changed from "max" to "current"
     header: () => <div className="text-right">Total</div>,
     cell: ({ row }) => {
-      const max = parseFloat(row.getValue("current"));
+      const current = parseFloat(row.getValue("current")); // Ensure this is a number
+
+      // Check if the value is a number to avoid NaN
+      if (isNaN(current)) {
+        return <div className="text-right">Invalid Value</div>;
+      }
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(max);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "max",
-    header: () => <div className="text-right">Total</div>,
-    cell: ({ row }) => {
-      const max = parseFloat(row.getValue("current"));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(max);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "max",
-    header: () => <div className="text-right">Total</div>,
-    cell: ({ row }) => {
-      const max = parseFloat(row.getValue("current"));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(max);
+      }).format(current);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
@@ -266,6 +241,7 @@ export function PositionsTable() {
 
   return (
     <div className="flex flex-col space-y-1.5 p-6">
+      <h2 className="ml-4 text-lg font-semibold">Positions</h2>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

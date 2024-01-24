@@ -292,7 +292,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
 
           <Separator className="" />
           <PositionsTable />
-          <AccountsReviewTable mailId={mail ? mail.id : null} />
+          {/* <AccountsReviewTable mailId={mail ? mail.id : null} /> */}
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">
