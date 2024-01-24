@@ -154,7 +154,7 @@ export const mails = [
     income: 12400,
     limit: 25000,
     monthlyIncomeData: generateMonthlyIncomeData(1052),
-  }
+  },
   // {
   //   id: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
   //   name: "Regular Savings",
@@ -429,6 +429,6 @@ export const investmentData: InvestmentData[] = [
     revenue: 16405,
     subscription: 250,
     mailId: "6c84fb90-12c4-11e1-840d-7b25c5ee775m",
-  }
+  },
   // Add more items as needed...
 ];
