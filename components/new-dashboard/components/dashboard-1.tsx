@@ -224,7 +224,7 @@ export function Dashboard({
                 label: "",
                 icon: Settings,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/settings",
               },
             ]}
           />
