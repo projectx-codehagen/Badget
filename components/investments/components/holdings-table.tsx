@@ -284,6 +284,7 @@ export function HoldingsTable() {
 
   return (
     <div className="flex flex-col space-y-1.5 p-6">
+      <h2 className="ml-4 text-lg font-semibold">Holdings</h2>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

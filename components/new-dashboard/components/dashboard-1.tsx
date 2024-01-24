@@ -14,7 +14,10 @@ import {
   PiggyBank,
   Repeat2,
   Settings,
+  Sparkle,
+  Sprout,
   Tag,
+  Wallet,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -142,6 +145,33 @@ export function Dashboard({
                 title: "Recurring",
                 label: "",
                 icon: Repeat2,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+            ]}
+          />
+          <Separator />
+          <Nav
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Ai Magic",
+                label: "",
+                icon: Sparkle,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+              {
+                title: "Save Money",
+                label: "",
+                icon: Wallet,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+              {
+                title: "Grow Assets",
+                label: "",
+                icon: Sprout,
                 variant: "ghost",
                 link: "/dashboard/",
               },
