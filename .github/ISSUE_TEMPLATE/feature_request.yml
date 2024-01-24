@@ -1,0 +1,43 @@
+name: 🚀 Feature request
+description: Suggest an idea for this project 💡
+title: "Feature: "
+labels: [👀 Exploration Pending, 💡 feature]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature request!
+  - type: dropdown
+    attributes:
+      multiple: false
+      label: Type of feature
+      description: Select the type of feature request, the lowercase should also be the PR prefix.
+      options:
+        - "💡 Feature"
+        - "🐛 Fix"
+        - "📝 Documentation"
+        - "🎨 Style"
+        - "🧑‍💻 Refactor"
+        - "🔥 Performance"
+        - "✅ Test"
+        - "🤖 Build"
+        - "🔁 CI"
+        - "📦 Chore"
+        - "⏩ Revert"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Current behavior
+      description: Is your feature request related to a problem? Please describe.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Suggested solution
+      description: Describe the solution you'd like.
+  - type: input
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem or helpful links here.
