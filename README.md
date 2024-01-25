@@ -37,13 +37,11 @@ ProjectX is a monorepo managed by [Turborepo](https://turbo.fish/). The monorepo
 - **Apps** are the Next.js apps that are deployed to Vercel (this is where most development is done).
 - **Packages** are the shared packages that are used by the apps (e.g. `@projectx/components`)
 
-````
-
 ## Installation
 
 Clone & create this repo locally with the following command:
 
-```bash
+````bash
 git clone https://github.com/meglerhagen/projectx.git
 ````
 
