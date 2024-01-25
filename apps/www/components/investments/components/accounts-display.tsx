@@ -48,7 +48,7 @@ import { TransactionsReviewTable } from "@/components/new-dashboard/components/t
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";
-import { PositionsTable } from "./positions-table";
+import { PositionsTable } from "@/components/transactions/components/positions-table";
 
 interface MailDisplayProps {
   mail: Mail | null;
