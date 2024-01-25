@@ -14,7 +14,10 @@ import {
   PiggyBank,
   Repeat2,
   Settings,
+  Sparkle,
+  Sprout,
   Tag,
+  Wallet,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -152,6 +155,33 @@ export function Dashboard({
             isCollapsed={isCollapsed}
             links={[
               {
+                title: "Ai Magic",
+                label: "",
+                icon: Sparkle,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+              {
+                title: "Save Money",
+                label: "",
+                icon: Wallet,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+              {
+                title: "Grow Assets",
+                label: "",
+                icon: Sprout,
+                variant: "ghost",
+                link: "/dashboard/",
+              },
+            ]}
+          />
+          <Separator />
+          <Nav
+            isCollapsed={isCollapsed}
+            links={[
+              {
                 title: "Credit Card",
                 label: "972",
                 icon: CreditCard,
@@ -224,7 +254,7 @@ export function Dashboard({
                 label: "",
                 icon: Settings,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/settings",
               },
             ]}
           />

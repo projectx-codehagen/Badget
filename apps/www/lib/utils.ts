@@ -1,4 +1,4 @@
-import { ClassValue, clsx } from "clsx";
+import { clsx, type ClassValue } from "clsx";
 import ms from "ms";
 import { twMerge } from "tailwind-merge";
 
