@@ -75,16 +75,10 @@ export function TransactionsDashboard({
           collapsible={true}
           minSize={15}
           maxSize={20}
-          onCollapse={() => {
-            setIsCollapsed(true);
+          onCollapse={(collapsed) => {
+            setIsCollapsed(collapsed);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true,
-            )}`;
-          }}
-          onExpand={() => {
-            setIsCollapsed(false);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false,
+              collapsed,
             )}`;
           }}
           className={cn(
@@ -137,7 +131,7 @@ export function TransactionsDashboard({
                 label: "",
                 icon: Tag,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/categories",
               },
               {
                 title: "Recurring",

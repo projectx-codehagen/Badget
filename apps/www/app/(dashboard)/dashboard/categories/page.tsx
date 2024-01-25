@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
 import { isValidJSONString } from "@/lib/utils";
-import { TransactionsDashboard } from "@/components/transactions/components/transactions-dashboard";
-import { accounts, mails } from "@/components/transactions/data";
+import { CategoriesDashboard } from "@/components/categories/components/categories-dashboard";
+import { accounts, mails } from "@/components/investments/data";
 
 export const metadata = {
   title: "Transactions",
@@ -25,10 +25,27 @@ export default async function DashboardPage() {
 
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
   const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined;
+
   return (
     <>
-      <div className="flex flex-col">
-        <TransactionsDashboard
+      <div className="md:hidden">
+        <Image
+          src="/examples/mail-dark.png"
+          width={1280}
+          height={727}
+          alt="Mail"
+          className="hidden dark:block"
+        />
+        <Image
+          src="/examples/mail-light.png"
+          width={1280}
+          height={727}
+          alt="Mail"
+          className="block dark:hidden"
+        />
+      </div>
+      <div className="hidden flex-col md:flex">
+        <CategoriesDashboard
           accounts={accounts}
           mails={mails}
           defaultLayout={defaultLayout}

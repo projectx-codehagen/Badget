@@ -15,6 +15,7 @@ interface MailListProps {
 
 export function MailList({ items }: MailListProps) {
   const [mail, setMail] = useMail();
+  console.log(mail);
 
   return (
     <ScrollArea className="h-screen">

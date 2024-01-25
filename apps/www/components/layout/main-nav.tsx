@@ -38,6 +38,8 @@ export function MainNav({ items, children }: MainNavProps) {
     };
   }, [showMobileMenu]);
 
+  //TODO Import the AskAicomp - Make the line streight etc.
+
   return (
     <div className="flex gap-6 md:gap-10">
       <Link href="/" className="hidden items-center space-x-2 md:flex">
@@ -63,7 +65,8 @@ export function MainNav({ items, children }: MainNavProps) {
               {item.title}
             </Link>
           ))}
-          <AskAIComponent />
+
+          {/* <AskAIComponent /> */}
         </nav>
       ) : null}
       <button

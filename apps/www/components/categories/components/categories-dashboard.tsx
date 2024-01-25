@@ -32,15 +32,14 @@ import { TopCategoriesTable } from "@/components/new-dashboard/components/top-ca
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
 import { AccountSwitcher } from "./account-switcher";
-import { AccountsDisplay } from "./accounts-display";
 import { AccountsList } from "./accounts-list";
-import { AllocationSection } from "./allocation-section";
-import { AllocationTable } from "./allocation-table";
+import { CategoriesTable } from "./allocation-table";
+import { CategoriesDisplay } from "./categories-display";
 import { HoldingsTable } from "./holdings-table";
 import { Investmentcards } from "./investment-cards";
 import { Nav } from "./nav";
 import { SmallInvestmentCard } from "./small-investment-card";
-import { TotalBalanceCard } from "./total-balance-card";
+import { SpentSoFarCard } from "./total-balance-card";
 
 interface MailProps {
   accounts: {
@@ -54,7 +53,7 @@ interface MailProps {
   navCollapsedSize: number;
 }
 
-export function InvestmentsDashboard({
+export function CategoriesDashboard({
   accounts,
   mails,
   defaultLayout = [265, 440, 400],
@@ -129,14 +128,14 @@ export function InvestmentsDashboard({
                 title: "Investments",
                 label: "",
                 icon: BarChart,
-                variant: "default",
+                variant: "ghost",
                 link: "/dashboard/investments",
               },
               {
                 title: "Categories",
                 label: "",
                 icon: Tag,
-                variant: "ghost",
+                variant: "default",
                 link: "/dashboard/categories",
               },
               {
@@ -233,11 +232,11 @@ export function InvestmentsDashboard({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <Separator />
-          <TotalBalanceCard />
+          <SpentSoFarCard />
           <div>
-            <SmallInvestmentCard />
-            <AllocationTable />
-            <HoldingsTable />
+            {/* <SmallInvestmentCard /> */}
+            <CategoriesTable />
+            {/* <HoldingsTable /> */}
           </div>
           <div>
             <Investmentcards items={mails} />
@@ -246,7 +245,7 @@ export function InvestmentsDashboard({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
-          <AccountsDisplay
+          <CategoriesDisplay
             mail={mails.find((item) => item.id === mail.selected) || null}
           />
         </ResizablePanel>

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
@@ -21,7 +22,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
 
 type FormData = z.infer<typeof userAuthSchema>;
 
-export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
+const UserAuthFormCard = ({ className, type, ...props }: UserAuthFormProps) => {
   const {
     register,
     handleSubmit,
@@ -124,5 +125,14 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
         Google
       </button>
     </div>
+  );
+};
+
+export function UserAuthForm(UserAuthFormProps: UserAuthFormProps) {
+  const UserAuthFormFallback = <>Loading...</>;
+  return (
+    <Suspense fallback={UserAuthFormFallback}>
+      <UserAuthFormCard {...UserAuthFormProps} />
+    </Suspense>
   );
 }

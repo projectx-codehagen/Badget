@@ -13,12 +13,7 @@ import {
   ReplyAll,
   Trash2,
 } from "lucide-react";
-import {
-  Line,
-  LineChart,
-  Tooltip as RechartsTooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import { formatCurrency } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -48,13 +43,64 @@ import { TransactionsReviewTable } from "@/components/new-dashboard/components/t
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";
-import { PositionsTable } from "./positions-table";
+import { KeyMetricsTable } from "./key-metrics-table";
 
 interface MailDisplayProps {
   mail: Mail | null;
 }
 
-export function AccountsDisplay({ mail }: MailDisplayProps) {
+const data2 = [
+  {
+    name: "Jan",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Feb",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Mar",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Apr",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "May",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Jun",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Jul",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Aug",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Sep",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Oct",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Nov",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Dec",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+];
+
+export function CategoriesDisplay({ mail }: MailDisplayProps) {
   const today = new Date();
   const data = mail ? mail.monthlyIncomeData : [];
   console.log(mail);
@@ -205,10 +251,10 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
             {/* Left section with avatar and text */}
             <div className="flex items-center gap-4">
               <Avatar>
-                <AvatarImage
+                {/* <AvatarImage
                   src="/path-to-your-avatar-image.png"
                   alt={mail.name}
-                />
+                /> */}
                 <AvatarFallback delayMs={600}>
                   {mail.name
                     .split(" ")
@@ -229,69 +275,54 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
             {/* Right section with badge */}
             {mail.date && (
               <div className="flex flex-col items-end">
-                <Badge
+                {/* <Badge
                   variant={mail.change >= 0 ? "default" : "destructive"}
                   className="self-end"
                 >
                   {mail.change >= 0
                     ? `▲ ${mail.change.toFixed(2)}%`
                     : `▼ ${Math.abs(mail.change).toFixed(2)}%`}
-                </Badge>
+                </Badge> */}
+                <div className="text-m -mb-2 font-semibold">Spent so far</div>
                 <div className="mt-2 flex items-baseline">
                   <span className="text-m font-semibold">
                     {formatCurrency(mail.income as number)}
                   </span>
                 </div>
-                Updated at 23:03
+                <div className="mt-1 text-sm text-gray-500">$1,240.00 over</div>
               </div>
             )}
           </div>
 
           <div className="mx-6 h-[160px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={data}
-                margin={{ top: 5, right: 10, left: 10, bottom: 0 }}
-              >
-                <Line
-                  type="monotone"
-                  dataKey="income"
-                  stroke="#8884d8"
-                  strokeWidth={2}
+              <BarChart data={data2}>
+                <XAxis
+                  dataKey="name"
+                  stroke="#888888"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
                 />
-                <RechartsTooltip
-                  content={({ active, payload }) => {
-                    if (active && payload && payload.length) {
-                      const incomeData = payload.find(
-                        (p) => p.dataKey === "income",
-                      );
-
-                      return (
-                        <div className="rounded-lg border bg-background p-2 shadow-sm">
-                          <div className="flex flex-col">
-                            {incomeData && (
-                              <div>
-                                <span className="text-[0.70rem] uppercase text-muted-foreground">
-                                  Income{" "}
-                                </span>
-                                <span className="font-bold">
-                                  {formatCurrency(incomeData.value as number)}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
+                <YAxis
+                  stroke="#888888"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  tickFormatter={(value) => `$${value}`}
                 />
-              </LineChart>
+                <Bar
+                  dataKey="total"
+                  fill="currentColor"
+                  radius={[4, 4, 0, 0]}
+                  className="fill-primary"
+                />
+              </BarChart>
             </ResponsiveContainer>
           </div>
 
           <Separator className="" />
-          <PositionsTable />
+          <KeyMetricsTable />
           <AccountsReviewTable mailId={mail ? mail.id : null} />
         </div>
       ) : (

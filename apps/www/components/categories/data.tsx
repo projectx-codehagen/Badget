@@ -17,7 +17,7 @@ const generateMonthlyIncomeData = (baseIncome: number): MonthlyIncomeData[] => {
 export const mails = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
-    name: "Apple Inc.",
+    name: "Car & Transportation",
     ticker: "APPL",
     available: 7665,
     change: 12,

@@ -51,7 +51,7 @@ interface AccountsDashboardProps {
 export function AccountsDashboard({
   accounts,
   mails,
-  defaultLayout = [265, 440, 500],
+  defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
 }: AccountsDashboardProps) {
@@ -75,16 +75,10 @@ export function AccountsDashboard({
           collapsible={true}
           minSize={15}
           maxSize={20}
-          onCollapse={() => {
-            setIsCollapsed(true);
+          onCollapse={(collapsed) => {
+            setIsCollapsed(collapsed);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true,
-            )}`;
-          }}
-          onExpand={() => {
-            setIsCollapsed(false);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false,
+              collapsed,
             )}`;
           }}
           className={cn(
@@ -137,7 +131,7 @@ export function AccountsDashboard({
                 label: "",
                 icon: Tag,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/categories",
               },
               {
                 title: "Recurring",
