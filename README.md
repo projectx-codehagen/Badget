@@ -38,10 +38,14 @@ Clone & create this repo locally with the following command:
 git clone https://github.com/meglerhagen/projectx.git
 ```
 
-1. Install dependencies using pnpm:
+1. Install dependencies using pnpm or bun:
 
 ```sh
-yarn install
+pnpm install
+```
+or
+```sh
+bun install
 ```
 
 2. Copy `.env.example` to `.env` and update the variables.
@@ -56,6 +60,10 @@ cp .env.example .env.local
 
 ```sh
 yarn dev
+```
+or
+```sh
+bun dev
 ```
 
 ## Database
