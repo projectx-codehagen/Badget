@@ -20,7 +20,7 @@ export default async function DashboardPage() {
     redirect(authOptions?.pages?.signIn || "/login");
   }
 
-  const layout = cookies().get("react-resizable-panels:layout");
+  const layout = cookies().get("react-resizable-panels:layout-investment");
   const collapsed = cookies().get("react-resizable-panels:collapsed");
 
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
