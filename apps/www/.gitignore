@@ -39,9 +39,7 @@ next-env.d.ts
 # email
 /.react-email/
 
+.vscode
 .contentlayer
 
 venv
-
-# Turbo
-.turbo

@@ -45,10 +45,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { TransactionsReviewTable } from "@/components/new-dashboard/components/transaction-review-table";
+import { PositionsTable } from "@/components/transactions/components/positions-table";
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";
-import { PositionsTable } from "./positions-table";
 
 interface MailDisplayProps {
   mail: Mail | null;

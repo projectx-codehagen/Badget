@@ -26,9 +26,18 @@
 
 ## Introduction
 
-Lets goooo - Next.js 14, Prisma, Planetscale, Auth.js, Resend, React Email, Shadcn/ui, and Stripe.
+Lets goooo - Next.js 14, Turborepo, Prisma, Planetscale, Auth.js, Resend, React Email, Shadcn/ui, and Stripe.
 <br/>
 All seamlessly integrated with the Projectx to accelerate the development.
+
+## Directory Structure
+
+ProjectX is a monorepo managed by [Turborepo](https://turbo.fish/). The monorepo is split between `apps` and `packages` directories.
+
+- **Apps** are the Next.js apps that are deployed to Vercel (this is where most development is done).
+- **Packages** are the shared packages that are used by the apps (e.g. `@projectx/components`)
+
+````
 
 ## Installation
 
@@ -36,32 +45,47 @@ Clone & create this repo locally with the following command:
 
 ```bash
 git clone https://github.com/meglerhagen/projectx.git
-```
+````
 
 1. Install dependencies using pnpm or bun:
 
 ```sh
 pnpm install
 ```
+
 or
+
 ```sh
 bun install
 ```
 
-2. Copy `.env.example` to `.env` and update the variables.
+2. Move into the app directory (this is where the next.js app lives):
+
+```sh
+cd apps/www
+```
+
+3. Copy `.env.example` to `.env.local` and update the variables.
 
 ```sh
 cp .env.example .env.local
 ```
 
-3. Input everything you need for the env.
+4. Input everything you need for the env.
 
-4. Start the development server:
+5. Start the development server from either yarn or turbo:
 
 ```sh
+# At the root of the mono repo
+yarn dev
+
+# Or from the app directory
+cd apps/www
 yarn dev
 ```
+
 or
+
 ```sh
 bun dev
 ```
