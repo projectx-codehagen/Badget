@@ -1,6 +1,7 @@
 // @ts-nocheck
 // TODO: Fix this when we turn strict mode on.
-import { UserSubscriptionPlan } from "types";
+import { UserSubscriptionPlan } from "@/types";
+
 import { pricingData } from "@/config/subscriptions";
 import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
@@ -42,8 +43,8 @@ export async function getUserSubscriptionPlan(
     ? userPlan?.stripeIds.monthly === user.stripePriceId
       ? "month"
       : userPlan?.stripeIds.yearly === user.stripePriceId
-      ? "year"
-      : null
+        ? "year"
+        : null
     : null;
 
   let isCanceled = false;
