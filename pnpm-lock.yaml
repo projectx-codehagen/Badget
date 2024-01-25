@@ -149,9 +149,6 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.10.7
         version: 8.11.7(react-dom@18.2.0)(react@18.2.0)
-      '@typescript-eslint/parser':
-        specifier: ^6.9.0
-        version: 6.19.1(eslint@8.56.0)(typescript@5.3.3)
       '@vercel/analytics':
         specifier: ^1.1.1
         version: 1.1.2
@@ -343,7 +340,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       tailwindcss:
-        specifier: ^3.3.5
+        specifier: 3.3.5
         version: 3.3.5
       typescript:
         specifier: ^5.3.3

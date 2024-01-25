@@ -31,8 +31,8 @@
     "typecheck": "turbo typecheck"
   },
   "dependencies": {
-    "@projectx/prettier-config": "^0.1.0",
     "@manypkg/cli": "^0.21.0",
+    "@projectx/prettier-config": "^0.1.0",
     "prettier": "^3.2.4",
     "turbo": "^1.11.3",
     "typescript": "^5.3.3"
