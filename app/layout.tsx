@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 
-import { Metadata } from "next";
 import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 
 import { siteConfig } from "@/config/site";

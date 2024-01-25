@@ -1,20 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { toast } from "@/components/ui/use-toast";
 
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "../ui/card";
 import {
   Form,
@@ -26,7 +23,6 @@ import {
 import { Switch } from "../ui/switch";
 
 export function SelectInputForm({ options, image }) {
-  const router = useRouter();
   const [activeSwitch, setActiveSwitch] = useState(null);
 
   const dynamicSchema = options.reduce((acc, option) => {
