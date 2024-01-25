@@ -1,6 +1,10 @@
 /** @type {import('eslint').Linter.Config} */
 const config = {
-  extends: ["plugin:@next/next/recommended", "plugin:tailwindcss/recommended"],
+  extends: [
+    "next/core-web-vitals",
+    // "plugin:@next/next/recommended",
+    // "plugin:tailwindcss/recommended"
+  ],
   rules: {
     "@next/next/no-html-link-for-pages": "off",
     "tailwindcss/no-custom-classname": "off",

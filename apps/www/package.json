@@ -69,6 +69,7 @@
     "@typescript-eslint/parser": "^6.9.0",
     "@vercel/analytics": "^1.1.1",
     "@vercel/og": "^0.5.20",
+    "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
@@ -139,8 +140,7 @@
     "root": true,
     "extends": [
       "@projectx/eslint-config/base",
-      "@projectx/eslint-config/nextjs",
-      "@projectx/eslint-config/react"
+      "@projectx/eslint-config/nextjs"
     ]
   },
   "prettier": "@projectx/prettier-config"
