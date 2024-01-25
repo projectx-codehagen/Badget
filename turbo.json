@@ -7,7 +7,12 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "next-env.d.ts",
+        ".contentlayer/**"
+      ]
     },
     "lint": {
       "outputs": []
