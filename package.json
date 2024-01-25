@@ -8,7 +8,7 @@
     "url": "https://twitter.com/Codehagen"
   },
   "engines": {
-    "node": ">=v18.18.2"
+    "node": ">=v20.10.0"
   },
   "packageManager": "pnpm@8.9.2",
   "scripts": {
@@ -24,10 +24,9 @@
     "prisma:migrate:dev": "dotenv -e .env.local prisma migrate dev",
     "prisma:studio": "dotenv -e .env.local prisma studio",
     "prisma:push": "dotenv -e .env.local prisma db push",
-    "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
-    "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "format": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "format:check": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
-    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
     "typecheck": "turbo typecheck"
   },
   "dependencies": {

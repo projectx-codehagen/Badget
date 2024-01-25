@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "contentlayer build && pnpm with-env next build",
-    "clean": "git clean -xdf .next .turbo node_modules",
+    "clean": "git clean -xdf .next .turbo .contentlayer node_modules",
     "dev": "pnpm with-env next dev",
     "email": "email dev --dir emails --port 3333",
     "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
