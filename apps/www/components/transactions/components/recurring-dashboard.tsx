@@ -32,18 +32,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TopCategoriesTable } from "@/components/new-dashboard/components/top-categories-table";
 
-import { Mail } from "../data";
-import { useMail } from "../use-mail";
-import { AccountSwitcher } from "./account-switcher";
-import { AccountsList } from "./accounts-list";
-import { CategoriesTable } from "./allocation-table";
-import { RecurringTableNext } from "./allocation-table-next";
-import { CategoriesDisplay } from "./categories-display";
-import { HoldingsTable } from "./holdings-table";
-import { Investmentcards } from "./investment-cards";
-import { Nav } from "./nav";
-import { SmallInvestmentCard } from "./small-investment-card";
-import { RecurringSpentSoFarCard } from "./total-balance-card";
+import { Mail } from "@components/transactions/data";
+import { useMail } from "@components/transactions/use-mail";
+import { AccountSwitcher } from "@components/transactions/components/account-switcher";
+import { AccountsList } from "@components/accounts/components/accounts-list";
+import { CategoriesTable } from "@/components/recurring/components/allocation-table";
+import { RecurringTableNext } from "@components/transactions/components/allocation-table-next";
+import { CategoriesDisplay } from "@components/recurring/components/categories-display";
+import { HoldingsTable } from "@components/recurring/components/holdings-table";
+import { Investmentcards } from "@components/recurring/components/investment-cards";
+import { Nav } from "@components/transactions/components/nav";
+import { SmallInvestmentCard } from "@components/recurring/components/small-investment-card";
+import { RecurringSpentSoFarCard } from "@components/recurring/components/total-balance-card";
 
 interface MailProps {
   accounts: {
