@@ -38,13 +38,11 @@ ProjectX is a monorepo managed by [Turborepo](https://turbo.fish/). The monorepo
 - **Packages** are the shared packages that are used by the apps (e.g. `@projectx/components`)
 - **Tooling** are the shared configuration that are used by the apps and packages (e.g. `@projectx/eslint-config`)
 
-````
-
 ## Installation
 
 Clone & create this repo locally with the following command:
 
-```bash
+````bash
 git clone https://github.com/meglerhagen/projectx.git
 ````
 
