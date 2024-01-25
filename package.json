@@ -7,29 +7,35 @@
     "name": "Christer",
     "url": "https://twitter.com/Codehagen"
   },
+  "engines": {
+    "node": ">=v18.18.2"
+  },
+  "packageManager": "pnpm@8.9.2",
   "scripts": {
+    "clean": "git clean -xdf node_modules dist .next",
+    "clean:workspaces": "turbo clean",
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "turbo dev --parallel",
+    "dev:web": "turbo dev --parallel --filter !@projectx/db",
     "test": "turbo test",
-    "lint": "turbo lint",
-    "format": "turbo format",
-    "format:check": "turbo format:check",
-    "type-check": "turbo type-check",
-    "turbo": "next dev --turbo",
-    "start": "next start",
-    "preview": "next build && next start",
     "postinstall": "prisma generate",
     "email": "email dev --dir emails --port 3333",
     "prisma:generate": "dotenv -e .env.local prisma generate",
     "prisma:migrate:dev": "dotenv -e .env.local prisma migrate dev",
     "prisma:studio": "dotenv -e .env.local prisma studio",
-    "prisma:push": "dotenv -e .env.local prisma db push"
+    "prisma:push": "dotenv -e .env.local prisma db push",
+    "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
+    "typecheck": "turbo typecheck"
   },
-  "devDependencies": {
-    "turbo": "^1.11.3"
+  "dependencies": {
+    "@projectx/prettier-config": "^0.1.0",
+    "@manypkg/cli": "^0.21.0",
+    "prettier": "^3.2.4",
+    "turbo": "^1.11.3",
+    "typescript": "^5.3.3"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "prettier": "@projectx/prettier-config"
 }
