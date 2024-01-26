@@ -1,0 +1,4 @@
+{
+  "extends": "@projectx/tsconfig/base.json",
+  "include": ["routes"],
+}
