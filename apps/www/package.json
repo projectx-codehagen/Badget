@@ -7,25 +7,22 @@
     "name": "Christer",
     "url": "https://twitter.com/Codehagen"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
-    "build": "contentlayer build && next build",
-    "dev": "next dev",
+    "build": "contentlayer build && pnpm with-env next build",
+    "clean": "git clean -xdf .next .turbo .contentlayer node_modules",
+    "dev": "pnpm with-env next dev",
     "email": "email dev --dir emails --port 3333",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check",
+    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
+    "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "postinstall": "prisma generate",
-    "lint": "next lint",
-    "preview": "next build && next start",
-    "prisma:generate": "dotenv -e .env.local prisma generate",
-    "prisma:migrate:dev": "dotenv -e .env.local prisma migrate dev",
-    "prisma:push": "dotenv -e .env.local prisma db push",
-    "prisma:studio": "dotenv -e .env.local prisma studio",
-    "start": "next start",
-    "turbo": "next dev --turbo"
+    "preview": "pnpm with-env next build && pnpm with-env next start",
+    "prisma:generate": "pnpm with-env prisma generate",
+    "prisma:migrate:dev": "pnpm with-env prisma migrate dev",
+    "prisma:push": "pnpm with-env prisma db push",
+    "prisma:studio": "pnpm with-env prisma studio",
+    "start": "pnpm with-env next start",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env.local --"
   },
   "dependencies": {
     "@edgestore/react": "^0.1.4",
@@ -69,9 +66,9 @@
     "@react-email/html": "0.0.6",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@tanstack/react-table": "^8.10.7",
-    "@typescript-eslint/parser": "^6.9.0",
     "@vercel/analytics": "^1.1.1",
     "@vercel/og": "^0.5.20",
+    "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
@@ -114,23 +111,18 @@
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
-    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
-    "@tailwindcss/line-clamp": "^0.4.4",
+    "@projectx/eslint-config": "^0.2.0",
+    "@projectx/prettier-config": "^0.1.0",
+    "@projectx/tailwind-config": "^0.1.0",
+    "@projectx/tsconfig": "^0.1.0",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20.8.9",
     "@types/react": "18.2.33",
     "@types/react-dom": "18.2.14",
-    "autoprefixer": "^10.4.16",
-    "eslint": "^8.52.0",
-    "eslint-config-next": "14.0.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-tailwindcss": "^3.13.0",
+    "eslint": "^8.56.0",
     "husky": "^8.0.3",
     "mdast-util-toc": "^7.0.0",
-    "postcss": "^8.4.31",
-    "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.7",
+    "prettier": "^3.2.4",
     "pretty-quick": "^3.1.3",
     "prisma": "^5.5.2",
     "rehype": "^13.0.1",
@@ -139,8 +131,16 @@
     "rehype-slug": "^6.0.0",
     "remark": "^15.0.1",
     "remark-gfm": "^3.0.1",
-    "tailwindcss": "^3.3.5",
-    "typescript": "5.2.2",
+    "tailwindcss": "3.3.5",
+    "typescript": "^5.3.3",
     "unist-util-visit": "^5.0.0"
-  }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@projectx/eslint-config/base",
+      "@projectx/eslint-config/nextjs"
+    ]
+  },
+  "prettier": "@projectx/prettier-config"
 }
