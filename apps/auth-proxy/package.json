@@ -14,10 +14,10 @@
     "@auth/core": "^0.23.0"
   },
   "devDependencies": {
-    "@acme/eslint-config": "^0.2.0",
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tailwind-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
+    "@projectx/eslint-config": "^0.2.0",
+    "@projectx/prettier-config": "^0.1.0",
+    "@projectx/tailwind-config": "^0.1.0",
+    "@projectx/tsconfig": "^0.1.0",
     "eslint": "^8.56.0",
     "nitropack": "^2.8.1",
     "prettier": "^3.1.1",

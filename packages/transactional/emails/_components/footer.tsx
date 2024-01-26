@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Hr, Tailwind, Text } from "@react-email/components";
 
 export default function Footer({

@@ -1,15 +1,16 @@
 import sendOnboardingEmail from "@/actions/send-onboarding-email";
-import MagicLinkEmail from "@/emails/magic-link-email";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
 
+import MagicLinkEmail from "@projectx/transactional/magic-link-email";
+import { resend } from "@projectx/transactional";
+
 import { env } from "@/env.mjs";
 import { siteConfig } from "@/config/site";
 import { prisma } from "@/lib/db";
 
-import { resend } from "./email";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
