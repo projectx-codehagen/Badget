@@ -261,10 +261,14 @@ export function InvestmentsDashboard({
           />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+        <ResizablePanel
+          className="!overflow-y-scroll"
+          defaultSize={defaultLayout[1]}
+          minSize={30}
+        >
           <Separator />
           <TotalBalanceCard />
-          <div>
+          <div className="overflow-scroll">
             <SmallInvestmentCard />
             <AllocationTable />
             <HoldingsTable />
@@ -275,7 +279,7 @@ export function InvestmentsDashboard({
           <TopCategoriesTable />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[2]}>
+        <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
           <AccountsDisplay
             mail={mails.find((item) => item.id === mail.selected) || null}
           />
