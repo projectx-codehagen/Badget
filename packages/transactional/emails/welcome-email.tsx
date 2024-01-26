@@ -1,12 +1,9 @@
-/* eslint-disable react/no-unescaped-entities */
 import {
   Body,
   Container,
   Head,
   Heading,
-  Hr,
   Html,
-  Img,
   Link,
   Preview,
   Section,
@@ -14,7 +11,7 @@ import {
   Text,
 } from "@react-email/components";
 
-import Footer from "./components/footer";
+import Footer from "./_components/footer";
 
 export default function WelcomeEmail({
   name = "John Doe",
