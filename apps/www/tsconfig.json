@@ -12,10 +12,6 @@
       },
     ],
     "strictNullChecks": true,
-<<<<<<< HEAD
-=======
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
->>>>>>> upstream/main
   },
   "include": [
     "next-env.d.ts",
