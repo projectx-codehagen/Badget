@@ -3,8 +3,6 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    // This is optional because it's only used in development.
-    // See https://next-auth.js.org/deployment.
     DATABASE_URL: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     TEST_EMAIL_ADDRESS: z.string().min(1),

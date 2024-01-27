@@ -1,6 +1,4 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { getUserWorkspaces } from "@/actions/account-switcher/get-workspace";
 
 import { Dashboard } from "@/components/new-dashboard/components/dashboard-1";
 import { accounts, mails } from "@/components/new-dashboard/data";
@@ -11,8 +9,6 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  const workspace = await getUserWorkspaces();
-
   const layout = cookies().get("react-resizable-panels:layout");
   const collapsed = cookies().get("react-resizable-panels:collapsed");
 
@@ -28,7 +24,6 @@ export default async function DashboardPage() {
           defaultLayout={defaultLayout}
           defaultCollapsed={defaultCollapsed}
           navCollapsedSize={4}
-          workspace={workspace}
         />
       </div>
     </>

@@ -91,7 +91,7 @@ export const docsConfig: DocsConfig = {
           disabled: true,
         },
         {
-          title: "Database with Prisma",
+          title: "Database with Drizzle ORM",
           href: "/docs/in-progress",
           disabled: true,
         },

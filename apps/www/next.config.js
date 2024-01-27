@@ -38,10 +38,7 @@ const nextConfig = {
         hostname: "tailwindui.com",
       },
     ],
-  },
-  experimental: {
-    serverComponentsExternalPackages: ["@prisma/client"],
-  },
+  }
 };
 
 const withContentlayer = createContentlayerPlugin({

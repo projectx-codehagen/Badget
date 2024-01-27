@@ -1,6 +1,7 @@
 "use client";
 
 import { MainNavItem } from "@/types";
+import { UserButton } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/dist/types/server";
 
 import useScroll from "@/hooks/use-scroll";
@@ -8,10 +9,13 @@ import { useSigninModal } from "@/hooks/use-signin-modal";
 import { Button } from "@/components/ui/button";
 
 import { MainNav } from "./main-nav";
-import { UserAccountNav } from "./user-account-nav";
 
 interface NavBarProps {
-  user: Pick<User, "username" | "imageUrl" | "emailAddresses"> | null;
+  user: {
+    username: string;
+    email: string;
+    imageUrl: string;
+  };
   items?: MainNavItem[];
   children?: React.ReactNode;
   rightElements?: React.ReactNode;
@@ -52,7 +56,7 @@ export function NavBar({
             ) : null} */}
 
           {user ? (
-            <UserAccountNav user={user} />
+            <UserButton />
           ) : (
             <Button
               className="px-3"
