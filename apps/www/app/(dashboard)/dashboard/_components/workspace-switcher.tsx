@@ -96,8 +96,10 @@ export function WorkspaceSwitcher({ isCollapsed }: WorkspaceSwitcherProps) {
         <Avatar className="mr-2 h-5 w-5">
           <AvatarFallback>Ac</AvatarFallback>
         </Avatar>
-        <span className={cn(isCollapsed && "hidden")}>Select a workspace</span>
-        <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0" />
+        <div className={cn("flex justify-between", isCollapsed && "hidden")}>
+          <span>Select a workspace</span>
+          <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0" />
+        </div>
       </Button>
     );
   }
@@ -118,18 +120,29 @@ export function WorkspaceSwitcher({ isCollapsed }: WorkspaceSwitcherProps) {
             role="combobox"
             aria-expanded={switcherOpen}
             aria-label="Select a workspace"
-            className="w-full items-center justify-center border px-0"
+            className={cn(
+              "flex w-full items-center gap-2 border [&>span]:line-clamp-1 [&>span]:flex [&>span]:w-full [&>span]:items-center [&>span]:gap-1 [&>span]:truncate [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0",
+              isCollapsed &&
+                "flex h-9 w-9 shrink-0 items-center justify-center p-0 [&>span]:w-auto [&>svg]:hidden",
+            )}
           >
-            <Avatar className={cn("h-5 w-5", !isCollapsed && "mr-2")}>
-              <AvatarImage src={normalizedObject?.image ?? ""} />
-              <AvatarFallback>
-                {normalizedObject.name?.substring(0, 2)}
-              </AvatarFallback>
-            </Avatar>
-            <span className={cn("ml-2", isCollapsed && "hidden")}>
-              {normalizedObject.name}
-              <ChevronDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
-            </span>
+            <div className="flex justify-between">
+              <Avatar className={cn("h-5 w-5", !isCollapsed && "mr-2")}>
+                <AvatarImage src={normalizedObject?.image ?? ""} />
+                <AvatarFallback>
+                  {normalizedObject.name?.substring(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+              <span className={cn(isCollapsed && "hidden")}>
+                {normalizedObject.name}
+              </span>
+            </div>
+            <ChevronDown
+              className={cn(
+                "ml-auto h-4 w-4 shrink-0 opacity-50",
+                isCollapsed && "hidden",
+              )}
+            />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="ml-2 w-52 p-0">
