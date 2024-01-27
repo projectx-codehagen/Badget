@@ -6,6 +6,13 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
@@ -17,9 +24,9 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@projectx/eslint-config": "^0.2.0",
-    "@projectx/prettier-config": "^0.1.0",
-    "@projectx/tsconfig": "^0.1.0",
+    "@projectx/eslint-config": "workspace:^0.2.0",
+    "@projectx/prettier-config": "workspace:^0.1.0",
+    "@projectx/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"

@@ -6,39 +6,69 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
+import type { NextRequest } from "next/server";
+import type {
+  SignedInAuthObject,
+  SignedOutAuthObject,
+} from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
 import { ZodError } from "zod";
 
-import type { Session } from "@projectx/auth";
-import { auth } from "@projectx/auth";
 import { db } from "@projectx/db";
 
+import { transformer } from "./transformer";
+
+type AuthContext = SignedInAuthObject | SignedOutAuthObject;
 /**
  * 1. CONTEXT
  *
- * This section defines the "contexts" that are available in the backend API.
+ * This section defines the "contexts" that are available in the backend API
  *
- * These allow you to access things when processing a request, like the database, the session, etc.
+ * These allow you to access things like the database, the session, etc, when
+ * processing a request
  *
- * This helper generates the "internals" for a tRPC context. The API handler and RSC clients each
- * wrap this and provides the required context.
+ */
+interface CreateContextOptions {
+  headers: Headers;
+  auth: AuthContext;
+  apiKey?: string | null;
+  req?: NextRequest;
+}
+
+/**
+ * This helper generates the "internals" for a tRPC context. If you need to use
+ * it, you can export it from here
  *
- * @see https://trpc.io/docs/server/context
+ * Examples of things you may need it for:
+ * - testing, so we dont have to mock Next.js' req/res
+ * - trpc's `createSSGHelpers` where we don't have req/res
+ * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
+ */
+export const createInnerTRPCContext = (opts: CreateContextOptions) => {
+  return {
+    ...opts,
+    db,
+  };
+};
+
+/**
+ * This is the actual context you'll use in your router. It will be used to
+ * process every request that goes through your tRPC endpoint
+ * @link https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: {
   headers: Headers;
-  session: Session | null;
+  auth: AuthContext;
+  req?: NextRequest;
 }) => {
-  const session = opts.session ?? (await auth());
-  const source = opts.headers.get("x-trpc-source") ?? "unknown";
+  const apiKey = opts.req?.headers.get("x-acme-api-key");
 
-  console.log(">>> tRPC Request from", source, "by", session?.user);
-
-  return {
-    session,
-    db,
-  };
+  return createInnerTRPCContext({
+    auth: opts.auth,
+    apiKey,
+    req: opts.req,
+    headers: opts.headers,
+  });
 };
 
 /**
@@ -47,22 +77,19 @@ export const createTRPCContext = async (opts: {
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: superjson,
-  errorFormatter: ({ shape, error }) => ({
-    ...shape,
-    data: {
-      ...shape.data,
-      zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
-    },
-  }),
+export const t = initTRPC.context<typeof createTRPCContext>().create({
+  transformer,
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    };
+  },
 });
-
-/**
- * Create a server-side caller
- * @see https://trpc.io/docs/server/server-side-calls
- */
-export const createCallerFactory = t.createCallerFactory;
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -76,6 +103,7 @@ export const createCallerFactory = t.createCallerFactory;
  * @see https://trpc.io/docs/router
  */
 export const createTRPCRouter = t.router;
+export const mergeRouters = t.mergeRouters;
 
 /**
  * Public (unauthed) procedure
@@ -87,21 +115,62 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 
 /**
- * Protected (authenticated) procedure
- *
- * If you want a query or mutation to ONLY be accessible to logged in users, use this. It verifies
- * the session is valid and guarantees `ctx.session.user` is not null.
- *
- * @see https://trpc.io/docs/procedures
+ * Reusable procedure that enforces users are logged in before running the
+ * code
  */
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.session?.user) {
+  if (!ctx.auth?.userId) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
     ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
+      auth: {
+        ...ctx.auth,
+        userId: ctx.auth.userId,
+      },
     },
   });
 });
+/**
+ * Reusable procedure that enforces users are part of an organization before
+ * running the code
+ */
+export const protectedOrgProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (!ctx.auth?.orgId) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You must be in an organization to perform this action",
+    });
+  }
+  return next({
+    ctx: {
+      auth: {
+        ...ctx.auth,
+        orgId: ctx.auth.orgId,
+      },
+    },
+  });
+});
+/**
+ * Procedure that enforces users are admins of an organization before running
+ * the code
+ */
+export const protectedAdminProcedure = protectedOrgProcedure.use(
+  ({ ctx, next }) => {
+    if (ctx.auth.orgRole !== "admin") {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You must be an admin to perform this action",
+      });
+    }
+
+    return next({
+      ctx: {
+        auth: {
+          ...ctx.auth,
+          orgRole: ctx.auth.orgRole,
+        },
+      },
+    });
+  },
+);

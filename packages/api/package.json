@@ -6,6 +6,13 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
@@ -14,17 +21,20 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@projectx/auth": "^0.1.0",
-    "@projectx/db": "^0.1.0",
-    "@projectx/validators": "^0.1.0",
+    "@projectx/db": "workspace:^0.1.0",
+    "@projectx/stripe": "workspace:^0.1.0",
+    "@projectx/validators": "workspace:^0.1.0",
+    "@clerk/nextjs": "^4.29.5",
+    "@dinero.js/currencies": "2.0.0-alpha.14",
     "@trpc/server": "next",
+    "dinero.js": "2.0.0-alpha.14",
     "superjson": "2.2.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@projectx/eslint-config": "^0.2.0",
-    "@projectx/prettier-config": "^0.1.0",
-    "@projectx/tsconfig": "^0.1.0",
+    "@projectx/eslint-config": "workspace:^0.2.0",
+    "@projectx/prettier-config": "workspace:^0.1.0",
+    "@projectx/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
