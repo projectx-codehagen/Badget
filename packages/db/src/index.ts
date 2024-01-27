@@ -1,10 +1,9 @@
 import { connect } from "@planetscale/database";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 
-import * as auth from "./schema/auth";
 import * as customer from "./schema/customer";
 
-export const schema = { ...auth, ...customer };
+export const schema = { ...customer };
 
 export { mySqlTable as tableCreator } from "./schema/_table";
 
