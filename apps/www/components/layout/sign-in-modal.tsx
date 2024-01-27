@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useSignIn } from "@clerk/nextjs";
 
 import { siteConfig } from "@/config/site";
 import { useSigninModal } from "@/hooks/use-signin-modal";
@@ -10,6 +10,7 @@ import { Icons } from "@/components/shared/icons";
 import { Modal } from "@/components/shared/modal";
 
 export const SignInModal = () => {
+  const { signIn } = useSignIn();
   const signInModal = useSigninModal();
   const [signInClicked, setSignInClicked] = useState(false);
 
@@ -35,15 +36,17 @@ export const SignInModal = () => {
             disabled={signInClicked}
             onClick={() => {
               setSignInClicked(true);
-              signIn("google", {
-                redirect: false,
-                callbackUrl: "/dashboard",
-              }).then(() =>
-                // TODO: fix this without setTimeOut(), modal closes too quickly. Idea: update value before redirect
-                setTimeout(() => {
-                  signInModal.onClose();
-                }, 1000),
-              );
+              signIn
+                ?.create({
+                  strategy: "oauth_google",
+                  redirectUrl: "/dashboard",
+                })
+                .then(() =>
+                  // TODO: fix this without setTimeOut(), modal closes too quickly. Idea: update value before redirect
+                  setTimeout(() => {
+                    signInModal.onClose();
+                  }, 1000),
+                );
             }}
           >
             {signInClicked ? (
