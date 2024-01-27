@@ -6,4 +6,4 @@ import { mysqlTableCreator } from "drizzle-orm/mysql-core";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const mySqlTable = mysqlTableCreator((name) => `badget_${name}`);
+export const mySqlTable = mysqlTableCreator((name) => `projectx_${name}`);
