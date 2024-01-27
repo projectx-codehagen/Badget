@@ -5,6 +5,18 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*",
+        "drizzle.config.ts"
+      ]
+    }
+  },
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
@@ -18,9 +30,9 @@
     "drizzle-orm": "^0.29.2"
   },
   "devDependencies": {
-    "@projectx/eslint-config": "^0.2.0",
-    "@projectx/prettier-config": "^0.1.0",
-    "@projectx/tsconfig": "^0.1.0",
+    "@projectx/eslint-config": "workspace:^0.2.0",
+    "@projectx/prettier-config": "workspace:^0.1.0",
+    "@projectx/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.8",
     "eslint": "^8.56.0",

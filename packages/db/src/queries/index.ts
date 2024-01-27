@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 
-import type { ItemInsert, TransactionInsert } from "..";
-import { db, schema } from "..";
+import type { ItemInsert, TransactionInsert } from "../../drizzle.config";
+import { db, schema } from "../../drizzle.config";
 
 export const findItemByPlaidItemId = async (plaidItemId: string) => {
   const items = await db
