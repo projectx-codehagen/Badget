@@ -38,7 +38,7 @@ const nextConfig = {
         hostname: "tailwindui.com",
       },
     ],
-  }
+  },
 };
 
 const withContentlayer = createContentlayerPlugin({

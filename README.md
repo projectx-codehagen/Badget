@@ -32,11 +32,20 @@ All seamlessly integrated with the Projectx to accelerate the development.
 
 ## Directory Structure
 
-ProjectX is a monorepo managed by [Turborepo](https://turbo.fish/). The monorepo is split between `apps` and `packages` directories.
+ProjectX is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
 
-- **Apps** are the Next.js apps that are deployed to Vercel (this is where most development is done).
-- **Packages** are the shared packages that are used by the apps (e.g. `@projectx/components`)
-- **Tooling** are the shared configuration that are used by the apps and packages (e.g. `@projectx/eslint-config`)
+    .
+    ├── apps                         # Its app workspace which contains 
+    │    ├── www                     # Nextjs app which is deployed in Vercel       
+    │    └── ...                                      
+    ├── tooling                      # are the shared configuration that are used by the apps and packages (e.g. `@projectx/eslint-config`)
+    ├── packages                     # are the shared packages that are used by the apps (e.g. `@projectx/components`)
+    ├── docker-compose.yml                  
+    ├── LICENSE
+    └── README.md
+
+> Use short lowercase names at least for the top-level files and folders except
+> `LICENSE`, `README.md`
 
 ## Installation
 
@@ -78,14 +87,14 @@ This project uses MySQL database on PlanetScale. To setup a DB for your local de
 1. Create a free account and a [new Database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database)
 2. From the dashboard, create a branch and click "Connect" button.
 3. Hit `Create password` and select `Drizzle` in `Connect with` dropdown
-4. Copy the url to `.env.local` file
-5. run `yarn run db:push`.
+4. Copy the entire list of params to `.env.local` file. Make sure to change the params under the section "Database (MySQL - PlanetScale)"
+5. run `pnpm run db:push`
 
 You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
 
 1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
 2. run `docker-compose --env-file .env.local up` to start the DB.
-3. run `yarn run db:push`.
+3. run `pnpm run db:push`.
 
 ## Email provider
 

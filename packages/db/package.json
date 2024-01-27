@@ -16,7 +16,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint . --no-error-on-unmatched-pattern",
     "push": "drizzle-kit push:mysql",
@@ -34,7 +34,7 @@
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.13",
     "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.4",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

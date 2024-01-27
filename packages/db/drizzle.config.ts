@@ -5,13 +5,13 @@ dotenv.config({ path: "../../.env.local" });
 
 const uri = [
   "mysql://",
-  process.env.DB_USERNAME,
+  process.env.DATABASE_USERNAME,
   ":",
-  process.env.DB_PASSWORD,
+  process.env.DATABASE_PASSWORD,
   "@",
-  process.env.DB_HOST,
+  process.env.DATABASE_HOST,
   ":3306/",
-  process.env.DB_NAME,
+  process.env.DATABASE_NAME,
   '?ssl={"rejectUnauthorized":true}',
 ].join("");
 
