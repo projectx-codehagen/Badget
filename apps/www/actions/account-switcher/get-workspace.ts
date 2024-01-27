@@ -1,11 +1,12 @@
 // actions/get-user-workspaces.js
 "use server";
 
+import { currentUser } from "@clerk/nextjs";
+
 import { prisma } from "@/lib/db";
-import { getCurrentUser } from "@/lib/session";
 
 export async function getUserWorkspaces() {
-  const user = await getCurrentUser();
+  const user = await currentUser();
   const userId = user?.id;
 
   //   console.log(`Request received to get workspaces for User ID: ${userId}`);
@@ -23,9 +24,9 @@ export async function getUserWorkspaces() {
     // Transform the workspace data
     const transformedWorkspaces = workspaceData.map((ws) => ({
       workspaceName: ws.name,
-      email: user?.name,
+      email: user?.emailAddresses[0].emailAddress,
       icon: "vercel",
-      name: user?.name,
+      name: user?.username,
     }));
 
     // console.log(`Workspaces retrieved successfully for user ID: ${userId}`);

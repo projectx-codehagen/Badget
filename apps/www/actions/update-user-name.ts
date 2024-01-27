@@ -1,11 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
+import { currentUser } from "@clerk/nextjs";
 
-import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { userNameSchema } from "@projectx/validators";
+
+import { prisma } from "@/lib/db";
 
 export type FormData = {
   name: string;
@@ -13,9 +13,9 @@ export type FormData = {
 
 export async function updateUserName(userId: string, data: FormData) {
   try {
-    const session = await getServerSession(authOptions);
+    const user = await currentUser();
 
-    if (!session?.user || session?.user.id !== userId) {
+    if (!user || user.id !== userId) {
       throw new Error("Unauthorized");
     }
 

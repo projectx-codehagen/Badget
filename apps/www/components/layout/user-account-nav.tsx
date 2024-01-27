@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { User } from "@clerk/nextjs/dist/types/server";
 import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
-import type { User } from "next-auth";
 import { signOut } from "next-auth/react";
 
 import {
@@ -15,7 +15,7 @@ import {
 import { UserAvatar } from "@/components/shared/user-avatar";
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user: Pick<User, "name" | "image" | "email">;
+  user: Pick<User, "username" | "imageUrl" | "emailAddresses">;
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
@@ -23,17 +23,17 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
-          user={{ name: user?.name || null, image: user?.image || null }}
+          user={{ name: user?.username || null, image: user?.imageUrl || null }}
           className="h-8 w-8"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user?.name && <p className="font-medium">{user?.name}</p>}
-            {user?.email && (
+            {user?.username && <p className="font-medium">{user?.username}</p>}
+            {user?.emailAddresses[0] && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {user?.email}
+                {user?.emailAddresses[0].emailAddress}
               </p>
             )}
           </div>

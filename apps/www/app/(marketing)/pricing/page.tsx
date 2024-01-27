@@ -1,6 +1,6 @@
-import { getCurrentUser } from "@/lib/session";
+import { currentUser } from "@clerk/nextjs";
+
 import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { Skeleton } from "@/components/ui/skeleton";
 import { PricingCards } from "@/components/pricing-cards";
 import { PricingFaq } from "@/components/pricing-faq";
 
@@ -11,7 +11,7 @@ export const metadata = {
 };
 
 export default async function PricingPage() {
-  const user = await getCurrentUser();
+  const user = await currentUser();
   let subscriptionPlan;
 
   if (user) {

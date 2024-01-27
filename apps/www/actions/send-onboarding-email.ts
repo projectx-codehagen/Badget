@@ -1,8 +1,7 @@
 "use server";
 
 // src/utils/sendOnboardingEmail.ts
-import WelcomeEmail from "@projectx/transactional/welcome-email";
-import { resend } from "@projectx/transactional";
+import { resend, WelcomeEmail } from "@projectx/transactional";
 
 import { prisma } from "@/lib/db";
 

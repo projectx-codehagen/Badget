@@ -1,19 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import { MainNavItem } from "@/types";
-import { User } from "next-auth";
+import { User } from "@clerk/nextjs/dist/types/server";
 
-import { cn } from "@/lib/utils";
 import useScroll from "@/hooks/use-scroll";
 import { useSigninModal } from "@/hooks/use-signin-modal";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 import { MainNav } from "./main-nav";
 import { UserAccountNav } from "./user-account-nav";
 
 interface NavBarProps {
-  user: Pick<User, "name" | "image" | "email"> | undefined;
+  user: Pick<User, "username" | "imageUrl" | "emailAddresses"> | null;
   items?: MainNavItem[];
   children?: React.ReactNode;
   rightElements?: React.ReactNode;
