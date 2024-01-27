@@ -22,7 +22,7 @@
     "clean": "git clean -xdf .turbo .react-email node_modules",
     "dev": "email dev -p 3001",
     "export": "email export",
-    "lint": "eslint .",
+    "lint": "eslint . --no-error-on-unmatched-pattern",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },

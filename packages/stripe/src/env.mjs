@@ -16,7 +16,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID: z.string(),
     NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID: z.string(),
     NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID: z.string(),
-    NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID: z.string()
+    NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID: z.string(),
   },
   // Client side variables gets destructured here due to Next.js static analysis
   // Shared ones are also included here for good measure since the behavior has been inconsistent

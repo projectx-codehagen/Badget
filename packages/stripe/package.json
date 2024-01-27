@@ -18,7 +18,7 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "dev": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
-    "lint": "eslint .",
+    "lint": "eslint . --no-error-on-unmatched-pattern",
     "format": "prettier --check \"**/*.{mjs,ts,json}\"",
     "typecheck": "tsc --noEmit"
   },

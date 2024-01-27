@@ -9,7 +9,6 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-
   return (
     <DashboardShell>
       <DashboardHeader heading="Properties" text="Create and manage content.">

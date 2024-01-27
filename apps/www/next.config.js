@@ -11,7 +11,10 @@ const nextConfig = {
   swcMinify: true,
 
   transpilePackages: [
-    "@projectx/api", "@projectx/db", "@projectx/transactional", "@projectx/validators"
+    "@projectx/api",
+    "@projectx/db",
+    "@projectx/transactional",
+    "@projectx/validators",
   ],
 
   images: {

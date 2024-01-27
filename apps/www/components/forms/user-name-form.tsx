@@ -6,8 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
-import { cn } from "@/lib/utils";
 import { userNameSchema } from "@projectx/validators";
+
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
