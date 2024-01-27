@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/dist/types/server";
 
 import { dashboardConfig } from "@/config/dashboard";
 import { NavBar } from "@/components/layout/navbar";

@@ -33,7 +33,6 @@ import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/works
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
-import { AccountSwitcher } from "./account-switcher";
 import { Nav } from "./nav";
 import { CardsStats } from "./stats";
 import { TopCategoriesTable } from "./top-categories-table";
@@ -96,11 +95,6 @@ export function Dashboard({
             )}
           >
             <WorkspaceSwitcher isCollapsed={isCollapsed} />
-            {/* <AccountSwitcher
-              isCollapsed={isCollapsed}
-              accounts={accounts}
-              workspace={workspace}
-            /> */}
           </div>
           <Separator />
           <Nav

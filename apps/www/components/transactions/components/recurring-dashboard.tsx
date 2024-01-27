@@ -44,6 +44,7 @@ import { RecurringTableNext } from "@/components/transactions/components/allocat
 import { Nav } from "@/components/transactions/components/nav";
 import { Mail } from "@/components/transactions/data";
 import { useMail } from "@/components/transactions/use-mail";
+import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 interface MailProps {
   accounts: {
@@ -100,7 +101,7 @@ export function RecurringDashboard({
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+            <WorkspaceSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
