@@ -12,7 +12,6 @@
       },
     ],
     "strictNullChecks": true,
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
   },
   "include": [
     "next-env.d.ts",

@@ -42,9 +42,9 @@ ProjectX is a monorepo managed by [Turborepo](https://turbo.fish/). The monorepo
 
 Clone & create this repo locally with the following command:
 
-````bash
+```bash
 git clone https://github.com/meglerhagen/projectx.git
-````
+```
 
 1. Install dependencies using pnpm:
 
@@ -77,15 +77,15 @@ This project uses MySQL database on PlanetScale. To setup a DB for your local de
 
 1. Create a free account and a [new Database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database)
 2. From the dashboard, create a branch and click "Connect" button.
-3. Hit `Create password` and select `Prisma` in `Connect with` dropdown
-4. Copy the url to `.env.local` file
-5. run `yarn run prisma:push` (Be mindful prisma migrate won't work because it requires more privileges for the database user).
+3. Hit `Create password` and select `Drizzle` in `Connect with` dropdown
+4. Copy the entire list of params to `.env.local` file. Make sure to change the params under the section "Database (MySQL - PlanetScale)"
+5. run `pnpm run db:push`
 
 You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
 
 1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
 2. run `docker-compose --env-file .env.local up` to start the DB.
-3. run `yarn run prisma:push`.
+3. run `pnpm run db:push`.
 
 ## Email provider
 
