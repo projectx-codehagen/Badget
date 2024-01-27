@@ -3,8 +3,6 @@ import { httpBatchLink } from "@trpc/client";
 
 import type { AppRouter } from "@projectx/api";
 
-export { transformer } from "@projectx/api/transformer";
-
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return "";
   const vc = process.env.VERCEL_URL;

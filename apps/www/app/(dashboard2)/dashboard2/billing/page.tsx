@@ -1,6 +1,6 @@
+import { api } from "@/trpc/server";
 import { currentUser } from "@clerk/nextjs";
 
-import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { BillingInfo } from "@/components/billing-info";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
@@ -13,8 +13,7 @@ export const metadata = {
 
 export default async function BillingPage() {
   const user = await currentUser();
-
-  const subscriptionPlan = await getUserSubscriptionPlan(user!.id);
+  const subscriptionPlan = await api.auth.mySubscription.query();
 
   return (
     <DashboardShell>
@@ -40,7 +39,7 @@ export default async function BillingPage() {
             .
           </AlertDescription>
         </Alert> */}
-        <BillingInfo subscriptionPlan={subscriptionPlan} />
+        <BillingInfo subscriptionPlan={subscriptionPlan!} />
       </div>
       {/* <LanugageButton userId={user.id} /> */}
     </DashboardShell>

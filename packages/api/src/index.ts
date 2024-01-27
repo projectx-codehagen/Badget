@@ -1,33 +1,22 @@
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
 import type { AppRouter } from "./root";
-import { appRouter } from "./root";
-import { createCallerFactory, createTRPCContext } from "./trpc";
 
-/**
- * Create a server-side caller for the tRPC API
- * @example
- * const trpc = createCaller(createContext);
- * const res = await trpc.post.all();
- *       ^? Post[]
- */
-const createCaller = createCallerFactory(appRouter);
+export { createTRPCContext, createInnerTRPCContext } from "./trpc";
 
+// TODO: Maybe just export `createAction` instead of the whole `trpc` object?
+export { t } from "./trpc";
+
+export type { AppRouter } from "./root";
+export { appRouter } from "./root";
 /**
  * Inference helpers for input types
- * @example
- * type PostByIdInput = RouterInputs['post']['byId']
- *      ^? { id: number }
+ * @example type HelloInput = RouterInputs['example']['hello']
  **/
-type RouterInputs = inferRouterInputs<AppRouter>;
+export type RouterInputs = inferRouterInputs<AppRouter>;
 
 /**
  * Inference helpers for output types
- * @example
- * type AllPostsOutput = RouterOutputs['post']['all']
- *      ^? Post[]
+ * @example type HelloOutput = RouterOutputs['example']['hello']
  **/
-type RouterOutputs = inferRouterOutputs<AppRouter>;
-
-export { createTRPCContext, appRouter, createCaller };
-export type { AppRouter, RouterInputs, RouterOutputs };
+export type RouterOutputs = inferRouterOutputs<AppRouter>;

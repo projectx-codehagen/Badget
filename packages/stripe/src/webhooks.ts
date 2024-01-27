@@ -1,7 +1,7 @@
 import { clerkClient } from "@clerk/nextjs";
 import type Stripe from "stripe";
 
-import { db, genId } from "@projectx/db";
+import { db, eq, genId, schema } from "@projectx/db";
 
 import { stripe } from ".";
 import { stripePriceToSubscriptionPlan } from "./plans";
@@ -28,10 +28,10 @@ export async function handleEvent(event: Stripe.Event) {
       }
 
       const customer = await db
-        .selectFrom("Customer")
-        .select("id")
-        .where("stripeId", "=", customerId)
-        .executeTakeFirst();
+        .select({ id: schema.customer.id })
+        .from(schema.customer)
+        .where(eq(schema.customer.stripeId, customerId))
+        .execute();
 
       const subscriptionPlan = stripePriceToSubscriptionPlan(
         subscription.items.data[0]?.price.id,
@@ -40,16 +40,16 @@ export async function handleEvent(event: Stripe.Event) {
       /**
        * User is already subscribed, update their info
        */
-      if (customer) {
+      if (customer[0]) {
         return await db
-          .updateTable("Customer")
-          .where("id", "=", customer.id)
+          .update(schema.customer)
           .set({
             stripeId: customerId,
             subscriptionId: subscription.id,
             paidUntil: new Date(subscription.current_period_end * 1000),
             plan: subscriptionPlan?.key,
           })
+          .where(eq(schema.customer.id, customer[0].id))
           .execute();
       }
 
@@ -64,9 +64,8 @@ export async function handleEvent(event: Stripe.Event) {
       // TODO: SET ACTIVE ORG WHEN CLERK CAN BOTHER TO LET ME DO TAHT SERVERSIDE!!!
 
       await db
-        .insertInto("Customer")
+        .insert(schema.customer)
         .values({
-          id: genId(),
           clerkUserId: userId,
           clerkOrganizationId: organization.id,
           stripeId: customerId,
@@ -92,12 +91,12 @@ export async function handleEvent(event: Stripe.Event) {
       );
 
       await db
-        .updateTable("Customer")
-        .where("subscriptionId", "=", subscription.id)
+        .update(schema.customer)
         .set({
           plan: subscriptionPlan?.key,
           paidUntil: new Date(subscription.current_period_end * 1000),
         })
+        .where(eq(schema.customer.subscriptionId, subscription.id))
         .execute();
       break;
     }
@@ -113,13 +112,13 @@ export async function handleEvent(event: Stripe.Event) {
           : subscription.customer.id;
 
       await db
-        .updateTable("Customer")
-        .where("stripeId", "=", customerId)
+        .update(schema.customer)
         .set({
           subscriptionId: null,
           plan: "FREE",
           paidUntil: null,
         })
+        .where(eq(schema.customer.stripeId, customerId))
         .execute();
       break;
     }
@@ -135,12 +134,12 @@ export async function handleEvent(event: Stripe.Event) {
       );
 
       await db
-        .updateTable("Customer")
-        .where("stripeId", "=", customerId)
+        .update(schema.customer)
         .set({
           plan: subscriptionPlan?.key,
           paidUntil: new Date(subscription.current_period_end * 1000),
         })
+        .where(eq(schema.customer.stripeId, customerId))
         .execute();
       break;
     }

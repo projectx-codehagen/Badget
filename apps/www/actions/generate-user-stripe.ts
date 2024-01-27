@@ -1,11 +1,11 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { api } from "@/trpc/server";
 import { currentUser } from "@clerk/nextjs";
 
 import { stripe } from "@projectx/stripe";
 
-import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { absoluteUrl } from "@/lib/utils";
 
 export type responseAction = {
@@ -28,12 +28,12 @@ export async function generateUserStripe(
       throw new Error("Unauthorized");
     }
 
-    const subscriptionPlan = await getUserSubscriptionPlan(user.id);
+    const subscription = await api.auth.mySubscription.query();
 
-    if (subscriptionPlan.isPaid && subscriptionPlan.stripeCustomerId) {
+    if (subscription?.isPaid && subscription?.stripeId) {
       // User on Paid Plan - Create a portal session to manage subscription.
       const stripeSession = await stripe.billingPortal.sessions.create({
-        customer: subscriptionPlan.stripeCustomerId,
+        customer: subscription.stripeId,
         return_url: billingUrl,
       });
 

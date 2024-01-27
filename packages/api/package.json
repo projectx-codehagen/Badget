@@ -4,7 +4,11 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./env": "./src/env.mjs",
+    "./edge": "./src/edge.ts",
+    "./lambda": "./src/lambda.ts",
+    "./transformer": "./src/transformer.ts"
   },
   "typesVersions": {
     "*": {

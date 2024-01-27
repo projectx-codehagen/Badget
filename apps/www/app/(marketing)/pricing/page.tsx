@@ -1,6 +1,6 @@
+import { api } from "@/trpc/server";
 import { currentUser } from "@clerk/nextjs";
 
-import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { PricingCards } from "@/components/pricing-cards";
 import { PricingFaq } from "@/components/pricing-faq";
 
@@ -12,11 +12,7 @@ export const metadata = {
 
 export default async function PricingPage() {
   const user = await currentUser();
-  let subscriptionPlan;
-
-  if (user) {
-    subscriptionPlan = await getUserSubscriptionPlan(user.id);
-  }
+  const subscriptionPlan = await api.auth.mySubscription.query();
 
   return (
     <div className="flex w-full flex-col gap-16 py-8 md:py-8">

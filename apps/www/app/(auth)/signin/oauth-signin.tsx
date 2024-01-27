@@ -38,18 +38,6 @@ export function OAuthSignIn() {
       <Button
         variant="outline"
         className="bg-background"
-        onClick={() => oauthSignIn("oauth_github")}
-      >
-        {isLoading === "oauth_github" ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}
-        Github
-      </Button>
-      <Button
-        variant="outline"
-        className="bg-background"
         onClick={() => oauthSignIn("oauth_google")}
       >
         {isLoading === "oauth_google" ? (

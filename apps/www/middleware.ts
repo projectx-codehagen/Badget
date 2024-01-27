@@ -28,12 +28,12 @@ export default authMiddleware({
       return NextResponse.redirect(url);
     }
 
-    if (req.nextUrl.pathname === "/dashboard") {
-      // /dashboard should redirect to the user's dashboard
-      // use their current workspace, i.e. /:orgId or /:userId
-      url.pathname = `/${auth.orgId ?? auth.userId}`;
-      return NextResponse.redirect(url);
-    }
+    // if (req.nextUrl.pathname === "/dashboard") {
+    //   // /dashboard should redirect to the user's dashboard
+    //   // use their current workspace, i.e. /:orgId or /:userId
+    //   url.pathname = `/${auth.orgId ?? auth.userId}`;
+    //   return NextResponse.redirect(url);
+    // }
 
     /**
      * TODO: I'd prefer not showing the ID in the URL but
@@ -46,33 +46,33 @@ export default authMiddleware({
      * TODO: Decide if redirects should 404 or redirect to /
      */
 
-    const workspaceId = parts[0];
-    const isOrg = workspaceId?.startsWith("org_");
-    if (isOrg && auth.orgId !== workspaceId) {
-      // User is accessing an org that's not their active one
-      // Check if they have access to it
-      const orgs = await clerkClient.users.getOrganizationMembershipList({
-        userId: auth.userId,
-      });
-      const hasAccess = orgs.some((org) => org.id === workspaceId);
-      if (!hasAccess) {
-        url.pathname = `/`;
-        return NextResponse.redirect(url);
-      }
+    // const workspaceId = parts[0];
+    // const isOrg = workspaceId?.startsWith("org_");
+    // if (isOrg && auth.orgId !== workspaceId) {
+    //   // User is accessing an org that's not their active one
+    //   // Check if they have access to it
+    //   const orgs = await clerkClient.users.getOrganizationMembershipList({
+    //     userId: auth.userId,
+    //   });
+    //   const hasAccess = orgs.some((org) => org.id === workspaceId);
+    //   if (!hasAccess) {
+    //     url.pathname = `/`;
+    //     return NextResponse.redirect(url);
+    //   }
 
-      // User has access to the org, let them pass.
-      // TODO: Set the active org to the one they're accessing
-      // so that we don't need to do this client-side.
-      // This is currently not possible with Clerk but will be.
-      return NextResponse.next();
-    }
+    //   // User has access to the org, let them pass.
+    //   // TODO: Set the active org to the one they're accessing
+    //   // so that we don't need to do this client-side.
+    //   // This is currently not possible with Clerk but will be.
+    //   return NextResponse.next();
+    // }
 
-    const isUser = workspaceId?.startsWith("user_");
-    if (isUser && auth.userId !== workspaceId) {
-      // User is accessing a user that's not them
-      url.pathname = `/`;
-      return NextResponse.redirect(url);
-    }
+    // const isUser = workspaceId?.startsWith("user_");
+    // if (isUser && auth.userId !== workspaceId) {
+    //   // User is accessing a user that's not them
+    //   url.pathname = `/`;
+    //   return NextResponse.redirect(url);
+    // }
 
     return NextResponse.next();
   },

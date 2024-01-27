@@ -2,8 +2,9 @@ import { headers } from "next/headers";
 import { createTRPCClient, loggerLink } from "@trpc/client";
 
 import type { AppRouter } from "@projectx/api";
+import { transformer } from "@projectx/api/transformer";
 
-import { endingLink, transformer } from "./shared";
+import { endingLink } from "./shared";
 
 export const api = createTRPCClient<AppRouter>({
   transformer: transformer,
