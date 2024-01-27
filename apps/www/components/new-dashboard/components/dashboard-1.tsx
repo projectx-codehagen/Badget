@@ -91,11 +91,11 @@ export function Dashboard({
         >
           <div
             className={cn(
-              "flex h-[52px] items-center justify-center",
+              "flex h-[52px] items-center justify-center px-2",
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <WorkspaceSwitcher />
+            <WorkspaceSwitcher isCollapsed={isCollapsed} />
             {/* <AccountSwitcher
               isCollapsed={isCollapsed}
               accounts={accounts}

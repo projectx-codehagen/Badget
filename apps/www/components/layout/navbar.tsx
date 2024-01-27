@@ -2,7 +2,6 @@
 
 import { MainNavItem } from "@/types";
 import { UserButton } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/dist/types/server";
 
 import useScroll from "@/hooks/use-scroll";
 import { useSigninModal } from "@/hooks/use-signin-modal";
@@ -43,17 +42,6 @@ export function NavBar({
 
         <div className="flex items-center space-x-3">
           {rightElements}
-
-          {/* {!user ? (
-              <Link
-                href="/login"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "sm" })
-                )}
-              >
-                Login Page
-              </Link>
-            ) : null} */}
 
           {user ? (
             <UserButton />

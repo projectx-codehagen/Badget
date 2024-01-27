@@ -13,7 +13,13 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  const user = await currentUser();
+  const clerkUser = await currentUser();
+
+  const user = {
+    imageUrl: clerkUser?.imageUrl ?? "vercel",
+    username: clerkUser?.username ?? "",
+    email: clerkUser?.emailAddresses[0].emailAddress ?? "",
+  };
 
   if (!user) {
     return notFound();

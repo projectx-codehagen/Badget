@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/trpc/client";
 import { useOrganization, useOrganizationList, useUser } from "@clerk/nextjs";
 import { toDecimal } from "dinero.js";
-import { Check, ChevronsUpDown, PlusCircle } from "lucide-react";
+import { Check, ChevronDown, ChevronsUpDown, PlusCircle } from "lucide-react";
 
 import type { PurchaseOrg } from "@projectx/validators";
 import { purchaseOrgSchema } from "@projectx/validators";
@@ -56,7 +56,11 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 
-export function WorkspaceSwitcher() {
+type WorkspaceSwitcherProps = {
+  isCollapsed: boolean;
+};
+
+export function WorkspaceSwitcher({ isCollapsed }: WorkspaceSwitcherProps) {
   const router = useRouter();
 
   const [switcherOpen, setSwitcherOpen] = React.useState(false);
@@ -92,7 +96,7 @@ export function WorkspaceSwitcher() {
         <Avatar className="mr-2 h-5 w-5">
           <AvatarFallback>Ac</AvatarFallback>
         </Avatar>
-        Select a workspace
+        <span className={cn(isCollapsed && "hidden")}>Select a workspace</span>
         <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0" />
       </Button>
     );
@@ -114,19 +118,21 @@ export function WorkspaceSwitcher() {
             role="combobox"
             aria-expanded={switcherOpen}
             aria-label="Select a workspace"
-            className="w-52 justify-between"
+            className="w-full items-center justify-center border px-0"
           >
-            <Avatar className="mr-2 h-5 w-5">
+            <Avatar className={cn("h-5 w-5", !isCollapsed && "mr-2")}>
               <AvatarImage src={normalizedObject?.image ?? ""} />
               <AvatarFallback>
                 {normalizedObject.name?.substring(0, 2)}
               </AvatarFallback>
             </Avatar>
-            {normalizedObject.name}
-            <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+            <span className={cn("ml-2", isCollapsed && "hidden")}>
+              {normalizedObject.name}
+              <ChevronDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+            </span>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-52 p-0">
+        <PopoverContent className="ml-2 w-52 p-0">
           <Command>
             <CommandList>
               <CommandInput placeholder="Search workspace..." />

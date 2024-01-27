@@ -31,7 +31,13 @@ const rightHeader = () => (
 );
 
 export default async function DocsLayout({ children }: DocsLayoutProps) {
-  const user = await currentUser();
+  const clerkUser = await currentUser();
+
+  const user = {
+    imageUrl: clerkUser?.imageUrl ?? "vercel",
+    username: clerkUser?.username ?? "",
+    email: clerkUser?.emailAddresses[0].emailAddress ?? "",
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
