@@ -15,15 +15,13 @@
   </a>
 </p>
 
-<ol align="center">
-  <li><a href="#introduction"><strong>Introduction</strong></a></li>
-  <li><a href="#installation"><strong>Installation</strong></a></li>
-  <ul>
-    <li><a href="#tech-stack--features"><strong>Tech Stack + Features</strong></a></li>
-    <li><a href="#author"><strong>Author</strong></a></li>
-    <li><a href="#contributing"><strong>Credits</strong></a></li>
-  </ul>
-</ol>
+<p align="center">
+  <a href="#introduction"><strong>Introduction</strong></a> ·
+  <a href="#installation"><strong>Installation</strong></a> ·
+  <a href="#tech-stack--features"><strong>Tech Stack + Features</strong></a> ·
+  <a href="#author"><strong>Author</strong></a> ·
+  <a href="#contributing"><strong>Credits</strong></a>
+</p>
 <br/>
 
 ## Introduction
