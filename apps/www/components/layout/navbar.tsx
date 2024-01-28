@@ -8,6 +8,7 @@ import { useSigninModal } from "@/hooks/use-signin-modal";
 import { Button } from "@/components/ui/button";
 
 import { MainNav } from "./main-nav";
+import { UserAccountNav } from "./user-account-nav";
 
 interface NavBarProps {
   user: {
@@ -44,7 +45,7 @@ export function NavBar({
           {rightElements}
 
           {user ? (
-            <UserButton />
+            <UserAccountNav user={user} />
           ) : (
             <Button
               className="px-3"
