@@ -204,7 +204,7 @@ export default function PrimarySidebar(props: PrimarySidebarProps) {
             label: "",
             icon: Settings,
             variant: "ghost",
-            link: "/dashboard/settings",
+            link: "/settings",
           },
         ]}
       />
