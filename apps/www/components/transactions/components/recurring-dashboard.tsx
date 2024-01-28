@@ -21,25 +21,19 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AccountsList } from "@/components/accounts/components/accounts-list";
 import { TopCategoriesTable } from "@/components/new-dashboard/components/top-categories-table";
 import { CategoriesTable } from "@/components/recurring/components/allocation-table";
 import { CategoriesDisplay } from "@/components/recurring/components/categories-display";
-import { HoldingsTable } from "@/components/recurring/components/holdings-table";
 import { Investmentcards } from "@/components/recurring/components/investment-cards";
-import { SmallInvestmentCard } from "@/components/recurring/components/small-investment-card";
 import { RecurringSpentSoFarCard } from "@/components/recurring/components/total-balance-card";
 import { mails } from "@/components/recurring/data";
-import { AccountSwitcher } from "@/components/transactions/components/account-switcher";
 import { RecurringTableNext } from "@/components/transactions/components/allocation-table-next";
 import { Nav } from "@/components/transactions/components/nav";
 import { Mail } from "@/components/transactions/data";

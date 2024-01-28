@@ -25,7 +25,7 @@ export default async function SettingsPage() {
       />
       <div className="grid gap-10">
         <UserNameForm
-          user={{ id: user?.id ?? "", name: user?.username ?? "" }}
+          user={{ id: user?.id ?? "", username: user?.username ?? "" }}
         />
       </div>
     </DashboardShell>
