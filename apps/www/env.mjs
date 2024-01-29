@@ -3,7 +3,9 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    DATABASE_URL: z.string().min(1),
+    DATABASE_HOST: z.string().min(1),
+    DATABASE_USERNAME: z.string().min(1),
+    DATABASE_PASSWORD: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     TEST_EMAIL_ADDRESS: z.string().min(1),
     STRIPE_API_KEY: z.string().min(1),
@@ -19,7 +21,9 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID: z.string().min(1),
   },
   runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_HOST: process.env.DATABASE_HOST,
+    DATABASE_USERNAME: process.env.DATABASE_USERNAME,
+    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     TEST_EMAIL_ADDRESS: process.env.TEST_EMAIL_ADDRESS,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,

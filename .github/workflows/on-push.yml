@@ -24,7 +24,6 @@ jobs:
     env:
       NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_
       CLERK_SECRET_KEY: sk_test_
-      DATABASE_URL: http://example.com
       DATABASE_HOST: ignore
       DATABASE_NAME: ignore
       DATABASE_USERNAME: ignore
