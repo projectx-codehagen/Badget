@@ -133,7 +133,9 @@ export function WorkspaceSwitcher({ isCollapsed }: WorkspaceSwitcherProps) {
                   {normalizedObject.name?.substring(0, 2)}
                 </AvatarFallback>
               </Avatar>
-              <span className={cn(isCollapsed && "hidden")}>
+              <span
+                className={cn("whitespace-nowrap", isCollapsed && "hidden")}
+              >
                 {normalizedObject.name}
               </span>
             </div>

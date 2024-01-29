@@ -1,21 +1,16 @@
 "use client";
 
 import { MainNavItem } from "@/types";
-import { UserButton } from "@clerk/nextjs";
 
 import useScroll from "@/hooks/use-scroll";
 import { useSigninModal } from "@/hooks/use-signin-modal";
 import { Button } from "@/components/ui/button";
 
 import { MainNav } from "./main-nav";
-import { UserAccountNav } from "./user-account-nav";
+import { NormalizedUser, UserAccountNav } from "./user-account-nav";
 
 interface NavBarProps {
-  user: {
-    username: string;
-    email: string;
-    imageUrl: string;
-  };
+  user: NormalizedUser | null;
   items?: MainNavItem[];
   children?: React.ReactNode;
   rightElements?: React.ReactNode;

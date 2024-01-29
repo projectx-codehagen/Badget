@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs";
 
 import { docsConfig } from "@/config/docs";
 import { siteConfig } from "@/config/site";
+import { normalizeUser } from "@/lib/utils";
 import { DocsSearch } from "@/components/docs/search";
 import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
 import { NavBar } from "@/components/layout/navbar";
@@ -32,12 +33,7 @@ const rightHeader = () => (
 
 export default async function DocsLayout({ children }: DocsLayoutProps) {
   const clerkUser = await currentUser();
-
-  const user = {
-    imageUrl: clerkUser?.imageUrl ?? "vercel",
-    username: clerkUser?.username ?? "",
-    email: clerkUser?.emailAddresses[0].emailAddress ?? "",
-  };
+  const user = normalizeUser(clerkUser);
 
   return (
     <div className="flex min-h-screen flex-col">

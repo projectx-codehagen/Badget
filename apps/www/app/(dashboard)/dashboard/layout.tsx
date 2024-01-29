@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
 
 import { dashboardConfig } from "@/config/dashboard";
+import { normalizeUser } from "@/lib/utils";
 import { NavBar } from "@/components/layout/navbar";
 import { SiteFooter } from "@/components/layout/site-footer";
 
@@ -13,16 +13,7 @@ export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   const clerkUser = await currentUser();
-
-  const user = {
-    imageUrl: clerkUser?.imageUrl ?? "vercel",
-    username: clerkUser?.username ?? "",
-    email: clerkUser?.emailAddresses[0].emailAddress ?? "",
-  };
-
-  if (!user) {
-    return notFound();
-  }
+  const user = normalizeUser(clerkUser);
 
   return (
     <div className="flex min-h-screen flex-col">

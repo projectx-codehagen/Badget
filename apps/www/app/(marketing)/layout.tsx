@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { currentUser } from "@clerk/nextjs";
 
 import { marketingConfig } from "@/config/marketing";
+import { normalizeUser } from "@/lib/utils";
 import { NavBar } from "@/components/layout/navbar";
 import { SiteFooter } from "@/components/layout/site-footer";
 
@@ -13,12 +14,7 @@ export default async function MarketingLayout({
   children,
 }: MarketingLayoutProps) {
   const clerkUser = await currentUser();
-
-  const user = {
-    imageUrl: clerkUser?.imageUrl ?? "vercel",
-    username: clerkUser?.username ?? "",
-    email: clerkUser?.emailAddresses[0].emailAddress ?? "",
-  };
+  const user = normalizeUser(clerkUser);
 
   return (
     <div className="flex min-h-screen flex-col">

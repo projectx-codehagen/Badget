@@ -15,12 +15,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/shared/user-avatar";
 
+export type NormalizedUser = {
+  name: string;
+  email: string;
+  imageUrl: string;
+};
+
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user: {
-    username: string;
-    email: string;
-    imageUrl: string;
-  };
+  user: NormalizedUser;
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
@@ -32,8 +34,8 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
       <DropdownMenuTrigger>
         <UserAvatar
           user={{
-            username: user?.username ?? null,
-            imageUrl: user?.imageUrl ?? null,
+            username: user.name,
+            imageUrl: user.imageUrl,
           }}
           className="h-8 w-8"
         />
@@ -41,10 +43,10 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user?.username && <p className="font-medium">{user?.username}</p>}
-            {user?.email && (
+            {user.name && <p className="font-medium">{user.name}</p>}
+            {user.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {user?.email}
+                {user.email}
               </p>
             )}
           </div>
