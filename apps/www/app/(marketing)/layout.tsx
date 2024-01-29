@@ -1,7 +1,8 @@
 import { Suspense } from "react";
+import { currentUser } from "@clerk/nextjs";
 
 import { marketingConfig } from "@/config/marketing";
-import { getCurrentUser } from "@/lib/session";
+import { normalizeUser } from "@/lib/utils";
 import { NavBar } from "@/components/layout/navbar";
 import { SiteFooter } from "@/components/layout/site-footer";
 
@@ -12,7 +13,8 @@ interface MarketingLayoutProps {
 export default async function MarketingLayout({
   children,
 }: MarketingLayoutProps) {
-  const user = await getCurrentUser();
+  const clerkUser = await currentUser();
+  const user = normalizeUser(clerkUser);
 
   return (
     <div className="flex min-h-screen flex-col">

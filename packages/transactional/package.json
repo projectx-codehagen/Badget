@@ -1,0 +1,50 @@
+{
+  "name": "@projectx/transactional",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./env": "./src/env.mjs"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "workspaces": [
+    ".react-email"
+  ],
+  "scripts": {
+    "clean": "git clean -xdf .turbo .react-email node_modules",
+    "dev": "email dev -p 3001",
+    "export": "email export",
+    "lint": "eslint . --no-error-on-unmatched-pattern",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-email/components": "0.0.14",
+    "@t3-oss/env-nextjs": "^0.7.1",
+    "react-email": "^2.0.0",
+    "resend": "^3.1.0"
+  },
+  "devDependencies": {
+    "@projectx/eslint-config": "workspace:0.2.0",
+    "@projectx/prettier-config": "workspace:^0.1.0",
+    "@projectx/tailwind-config": "workspace:^0.1.0",
+    "@projectx/tsconfig": "workspace:^0.1.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@projectx/eslint-config/base"
+    ]
+  },
+  "prettier": "@projectx/prettier-config"
+}

@@ -1,9 +1,10 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { UserSubscriptionPlan } from "@/types";
 import Balancer from "react-wrap-balancer";
+
+import { RouterOutputs } from "@projectx/api";
 
 import { pricingData } from "@/config/subscriptions";
 import { useSigninModal } from "@/hooks/use-signin-modal";
@@ -14,14 +15,11 @@ import { Icons } from "@/components/shared/icons";
 
 interface PricingCardsProps {
   userId?: string;
-  subscriptionPlan?: UserSubscriptionPlan;
+  subscriptionPlan?: RouterOutputs["auth"]["mySubscription"];
 }
 
 export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
-  const isYearlyDefault =
-    !subscriptionPlan?.interval || subscriptionPlan.interval === "year"
-      ? true
-      : false;
+  const isYearlyDefault = false; // TODO: review when business model is defined
   const [isYearly, setIsYearly] = useState<boolean>(!!isYearlyDefault);
   const signInModal = useSigninModal();
 
@@ -70,7 +68,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
                         <span className="mr-2 text-muted-foreground line-through">
                           ${offer.prices.monthly}
                         </span>
-                        <span>${offer.prices.yearly / 12}</span>
+                        <span>${offer.prices.monthly * 12}</span>
                       </>
                     ) : (
                       `$${offer.prices.monthly}`
@@ -84,7 +82,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
               {offer.prices.monthly > 0 ? (
                 <div className="text-left text-sm text-muted-foreground">
                   {isYearly
-                    ? `$${offer.prices.yearly} will be charged when annual`
+                    ? `$${offer.prices.monthly * 12} will be charged when annual`
                     : "when charged monthly"}
                 </div>
               ) : null}

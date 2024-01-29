@@ -51,8 +51,8 @@ const features = [
     ),
   },
   {
-    title: "Prisma",
-    href: "https://www.prisma.io/",
+    title: "Drizzle ORM",
+    href: "https://orm.drizzle.team/",
     icon: (
       <svg
         className="h-9 w-auto"

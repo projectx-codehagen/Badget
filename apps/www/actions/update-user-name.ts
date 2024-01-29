@@ -1,11 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
+import { clerkClient } from "@clerk/nextjs";
 
-import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/db";
-import { userNameSchema } from "@/lib/validations/user";
+import { userNameSchema } from "@projectx/validators";
 
 export type FormData = {
   name: string;
@@ -13,28 +11,15 @@ export type FormData = {
 
 export async function updateUserName(userId: string, data: FormData) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session?.user.id !== userId) {
-      throw new Error("Unauthorized");
-    }
-
     const { name } = userNameSchema.parse(data);
-
-    // Update the user name.
-    await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        name: name,
-      },
+    await clerkClient.users.updateUser(userId, {
+      username: name,
     });
 
     revalidatePath("/dashboard/settings");
     return { status: "success" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return { status: "error" };
   }
 }

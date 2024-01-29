@@ -1,19 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import { MainNavItem } from "@/types";
-import { User } from "next-auth";
 
-import { cn } from "@/lib/utils";
 import useScroll from "@/hooks/use-scroll";
 import { useSigninModal } from "@/hooks/use-signin-modal";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 import { MainNav } from "./main-nav";
-import { UserAccountNav } from "./user-account-nav";
+import { NormalizedUser, UserAccountNav } from "./user-account-nav";
 
 interface NavBarProps {
-  user: Pick<User, "name" | "image" | "email"> | undefined;
+  user: NormalizedUser | null;
   items?: MainNavItem[];
   children?: React.ReactNode;
   rightElements?: React.ReactNode;
@@ -41,17 +38,6 @@ export function NavBar({
 
         <div className="flex items-center space-x-3">
           {rightElements}
-
-          {/* {!user ? (
-              <Link
-                href="/login"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "sm" })
-                )}
-              >
-                Login Page
-              </Link>
-            ) : null} */}
 
           {user ? (
             <UserAccountNav user={user} />

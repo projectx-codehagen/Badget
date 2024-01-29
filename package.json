@@ -10,24 +10,25 @@
   "engines": {
     "node": ">=v20.10.0"
   },
-  "packageManager": "pnpm@8.9.2",
+  "packageManager": "pnpm@8.14.3",
   "scripts": {
     "clean": "git clean -xdf node_modules dist .next",
     "clean:workspaces": "turbo clean",
     "build": "turbo build",
-    "dev": "turbo dev --parallel",
-    "dev:web": "turbo dev --parallel --filter !@projectx/db",
+    "dev": "turbo dev --parallel --filter=!react-email-client",
+    "dev:web": "turbo dev --parallel --filter !@projectx/transactional --filter=!react-email-client",
+    "dev:email": "turbo dev --parallel --filter !www --filter=!react-email-client",
     "test": "turbo test",
-    "email": "email dev --dir emails --port 3333",
     "db:push": "pnpm -F db push",
     "db:studio": "pnpm -F db studio",
-    "format": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
-    "format:check": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
-    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
-    "typecheck": "turbo typecheck"
+    "format": "turbo format --filter=!react-email-client --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "format:check": "turbo format --filter=!react-email-client --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
+    "lint:ws": "pnpm dlx sherif@latest",
+    "typecheck": "turbo typecheck --filter=!react-email-client"
   },
   "dependencies": {
-    "@manypkg/cli": "^0.21.0",
     "@projectx/prettier-config": "^0.1.0",
     "prettier": "^3.2.4",
     "turbo": "^1.11.3",

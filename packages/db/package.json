@@ -2,9 +2,6 @@
   "name": "@projectx/db",
   "version": "0.1.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "license": "MIT",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
@@ -17,29 +14,31 @@
       ]
     }
   },
+  "license": "MIT",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint . --no-error-on-unmatched-pattern",
     "push": "drizzle-kit push:mysql",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@planetscale/database": "^1.13.0",
-    "drizzle-orm": "^0.29.2"
+    "@planetscale/database": "^1.14.0",
+    "drizzle-orm": "^0.29.3"
   },
   "devDependencies": {
-    "@projectx/eslint-config": "^0.2.0",
-    "@projectx/prettier-config": "^0.1.0",
-    "@projectx/tsconfig": "^0.1.0",
+    "@projectx/eslint-config": "workspace:^0.2.0",
+    "@projectx/prettier-config": "workspace:^0.1.0",
+    "@projectx/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.8",
+    "drizzle-kit": "^0.20.13",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
+    "root": true,
     "extends": [
       "@projectx/eslint-config/base"
     ]

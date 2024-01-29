@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useSignIn } from "@clerk/nextjs";
+import { OAuthStrategy } from "@clerk/nextjs/dist/types/server";
 
 import { siteConfig } from "@/config/site";
 import { useSigninModal } from "@/hooks/use-signin-modal";
@@ -9,9 +10,34 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 import { Modal } from "@/components/shared/modal";
 
+import { useToast } from "../ui/use-toast";
+
 export const SignInModal = () => {
-  const signInModal = useSigninModal();
+  const [isLoading, setIsLoading] = useState<OAuthStrategy | null>(null);
   const [signInClicked, setSignInClicked] = useState(false);
+  const { signIn, isLoaded: signInLoaded } = useSignIn();
+  const signInModal = useSigninModal();
+  const { toast } = useToast();
+
+  const oauthSignIn = async (provider: OAuthStrategy) => {
+    if (!signInLoaded) return null;
+    try {
+      setIsLoading(provider);
+      await signIn.authenticateWithRedirect({
+        strategy: provider,
+        redirectUrl: "/sso-callback",
+        redirectUrlComplete: "/dashboard",
+      });
+    } catch (cause) {
+      console.error(cause);
+      setIsLoading(null);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Something went wrong, please try again.",
+      });
+    }
+  };
 
   return (
     <Modal showModal={signInModal.isOpen} setShowModal={signInModal.onClose}>
@@ -35,10 +61,7 @@ export const SignInModal = () => {
             disabled={signInClicked}
             onClick={() => {
               setSignInClicked(true);
-              signIn("google", {
-                redirect: false,
-                callbackUrl: "/dashboard",
-              }).then(() =>
+              oauthSignIn("oauth_google").then(() =>
                 // TODO: fix this without setTimeOut(), modal closes too quickly. Idea: update value before redirect
                 setTimeout(() => {
                   signInModal.onClose();

@@ -1,0 +1,45 @@
+{
+  "name": "@projectx/stripe",
+  "private": true,
+  "version": "0.1.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./plans": "./src/plans.ts",
+    "./env": "./src/env.mjs"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "dev": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
+    "lint": "eslint . --no-error-on-unmatched-pattern",
+    "format": "prettier --check \"**/*.{mjs,ts,json}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@projectx/db": "^0.1.0",
+    "@clerk/nextjs": "^4.29.4",
+    "@t3-oss/env-nextjs": "^0.7.1",
+    "stripe": "^14.13.0"
+  },
+  "devDependencies": {
+    "@projectx/eslint-config": "^0.2.0",
+    "@projectx/prettier-config": "^0.1.0",
+    "@projectx/tsconfig": "^0.1.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@projectx/eslint-config/base"
+    ]
+  },
+  "prettier": "@projectx/prettier-config"
+}

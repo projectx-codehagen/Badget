@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 
-import { Metadata } from "next";
 import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import { siteConfig } from "@/config/site";
 import { EdgeStoreProvider } from "@/lib/edgestore";
@@ -55,24 +55,26 @@ export const metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-          fontUrban.variable,
-          fontHeading.variable,
-        )}
-      >
-        <Providers attribute="class" defaultTheme="system" enableSystem>
-          <EdgeStoreProvider>{children}</EdgeStoreProvider>
-          <Analytics />
-          <Toaster />
-          <ModalProvider />
-          <TailwindIndicator />
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <head />
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable,
+            fontUrban.variable,
+            fontHeading.variable,
+          )}
+        >
+          <Providers attribute="class" defaultTheme="system" enableSystem>
+            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+            <Analytics />
+            <Toaster />
+            <ModalProvider />
+            <TailwindIndicator />
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

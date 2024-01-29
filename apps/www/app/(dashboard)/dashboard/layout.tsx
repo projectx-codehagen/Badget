@@ -1,8 +1,7 @@
-import { notFound } from "next/navigation";
+import { currentUser } from "@clerk/nextjs";
 
 import { dashboardConfig } from "@/config/dashboard";
-import { getCurrentUser } from "@/lib/session";
-import { DashboardNav } from "@/components/layout/nav";
+import { normalizeUser } from "@/lib/utils";
 import { NavBar } from "@/components/layout/navbar";
 import { SiteFooter } from "@/components/layout/site-footer";
 
@@ -13,11 +12,8 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    return notFound();
-  }
+  const clerkUser = await currentUser();
+  const user = normalizeUser(clerkUser);
 
   return (
     <div className="flex min-h-screen flex-col">

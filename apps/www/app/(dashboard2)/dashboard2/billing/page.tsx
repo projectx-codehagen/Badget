@@ -1,14 +1,9 @@
-import { redirect } from "next/navigation";
+import { api } from "@/trpc/server";
+import { currentUser } from "@clerk/nextjs";
 
-import { authOptions } from "@/lib/auth";
-import { getCurrentUser } from "@/lib/session";
-import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { BillingInfo } from "@/components/billing-info";
-import { LanugageButton } from "@/components/buttons/LanguageButton";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
-import { Icons } from "@/components/shared/icons";
 
 export const metadata = {
   title: "Projectx Billing - Subscription Management",
@@ -17,13 +12,8 @@ export const metadata = {
 };
 
 export default async function BillingPage() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login");
-  }
-
-  const subscriptionPlan = await getUserSubscriptionPlan(user.id);
+  const user = await currentUser();
+  const subscriptionPlan = await api.auth.mySubscription.query();
 
   return (
     <DashboardShell>
@@ -49,7 +39,7 @@ export default async function BillingPage() {
             .
           </AlertDescription>
         </Alert> */}
-        <BillingInfo subscriptionPlan={subscriptionPlan} />
+        <BillingInfo subscriptionPlan={subscriptionPlan!} />
       </div>
       {/* <LanugageButton userId={user.id} /> */}
     </DashboardShell>

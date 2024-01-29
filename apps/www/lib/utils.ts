@@ -1,8 +1,10 @@
+import { User } from "@clerk/nextjs/dist/types/server";
 import { clsx, type ClassValue } from "clsx";
 import ms from "ms";
 import { twMerge } from "tailwind-merge";
 
 import { env } from "@/env.mjs";
+import { NormalizedUser } from "@/components/layout/user-account-nav";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -100,3 +102,16 @@ export function isValidJSONString(str: string) {
   }
   return true;
 }
+
+export const normalizeUser = (clerkUser: User | null) => {
+  return !clerkUser
+    ? null
+    : ({
+        name: `${clerkUser.firstName} ${clerkUser.lastName}`, // TODO: fallback to username
+        email:
+          clerkUser.emailAddresses.find(
+            (e) => e.id === clerkUser.primaryEmailAddressId,
+          )?.emailAddress ?? clerkUser.emailAddresses[0].emailAddress,
+        imageUrl: clerkUser.imageUrl,
+      } satisfies NormalizedUser);
+};

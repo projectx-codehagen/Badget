@@ -1,0 +1,12 @@
+{
+  "extends": "@projectx/tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+    },
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+  },
+  "include": ["*.ts", "*.mjs", "src", "emails"],
+  "exclude": ["node_modules"],
+}
