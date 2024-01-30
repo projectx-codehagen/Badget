@@ -161,7 +161,7 @@ export function TransactionsDashboard({
                 label: "",
                 icon: Wallet,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/savemoney",
               },
               {
                 title: "Grow Assets",

@@ -103,7 +103,7 @@ export function SaveMoneyDashboard({
                 title: "Dashboard",
                 label: "",
                 icon: LayoutDashboard,
-                variant: "default",
+                variant: "ghost",
                 link: "/dashboard/",
               },
               {
@@ -158,8 +158,8 @@ export function SaveMoneyDashboard({
                 title: "Save Money",
                 label: "",
                 icon: Wallet,
-                variant: "ghost",
-                link: "/dashboard/",
+                variant: "default",
+                link: "/dashboard/savemoney",
               },
               {
                 title: "Grow Assets",
