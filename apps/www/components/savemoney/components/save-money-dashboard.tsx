@@ -29,15 +29,13 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
-import { AccountSwitcher } from "./account-switcher";
 import { Nav } from "./nav";
 import { SankeyCard } from "./sankey-card";
 import { CardsStats } from "./stats";
-import { TopCategoriesTable } from "./top-categories-table";
-import { TransactionsReviewTable } from "./transaction-review-table";
 
 interface DashboardProps {
   accounts: {
@@ -49,7 +47,6 @@ interface DashboardProps {
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;
-  workspace: {};
 }
 
 export function SaveMoneyDashboard({
@@ -58,7 +55,6 @@ export function SaveMoneyDashboard({
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
-  workspace,
 }: DashboardProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
   const [mail] = useMail();
@@ -97,11 +93,7 @@ export function SaveMoneyDashboard({
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <AccountSwitcher
-              isCollapsed={isCollapsed}
-              accounts={accounts}
-              workspace={workspace}
-            />
+            <WorkspaceSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
@@ -111,7 +103,7 @@ export function SaveMoneyDashboard({
                 title: "Dashboard",
                 label: "",
                 icon: LayoutDashboard,
-                variant: "default",
+                variant: "ghost",
                 link: "/dashboard/",
               },
               {
@@ -166,8 +158,8 @@ export function SaveMoneyDashboard({
                 title: "Save Money",
                 label: "",
                 icon: Wallet,
-                variant: "ghost",
-                link: "/dashboard/",
+                variant: "default",
+                link: "/dashboard/savemoney",
               },
               {
                 title: "Grow Assets",

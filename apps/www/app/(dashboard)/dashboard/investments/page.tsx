@@ -2,9 +2,6 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-import { authOptions } from "@/lib/auth";
-import { getCurrentUser } from "@/lib/session";
-import { isValidJSONString } from "@/lib/utils";
 import { InvestmentsDashboard } from "@/components/investments/components/investment-dashboard";
 import { accounts, mails } from "@/components/investments/data";
 

@@ -1,0 +1,42 @@
+{
+  "name": "@projectx/validators",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint . --no-error-on-unmatched-pattern",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@projectx/stripe": "workspace:^0.1.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@projectx/eslint-config": "workspace:^0.2.0",
+    "@projectx/prettier-config": "workspace:^0.1.0",
+    "@projectx/tsconfig": "workspace:^0.1.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@projectx/eslint-config/base"
+    ]
+  },
+  "prettier": "@projectx/prettier-config"
+}

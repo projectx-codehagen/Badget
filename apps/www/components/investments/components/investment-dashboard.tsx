@@ -21,23 +21,19 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TopCategoriesTable } from "@/components/new-dashboard/components/top-categories-table";
+import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
-import { AccountSwitcher } from "./account-switcher";
 import { AccountsDisplay } from "./accounts-display";
-import { AccountsList } from "./accounts-list";
-import { AllocationSection } from "./allocation-section";
 import { AllocationTable } from "./allocation-table";
 import { HoldingsTable } from "./holdings-table";
 import { Investmentcards } from "./investment-cards";
@@ -101,7 +97,7 @@ export function InvestmentsDashboard({
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+            <WorkspaceSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
@@ -167,7 +163,7 @@ export function InvestmentsDashboard({
                 label: "",
                 icon: Wallet,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/savemoney",
               },
               {
                 title: "Grow Assets",

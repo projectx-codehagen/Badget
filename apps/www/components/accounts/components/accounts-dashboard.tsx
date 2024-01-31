@@ -31,10 +31,10 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
-import { AccountSwitcher } from "./account-switcher";
 import { AccountsDisplay } from "./accounts-display";
 import { AccountsList } from "./accounts-list";
 import { Nav } from "./nav";
@@ -95,7 +95,7 @@ export function AccountsDashboard({
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+            <WorkspaceSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
@@ -161,7 +161,7 @@ export function AccountsDashboard({
                 label: "",
                 icon: Wallet,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/savemoney",
               },
               {
                 title: "Grow Assets",

@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs";
 
 import { docsConfig } from "@/config/docs";
 import { siteConfig } from "@/config/site";
-import { getCurrentUser } from "@/lib/session";
+import { normalizeUser } from "@/lib/utils";
 import { DocsSearch } from "@/components/docs/search";
 import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
 import { NavBar } from "@/components/layout/navbar";
@@ -31,7 +32,8 @@ const rightHeader = () => (
 );
 
 export default async function DocsLayout({ children }: DocsLayoutProps) {
-  const user = await getCurrentUser();
+  const clerkUser = await currentUser();
+  const user = normalizeUser(clerkUser);
 
   return (
     <div className="flex min-h-screen flex-col">

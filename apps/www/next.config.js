@@ -9,6 +9,14 @@ import("./env.mjs");
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+
+  transpilePackages: [
+    "@projectx/api",
+    "@projectx/db",
+    "@projectx/transactional",
+    "@projectx/validators",
+  ],
+
   images: {
     remotePatterns: [
       {
@@ -30,9 +38,6 @@ const nextConfig = {
         hostname: "tailwindui.com",
       },
     ],
-  },
-  experimental: {
-    serverComponentsExternalPackages: ["@prisma/client"],
   },
 };
 

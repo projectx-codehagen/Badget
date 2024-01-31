@@ -29,8 +29,8 @@
     "eslint-plugin-tailwindcss": "^3.14.0"
   },
   "devDependencies": {
-    "@projectx/prettier-config": "^0.1.0",
-    "@projectx/tsconfig": "^0.1.0",
+    "@projectx/prettier-config": "workspace:^0.1.0",
+    "@projectx/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3"
   },

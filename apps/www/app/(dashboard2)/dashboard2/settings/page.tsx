@@ -1,7 +1,5 @@
-import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs";
 
-import { authOptions } from "@/lib/auth";
-import { getCurrentUser } from "@/lib/session";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { UserNameForm } from "@/components/forms/user-name-form";
@@ -13,11 +11,7 @@ export const metadata = {
 };
 
 export default async function SettingsPage() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login");
-  }
+  const user = await currentUser();
 
   const handleUpdateUser = async (data) => {
     // ... logic to update the user
@@ -30,7 +24,9 @@ export default async function SettingsPage() {
         text="Manage account and website settings."
       />
       <div className="grid gap-10">
-        <UserNameForm user={{ id: user.id, name: user.name || "" }} />
+        <UserNameForm
+          user={{ id: user?.id ?? "", username: user?.username ?? "" }}
+        />
       </div>
     </DashboardShell>
   );

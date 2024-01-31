@@ -21,27 +21,22 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TopCategoriesTable } from "@/components/new-dashboard/components/top-categories-table";
+import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
-import { AccountSwitcher } from "./account-switcher";
-import { AccountsList } from "./accounts-list";
 import { CategoriesTable } from "./allocation-table";
 import { CategoriesDisplay } from "./categories-display";
-import { HoldingsTable } from "./holdings-table";
 import { Investmentcards } from "./investment-cards";
 import { Nav } from "./nav";
-import { SmallInvestmentCard } from "./small-investment-card";
 import { SpentSoFarCard } from "./total-balance-card";
 
 interface MailProps {
@@ -100,7 +95,7 @@ export function CategoriesDashboard({
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+            <WorkspaceSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
@@ -166,7 +161,7 @@ export function CategoriesDashboard({
                 label: "",
                 icon: Wallet,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/savemoney",
               },
               {
                 title: "Grow Assets",

@@ -2,12 +2,13 @@
 
 import { useTransition } from "react";
 import { updateUserName, type FormData } from "@/actions/update-user-name";
+import { User } from "@clerk/nextjs/dist/types/server";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
+import { userNameSchema } from "@projectx/validators";
+
 import { cn } from "@/lib/utils";
-import { userNameSchema } from "@/lib/validations/user";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -23,7 +24,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/shared/icons";
 
 interface UserNameFormProps {
-  user: Pick<User, "id" | "name">;
+  user: Pick<User, "id" | "username">;
 }
 
 export function UserNameForm({ user }: UserNameFormProps) {
@@ -37,7 +38,7 @@ export function UserNameForm({ user }: UserNameFormProps) {
   } = useForm<FormData>({
     resolver: zodResolver(userNameSchema),
     defaultValues: {
-      name: user?.name || "",
+      name: user?.username || "",
     },
   });
 

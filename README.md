@@ -26,25 +26,34 @@
 
 ## Introduction
 
-Lets goooo - Next.js 14, Turborepo, Prisma, Planetscale, Auth.js, Resend, React Email, Shadcn/ui, and Stripe.
+Lets goooo - Next.js 14, Turborepo, Drizzle ORM, Planetscale, Clerk, Resend, React Email, Shadcn/ui, and Stripe.
 <br/>
 All seamlessly integrated with the Projectx to accelerate the development.
 
 ## Directory Structure
 
-ProjectX is a monorepo managed by [Turborepo](https://turbo.fish/). The monorepo is split between `apps` and `packages` directories.
+ProjectX is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
 
-- **Apps** are the Next.js apps that are deployed to Vercel (this is where most development is done).
-- **Packages** are the shared packages that are used by the apps (e.g. `@projectx/components`)
-- **Tooling** are the shared configuration that are used by the apps and packages (e.g. `@projectx/eslint-config`)
+    .
+    ├── apps                         # Its app workspace which contains 
+    │    ├── www                     # Nextjs app which is deployed in Vercel       
+    │    └── ...                                      
+    ├── tooling                      # are the shared configuration that are used by the apps and packages (e.g. `@projectx/eslint-config`)
+    ├── packages                     # are the shared packages that are used by the apps (e.g. `@projectx/components`)
+    ├── docker-compose.yml                  
+    ├── LICENSE
+    └── README.md
+
+> Use short lowercase names at least for the top-level files and folders except
+> `LICENSE`, `README.md`
 
 ## Installation
 
 Clone & create this repo locally with the following command:
 
-````bash
+```bash
 git clone https://github.com/meglerhagen/projectx.git
-````
+```
 
 1. Install dependencies using pnpm:
 
@@ -77,15 +86,15 @@ This project uses MySQL database on PlanetScale. To setup a DB for your local de
 
 1. Create a free account and a [new Database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database)
 2. From the dashboard, create a branch and click "Connect" button.
-3. Hit `Create password` and select `Prisma` in `Connect with` dropdown
-4. Copy the url to `.env.local` file
-5. run `yarn run prisma:push` (Be mindful prisma migrate won't work because it requires more privileges for the database user).
+3. Hit `Create password` and select `Drizzle` in `Connect with` dropdown
+4. Copy the entire list of params to `.env.local` file. Make sure to change the params under the section "Database (MySQL - PlanetScale)"
+5. run `pnpm run db:push`
 
 You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
 
 1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
 2. run `docker-compose --env-file .env.local up` to start the DB.
-3. run `yarn run prisma:push`.
+3. run `pnpm run db:push`.
 
 ## Email provider
 
@@ -107,8 +116,8 @@ The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you h
 ### Frameworks
 
 - [Next.js](https://nextjs.org/) – React framework for building performant apps with the best developer experience
-- [Auth.js](https://authjs.dev/) – Handle user authentication with ease with providers like Google, Twitter, GitHub, etc.
-- [Prisma](https://www.prisma.io/) – Typescript-first ORM for Node.js
+- [Clerk](https://clerk.com/) – Handle user authentication with ease with providers like Google, Twitter, GitHub, etc.
+- [Drizzle ORM](https://orm.drizzle.team/) – TypeScript ORM that feels like SPA with SSR
 - [React Email](https://react.email/) – Versatile email framework for efficient and flexible email development
 
 ### Platforms

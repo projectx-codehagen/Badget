@@ -1,7 +1,7 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": [
-    "**/.env"
+    "**/.env.*local"
   ],
   "pipeline": {
     "topo": {
@@ -54,6 +54,18 @@
     }
   },
   "globalEnv": [
-    "DATABASE_URL"
+    "CLERK_SECRET_KEY",
+    "DATABASE_HOST",
+    "DATABASE_USERNAME",
+    "DATABASE_PASSWORD",
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+    "NEXTJS_URL",
+    "SKIP_ENV_VALIDATION",
+    "STRIPE_API_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID",
+    "NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID",
+    "NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID",
+    "NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID"
   ]
 }

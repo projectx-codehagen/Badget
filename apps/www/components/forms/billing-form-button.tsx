@@ -2,14 +2,16 @@
 
 import { useTransition } from "react";
 import { generateUserStripe } from "@/actions/generate-user-stripe";
-import { SubscriptionPlan, UserSubscriptionPlan } from "@/types";
+import { SubscriptionPlan } from "@/types";
+
+import { RouterOutputs } from "@projectx/api";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 
 interface BillingFormButtonProps {
   offer: SubscriptionPlan;
-  subscriptionPlan: UserSubscriptionPlan;
+  subscriptionPlan: RouterOutputs["auth"]["mySubscription"];
   year: boolean;
 }
 
@@ -40,7 +42,7 @@ export function BillingFormButton({
         </>
       ) : (
         <>
-          {subscriptionPlan.stripePriceId ===
+          {subscriptionPlan?.stripeId ===
           offer.stripeIds[year ? "yearly" : "monthly"]
             ? "Manage Subscription"
             : "Upgrade"}

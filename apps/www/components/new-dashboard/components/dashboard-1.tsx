@@ -29,10 +29,10 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
-import { AccountSwitcher } from "./account-switcher";
 import { Nav } from "./nav";
 import { CardsStats } from "./stats";
 import { TopCategoriesTable } from "./top-categories-table";
@@ -48,7 +48,6 @@ interface DashboardProps {
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;
-  workspace: {};
 }
 
 export function Dashboard({
@@ -57,7 +56,6 @@ export function Dashboard({
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
-  workspace,
 }: DashboardProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
   const [mail] = useMail();
@@ -92,15 +90,11 @@ export function Dashboard({
         >
           <div
             className={cn(
-              "flex h-[52px] items-center justify-center",
+              "flex h-[52px] items-center justify-center px-2",
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
-            <AccountSwitcher
-              isCollapsed={isCollapsed}
-              accounts={accounts}
-              workspace={workspace}
-            />
+            <WorkspaceSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
@@ -166,7 +160,7 @@ export function Dashboard({
                 label: "",
                 icon: Wallet,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/savemoney",
               },
               {
                 title: "Grow Assets",
