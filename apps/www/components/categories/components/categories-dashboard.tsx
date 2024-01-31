@@ -255,7 +255,11 @@ export function CategoriesDashboard({
           />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+        <ResizablePanel
+          className="!overflow-y-scroll"
+          defaultSize={defaultLayout[1]}
+          minSize={30}
+        >
           <Separator />
           <SpentSoFarCard />
           <div>
