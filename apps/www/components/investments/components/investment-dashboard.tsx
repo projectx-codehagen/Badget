@@ -56,7 +56,7 @@ interface MailProps {
 export function InvestmentsDashboard({
   accounts,
   mails,
-  defaultLayout = [265, 440, 400],
+  defaultLayout = [20, 40, 40],
   defaultCollapsed = false,
   navCollapsedSize,
 }: MailProps) {
@@ -68,7 +68,7 @@ export function InvestmentsDashboard({
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+          document.cookie = `react-resizable-panels:layout-investment=${JSON.stringify(
             sizes,
           )}`;
         }}
