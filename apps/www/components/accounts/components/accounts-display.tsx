@@ -48,6 +48,7 @@ import { TransactionsReviewTable } from "@/components/new-dashboard/components/t
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";
+import { AddNewAccountDialog } from "./add-new-account";
 
 interface MailDisplayProps {
   mail: Mail | null;
@@ -148,6 +149,16 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
             </Popover>
             <TooltipContent>Snooze</TooltipContent>
           </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Trash2 className="h-4 w-4" />
+                <span className="sr-only">Add new account</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Move to trash</TooltipContent>
+          </Tooltip>
+          <AddNewAccountDialog />
         </div>
         <div className="ml-auto flex items-center gap-2">
           <Tooltip>

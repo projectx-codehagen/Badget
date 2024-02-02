@@ -137,6 +137,15 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             </Popover>
             <TooltipContent>Snooze</TooltipContent>
           </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon" disabled={!mail}>
+                <Trash2 className="h-4 w-4" />
+                <span className="sr-only">Move to trash</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Move to trash</TooltipContent>
+          </Tooltip>
         </div>
         <div className="ml-auto flex items-center gap-2">
           <Tooltip>
