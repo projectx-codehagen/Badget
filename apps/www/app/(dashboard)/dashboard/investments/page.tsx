@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 
 import { InvestmentsDashboard } from "@/components/investments/components/investment-dashboard";
 import { accounts, mails } from "@/components/investments/data";
@@ -11,11 +10,6 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login");
-  }
 
   const layout = cookies().get("react-resizable-panels:layout-investment");
   const collapsed = cookies().get("react-resizable-panels:collapsed");
