@@ -56,7 +56,7 @@ export default async function IndexPage() {
           >
             <GetStartedButton />
             <Link
-              href="https://Projectx.com"
+              href="https://projectx-eight-gilt.vercel.app"
               target="_blank"
               rel="noreferrer"
               className={cn(

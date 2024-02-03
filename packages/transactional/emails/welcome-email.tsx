@@ -45,7 +45,7 @@ export default function WelcomeEmail({
             <Text className="ml-1 text-sm leading-4 text-black">
               ◆ Generate your first{" "}
               <Link
-                href="https://Projectx.com/dashboard"
+                href="https://projectx-eight-gilt.vercel.app/dashboard"
                 className="font-medium text-blue-600 no-underline"
               >
                 AI-powered property listing
@@ -54,7 +54,7 @@ export default function WelcomeEmail({
             <Text className="ml-1 text-sm leading-4 text-black">
               ◆ Manage your{" "}
               <Link
-                href="https://Projectx.com/dashboard"
+                href="https://projectx-eight-gilt.vercel.app/dashboard"
                 className="font-medium text-blue-600 no-underline"
               >
                 property portfolio
