@@ -1,9 +1,9 @@
 <a href="https://projectx-eight-gilt.vercel.app/">
-  <h1 align="center">ProjectX (Placeholder Name)</h1>
+  <h1 align="center">ProjectX: Revolutionizing Financial Management</h1>
 </a>
 
 <p align="center">
-  Start at full speed with Projectx !
+  Empower your financial management with ProjectX - AI-driven insights at your fingertips. Optimize your finances effortlessly.
 </p>
 
 <p align="center">
@@ -24,7 +24,15 @@
 </p>
 <br/>
 
+
 ## Introduction
+
+Welcome to ProjectX, where we're ushering in a new era of financial management. Leveraging cutting-edge AI, ProjectX redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions. 
+
+With ProjectX, gain unparalleled insights into your spending habits and financial patterns, empowering you to budget better and experience more. Trusted by the world's most innovative companies, ProjectX is here to revolutionize your financial management experience.
+
+
+## What we are using
 
 Lets goooo - Next.js 14, Turborepo, Drizzle ORM, Planetscale, Clerk, Resend, React Email, Shadcn/ui, and Stripe.
 <br/>
