@@ -438,6 +438,40 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  packages/ob-sync:
+    dependencies:
+      '@projectx/db':
+        specifier: workspace:^0.1.0
+        version: link:../db
+      js-sha256:
+        specifier: ^0.11.0
+        version: 0.11.0
+      jwt-decode:
+        specifier: ^4.0.0
+        version: 4.0.0
+      plaid:
+        specifier: ^18.2.0
+        version: 18.3.0
+    devDependencies:
+      '@projectx/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@projectx/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@projectx/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.1.1
+        version: 3.2.4
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
   packages/stripe:
     dependencies:
       '@clerk/nextjs':
@@ -9799,6 +9833,10 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /js-sha256@0.11.0:
+    resolution: {integrity: sha512-6xNlKayMZvds9h1Y1VWc0fQHQ82BxTXizWPEtEeGvmOUYpBRy4gbWroHLpzowe6xiQhHpelCQiE7HEdznyBL9Q==}
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -9880,6 +9918,11 @@ packages:
       array.prototype.flat: 1.3.2
       object.assign: 4.1.5
       object.values: 1.1.7
+    dev: false
+
+  /jwt-decode@4.0.0:
+    resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
+    engines: {node: '>=18'}
     dev: false
 
   /keyv@4.5.4:
@@ -11553,6 +11596,15 @@ packages:
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
+
+  /plaid@18.3.0:
+    resolution: {integrity: sha512-uk9xHS/Gs/wNRmcAM+La1QHqUCIYU/CdPQZ6Cbm+DQ05cIiJmk+ttjKCfKRLHFazUPuPd8Yszf5lFy17MnXGgA==}
+    engines: {node: '>=10.0.0'}
+    dependencies:
+      axios: 1.6.7
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /postcss-import@15.1.0(postcss@8.4.31):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
