@@ -111,3 +111,15 @@ export const PlaidPrimaryCategory = {
 } as const;
 export type PlaidPrimaryCategory =
   (typeof PlaidPrimaryCategory)[keyof typeof PlaidPrimaryCategory];
+
+export const ConnectorType = {
+  DIRECT: "DIRECT",
+  AGGREGATED: "AGGREGATED",
+} as const;
+export type ConnectorType = (typeof ConnectorType)[keyof typeof ConnectorType];
+
+export const ConnectorEnv = {
+  STAGING: "STAGING",
+  PRODUCTION: "PRODUCTION",
+} as const;
+export type ConnectorEnv = (typeof ConnectorEnv)[keyof typeof ConnectorEnv];

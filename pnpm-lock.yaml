@@ -50,6 +50,9 @@ importers:
       '@projectx/db':
         specifier: workspace:^0.1.0
         version: link:../../packages/db
+      '@projectx/openbanking':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/openbanking
       '@projectx/stripe':
         specifier: workspace:^0.1.0
         version: link:../../packages/stripe
@@ -428,6 +431,37 @@ importers:
       drizzle-kit:
         specifier: ^0.20.13
         version: 0.20.13
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.2.4
+        version: 3.2.4
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  packages/openbanking:
+    dependencies:
+      '@projectx/db':
+        specifier: workspace:^0.1.0
+        version: link:../db
+      plaid:
+        specifier: ^19.0.0
+        version: 19.0.0
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@projectx/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@projectx/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@projectx/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -11553,6 +11587,15 @@ packages:
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
+
+  /plaid@19.0.0:
+    resolution: {integrity: sha512-w2hlVRq1mhJsdjTLegXlMQoFaush3MkYBIiHyNLb4/eXYnlS4WV3Y6+kAWBTXd3d2flrsjsWSyEeImQXU9bSgg==}
+    engines: {node: '>=10.0.0'}
+    dependencies:
+      axios: 1.6.7
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /postcss-import@15.1.0(postcss@8.4.31):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}

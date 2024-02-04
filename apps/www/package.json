@@ -28,6 +28,7 @@
     "@hookform/resolvers": "^3.3.2",
     "@projectx/api": "workspace:^0.1.0",
     "@projectx/db": "workspace:^0.1.0",
+    "@projectx/openbanking": "workspace:^0.1.0",
     "@projectx/stripe": "workspace:^0.1.0",
     "@projectx/transactional": "workspace:^0.1.0",
     "@projectx/validators": "workspace:^0.1.0",
