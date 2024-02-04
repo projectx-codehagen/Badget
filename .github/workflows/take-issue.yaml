@@ -1,0 +1,20 @@
+# .github/workflows/take.yml
+name: Assign issue to contributor
+on:
+  issue_comment:
+
+jobs:
+  assign:
+    name: Take an issue
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: take the issue
+        uses: bdougie/take-action@main
+        with:
+          message: Thanks for taking this issue! Let us know if you have any questions!
+          blockingLabels: in progress
+          blockingLabelsMessage: This issue is already taken by someone else and is in progress. You can find another one by surfing the issues page.
+          trigger: .take
+          token: ${{ secrets.GITHUB_TOKEN }}
