@@ -450,8 +450,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       plaid:
-        specifier: ^18.2.0
-        version: 18.3.0
+        specifier: ^20.0.0
+        version: 20.0.0
     devDependencies:
       '@projectx/eslint-config':
         specifier: workspace:^0.2.0
@@ -11597,8 +11597,8 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
 
-  /plaid@18.3.0:
-    resolution: {integrity: sha512-uk9xHS/Gs/wNRmcAM+La1QHqUCIYU/CdPQZ6Cbm+DQ05cIiJmk+ttjKCfKRLHFazUPuPd8Yszf5lFy17MnXGgA==}
+  /plaid@20.0.0:
+    resolution: {integrity: sha512-QnNVfPt69aoTR9jZD3ygAJaMZmrfXliS1IYyYz3n6FwlRJQAF33Uan/tko7RqRIoHZpPP1a+fFNdWj56Ie7meA==}
     engines: {node: '>=10.0.0'}
     dependencies:
       axios: 1.6.7
