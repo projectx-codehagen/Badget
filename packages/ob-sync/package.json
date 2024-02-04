@@ -1,0 +1,46 @@
+{
+    "name": "@projectx/openbanking",
+    "version": "0.1.0",
+    "exports": {
+        ".": "./src/index.ts",
+        "./plaid": "./src/plaid.ts",
+        "./webhooks": "./src/webhooks.ts",
+        "./mappers": "./src/mappers.ts",
+        "./env": "./src/env.mjs"
+    },
+    "typesVersions": {
+        "*": {
+            "*": [
+                "src/*"
+            ]
+        }
+    },
+    "license": "MIT",
+    "scripts": {
+        "clean": "rm -rf .turbo node_modules",
+        "lint": "eslint .",
+        "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@projectx/db": "workspace:^0.1.0",
+        "jwt-decode": "^4.0.0",
+        "js-sha256": "^0.11.0",
+        "plaid": "^18.2.0"
+    },
+    "devDependencies": {
+        "@projectx/eslint-config": "workspace:^0.2.0",
+        "@projectx/prettier-config": "workspace:^0.1.0",
+        "@projectx/tsconfig": "workspace:^0.1.0",
+        "eslint": "^8.56.0",
+        "prettier": "^3.1.1",
+        "typescript": "^5.3.3"
+    },
+    "eslintConfig": {
+        "root": true,
+        "extends": [
+            "@projectx/eslint-config/base"
+        ]
+    },
+    "prettier": "@projectx/prettier-config"
+}
