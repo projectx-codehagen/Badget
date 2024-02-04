@@ -20,7 +20,7 @@ export type ItemStatus = (typeof ItemStatus)[keyof typeof ItemStatus];
 
 // Plaid Enums
 
-export const PlaidProducts = {
+export const Products = {
   Assets: "assets",
   Auth: "auth",
   Balance: "balance",
@@ -42,17 +42,9 @@ export const PlaidProducts = {
   // Products.Signal,
   // Products.Statements,
 } as const;
-export type PlaidProducts = (typeof PlaidProducts)[keyof typeof PlaidProducts];
+export type Products = (typeof Products)[keyof typeof Products];
 
-export const PlaidTransactionPaymentChannelEnum = {
-  InStore: "in store",
-  Online: "online",
-  Other: "other",
-} as const;
-export type PlaidTransactionPaymentChannelEnum =
-  (typeof PlaidTransactionPaymentChannelEnum)[keyof typeof PlaidTransactionPaymentChannelEnum];
-
-export const PlaidTransactionCode = {
+export const TransactionCode = {
   Adjustment: "adjustment",
   Atm: "atm",
   BankCharge: "bank charge",
@@ -67,31 +59,20 @@ export const PlaidTransactionCode = {
   StandingOrder: "standing order",
   Transfer: "transfer",
 } as const;
-export type PlaidTransactionCode =
-  (typeof PlaidTransactionCode)[keyof typeof PlaidTransactionCode];
+export type TransactionCode =
+  (typeof TransactionCode)[keyof typeof TransactionCode];
 
-export const PlaidMerchantConfidenceLevel = {
+export const MerchantConfidenceLevel = {
   VeryHigh: "VERY_HIGH",
   High: "HIGH",
   Medium: "MEDIUM",
   Low: "LOW",
   Unknown: "UNKNOWN",
 } as const;
-export type PlaidMerchantConfidenceLevel =
-  (typeof PlaidMerchantConfidenceLevel)[keyof typeof PlaidMerchantConfidenceLevel];
+export type MerchantConfidenceLevel =
+  (typeof MerchantConfidenceLevel)[keyof typeof MerchantConfidenceLevel];
 
-export const PlaidMerchantType = {
-  Merchant: "merchant",
-  FinancialInstitution: "financial_institution",
-  PaymentApp: "payment_app",
-  Marketplace: "marketplace",
-  PaymentTerminal: "payment_terminal",
-  IncomeSource: "income_source",
-} as const;
-export type PlaidMerchantType =
-  (typeof PlaidMerchantType)[keyof typeof PlaidMerchantType];
-
-export const PlaidPrimaryCategory = {
+export const PrimaryCategory = {
   INCOME: "INCOME",
   TRANSFER_IN: "TRANSFER_IN",
   TRANSFER_OUT: "TRANSFER_OUT",
@@ -109,5 +90,5 @@ export const PlaidPrimaryCategory = {
   TRAVEL: "TRAVEL",
   RENT_AND_UTILITIES: "RENT_AND_UTILITIES",
 } as const;
-export type PlaidPrimaryCategory =
-  (typeof PlaidPrimaryCategory)[keyof typeof PlaidPrimaryCategory];
+export type PrimaryCategory =
+  (typeof PrimaryCategory)[keyof typeof PrimaryCategory];
