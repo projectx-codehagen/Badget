@@ -23,8 +23,6 @@ export const account = mySqlTable(
 
     clerkOrganizationId: varchar("clerk_organization_id", { length: 36 }),
     clerkUserId: varchar("clerk_user_id", { length: 36 }),
-    plaidAccountId: varchar("plaid_account_id", { length: 38 }),
-
     mask: varchar("mask", { length: 4 }),
     name: varchar("name", { length: 256 }).notNull(),
     officialName: varchar("official_name", { length: 256 }),
@@ -38,9 +36,6 @@ export const account = mySqlTable(
         table.clerkOrganizationId,
       ),
       clerkUserIdIdx: index("clerk_user_id_idx").on(table.clerkUserId),
-      plaidAccountIdIdx: uniqueIndex("plaid_account_id_idx").on(
-        table.plaidAccountId,
-      ),
     };
   },
 );
@@ -55,7 +50,6 @@ export const balance = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     accountId: bigint("account_id", { mode: "number" }).notNull(),
-    plaidAccountId: varchar("plaid_account_id", { length: 38 }).notNull(),
 
     available: float("available"),
     current: float("current"),
@@ -82,12 +76,4 @@ export const accountRelations = relations(account, ({ many, one }) => ({
   balance: one(balance),
   transactions: many(transaction),
   projectsToAccounts: many(projectsToAccounts),
-}));
-
-// 👇 This code block defines which columns in the two tables are related
-export const balanceRelations = relations(balance, ({ one }) => ({
-  account: one(account, {
-    fields: [balance.accountId],
-    references: [account.plaidAccountId],
-  }),
 }));

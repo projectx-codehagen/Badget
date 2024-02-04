@@ -16,6 +16,7 @@ export const item = mySqlTable(
   "item",
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    externalId: varchar("external_id", { length: 64 }).unique().notNull(), // can be requisitionId or plaidItemId for example
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -24,11 +25,8 @@ export const item = mySqlTable(
     clerkOrganizationId: varchar("clerk_organization_id", { length: 36 }),
     clerkUserId: varchar("clerk_user_id", { length: 64 }).notNull(),
 
-    plaidAccessToken: varchar("plaid_access_token", { length: 255 })
-      .unique()
-      .notNull(),
-    plaidItemId: varchar("plaid_item_id", { length: 64 }).unique().notNull(),
-    plaidInstitutionId: varchar("plaid_institution_id", {
+    accessToken: varchar("access_token", { length: 255 }).unique().notNull(),
+    institutionId: varchar("institution_id", {
       length: 64,
     }).notNull(),
     status: mysqlEnum("status", [ItemStatus.BAD, ItemStatus.GOOD]).notNull(),
@@ -38,6 +36,7 @@ export const item = mySqlTable(
     lastTransactionUpdateCursor: varchar("last_transaction_update_cursor", {
       length: 128,
     }),
+    additionalData: json("additional_data"),
   },
   (table) => {
     return {
@@ -45,11 +44,10 @@ export const item = mySqlTable(
         table.clerkOrganizationId,
       ),
       clerkUserIdIdx: index("clerk_user_id_idx").on(table.clerkUserId),
-      plaidItemIdIdx: index("plaid_item_id_idx").on(table.plaidItemId),
       // TODO: clerkOrganizationId >-< clerkUserId
       clerkUserIdInstitutionIdUniqueKey: unique(
         "clerk_user_id_intitution_id",
-      ).on(table.clerkUserId, table.plaidInstitutionId),
+      ).on(table.clerkUserId, table.institutionId),
     };
   },
 );

@@ -4,13 +4,10 @@ import {
   index,
   int,
   json,
-  mysqlEnum,
   timestamp,
-  tinyint,
   varchar,
 } from "drizzle-orm/mysql-core";
 
-import { PlaidProducts } from "../enum";
 import { mySqlTable } from "./_table";
 
 export const institution = mySqlTable(
@@ -24,37 +21,11 @@ export const institution = mySqlTable(
 
     institutionId: varchar("institution_id", { length: 64 }),
     name: varchar("name", { length: 64 }),
-    products: mysqlEnum("products", [
-      PlaidProducts.Assets,
-      PlaidProducts.Auth,
-      PlaidProducts.Balance,
-      // PlaidProducts.Identity,
-      // PlaidProducts.Investments,
-      // PlaidProducts.InvestmentsAuth,
-      // PlaidProducts.Liabilities,
-      // PlaidProducts.PaymentInitiation,
-      // PlaidProducts.IdentityVerification,
-      PlaidProducts.Transactions,
-      // PlaidProducts.CreditDetails,
-      // PlaidProducts.Income,
-      // PlaidProducts.IncomeVerification,
-      // PlaidProducts.DepositSwitch,
-      // PlaidProducts.StandingOrders,
-      // PlaidProducts.Transfer,
-      // PlaidProducts.Employment,
-      PlaidProducts.RecurringTransactions,
-      // PlaidProducts.Signal,
-      // PlaidProducts.Statements,
-    ]),
     countryCodes: json("country_codes"),
-    url: varchar("url", { length: 64 }).notNull(),
-    primaryColor: varchar("primary_color", { length: 64 }).notNull(),
-    logo: varchar("logo", { length: 64 }).notNull(),
-    routingNumbers: json("routing_numbers").notNull(),
-    dtcNumbers: json("dtc_numbers").notNull(),
-    oauth: tinyint("oauth").notNull(),
+    url: varchar("url", { length: 64 }),
+    primaryColor: varchar("primary_color", { length: 64 }),
+    logo: varchar("logo", { length: 64 }),
     status: json("status").notNull(),
-    requestId: varchar("request_id", { length: 64 }).notNull(),
     total: int("total").notNull(),
   },
   (table) => {

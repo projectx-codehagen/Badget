@@ -1,7 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import { bigint, mysqlEnum, timestamp, varchar } from "drizzle-orm/mysql-core";
 
-import { PlaidPrimaryCategory } from "../enum";
+import { PrimaryCategory } from "../enum";
 import { mySqlTable } from "./_table";
 import { project } from "./project";
 
@@ -13,22 +13,22 @@ export const category = mySqlTable("category", {
   updatedAt: timestamp("updated_at").onUpdateNow(),
 
   primary: mysqlEnum("primary", [
-    PlaidPrimaryCategory.INCOME,
-    PlaidPrimaryCategory.TRANSFER_IN,
-    PlaidPrimaryCategory.TRANSFER_OUT,
-    PlaidPrimaryCategory.LOAN_PAYMENTS,
-    PlaidPrimaryCategory.BANK_FEES,
-    PlaidPrimaryCategory.ENTERTAINMENT,
-    PlaidPrimaryCategory.FOOD_AND_DRINK,
-    PlaidPrimaryCategory.GENERAL_MERCHANDISE,
-    PlaidPrimaryCategory.HOME_IMPROVEMENT,
-    PlaidPrimaryCategory.MEDICAL,
-    PlaidPrimaryCategory.PERSONAL_CARE,
-    PlaidPrimaryCategory.GENERAL_SERVICES,
-    PlaidPrimaryCategory.GOVERNMENT_AND_NON_PROFIT,
-    PlaidPrimaryCategory.TRANSPORTATION,
-    PlaidPrimaryCategory.TRAVEL,
-    PlaidPrimaryCategory.RENT_AND_UTILITIES,
+    PrimaryCategory.INCOME,
+    PrimaryCategory.TRANSFER_IN,
+    PrimaryCategory.TRANSFER_OUT,
+    PrimaryCategory.LOAN_PAYMENTS,
+    PrimaryCategory.BANK_FEES,
+    PrimaryCategory.ENTERTAINMENT,
+    PrimaryCategory.FOOD_AND_DRINK,
+    PrimaryCategory.GENERAL_MERCHANDISE,
+    PrimaryCategory.HOME_IMPROVEMENT,
+    PrimaryCategory.MEDICAL,
+    PrimaryCategory.PERSONAL_CARE,
+    PrimaryCategory.GENERAL_SERVICES,
+    PrimaryCategory.GOVERNMENT_AND_NON_PROFIT,
+    PrimaryCategory.TRANSPORTATION,
+    PrimaryCategory.TRAVEL,
+    PrimaryCategory.RENT_AND_UTILITIES,
   ]).notNull(),
   detailed: varchar("detailed", { length: 63 }).notNull(),
   description: varchar("description", { length: 255 }),
