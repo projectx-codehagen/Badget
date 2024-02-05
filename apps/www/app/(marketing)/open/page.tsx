@@ -21,8 +21,8 @@ export default async function PricingPage() {
   const user = await currentUser();
   // const subscriptionPlan = await api.auth.mySubscription.query();
   const Githubstats = await fetchGithubData();
-  const x = await api.customer.getAllCustomers.query();
-  console.log(x);
+  // const x = await api.customer.getAllCustomers.query();
+  // console.log(x);
 
   return (
     <div className="flex w-full flex-col gap-16 py-8 md:py-8">

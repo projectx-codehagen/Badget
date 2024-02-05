@@ -1,7 +1,7 @@
 export default function OpenStartupSection() {
   return (
     <section className="container flex flex-col items-center text-center">
-      <div className="mx-auto mb-10 flex w-full flex-col gap-5">
+      <div className="mx-auto mb-10 flex w-full max-w-4xl flex-col gap-5">
         <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
           Open startup
         </p>
@@ -9,8 +9,7 @@ export default function OpenStartupSection() {
           Everything Open!
         </h2>
         <p className="text-large font-medium text-muted-foreground">
-          We want to make everything open, so we also made the fincancial and
-          xxx
+          We want to make everything open, so lets share everything we have.
         </p>
       </div>
     </section>
