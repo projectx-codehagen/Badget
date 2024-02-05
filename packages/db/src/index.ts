@@ -30,7 +30,12 @@ export type Transaction = typeof schema.transaction.$inferSelect;
 export type Merchant = typeof schema.merchant.$inferSelect;
 export type Location = typeof schema.location.$inferSelect;
 export type TransactionInsert = typeof schema.transaction.$inferInsert;
-export type CanonicalInstitution = typeof schema.institution.$inferSelect;
+
+export type CanonicalCountryCode = typeof schema.countryCodes.$inferSelect;
+export type CanonicalConnectorConfig =
+  typeof schema.connectorConfigs.$inferSelect;
+export type CanonicalConnector = typeof schema.connectors.$inferSelect;
+export type CanonicalIntegration = typeof schema.integrations.$inferSelect;
 
 export { mySqlTable as tableCreator } from "./schema/_table";
 export * from "./enum";

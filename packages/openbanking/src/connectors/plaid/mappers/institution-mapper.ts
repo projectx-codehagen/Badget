@@ -1,5 +1,10 @@
 import { Institution } from "plaid";
 
-export const toCanonicalProvider = (institution: Institution) => {
-  throw new Error("Method not implemented.");
+import { CanonicalIntegration } from "@projectx/db";
+
+export const toCanonicalIntegration = (institution: Institution) => {
+  return {
+    name: institution.name,
+    logoUrl: institution.logo,
+  } as CanonicalIntegration;
 };

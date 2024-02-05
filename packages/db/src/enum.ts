@@ -112,6 +112,12 @@ export const PlaidPrimaryCategory = {
 export type PlaidPrimaryCategory =
   (typeof PlaidPrimaryCategory)[keyof typeof PlaidPrimaryCategory];
 
+export const CountryCode = {
+  IT: "IT",
+  US: "US",
+} as const;
+export type CountryCode = (typeof CountryCode)[keyof typeof CountryCode];
+
 export const ConnectorType = {
   DIRECT: "DIRECT",
   AGGREGATED: "AGGREGATED",

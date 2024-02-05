@@ -2,7 +2,6 @@ import { relations, sql } from "drizzle-orm";
 import {
   bigint,
   index,
-  json,
   mysqlEnum,
   timestamp,
   unique,
@@ -12,6 +11,26 @@ import {
 
 import { ConnectorEnv, ConnectorType } from "../enum";
 import { mySqlTable } from "./_table";
+
+export const countryCodes = mySqlTable(
+  "countryCodes",
+  {
+    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").onUpdateNow(),
+
+    code: varchar("org_id", { length: 36 }).notNull(),
+
+    integrationId: bigint("integration_id", { mode: "bigint" }),
+  },
+  (table) => {
+    return {
+      integrationIdIdx: index("integration_id_idx").on(table.integrationId),
+    };
+  },
+);
 
 export const connectorConfigs = mySqlTable(
   "connectorConfigs",
@@ -41,20 +60,11 @@ export const connectors = mySqlTable("connectors", {
     .notNull(),
   updatedAt: timestamp("updated_at").onUpdateNow(),
 
+  name: varchar("name", { length: 36 }).notNull(), // TODO: maybe use enum ?
   type: mysqlEnum("type", [
     ConnectorType.DIRECT,
     ConnectorType.AGGREGATED,
   ]).notNull(),
-});
-
-export const providers = mySqlTable("providers", {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-  createdAt: timestamp("created_at")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: timestamp("updated_at").onUpdateNow(),
-
-  name: varchar("label", { length: 36 }).notNull(),
 });
 
 export const integrations = mySqlTable(
@@ -66,18 +76,15 @@ export const integrations = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    label: varchar("label", { length: 36 }).notNull(),
+    name: varchar("name", { length: 63 }).notNull(),
     logoUrl: varchar("logo_url", { length: 255 }),
-    supportedCountries: json("supported_countryes").default([]), // TODO: table for supported features by country?
 
-    connectorId: bigint("connector_id", { mode: "bigint" }),
-    providerId: bigint("provider_id", { mode: "bigint" }),
+    connectorId: bigint("connector_id", { mode: "number" }),
   },
   (table) => {
     return {
-      connectorProviderUnq: unique().on(table.connectorId, table.providerId),
+      connectorProviderUnq: unique().on(table.connectorId, table.name),
       connectorIdIdx: index("connector_id_idx").on(table.connectorId),
-      providerIdIdx: index("provider_id_idx").on(table.providerId),
     };
   },
 );
@@ -114,28 +121,20 @@ export const connectorsRelations = relations(connectors, ({ many }) => ({
 }));
 
 /**
- * 👇 This code block will tell Drizzle that provider is related to:
- * - provider <-> integration -> 1-to-N
- */
-export const providersRelations = relations(providers, ({ many }) => ({
-  integrations: many(integrations),
-}));
-
-/**
  * 👇 This code block will tell Drizzle that integration is related to:
  * - integration <-> connector -> N-to-1
  * - integration <-> provider  -> N-to-1
  */
-export const integrationsRelations = relations(integrations, ({ one }) => ({
-  connector: one(connectors, {
-    fields: [integrations.connectorId],
-    references: [connectors.id],
+export const integrationsRelations = relations(
+  integrations,
+  ({ one, many }) => ({
+    connector: one(connectors, {
+      fields: [integrations.connectorId],
+      references: [connectors.id],
+    }),
+    countryCodes: many(countryCodes),
   }),
-  provider: one(providers, {
-    fields: [integrations.providerId],
-    references: [providers.id],
-  }),
-}));
+);
 
 /**
  * 👇 This code block will tell Drizzle that resource is related to:

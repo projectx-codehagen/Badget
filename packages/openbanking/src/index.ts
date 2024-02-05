@@ -1,15 +1,19 @@
-import { CanonicalInstitution, ConnectorEnv } from "@projectx/db";
+import { CanonicalIntegration, ConnectorEnv } from "@projectx/db";
 
 import { PlaidClientAdapter } from "./connectors/plaid";
 
 export * from "./webhooks";
+export * from "./connectors/plaid";
+export * from "./connectors/gocardless";
 
 export interface IConnectorClient {
+  get name(): string;
+
   // auth can be done here
   preConnect(): Promise<void>;
 
   // core methods
-  listProviders(): Promise<CanonicalInstitution[]>; // TODO: create CanonicalProvider
+  listProviders(): Promise<CanonicalIntegration[]>;
 
   listAccounts(): Promise<void>;
   listBalances(): Promise<void>;
@@ -36,23 +40,18 @@ class ConnectorFacade {
     this.connectors = connectors;
   }
 
-  get connectorsCount() {
-    return this.connectors.length;
+  get ids() {
+    return this.connectors.map((c) => c.name);
   }
 
   async getProviders() {
-    const promises = this.connectors.map((connector) =>
-      connector.listProviders(),
-    );
+    const resultMap = new Map<string, CanonicalIntegration[]>();
 
-    const settledResults = (await Promise.allSettled(promises)) as {
-      status: "fulfilled" | "rejected";
-      value: CanonicalInstitution[];
-    }[];
+    for (const connector of this.connectors) {
+      const providers = await connector.listProviders();
+      resultMap.set(connector.name, providers);
+    }
 
-    return settledResults
-      .filter((sr) => sr.status === "fulfilled")
-      .map((sr) => sr.value)
-      .flat();
+    return resultMap;
   }
 }
