@@ -1,6 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import {
   bigint,
+  boolean,
   index,
   mysqlEnum,
   timestamp,
@@ -9,7 +10,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 
-import { ConnectorEnv, ConnectorType } from "../enum";
+import { ConnectorEnv, ConnectorType, CountryCode } from "../enum";
 import { mySqlTable } from "./_table";
 
 export const countryCodes = mySqlTable(
@@ -21,7 +22,8 @@ export const countryCodes = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    code: varchar("org_id", { length: 36 }).notNull(),
+    code: mysqlEnum("code", [CountryCode.IT, CountryCode.US]).notNull(),
+    active: boolean("active").default(true),
 
     integrationId: bigint("integration_id", { mode: "bigint" }),
   },
@@ -44,7 +46,11 @@ export const connectorConfigs = mySqlTable(
     orgId: varchar("org_id", { length: 36 }).notNull(),
     clientId: varchar("client_id", { length: 255 }),
     clientSecret: varchar("client_secret", { length: 255 }),
-    env: mysqlEnum("env", [ConnectorEnv.STAGING, ConnectorEnv.PRODUCTION]),
+    env: mysqlEnum("env", [
+      ConnectorEnv.DEVELOPMENT,
+      ConnectorEnv.STAGING,
+      ConnectorEnv.PRODUCTION,
+    ]),
   },
   (table) => {
     return {
@@ -76,8 +82,11 @@ export const integrations = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    name: varchar("name", { length: 63 }).notNull(),
+    name: varchar("name", { length: 255 }).notNull(),
     logoUrl: varchar("logo_url", { length: 255 }),
+    connectorProviderId: varchar("connector_provider_id", {
+      length: 63,
+    }).unique(),
 
     connectorId: bigint("connector_id", { mode: "number" }),
   },

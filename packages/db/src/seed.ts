@@ -9,6 +9,7 @@ import {
   ConnectorType,
   CountryCode,
   schema,
+  sql,
 } from "./index";
 
 dotenv.config({ path: "../../.env.local" });
@@ -64,9 +65,18 @@ const main = async () => {
   });
 
   console.log("Seed start");
-  await db.insert(schema.countryCodes).values(countryCodeData);
-  await db.insert(schema.connectorConfigs).values(connectorsConfigData);
-  await db.insert(schema.connectors).values(connectorsData);
+  await db
+    .insert(schema.countryCodes)
+    .values(countryCodeData)
+    .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+  await db
+    .insert(schema.connectorConfigs)
+    .values(connectorsConfigData)
+    .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+  await db
+    .insert(schema.connectors)
+    .values(connectorsData)
+    .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   console.log("Seed done");
 };
 

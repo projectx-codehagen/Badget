@@ -1,4 +1,11 @@
-import { CanonicalIntegration, ConnectorEnv } from "@projectx/db";
+import {
+  CanonicalIntegration,
+  ConnectorEnv,
+  CountryCode,
+  db,
+  eq,
+  schema,
+} from "@projectx/db";
 
 import { PlaidClientAdapter } from "./connectors/plaid";
 
@@ -13,7 +20,7 @@ export interface IConnectorClient {
   preConnect(): Promise<void>;
 
   // core methods
-  listProviders(): Promise<CanonicalIntegration[]>;
+  listProviders(countryCodes?: CountryCode[]): Promise<CanonicalIntegration[]>;
 
   listAccounts(): Promise<void>;
   listBalances(): Promise<void>;
@@ -23,11 +30,15 @@ export interface IConnectorClient {
   postConnect(): Promise<void>;
 }
 
-export const connectorFacade = async (_env: ConnectorEnv) => {
-  // TODO: get active connectorConfigs for env
+export const connectorFacade = async (env: ConnectorEnv) => {
+  // TODO: get connectorConfigs for env
+  const connectorConfigs = await db
+    .select()
+    .from(schema.connectorConfigs)
+    .where(eq(schema.connectorConfigs.env, env));
 
-  // instantiate all of the connector adapters
-  const plaidConnector = new PlaidClientAdapter();
+  // TODO: dynamically instantiate all of the connector adapters
+  const plaidConnector = new PlaidClientAdapter(connectorConfigs[0]);
   await plaidConnector.preConnect();
 
   return new ConnectorFacade(plaidConnector);
@@ -44,14 +55,28 @@ class ConnectorFacade {
     return this.connectors.map((c) => c.name);
   }
 
-  async getProviders() {
+  async getProviders(countryCodes: CountryCode[]) {
     const resultMap = new Map<string, CanonicalIntegration[]>();
 
     for (const connector of this.connectors) {
-      const providers = await connector.listProviders();
+      const providers = await connector.listProviders(countryCodes);
       resultMap.set(connector.name, providers);
     }
 
     return resultMap;
   }
 }
+
+export const toConnectorEnv = (env: string) => {
+  switch (env) {
+    case "production":
+      return ConnectorEnv.PRODUCTION;
+    case "staging":
+    case "test":
+      return ConnectorEnv.STAGING;
+    case "development":
+      return ConnectorEnv.DEVELOPMENT;
+    default:
+      throw new Error(`[openbanking] unknown env ${env}`);
+  }
+};

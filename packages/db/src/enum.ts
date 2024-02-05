@@ -125,6 +125,7 @@ export const ConnectorType = {
 export type ConnectorType = (typeof ConnectorType)[keyof typeof ConnectorType];
 
 export const ConnectorEnv = {
+  DEVELOPMENT: "DEVELOPMENT",
   STAGING: "STAGING",
   PRODUCTION: "PRODUCTION",
 } as const;
