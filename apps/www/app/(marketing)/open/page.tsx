@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { api } from "@/trpc/server";
 import { currentUser } from "@clerk/nextjs";
 
+import { fetchGithubData } from "@/lib/utils";
 import OpenCardSection from "@/components/open-page/OpenCardsSection";
 import OpenMiddleSection from "@/components/open-page/OpenMiddleSection";
 import { OpenSalaryTable } from "@/components/open-page/OpenSalaryTable";
@@ -19,11 +20,12 @@ export const metadata = {
 export default async function PricingPage() {
   const user = await currentUser();
   // const subscriptionPlan = await api.auth.mySubscription.query();
+  const Githubstats = await fetchGithubData();
 
   return (
     <div className="flex w-full flex-col gap-16 py-8 md:py-8">
       <OpenStartupSection />
-      <OpenCardSection />
+      <OpenCardSection githubData={Githubstats} />
       <OpenTableTeam />
       <OpenSalaryTable />
       <OpenMiddleSection />

@@ -3,7 +3,6 @@ import {
   GitBranchIcon,
   GitPullRequestIcon,
   StarIcon,
-  UsersIcon,
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -16,22 +15,7 @@ const githubData = {
   totalContributors: 43,
 };
 
-export default async function OpenCardSection() {
-  const GithubInfo = await fetch(
-    "https://api.github.com/repos/projectx-codehagen/projectx",
-    {
-      next: {
-        revalidate: 3600,
-      },
-    },
-  );
-  const data = await GithubInfo.json();
-
-  const prsResponse = await fetch(
-    `https://api.github.com/search/issues?q=repo:projectx-codehagen/projectx+type:pr+is:merged`,
-  );
-  const TotalPR = await prsResponse.json();
-
+export default function OpenCardSection({ githubData }) {
   return (
     <section className="container -mt-10 flex flex-col items-center">
       <div className="mx-auto grid w-full max-w-4xl gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -41,7 +25,9 @@ export default async function OpenCardSection() {
             <StarIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.stargazers_count}</div>
+            <div className="text-2xl font-bold">
+              {githubData.stargazers_count}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -50,7 +36,7 @@ export default async function OpenCardSection() {
             <ActivityIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.open_issues}</div>
+            <div className="text-2xl font-bold">{githubData.open_issues}</div>
           </CardContent>
         </Card>
         <Card>
@@ -59,7 +45,7 @@ export default async function OpenCardSection() {
             <GitPullRequestIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{TotalPR.total_count}</div>
+            <div className="text-2xl font-bold">{githubData.total_count}</div>
           </CardContent>
         </Card>
         <Card>
@@ -68,7 +54,7 @@ export default async function OpenCardSection() {
             <GitBranchIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.forks}</div>
+            <div className="text-2xl font-bold">{githubData.forks}</div>
           </CardContent>
         </Card>
       </div>
