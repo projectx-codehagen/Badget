@@ -5,7 +5,9 @@ import { drizzle } from "drizzle-orm/planetscale-serverless";
 import {
   CanonicalConnector,
   CanonicalConnectorConfig,
+  CanonicalCountryCode,
   ConnectorType,
+  CountryCode,
   schema,
 } from "./index";
 
@@ -17,6 +19,10 @@ if (!("DATABASE_USERNAME" in process.env))
   throw new Error("DATABASE_USERNAME not found on .env.local");
 if (!("DATABASE_PASSWORD" in process.env))
   throw new Error("DATABASE_PASSWORD not found on .env.local");
+if (!("PLAID_CLIENT_ID" in process.env))
+  throw new Error("PLAID_CLIENT_ID not found on .env.local");
+if (!("PLAID_CLIENT_SECRET" in process.env))
+  throw new Error("PLAID_CLIENT_SECRET not found on .env.local");
 
 const main = async () => {
   const client = new Client({
@@ -26,14 +32,24 @@ const main = async () => {
   }).connection();
   const db = drizzle(client);
 
+  const countryCodeData: CanonicalCountryCode[] = [];
   const connectorsConfigData: CanonicalConnectorConfig[] = [];
   const connectorsData: CanonicalConnector[] = [];
+
+  countryCodeData.push({
+    id: 1,
+    code: CountryCode.IT,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    integrationId: BigInt(1), // NOTE: why is this required?
+  });
 
   connectorsConfigData.push({
     id: 1,
     env: "STAGING",
-    clientId: "6515a2d045d5df001cbb66aa",
-    clientSecret: "d3852527c8f97ebc23934a4a6a5eb8",
+    clientId: process.env.PLAID_CLIENT_ID,
+    clientSecret: process.env.PLAID_CLIENT_SECRET,
     orgId: "org_",
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -48,6 +64,7 @@ const main = async () => {
   });
 
   console.log("Seed start");
+  await db.insert(schema.countryCodes).values(countryCodeData);
   await db.insert(schema.connectorConfigs).values(connectorsConfigData);
   await db.insert(schema.connectors).values(connectorsData);
   console.log("Seed done");
