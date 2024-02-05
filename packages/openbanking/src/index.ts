@@ -71,9 +71,10 @@ export const toConnectorEnv = (env: string) => {
   switch (env) {
     case "production":
       return ConnectorEnv.PRODUCTION;
+    case "sandbox":
     case "staging":
     case "test":
-      return ConnectorEnv.STAGING;
+      return ConnectorEnv.SANDBOX;
     case "development":
       return ConnectorEnv.DEVELOPMENT;
     default:

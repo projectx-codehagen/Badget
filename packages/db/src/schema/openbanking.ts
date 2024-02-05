@@ -48,7 +48,7 @@ export const connectorConfigs = mySqlTable(
     clientSecret: varchar("client_secret", { length: 255 }),
     env: mysqlEnum("env", [
       ConnectorEnv.DEVELOPMENT,
-      ConnectorEnv.STAGING,
+      ConnectorEnv.SANDBOX,
       ConnectorEnv.PRODUCTION,
     ]),
   },

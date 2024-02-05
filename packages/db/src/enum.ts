@@ -126,7 +126,7 @@ export type ConnectorType = (typeof ConnectorType)[keyof typeof ConnectorType];
 
 export const ConnectorEnv = {
   DEVELOPMENT: "DEVELOPMENT",
-  STAGING: "STAGING",
+  SANDBOX: "SANDBOX",
   PRODUCTION: "PRODUCTION",
 } as const;
 export type ConnectorEnv = (typeof ConnectorEnv)[keyof typeof ConnectorEnv];

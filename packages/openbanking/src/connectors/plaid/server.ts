@@ -1,9 +1,4 @@
-import {
-  Configuration,
-  InstitutionsGetRequest,
-  PlaidApi,
-  PlaidEnvironments,
-} from "plaid";
+import { Configuration, InstitutionsGetRequest, PlaidApi } from "plaid";
 
 import {
   CanonicalConnectorConfig,
@@ -13,6 +8,7 @@ import {
 
 import { IConnectorClient } from "../..";
 import { toPlaidCountryCode } from "./mappers/country-code-mapper";
+import { toPlaidEnvironment } from "./mappers/env-mapper";
 import { toCanonicalIntegration } from "./mappers/institution-mapper";
 
 export class PlaidClientAdapter implements IConnectorClient {
@@ -20,7 +16,7 @@ export class PlaidClientAdapter implements IConnectorClient {
 
   constructor(config: CanonicalConnectorConfig) {
     const configuration = new Configuration({
-      basePath: PlaidEnvironments.sandbox, // TODO: map other envs
+      basePath: toPlaidEnvironment(config.env),
       baseOptions: {
         headers: {
           "PLAID-CLIENT-ID": config.clientId,
