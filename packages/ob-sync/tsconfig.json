@@ -1,5 +1,5 @@
 {
-  "extends": "@badget/tsconfig/base.json",
+  "extends": "@projectx/tsconfig/base.json",
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
   },
