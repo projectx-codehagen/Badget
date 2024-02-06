@@ -52,6 +52,7 @@ const main = async () => {
     clientId: process.env.PLAID_CLIENT_ID,
     clientSecret: process.env.PLAID_CLIENT_SECRET,
     orgId: "org_",
+    connectorId: BigInt(1),
     createdAt: new Date(),
     updatedAt: new Date(),
   });

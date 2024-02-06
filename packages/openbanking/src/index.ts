@@ -7,8 +7,6 @@ import {
   schema,
 } from "@projectx/db";
 
-import { PlaidClientAdapter } from "./connectors/plaid";
-
 export * from "./webhooks";
 export * from "./connectors/plaid";
 export * from "./connectors/gocardless";
@@ -31,17 +29,36 @@ export interface IConnectorClient {
 }
 
 export const connectorFacade = async (env: ConnectorEnv) => {
-  // TODO: get connectorConfigs for env
-  const connectorConfigs = await db
+  // get configured connector based on env
+  const connectorsWithConfig = await db
     .select()
     .from(schema.connectorConfigs)
-    .where(eq(schema.connectorConfigs.env, env));
+    .where(eq(schema.connectorConfigs.env, env))
+    .leftJoin(
+      schema.connectors,
+      eq(schema.connectorConfigs.connectorId, schema.connectors.id),
+    );
 
-  // TODO: dynamically instantiate all of the connector adapters
-  const plaidConnector = new PlaidClientAdapter(connectorConfigs[0]);
-  await plaidConnector.preConnect();
+  // dynamically instantiate all of the connectors
+  const connectors: IConnectorClient[] = [];
+  for (const connectorWithConfig of connectorsWithConfig) {
+    const ConnectorClientAdapter = (
+      await import(
+        `./connectors/${connectorWithConfig.connectors.name}/server.ts`
+      )
+    ).default satisfies IConnectorClient;
 
-  return new ConnectorFacade(plaidConnector);
+    // maybe delegate this to a factory?
+    const connector = new ConnectorClientAdapter(
+      connectorWithConfig.connectorConfigs,
+    );
+    await connector.preConnect();
+
+    connectors.push(connector);
+  }
+
+  // return facade object for simpler unified access
+  return new ConnectorFacade(...connectors);
 };
 
 class ConnectorFacade {

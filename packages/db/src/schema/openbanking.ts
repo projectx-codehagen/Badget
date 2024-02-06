@@ -51,6 +51,8 @@ export const connectorConfigs = mySqlTable(
       ConnectorEnv.SANDBOX,
       ConnectorEnv.PRODUCTION,
     ]),
+
+    connectorId: bigint("connector_id", { mode: "bigint" }),
   },
   (table) => {
     return {
@@ -92,7 +94,7 @@ export const integrations = mySqlTable(
   },
   (table) => {
     return {
-      connectorProviderUnq: unique().on(table.connectorId, table.name),
+      connectorIdNameUnq: unique().on(table.connectorId, table.name),
       connectorIdIdx: index("connector_id_idx").on(table.connectorId),
     };
   },

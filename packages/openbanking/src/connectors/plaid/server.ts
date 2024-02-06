@@ -11,7 +11,7 @@ import { toPlaidCountryCode } from "./mappers/country-code-mapper";
 import { toPlaidEnvironment } from "./mappers/env-mapper";
 import { toCanonicalIntegration } from "./mappers/institution-mapper";
 
-export class PlaidClientAdapter implements IConnectorClient {
+export default class PlaidClientAdapter implements IConnectorClient {
   private plaidClient: PlaidApi;
 
   constructor(config: CanonicalConnectorConfig) {
@@ -50,10 +50,11 @@ export class PlaidClientAdapter implements IConnectorClient {
       };
 
       try {
+        // TODO: handle rate limit
         const response = await this.plaidClient.institutionsGet(request);
         const institutions = response.data.institutions;
         offset += institutions.length;
-        notCompleted = response.data.total <= offset;
+        notCompleted = response.data.total < offset;
         result = [...institutions.map(toCanonicalIntegration)];
       } catch (error) {
         // Handle error
