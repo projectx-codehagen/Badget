@@ -3,6 +3,7 @@ import {
   bigint,
   boolean,
   index,
+  json,
   mysqlEnum,
   timestamp,
   unique,
@@ -44,8 +45,7 @@ export const connectorConfigs = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     orgId: varchar("org_id", { length: 36 }).notNull(),
-    clientId: varchar("client_id", { length: 255 }),
-    clientSecret: varchar("client_secret", { length: 255 }),
+    secret: json("secret"),
     env: mysqlEnum("env", [
       ConnectorEnv.DEVELOPMENT,
       ConnectorEnv.SANDBOX,

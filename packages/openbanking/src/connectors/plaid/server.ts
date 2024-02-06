@@ -11,16 +11,21 @@ import { toPlaidCountryCode } from "./mappers/country-code-mapper";
 import { toPlaidEnvironment } from "./mappers/env-mapper";
 import { toCanonicalIntegration } from "./mappers/institution-mapper";
 
+const parseSecret = (secret: unknown) => {
+  return secret as { clientId: string; clientSecret: string };
+};
+
 export default class PlaidClientAdapter implements IConnectorClient {
   private plaidClient: PlaidApi;
 
   constructor(config: CanonicalConnectorConfig) {
+    const secret = parseSecret(config.secret);
     const configuration = new Configuration({
       basePath: toPlaidEnvironment(config.env),
       baseOptions: {
         headers: {
-          "PLAID-CLIENT-ID": config.clientId,
-          "PLAID-SECRET": config.clientSecret,
+          "PLAID-CLIENT-ID": secret.clientId,
+          "PLAID-SECRET": secret.clientSecret,
         },
       },
     });
