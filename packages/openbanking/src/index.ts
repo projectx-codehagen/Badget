@@ -1,7 +1,6 @@
 import {
   CanonicalIntegration,
   ConnectorEnv,
-  CountryCode,
   db,
   eq,
   schema,
@@ -18,7 +17,7 @@ export interface IConnectorClient {
   preConnect(): Promise<void>;
 
   // core methods
-  listProviders(countryCodes?: CountryCode[]): Promise<CanonicalIntegration[]>;
+  listProviders(countryCodes?: string[]): Promise<CanonicalIntegration[]>;
   listAccounts(): Promise<void>;
   listBalances(): Promise<void>;
   listTransactions(): Promise<void>;
@@ -67,7 +66,7 @@ class ConnectorFacade {
     this.connectors = connectors;
   }
 
-  async getProviders(countryCodes: CountryCode[]) {
+  async getProviders(countryCodes: string[]) {
     const resultMap = new Map<string, CanonicalIntegration[]>();
 
     for (const connector of this.connectors) {

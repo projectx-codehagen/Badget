@@ -1,10 +1,10 @@
-import { CountryCode, db, eq, inArray, schema } from "@projectx/db";
+import { db, eq, inArray, schema } from "@projectx/db";
 
 import { connectorFacade, toConnectorEnv } from ".";
 import { env } from "./env.mjs";
 
 export type IntegrationsWebhookPayload = {
-  countryCodes: CountryCode[];
+  countryCodes: string[];
 };
 
 export async function handleEvent(_payload: IntegrationsWebhookPayload) {

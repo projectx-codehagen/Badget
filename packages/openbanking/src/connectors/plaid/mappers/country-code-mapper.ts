@@ -1,23 +1,21 @@
 import { CountryCode } from "plaid";
 
-import { CountryCode as CanonicalCountryCode } from "@projectx/db";
-
 export const toCanonicalCountryCode = (countryCode: CountryCode) => {
   switch (countryCode) {
     case CountryCode.It:
-      return CanonicalCountryCode.IT;
+      return "IT";
     case CountryCode.Us:
-      return CanonicalCountryCode.US;
+      return "US";
     default:
       throw new Error(`[plaid] unknown country code ${countryCode}`);
   }
 };
 
-export const toPlaidCountryCode = (countryCode: CanonicalCountryCode) => {
+export const toPlaidCountryCode = (countryCode: string) => {
   switch (countryCode) {
-    case CanonicalCountryCode.IT:
+    case "IT":
       return CountryCode.It;
-    case CanonicalCountryCode.US:
+    case "US":
       return CountryCode.Us;
     default:
       throw new Error(`[plaid] unknown country code ${countryCode}`);

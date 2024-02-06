@@ -11,7 +11,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 
-import { ConnectorEnv, ConnectorType, CountryCode } from "../enum";
+import { ConnectorEnv, ConnectorType } from "../enum";
 import { mySqlTable } from "./_table";
 
 export const countryCodes = mySqlTable(
@@ -23,7 +23,7 @@ export const countryCodes = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    code: mysqlEnum("code", [CountryCode.IT, CountryCode.US]).notNull(),
+    code: varchar("code", { length: 2 }).notNull(),
     active: boolean("active").default(true),
 
     integrationId: bigint("integration_id", { mode: "bigint" }),

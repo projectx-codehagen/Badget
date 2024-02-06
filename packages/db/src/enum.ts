@@ -93,12 +93,6 @@ export const PrimaryCategory = {
 export type PrimaryCategory =
   (typeof PrimaryCategory)[keyof typeof PrimaryCategory];
 
-export const CountryCode = {
-  IT: "IT",
-  US: "US",
-} as const;
-export type CountryCode = (typeof CountryCode)[keyof typeof CountryCode];
-
 export const ConnectorType = {
   DIRECT: "DIRECT",
   AGGREGATED: "AGGREGATED",

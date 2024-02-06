@@ -7,7 +7,6 @@ import {
   CanonicalConnectorConfig,
   CanonicalCountryCode,
   ConnectorType,
-  CountryCode,
   schema,
   sql,
 } from "./index";
@@ -39,7 +38,7 @@ const main = async () => {
 
   countryCodeData.push({
     id: 1,
-    code: CountryCode.IT,
+    code: "IT",
     active: true,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -49,8 +48,10 @@ const main = async () => {
   connectorsConfigData.push({
     id: 1,
     env: "SANDBOX",
-    clientId: process.env.PLAID_CLIENT_ID!,
-    clientSecret: process.env.PLAID_CLIENT_SECRET!,
+    secret: {
+      clientId: process.env.PLAID_CLIENT_ID!,
+      clientSecret: process.env.PLAID_CLIENT_SECRET!,
+    },
     orgId: "org_",
     connectorId: BigInt(1),
     createdAt: new Date(),

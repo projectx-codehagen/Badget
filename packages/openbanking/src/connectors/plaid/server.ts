@@ -1,10 +1,6 @@
 import { Configuration, InstitutionsGetRequest, PlaidApi } from "plaid";
 
-import {
-  CanonicalConnectorConfig,
-  CanonicalIntegration,
-  CountryCode,
-} from "@projectx/db";
+import { CanonicalConnectorConfig, CanonicalIntegration } from "@projectx/db";
 
 import { IConnectorClient } from "../..";
 import { toPlaidCountryCode } from "./mappers/country-code-mapper";
@@ -42,7 +38,7 @@ export default class PlaidClientAdapter implements IConnectorClient {
     return Promise.resolve();
   }
 
-  async listProviders(countryCodes: CountryCode[]) {
+  async listProviders(countryCodes: string[]) {
     let result: CanonicalIntegration[] = [];
 
     let notCompleted = true;
