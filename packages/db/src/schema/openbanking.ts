@@ -50,7 +50,7 @@ export const connectorConfigs = mySqlTable(
       ConnectorEnv.DEVELOPMENT,
       ConnectorEnv.SANDBOX,
       ConnectorEnv.PRODUCTION,
-    ]),
+    ]).notNull(),
 
     connectorId: bigint("connector_id", { mode: "bigint" }),
   },

@@ -19,7 +19,6 @@ export interface IConnectorClient {
 
   // core methods
   listProviders(countryCodes?: CountryCode[]): Promise<CanonicalIntegration[]>;
-
   listAccounts(): Promise<void>;
   listBalances(): Promise<void>;
   listTransactions(): Promise<void>;
@@ -44,7 +43,7 @@ export const connectorFacade = async (env: ConnectorEnv) => {
   for (const connectorWithConfig of connectorsWithConfig) {
     const ConnectorClientAdapter = (
       await import(
-        `./connectors/${connectorWithConfig.connectors.name}/server.ts`
+        `./connectors/${connectorWithConfig.connectors!.name.toLowerCase()}/server.ts`
       )
     ).default satisfies IConnectorClient;
 
@@ -66,10 +65,6 @@ class ConnectorFacade {
 
   constructor(...connectors: IConnectorClient[]) {
     this.connectors = connectors;
-  }
-
-  get ids() {
-    return this.connectors.map((c) => c.name);
   }
 
   async getProviders(countryCodes: CountryCode[]) {

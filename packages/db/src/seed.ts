@@ -49,8 +49,8 @@ const main = async () => {
   connectorsConfigData.push({
     id: 1,
     env: "SANDBOX",
-    clientId: process.env.PLAID_CLIENT_ID,
-    clientSecret: process.env.PLAID_CLIENT_SECRET,
+    clientId: process.env.PLAID_CLIENT_ID!,
+    clientSecret: process.env.PLAID_CLIENT_SECRET!,
     orgId: "org_",
     connectorId: BigInt(1),
     createdAt: new Date(),

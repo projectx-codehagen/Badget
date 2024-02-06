@@ -37,7 +37,7 @@ export default class PlaidClientAdapter implements IConnectorClient {
     return Promise.resolve();
   }
 
-  async listProviders(countryCodes?: CountryCode[]) {
+  async listProviders(countryCodes: CountryCode[]) {
     let result: CanonicalIntegration[] = [];
 
     let notCompleted = true;

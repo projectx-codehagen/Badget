@@ -1,12 +1,4 @@
-import {
-  CanonicalCountryCode,
-  ConnectorEnv,
-  CountryCode,
-  db,
-  eq,
-  inArray,
-  schema,
-} from "@projectx/db";
+import { CountryCode, db, eq, inArray, schema } from "@projectx/db";
 
 import { connectorFacade, toConnectorEnv } from ".";
 import { env } from "./env.mjs";
@@ -43,10 +35,10 @@ export async function handleEvent(_payload: IntegrationsWebhookPayload) {
 
   // create integrations
   for (let [connectorKey, connectorProviders] of providersMap.entries()) {
-    const connectorId = connectors.find((c) => c.name === connectorKey).id;
+    const connector = connectors.find((c) => c.name === connectorKey);
 
     // TODO: handle connector not found
-    if (!connectorId) {
+    if (!connector) {
       console.warn(`[openbanking] Connector '${connectorKey}' not found`);
       continue;
     }
@@ -60,8 +52,10 @@ export async function handleEvent(_payload: IntegrationsWebhookPayload) {
       return db.transaction(async (tx) => {
         await tx
           .insert(schema.integrations)
-          .values({ connectorId, ...connectorProvider })
-          .onDuplicateKeyUpdate({ set: { connectorId, ...connectorProvider } });
+          .values({ connectorId: connector.id, ...connectorProvider })
+          .onDuplicateKeyUpdate({
+            set: { connectorId: connector.id, ...connectorProvider },
+          });
       });
     });
 

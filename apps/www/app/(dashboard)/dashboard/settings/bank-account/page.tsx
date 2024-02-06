@@ -2,7 +2,6 @@ import { api } from "@/trpc/server";
 
 import { Separator } from "@/components/ui/separator";
 
-import BankAccountForm from "./bank-account-form";
 import { IntegrationForm } from "./integrations-form";
 
 export default async function SettingsProfilePage() {
