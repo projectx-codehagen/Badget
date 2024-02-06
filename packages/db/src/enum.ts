@@ -92,3 +92,12 @@ export const PrimaryCategory = {
 } as const;
 export type PrimaryCategory =
   (typeof PrimaryCategory)[keyof typeof PrimaryCategory];
+
+export const UserStatus = {
+  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
+  BLOCKED: "BLOCKED",
+  BANNED: "BANNED",
+  DELETED: "DELETED",
+} as const;
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus];
