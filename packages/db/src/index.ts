@@ -28,7 +28,6 @@ export type Item = typeof schema.item.$inferSelect;
 export type ItemInsert = typeof schema.item.$inferInsert;
 export type Transaction = typeof schema.transaction.$inferSelect;
 export type Merchant = typeof schema.merchant.$inferSelect;
-export type Location = typeof schema.location.$inferSelect;
 export type TransactionInsert = typeof schema.transaction.$inferInsert;
 
 export type CanonicalCountryCode = typeof schema.countryCodes.$inferSelect;
