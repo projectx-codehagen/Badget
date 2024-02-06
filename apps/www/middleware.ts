@@ -6,6 +6,8 @@ export default authMiddleware({
   publicRoutes: [
     "/",
     "/opengraph-image.png",
+    "/open",
+    "/oss-friends",
     "/signin(.*)",
     "/sso-callback(.*)",
     "/terms(.*)",
