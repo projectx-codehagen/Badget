@@ -1,10 +1,10 @@
-name: on-push
+name: CI
 
 on:
   pull_request:
     branches: ["main"]
   push:
-    branches: ["main"]
+    branches: ["*"]
   merge_group:
 
 permissions:
@@ -14,65 +14,47 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
+# You can leverage Vercel Remote Caching with Turbo to speed up your builds
+# @link https://turborepo.org/docs/core-concepts/remote-caching#remote-caching-on-vercel-builds
+# env:
+#   FORCE_COLOR: 3
+#   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+#   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+
 jobs:
-  ci:
-    name: 🔁 ci
-
-    runs-on:
-      labels: ubuntu-latest
-
-    env:
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_
-      CLERK_SECRET_KEY: sk_test_
-      DATABASE_HOST: ignore
-      DATABASE_NAME: ignore
-      DATABASE_USERNAME: ignore
-      DATABASE_PASSWORD: ignore
-      RESEND_API_KEY: ignore
-      TEST_EMAIL_ADDRESS: noreply@example.com
-      STRIPE_API_KEY: sk_test_
-      STRIPE_WEBHOOK_SECRET: whsec_
-      NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID: prod_
-      NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID: price_
-      NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID: prod_
-      NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID: price_
-      EDGE_STORE_ACCESS_KEY: ignore
-      EDGE_STORE_SECRET_KEY: ignore
-      NEXT_PUBLIC_APP_URL: http://localhost:3000
-      NEXTJS_URL: http://localhost:3000
+  lint:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
+      - name: Setup
+        uses: ./tooling/github/setup
 
-      - name: Setup Node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: Copy env
+        shell: bash
+        run: cp .env.example .env
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Lint
+        run: pnpm lint && pnpm lint:ws
 
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: pnpm i
+      - name: Setup
+        uses: ./tooling/github/setup
 
-      - name: 🦄 Format
-        run: pnpm format:check
+      - name: Format
+        run: pnpm format
 
-      - name: 🎨 Lint
-        run: pnpm lint
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: 👷‍♂️ Build
-        run: pnpm build
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Typecheck
+        run: pnpm typecheck
