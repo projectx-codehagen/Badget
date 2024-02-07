@@ -15,7 +15,7 @@
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "preview": "pnpm with-env next build && pnpm with-env next start",
     "start": "pnpm with-env next start",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "contentlayer build && tsc --noEmit",
     "with-env": "dotenv -e ../../.env.local --"
   },
   "dependencies": {
