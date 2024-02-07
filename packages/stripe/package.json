@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "@projectx/db": "^0.1.0",
-    "@clerk/nextjs": "^4.29.4",
+    "@clerk/nextjs": "^4.29.6",
     "@t3-oss/env-nextjs": "^0.7.1",
-    "stripe": "^14.13.0"
+    "stripe": "^14.15.0"
   },
   "devDependencies": {
     "@projectx/eslint-config": "^0.2.0",
