@@ -92,3 +92,16 @@ export const PrimaryCategory = {
 } as const;
 export type PrimaryCategory =
   (typeof PrimaryCategory)[keyof typeof PrimaryCategory];
+
+export const ConnectorType = {
+  DIRECT: "DIRECT",
+  AGGREGATED: "AGGREGATED",
+} as const;
+export type ConnectorType = (typeof ConnectorType)[keyof typeof ConnectorType];
+
+export const ConnectorEnv = {
+  DEVELOPMENT: "DEVELOPMENT",
+  SANDBOX: "SANDBOX",
+  PRODUCTION: "PRODUCTION",
+} as const;
+export type ConnectorEnv = (typeof ConnectorEnv)[keyof typeof ConnectorEnv];

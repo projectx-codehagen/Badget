@@ -13,6 +13,7 @@ const nextConfig = {
   transpilePackages: [
     "@projectx/api",
     "@projectx/db",
+    "@projectx/openbanking",
     "@projectx/transactional",
     "@projectx/validators",
   ],

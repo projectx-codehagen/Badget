@@ -1,8 +1,12 @@
+import { api } from "@/trpc/server";
+
 import { Separator } from "@/components/ui/separator";
 
-import BankAccountForm from "./bank-account-form";
+import { IntegrationForm } from "./integrations-form";
 
-export default function SettingsProfilePage() {
+export default async function SettingsProfilePage() {
+  const integrations = await api.integrations.listIntegrations.query();
+
   return (
     <div className="space-y-6">
       <div>
@@ -12,7 +16,8 @@ export default function SettingsProfilePage() {
         </p>
       </div>
       <Separator />
-      <BankAccountForm />
+      <IntegrationForm integrations={integrations} />
+      {/* <BankAccountForm /> */}
     </div>
   );
 }

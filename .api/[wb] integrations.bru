@@ -1,0 +1,17 @@
+meta {
+  name: [wb] integrations
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/webhooks/openbanking
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "countryCodes": ["IT"]
+  }
+}
