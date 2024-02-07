@@ -32,7 +32,7 @@ jobs:
 
       - name: Copy env
         shell: bash
-        run: cp .env.example .env
+        run: cp .env.example .env.local
 
       - name: Lint
         run: pnpm lint && pnpm lint:ws
