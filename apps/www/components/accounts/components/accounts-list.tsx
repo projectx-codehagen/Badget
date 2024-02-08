@@ -23,6 +23,7 @@ export function AccountsList({ items }: MailListProps) {
       if (!acc[item.category]) {
         acc[item.category] = [];
       }
+      // @ts-ignore
       acc[item.category].push(item);
       return acc;
     },

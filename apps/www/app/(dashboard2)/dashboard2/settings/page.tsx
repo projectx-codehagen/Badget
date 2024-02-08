@@ -13,10 +13,6 @@ export const metadata = {
 export default async function SettingsPage() {
   const user = await currentUser();
 
-  const handleUpdateUser = async (data) => {
-    // ... logic to update the user
-  };
-
   return (
     <DashboardShell>
       <DashboardHeader

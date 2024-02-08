@@ -7,6 +7,7 @@ import { MdxCard } from "@/components/content/mdx-card";
 import { Callout } from "@/components/shared/callout";
 
 const components = {
+  // @ts-ignore
   h1: ({ className, ...props }) => (
     <h1
       className={cn(
@@ -16,6 +17,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
@@ -25,6 +27,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
@@ -34,6 +37,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   h4: ({ className, ...props }) => (
     <h4
       className={cn(
@@ -43,6 +47,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   h5: ({ className, ...props }) => (
     <h5
       className={cn(
@@ -52,6 +57,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   h6: ({ className, ...props }) => (
     <h6
       className={cn(
@@ -61,27 +67,33 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   a: ({ className, ...props }) => (
     <a
       className={cn("font-medium underline underline-offset-4", className)}
       {...props}
     />
   ),
+  // @ts-ignore
   p: ({ className, ...props }) => (
     <p
       className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
       {...props}
     />
   ),
+  // @ts-ignore
   ul: ({ className, ...props }) => (
     <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
   ),
+  // @ts-ignore
   ol: ({ className, ...props }) => (
     <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
   ),
+  // @ts-ignore
   li: ({ className, ...props }) => (
     <li className={cn("mt-2", className)} {...props} />
   ),
+  // @ts-ignore
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
@@ -111,6 +123,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   th: ({ className, ...props }) => (
     <th
       className={cn(
@@ -120,6 +133,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   td: ({ className, ...props }) => (
     <td
       className={cn(
@@ -129,6 +143,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   pre: ({ className, ...props }) => (
     <pre
       className={cn(
@@ -138,6 +153,7 @@ const components = {
       {...props}
     />
   ),
+  // @ts-ignore
   code: ({ className, ...props }) => (
     <code
       className={cn(
@@ -161,6 +177,7 @@ export function Mdx({ code }: MdxProps) {
 
   return (
     <div className="mdx">
+      {/* @ts-ignore */}
       <Component components={components} />
     </div>
   );

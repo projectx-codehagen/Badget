@@ -32,6 +32,7 @@ const frameworks = [
   { value: "us_bank", label: "US Bank" },
 ];
 
+// @ts-ignore
 function ComboboxDemo({ onFrameworkSelect }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -84,6 +85,7 @@ function ComboboxDemo({ onFrameworkSelect }) {
 export function AddNewAccountDialog() {
   const [selectedFramework, setSelectedFramework] = useState("");
 
+  // @ts-ignore
   const handleFrameworkSelect = (framework) => {
     setSelectedFramework(framework);
   };

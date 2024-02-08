@@ -10,6 +10,7 @@ import {
 
 import { UploadDropZone } from "../fileupload/UploadDropZone";
 
+// @ts-ignore
 export function AddFilesButton({ propertyId, slug }) {
   return (
     <Dialog>

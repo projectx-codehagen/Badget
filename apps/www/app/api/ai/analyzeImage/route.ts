@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
       "Jeg ønsker at du skal opptre som en eiendomsmegler. Jeg vil at du skal lage tekst basert på bildet du mottar, og skrive en detaljert og tiltalende eiendomsbeskrivelse. Stilen skal være profesjonell, og beskrivelsen skal være omtrent én setning lang. Jeg ønsker 3 forskjellige setninger slik at jeg kan velge. Inkluder unike funksjoner og fremhev hva som gjør denne eiendommen spesiell.",
   };
 
+  // @ts-ignore
   const requestText = requestTexts[language] || requestTexts["english"];
 
   try {

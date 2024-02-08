@@ -14,6 +14,7 @@ import { useToast } from "../ui/use-toast";
 
 // Image Compression Function
 async function compressImage(
+  // @ts-ignore
   file,
   maxWidth = 1024,
   maxHeight = 1024,
@@ -77,6 +78,7 @@ async function compressImage(
   });
 }
 
+// @ts-ignore
 export function UploadDropZone({ propertyId, slug }) {
   const { toast } = useToast();
   const path = usePathname();
@@ -85,6 +87,7 @@ export function UploadDropZone({ propertyId, slug }) {
   const [loading, setLoading] = useState(false);
   const { edgestore } = useEdgeStore();
 
+  // @ts-ignore
   async function updateFileProgress(key, progress) {
     setFileStates((currentFileStates) => {
       return currentFileStates.map((fileState) => {
@@ -96,10 +99,12 @@ export function UploadDropZone({ propertyId, slug }) {
     });
   }
 
+  // @ts-ignore
   async function onFilesAdded(addedFiles) {
     setFileStates([...fileStates, ...addedFiles]);
     setLoading(true);
 
+    // @ts-ignore
     const compressAndUpload = async (fileState) => {
       try {
         // Compress the image

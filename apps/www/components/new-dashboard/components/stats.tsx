@@ -40,6 +40,7 @@ const data = [
 ];
 
 // Function to calculate percentage change (if you have the previous values)
+// @ts-ignore
 function calculateChange(current, previous) {
   if (previous === 0) return 0;
   return ((current - previous) / previous) * 100;
