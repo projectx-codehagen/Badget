@@ -2,6 +2,11 @@ import { Separator } from "@/components/ui/separator";
 
 import { AppearanceForm } from "./appearance-form";
 
+export const metadata = {
+  title: "Appearance settings",
+  description: "Appearance settings description",
+};
+
 export default function SettingsAppearancePage() {
   return (
     <div className="space-y-6">

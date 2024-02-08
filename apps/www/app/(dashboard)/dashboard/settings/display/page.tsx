@@ -2,6 +2,11 @@ import { Separator } from "@/components/ui/separator";
 
 import { DisplayForm } from "./display-form";
 
+export const metadata = {
+  title: "Display settings",
+  description: "Display settings description",
+};
+
 export default function SettingsDisplayPage() {
   return (
     <div className="space-y-6">
