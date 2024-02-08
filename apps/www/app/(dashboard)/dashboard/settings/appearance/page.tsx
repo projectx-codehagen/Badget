@@ -7,7 +7,6 @@ export const metadata = {
   description: "Appearance settings description",
 };
 
-
 export default function SettingsAppearancePage() {
   return (
     <div className="space-y-6">
