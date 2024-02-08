@@ -12,11 +12,12 @@ export const SubscriptionPlan = {
 export type SubscriptionPlan =
   (typeof SubscriptionPlan)[keyof typeof SubscriptionPlan];
 
-export const ItemStatus = {
+export const ResourceStatus = {
   BAD: "BAD",
   GOOD: "GOOD",
 } as const;
-export type ItemStatus = (typeof ItemStatus)[keyof typeof ItemStatus];
+export type ResourceStatus =
+  (typeof ResourceStatus)[keyof typeof ResourceStatus];
 
 // Plaid Enums
 
