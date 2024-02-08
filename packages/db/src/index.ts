@@ -9,6 +9,7 @@ import * as institution from "./schema/institution";
 import * as item from "./schema/item";
 import * as project from "./schema/project";
 import * as transaction from "./schema/transaction";
+import * as user from "./schema/user";
 
 export const schema = {
   ...customer,
@@ -18,6 +19,7 @@ export const schema = {
   ...item,
   ...transaction,
   ...category,
+  ...user,
 };
 
 export type Account = typeof schema.account.$inferSelect;
@@ -27,6 +29,7 @@ export type ItemInsert = typeof schema.item.$inferInsert;
 export type Transaction = typeof schema.transaction.$inferSelect;
 export type Merchant = typeof schema.merchant.$inferSelect;
 export type TransactionInsert = typeof schema.transaction.$inferInsert;
+export type User = typeof schema.user.$inferSelect;
 
 export { mySqlTable as tableCreator } from "./schema/_table";
 export * from "./enum";
