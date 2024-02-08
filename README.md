@@ -7,9 +7,9 @@
 </p>
 
 <p align="center">
-  <a href="https://twitter.com/placeholder">
+  <!-- <a href="https://twitter.com/placeholder">
     <img src="https://img.shields.io/twitter/follow/Projectx?style=flat&label=%40projectxy&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
-  </a>
+  </a> -->
   <a href="https://github.com/meglerhagen/projectx/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/meglerhagen/projectx?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
   </a>

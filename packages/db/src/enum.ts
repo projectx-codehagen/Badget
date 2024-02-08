@@ -101,3 +101,16 @@ export const UserStatus = {
   DELETED: "DELETED",
 } as const;
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus];
+
+export const ConnectorType = {
+  DIRECT: "DIRECT",
+  AGGREGATED: "AGGREGATED",
+} as const;
+export type ConnectorType = (typeof ConnectorType)[keyof typeof ConnectorType];
+
+export const ConnectorEnv = {
+  DEVELOPMENT: "DEVELOPMENT",
+  SANDBOX: "SANDBOX",
+  PRODUCTION: "PRODUCTION",
+} as const;
+export type ConnectorEnv = (typeof ConnectorEnv)[keyof typeof ConnectorEnv];

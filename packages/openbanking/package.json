@@ -1,42 +1,39 @@
 {
-  "name": "@projectx/db",
+  "name": "@projectx/openbanking",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./webhooks": "./src/webhooks.ts",
+    "./env": "./src/env.mjs"
   },
   "typesVersions": {
     "*": {
       "*": [
-        "src/*",
-        "drizzle.config.ts"
+        "src/*"
       ]
     }
   },
   "license": "MIT",
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint . --no-error-on-unmatched-pattern",
-    "push": "drizzle-kit push:mysql",
-    "studio": "drizzle-kit studio",
-    "seed": "tsx ./src/seed.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@planetscale/database": "^1.14.0",
-    "drizzle-orm": "^0.29.3"
+    "@projectx/db": "workspace:^0.1.0",
+    "plaid": "^20.0.0",
+    "react-plaid-link": "^3.5.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@projectx/eslint-config": "workspace:^0.2.0",
     "@projectx/prettier-config": "workspace:^0.1.0",
     "@projectx/tsconfig": "workspace:^0.1.0",
-    "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.13",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
-    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
