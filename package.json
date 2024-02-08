@@ -29,7 +29,7 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "typecheck": "turbo typecheck --filter=!react-email-client"
   },
-  "dependencies": {
+  "devDependencies": {
     "@projectx/prettier-config": "^0.1.0",
     "prettier": "^3.2.4",
     "turbo": "^1.11.3",

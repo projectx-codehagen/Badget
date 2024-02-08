@@ -30,6 +30,7 @@ export type Transaction = typeof schema.transaction.$inferSelect;
 export type Merchant = typeof schema.merchant.$inferSelect;
 export type TransactionInsert = typeof schema.transaction.$inferInsert;
 
+export type CanonicalCountryCode = typeof schema.countryCodes.$inferSelect;
 export type CanonicalConnectorConfig =
   typeof schema.connectorConfigs.$inferSelect;
 export type CanonicalConnector = typeof schema.connectors.$inferSelect;
