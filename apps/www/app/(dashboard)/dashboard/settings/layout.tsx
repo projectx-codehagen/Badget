@@ -5,14 +5,18 @@ import { Separator } from "@/components/ui/separator";
 import SettingSidebarNav from "@/components/layout/settings-sidebar-nav";
 
 export const metadata: Metadata = {
-  title: "Forms",
-  description: "Advanced form example using react-hook-form and Zod.",
+  title: "Settings",
+  description: "Settings-page for ProjectX",
 };
 
 const sidebarNavItems = [
   {
     title: "Profile",
     href: "/dashboard/settings",
+  },
+  {
+    title: "Connectors",
+    href: "/dashboard/settings/connectors",
   },
   {
     title: "Account",
