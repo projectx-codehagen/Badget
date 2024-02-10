@@ -21,6 +21,7 @@
     "lint": "eslint . --no-error-on-unmatched-pattern",
     "push": "drizzle-kit push:mysql",
     "studio": "drizzle-kit studio",
+    "seed": "tsx ./src/seed.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
     "drizzle-kit": "^0.20.13",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

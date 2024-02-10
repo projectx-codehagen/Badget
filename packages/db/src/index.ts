@@ -7,12 +7,14 @@ import * as category from "./schema/category";
 import * as customer from "./schema/customer";
 import * as institution from "./schema/institution";
 import * as item from "./schema/item";
+import * as openbanking from "./schema/openbanking";
 import * as project from "./schema/project";
 import * as transaction from "./schema/transaction";
 
 export const schema = {
   ...customer,
   ...project,
+  ...openbanking,
   ...account,
   ...institution,
   ...item,
@@ -26,12 +28,16 @@ export type Item = typeof schema.item.$inferSelect;
 export type ItemInsert = typeof schema.item.$inferInsert;
 export type Transaction = typeof schema.transaction.$inferSelect;
 export type Merchant = typeof schema.merchant.$inferSelect;
-export type Location = typeof schema.location.$inferSelect;
 export type TransactionInsert = typeof schema.transaction.$inferInsert;
+
+export type CanonicalCountryCode = typeof schema.countryCodes.$inferSelect;
+export type CanonicalConnectorConfig =
+  typeof schema.connectorConfigs.$inferSelect;
+export type CanonicalConnector = typeof schema.connectors.$inferSelect;
+export type CanonicalIntegration = typeof schema.integrations.$inferInsert;
 
 export { mySqlTable as tableCreator } from "./schema/_table";
 export * from "./enum";
-export * from "./queries";
 
 export * from "drizzle-orm";
 

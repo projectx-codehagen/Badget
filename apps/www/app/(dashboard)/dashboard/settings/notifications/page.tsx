@@ -2,6 +2,11 @@ import { Separator } from "@/components/ui/separator";
 
 import { NotificationsForm } from "./notifications-form";
 
+export const metadata = {
+  title: "Notifications settings",
+  description: "Notifications settings description",
+};
+
 export default function SettingsNotificationsPage() {
   return (
     <div className="space-y-6">

@@ -21,6 +21,7 @@
     "test": "turbo test",
     "db:push": "pnpm -F db push",
     "db:studio": "pnpm -F db studio",
+    "db:seed": "pnpm -F db seed",
     "format": "turbo format --filter=!react-email-client --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
     "format:check": "turbo format --filter=!react-email-client --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
@@ -28,7 +29,7 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "typecheck": "turbo typecheck --filter=!react-email-client"
   },
-  "dependencies": {
+  "devDependencies": {
     "@projectx/prettier-config": "^0.1.0",
     "prettier": "^3.2.4",
     "turbo": "^1.11.3",

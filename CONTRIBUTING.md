@@ -16,13 +16,13 @@ Some thoughts to help you contribute to this project
 ```sh
 $ git clone https://github.com/<your-name>/projectx
 $ cd projectx
-$ yarn install
+$ pnpm i
 ```
 
 ## Building
 
 ```sh
-$ yarn build
+$ pnpm run build
 ```
 
 ## Pull Requests
@@ -32,7 +32,7 @@ $ yarn build
 1. Fork the repo and create your branch
 2. Name your branch something that is descriptive to the work you are doing. i.e. adds-new-thing or fixes-mobile
 3. Make sure you address any lint warnings.
-4. Run yarn format if your unsure
+4. Run `pnpm run format` if your unsure
 5. If you make the existing code better, please let us know in your PR description.
 6. A PR description and title are required. The title is required to begin with: "feat:" or "fix:"
 7. [Link to an issue](https://help.github.com/en/github/writing-on-github/autolinked-references-and-urls) in the project. Unsolicited code is welcomed, but an issue is required for announce your intentions. PR's without a linked issue will be marked invalid and closed.
