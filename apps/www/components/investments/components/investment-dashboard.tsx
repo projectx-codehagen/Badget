@@ -32,9 +32,11 @@ import { TopCategoriesTable } from "@/components/new-dashboard/components/top-ca
 import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 import { Mail } from "../data";
+import { useIsEquity } from "../use-equity";
 import { useMail } from "../use-mail";
 import { AccountsDisplay } from "./accounts-display";
 import { AllocationTable } from "./allocation-table";
+import { EquityTableDisplay } from "./equity-table-display";
 import { HoldingsTable } from "./holdings-table";
 import { Investmentcards } from "./investment-cards";
 import { Nav } from "./nav";
@@ -61,6 +63,7 @@ export function InvestmentsDashboard({
   navCollapsedSize,
 }: MailProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
+  const [isEquity] = useIsEquity();
   const [mail] = useMail();
 
   return (
@@ -276,9 +279,13 @@ export function InvestmentsDashboard({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
-          <AccountsDisplay
-            mail={mails.find((item) => item.id === mail.selected) || null}
-          />
+          {!isEquity ? (
+            <AccountsDisplay
+              mail={mails.find((item) => item.id === mail.selected) || null}
+            />
+          ) : (
+            <EquityTableDisplay />
+          )}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
