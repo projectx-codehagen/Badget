@@ -47,6 +47,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { useIsEquity } from "../use-equity";
+
 const data: Category[] = [
   {
     id: "home",
@@ -166,6 +168,7 @@ export function AllocationTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [isEquity, setIsEquity] = useIsEquity();
 
   const table = useReactTable({
     data,
@@ -216,6 +219,7 @@ export function AllocationTable() {
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                onClick={() => setIsEquity(true)}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
