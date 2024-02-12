@@ -33,8 +33,7 @@ export const transaction = mySqlTable(
     date: timestamp("date"),
     dateTime: timestamp("datetime"),
     isoCurrencyCode: varchar("iso_currency_code", { length: 3 }),
-    merchantEntityId: varchar("merchant_entity_id", { length: 128 }), // A unique, stable, Plaid-generated ID that maps to the merchant.
-    merchantName: varchar("merchant_name", { length: 256 }),
+    merchantEntityId: varchar("merchant_entity_id", { length: 128 }),
     originalDescription: varchar("original_description", { length: 256 }),
     transactionCode: varchar("transaction_code", { length: 64 }),
     additionalData: json("additional_data"),

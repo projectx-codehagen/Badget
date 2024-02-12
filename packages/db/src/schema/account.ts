@@ -23,10 +23,8 @@ export const account = mySqlTable(
 
     clerkOrganizationId: varchar("clerk_organization_id", { length: 36 }),
     clerkUserId: varchar("clerk_user_id", { length: 36 }),
-    mask: varchar("mask", { length: 4 }),
     name: varchar("name", { length: 256 }).notNull(),
     officialName: varchar("official_name", { length: 256 }),
-    // persistentAccountId: varchar("persistent_account_id", { length: 256 }).notNull(), TODO: enable this only when we are able to support "Chase" items
     subType: varchar("sub_type", { length: 16 }), // NOTE: enum was too long
     type: varchar("type", { length: 16 }), // NOTE: enum was too long
   },
@@ -55,9 +53,6 @@ export const balance = mySqlTable(
     current: float("current"),
     isoCurrencyCode: varchar("iso_currency_code", { length: 3 }), // ISO 4217
     limit: float("limit"),
-    unofficialCurrencyCode: varchar("unofficial_currency_code", {
-      length: 4,
-    }),
   },
   (table) => {
     return {
