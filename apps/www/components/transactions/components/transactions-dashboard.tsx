@@ -35,6 +35,7 @@ import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/works
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
+import { AccountsReviewTable } from "./accounts-review-table";
 import { MailDisplay } from "./mail-display";
 import { MailList } from "./mail-list";
 import { Nav } from "./nav";
@@ -285,6 +286,7 @@ export function TransactionsDashboard({
             </div>
             <TabsContent value="all" className="m-0">
               <MailList items={mails} />
+              {/* <AccountsReviewTable /> */}
             </TabsContent>
             <TabsContent value="unread" className="m-0">
               <MailList items={mails.filter((item) => !item.read)} />
