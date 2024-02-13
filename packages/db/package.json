@@ -25,7 +25,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@planetscale/database": "^1.14.0",
+    "@planetscale/database": "^1.16.0",
     "drizzle-orm": "^0.29.3"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "@projectx/prettier-config": "workspace:^0.1.0",
     "@projectx/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.13",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
     "tsx": "^4.7.0",

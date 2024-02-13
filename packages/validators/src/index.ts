@@ -67,3 +67,8 @@ export const transferToOrgSchema = z.object({
   orgId: z.string(),
 });
 export type TransferToOrg = z.infer<typeof transferToOrgSchema>;
+
+export const updateConnectorConfigSchema = z.object({
+  secret: z.string().min(1, "Secret is required"),
+});
+export type UpdateConnectorConfig = z.infer<typeof updateConnectorConfigSchema>;
