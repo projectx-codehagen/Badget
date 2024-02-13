@@ -143,7 +143,7 @@ export function InvestmentsDashboard({
                 label: "",
                 icon: Repeat2,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/recurring",
               },
             ]}
           />

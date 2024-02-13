@@ -54,7 +54,7 @@ interface MailProps {
 export function CategoriesDashboard({
   accounts,
   mails,
-  defaultLayout = [265, 440, 400],
+  defaultLayout = [20, 40, 40],
   defaultCollapsed = false,
   navCollapsedSize,
 }: MailProps) {
@@ -66,7 +66,7 @@ export function CategoriesDashboard({
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+          document.cookie = `react-resizable-panels:layout-categories=${JSON.stringify(
             sizes,
           )}`;
         }}

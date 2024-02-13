@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  const layout = cookies().get("react-resizable-panels:layout");
+  const layout = cookies().get("react-resizable-panels:layout-transactions");
   const collapsed = cookies().get("react-resizable-panels:collapsed");
 
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
