@@ -55,7 +55,7 @@ interface TransactionsDashboardProps {
 export function TransactionsDashboard({
   accounts,
   mails,
-  defaultLayout = [265, 440, 655],
+  defaultLayout = [20, 40, 40],
   defaultCollapsed = false,
   navCollapsedSize,
 }: TransactionsDashboardProps) {
@@ -67,7 +67,7 @@ export function TransactionsDashboard({
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+          document.cookie = `react-resizable-panels:layout-transactions=${JSON.stringify(
             sizes,
           )}`;
         }}
