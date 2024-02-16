@@ -1,0 +1,33 @@
+name: Merge schema changes
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  merge_changes:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Create a deploy request
+        uses: planetscale/create-deploy-request-action@v1
+        id: create_deploy_request
+        with:
+          org_name: christer-sailsdock
+          database_name: propwrite
+          branch_name: develop # when we will have more branches ${{ github.event.pull_request.head.ref }}
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+      - name: Deploy a deploy request
+        uses: planetscale/deploy-deploy-request-action@v1
+        with:
+          org_name: christer-sailsdock
+          database_name: propwrite
+          number: ${{ steps.create_deploy_request.outputs.number }}
+          wait: true
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
