@@ -2,7 +2,7 @@ import { Configuration, InstitutionsGetRequest, PlaidApi } from "plaid";
 
 import { CanonicalConnectorConfig, CanonicalIntegration } from "@projectx/db";
 
-import { IConnectorClient } from "../..";
+import { IConnectorClient } from "../../../openbanking/src";
 import { toPlaidCountryCode } from "./mappers/country-code-mapper";
 import { toPlaidEnvironment } from "./mappers/env-mapper";
 import { toCanonicalIntegration } from "./mappers/institution-mapper";

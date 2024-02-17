@@ -12,6 +12,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
     EDGE_STORE_ACCESS_KEY: z.string().optional(),
     EDGE_STORE_SECRET_KEY: z.string().optional(),
+    NODE_ENV: z.enum(["development", "production", "test"]).default("test"),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),

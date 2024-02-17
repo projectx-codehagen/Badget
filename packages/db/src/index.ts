@@ -25,6 +25,7 @@ export type CanonicalConnectorConfig =
 export type CanonicalConnector = typeof schema.connectors.$inferSelect;
 export type CanonicalIntegration = typeof schema.integrations.$inferInsert;
 export type CanonicalAccount = typeof schema.account.$inferInsert;
+export type CanonicalBalance = typeof schema.balance.$inferInsert;
 
 export { mySqlTable as tableCreator } from "./schema/_table";
 export * from "./enum";

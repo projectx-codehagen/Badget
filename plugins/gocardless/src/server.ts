@@ -1,9 +1,16 @@
-import NordigenClient from "nordigen-node";
+import NordigenClient, { GetDetailsResponse } from "nordigen-node";
 
-import { CanonicalConnectorConfig } from "@projectx/db";
+import { IConnectorClient } from "@projectx/connector-core";
+import {
+  CanonicalAccount,
+  CanonicalBalance,
+  CanonicalConnectorConfig,
+  CanonicalCountry,
+  CanonicalResource,
+} from "@projectx/db";
 
-import { IConnectorClient } from "../..";
 import { toCanonicalAccount } from "./mappers/account-mapper";
+import { toCanonicalBalance } from "./mappers/balance-mapper";
 import { toGoCardlessCountryCode } from "./mappers/country-code-mapper";
 import { toCanonicalIntegration } from "./mappers/institution-mapper";
 
@@ -20,7 +27,7 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
     this.goCardlessClient = new NordigenClient({
       secretId: secret.secretId,
       secretKey: secret.secretKey,
-      baseUrl: "https://ob.gocardless.com",
+      baseUrl: "https://bankaccountdata.gocardless.com/api/v2",
     });
   }
 
@@ -34,7 +41,12 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
     ).access;
   }
 
-  async listProviders(countryCodes: string[]) {
+  async postConnect() {
+    // no-op
+    return await Promise.resolve();
+  }
+
+  async listIntegrations(countryCodes: CanonicalCountry[]) {
     const providerPromiseList = countryCodes
       .map(toGoCardlessCountryCode)
       .map((countryCode) =>
@@ -47,28 +59,40 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
     return providerList.flat().map(toCanonicalIntegration);
   }
 
-  listAccounts(): Promise<void> {
+  createResource(): Promise<CanonicalResource> {
     throw new Error("Method not implemented.");
   }
 
-  async getAccountById(accountId: string) {
-    const { account } = await this.goCardlessClient
+  listResources(): Promise<CanonicalResource[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  async listAccounts(
+    _resource: CanonicalResource,
+  ): Promise<CanonicalAccount[]> {
+    const accountIdList = [""]; // TODO: extract from resource
+
+    const accountPromiseList = accountIdList.map((accountId) => {
+      return this.goCardlessClient.account(accountId).getDetails();
+    });
+
+    return (await Promise.allSettled(accountPromiseList))
+      .filter(assertFulfilled)
+      .map((result) => toCanonicalAccount(result.value.account));
+  }
+
+  async listBalances(_account: CanonicalAccount): Promise<CanonicalBalance[]> {
+    const accountId = ""; // TODO: extract from account
+
+    const response = await this.goCardlessClient
       .account(accountId)
-      .getDetails();
-    return toCanonicalAccount(account);
+      .getBalances();
+
+    return response.balances.map(toCanonicalBalance);
   }
 
-  listBalances(): Promise<void> {
+  async listTransactions(_account: CanonicalAccount): Promise<void> {
     throw new Error("Method not implemented.");
-  }
-
-  listTransactions(): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-
-  postConnect() {
-    // no-op
-    return Promise.resolve();
   }
 
   private async getValidAccessToken() {
@@ -114,4 +138,10 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
 
     this.token = (await this.goCardlessClient.generateToken()).access;
   }
+}
+
+function assertFulfilled(
+  item: PromiseSettledResult<GetDetailsResponse>,
+): item is PromiseFulfilledResult<GetDetailsResponse> {
+  return item.status === "fulfilled";
 }

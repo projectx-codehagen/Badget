@@ -37,7 +37,7 @@ export const connectorConfigs = mySqlTable(
   },
   (table) => {
     return {
-      orgIdIdx: uniqueIndex("org_id_idx").on(table.orgId),
+      orgIdIdx: index("org_id_idx").on(table.orgId),
     };
   },
 );
@@ -75,14 +75,13 @@ export const integrations = mySqlTable(
     name: varchar("name", { length: 255 }).notNull(),
     logoUrl: varchar("logo_url", { length: 255 }),
     connectorProviderId: varchar("connector_provider_id", {
-      length: 63,
+      length: 127,
     }).unique(),
 
     connectorId: bigint("connector_id", { mode: "number" }),
   },
   (table) => {
     return {
-      connectorIdNameUnq: unique().on(table.connectorId, table.name),
       connectorIdIdx: index("connector_id_idx").on(table.connectorId),
     };
   },

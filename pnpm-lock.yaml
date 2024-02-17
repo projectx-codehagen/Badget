@@ -47,12 +47,18 @@ importers:
       '@projectx/api':
         specifier: workspace:^0.1.0
         version: link:../../packages/api
+      '@projectx/connector-core':
+        specifier: workspace:^0.1.0
+        version: link:../../plugins/core
+      '@projectx/connector-gocardless':
+        specifier: workspace:^0.1.0
+        version: link:../../plugins/gocardless
+      '@projectx/connector-plaid':
+        specifier: workspace:^0.1.0
+        version: link:../../plugins/plaid
       '@projectx/db':
         specifier: workspace:^0.1.0
         version: link:../../packages/db
-      '@projectx/openbanking':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/openbanking
       '@projectx/stripe':
         specifier: workspace:^0.1.0
         version: link:../../packages/stripe
@@ -447,43 +453,6 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
-  packages/openbanking:
-    dependencies:
-      '@projectx/db':
-        specifier: workspace:^0.1.0
-        version: link:../db
-      nordigen-node:
-        specifier: ^1.4.0
-        version: 1.4.0
-      plaid:
-        specifier: ^20.0.0
-        version: 20.0.0
-      react-plaid-link:
-        specifier: ^3.5.1
-        version: 3.5.1(react-dom@18.2.0)(react@18.2.0)
-      zod:
-        specifier: ^3.22.4
-        version: 3.22.4
-    devDependencies:
-      '@projectx/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@projectx/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@projectx/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      prettier:
-        specifier: ^3.2.4
-        version: 3.2.4
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
-
   packages/stripe:
     dependencies:
       '@clerk/nextjs':
@@ -560,6 +529,105 @@ importers:
       '@projectx/stripe':
         specifier: workspace:^0.1.0
         version: link:../stripe
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@projectx/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@projectx/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@projectx/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.2.4
+        version: 3.2.4
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  plugins/core:
+    dependencies:
+      '@projectx/db':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/db
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@projectx/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@projectx/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@projectx/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.2.4
+        version: 3.2.4
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  plugins/gocardless:
+    dependencies:
+      '@projectx/connector-core':
+        specifier: workspace:^0.1.0
+        version: link:../core
+      '@projectx/db':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/db
+      nordigen-node:
+        specifier: ^1.4.0
+        version: 1.4.0
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@projectx/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@projectx/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@projectx/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.2.4
+        version: 3.2.4
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  plugins/plaid:
+    dependencies:
+      '@projectx/connector-core':
+        specifier: workspace:^0.1.0
+        version: link:../core
+      '@projectx/db':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/db
+      plaid:
+        specifier: ^20.0.0
+        version: 20.0.0
+      react-plaid-link:
+        specifier: ^3.5.1
+        version: 3.5.1(react-dom@18.2.0)(react@18.2.0)
       zod:
         specifier: ^3.22.4
         version: 3.22.4

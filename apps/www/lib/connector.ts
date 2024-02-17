@@ -1,30 +1,12 @@
+import { IConnectorClient } from "@projectx/connector-core";
 import {
+  CanonicalCountry,
   CanonicalIntegration,
   ConnectorEnv,
   db,
   eq,
   schema,
 } from "@projectx/db";
-
-export * from "./webhooks";
-export * from "./connectors/plaid";
-export * from "./connectors/gocardless";
-
-export interface IConnectorClient {
-  get name(): string;
-
-  // auth can be done here
-  preConnect(): Promise<void>;
-
-  // core methods
-  listProviders(countryCodes?: string[]): Promise<CanonicalIntegration[]>;
-  listAccounts(): Promise<void>;
-  listBalances(): Promise<void>;
-  listTransactions(): Promise<void>;
-
-  // post operation and clean can be done here or a noop
-  postConnect(): Promise<void>;
-}
 
 export const connectorFacade = async (env: ConnectorEnv) => {
   // get configured connector based on env
@@ -40,11 +22,9 @@ export const connectorFacade = async (env: ConnectorEnv) => {
   // dynamically instantiate all of the connectors
   const connectors: IConnectorClient[] = [];
   for (const connectorWithConfig of connectorsWithConfig) {
-    const ConnectorClientAdapter = (
-      await import(
-        `./connectors/${connectorWithConfig.connectors!.name.toLowerCase()}/server.ts`
-      )
-    ).default satisfies IConnectorClient;
+    const ConnectorClientAdapter = await connectorFactory(
+      connectorWithConfig.connectors!.name.toLowerCase(),
+    );
 
     // maybe delegate this to a factory?
     const connector = new ConnectorClientAdapter(
@@ -59,6 +39,17 @@ export const connectorFacade = async (env: ConnectorEnv) => {
   return new ConnectorFacade(...connectors);
 };
 
+const connectorFactory = async (connectorName: string) => {
+  switch (connectorName) {
+    case "gocardless":
+      return (await import(`@projectx/connector-gocardless/server`)).default;
+    case "plaid":
+      return (await import(`@projectx/connector-plaid/server`)).default;
+    default:
+      throw new Error(`[www] connector not found: ${connectorName}`);
+  }
+};
+
 class ConnectorFacade {
   private connectors: IConnectorClient[];
 
@@ -66,11 +57,11 @@ class ConnectorFacade {
     this.connectors = connectors;
   }
 
-  async getProviders(countryCodes: string[]) {
+  async getProviders(countries: CanonicalCountry[]) {
     const resultMap = new Map<string, CanonicalIntegration[]>();
 
     for (const connector of this.connectors) {
-      const providers = await connector.listProviders(countryCodes);
+      const providers = await connector.listIntegrations(countries);
       resultMap.set(connector.name, providers);
     }
 
@@ -78,6 +69,7 @@ class ConnectorFacade {
   }
 }
 
+// TODO: move to connector-core
 export const toConnectorEnv = (env: string) => {
   switch (env) {
     case "production":
