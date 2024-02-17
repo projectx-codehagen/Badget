@@ -5,7 +5,7 @@ import { resend, WelcomeEmail } from "@projectx/transactional";
 async function sendOnboardingEmail(email: string, name: string) {
   try {
     await resend.emails.send({
-      from: "Projectx <onboarding@Resend.com>",
+      from: "Badget <onboarding@Resend.com>",
       to: email,
       subject: "Unlock the Future of Real Estate with Projectx!",
       react: WelcomeEmail({

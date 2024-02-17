@@ -10,25 +10,25 @@ import {
 const pricingFaqData = [
   {
     id: "item-1",
-    question: "How does Projectx's AI improve the real estate listing process?",
+    question: "How does Badget's AI improve the real estate listing process?",
     answer:
-      "Projectx utilizes AI to analyze property details and generate compelling descriptions that highlight unique features, optimize for search engines, and attract potential buyers more effectively than standard listings.",
+      "Badget utilizes AI to analyze property details and generate compelling descriptions that highlight unique features, optimize for search engines, and attract potential buyers more effectively than standard listings.",
   },
   {
     id: "item-2",
-    question: "Can I integrate Projectx with my existing real estate tools?",
+    question: "Can I integrate Badget with my existing real estate tools?",
     answer:
-      "Not yet... But soon we can say this - Absolutely! Projectx is built with integration in mind. Our comprehensive API allows you to seamlessly connect with a range of real estate tools and platforms, ensuring a smooth addition to your current workflow.",
+      "Not yet... But soon we can say this - Absolutely! Badget is built with integration in mind. Our comprehensive API allows you to seamlessly connect with a range of real estate tools and platforms, ensuring a smooth addition to your current workflow.",
   },
   {
     id: "item-3",
-    question: "What kind of support can I expect with Projectx?",
+    question: "What kind of support can I expect with Badget?",
     answer:
       "We offer dedicated support for all our users. Whether you're on a free or paid plan, our team is ready to assist you with any questions or issues you may encounter. Premium support options are available for our Pro plan subscribers.",
   },
   {
     id: "item-4",
-    question: "Is my data secure with Projectx?",
+    question: "Is my data secure with Badget?",
     answer:
       "Data security is our top priority. We employ SSL encryption and adhere to industry best practices to ensure that all your data, from property listings to client information, is securely stored and protected.",
   },

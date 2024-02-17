@@ -5,9 +5,9 @@ import { DashboardShell } from "@/components/dashboard/shell";
 import { UserNameForm } from "@/components/forms/user-name-form";
 
 export const metadata = {
-  title: "Projectx Settings - Customize Your Experience",
+  title: "Badget Settings - Customize Your Experience",
   description:
-    "Adjust your Projectx account settings for a tailored real estate management experience. Manage language preferences, account details, and more.",
+    "Adjust your Badget account settings for a tailored real estate management experience. Manage language preferences, account details, and more.",
 };
 
 export default async function SettingsPage() {

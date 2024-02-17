@@ -1,17 +1,17 @@
-<a href="https://projectx-eight-gilt.vercel.app/">
-  <h1 align="center">ProjectX: Revolutionizing Financial Management</h1>
+<a href="https://badget-eight-gilt.vercel.app/">
+  <h1 align="center">Badget: Revolutionizing Financial Management</h1>
 </a>
 
 <p align="center">
-  Empower your financial management with ProjectX - AI-driven insights at your fingertips. Optimize your finances effortlessly.
+  Empower your financial management with Badget - AI-driven insights at your fingertips. Optimize your finances effortlessly.
 </p>
 
 <p align="center">
   <!-- <a href="https://twitter.com/placeholder">
-    <img src="https://img.shields.io/twitter/follow/Projectx?style=flat&label=%40projectxy&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
+    <img src="https://img.shields.io/twitter/follow/badget?style=flat&label=%40badgety&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
   </a> -->
-  <a href="https://github.com/meglerhagen/projectx/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/meglerhagen/projectx?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
+  <a href="https://github.com/meglerhagen/badget/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/meglerhagen/badget?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
   </a>
 </p>
 
@@ -26,26 +26,26 @@
 
 ## Introduction
 
-Welcome to ProjectX, where we're ushering in a new era of financial management. Leveraging cutting-edge AI, ProjectX redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions.
+Welcome to badget, where we're ushering in a new era of financial management. Leveraging cutting-edge AI, badget redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions.
 
-With ProjectX, gain unparalleled insights into your spending habits and financial patterns, empowering you to budget better and experience more. Trusted by the world's most innovative companies, ProjectX is here to revolutionize your financial management experience.
+With badget, gain unparalleled insights into your spending habits and financial patterns, empowering you to budget better and experience more. Trusted by the world's most innovative companies, badget is here to revolutionize your financial management experience.
 
 ## What we are using
 
 Lets goooo - Next.js 14, Turborepo, Drizzle ORM, Planetscale, Clerk, Resend, React Email, Shadcn/ui, and Stripe.
 <br/>
-All seamlessly integrated with the Projectx to accelerate the development.
+All seamlessly integrated with the badget to accelerate the development.
 
 ## Directory Structure
 
-ProjectX is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
+badget is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
 
     .
     ├── apps                         # Its app workspace which contains
     │    ├── www                     # Nextjs app which is deployed in Vercel
     │    └── ...
-    ├── tooling                      # are the shared configuration that are used by the apps and packages (e.g. `@projectx/eslint-config`)
-    ├── packages                     # are the shared packages that are used by the apps (e.g. `@projectx/components`)
+    ├── tooling                      # are the shared configuration that are used by the apps and packages (e.g. `@badget/eslint-config`)
+    ├── packages                     # are the shared packages that are used by the apps (e.g. `@badget/components`)
     ├── docker-compose.yml
     ├── LICENSE
     └── README.md
@@ -58,7 +58,7 @@ ProjectX is a monorepo managed by [Turborepo](https://turbo.build/repo). The mon
 Clone & create this repo locally with the following command:
 
 ```bash
-git clone https://github.com/meglerhagen/projectx.git
+git clone https://github.com/meglerhagen/badget.git
 ```
 
 1. Install dependencies using pnpm:
@@ -153,11 +153,11 @@ The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you h
 
 We love our contributors! Here's how you can contribute:
 
-- [Open an issue](https://github.com/meglerhagen/projectx/issues) if you believe you've encountered a bug.
-- Make a [pull request](https://github.com/meglerhagen/projectx/pull) to add new features/make quality-of-life improvements/fix bugs.
+- [Open an issue](https://github.com/meglerhagen/badget/issues) if you believe you've encountered a bug.
+- Make a [pull request](https://github.com/meglerhagen/badget/pull) to add new features/make quality-of-life improvements/fix bugs.
 
-<a href="https://github.com/meglerhagen/projectx/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=meglerhagen/projectx" />
+<a href="https://github.com/meglerhagen/badget/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=meglerhagen/badget" />
 </a>
 
 ## Repo Activity

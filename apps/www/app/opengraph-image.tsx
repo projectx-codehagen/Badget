@@ -53,7 +53,7 @@ export default async function Image() {
                 fontFamily: '"Cal Sans"',
               }}
             >
-              Budget Better, Gain More Experience Projectx
+              Budget Better, Gain More Experience Badget
             </h1>
 
             <p tw="max-w-[42rem] text-muted-foreground text-xl leading-8">

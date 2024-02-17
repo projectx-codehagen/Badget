@@ -119,13 +119,13 @@ export const normalizeUser = (clerkUser: User | null) => {
 export async function fetchGithubData() {
   try {
     const githubInfoResponse = await fetch(
-      "https://api.github.com/repos/projectx-codehagen/projectx",
+      "https://api.github.com/repos/projectx-codehagen/badget",
     );
     if (!githubInfoResponse.ok) throw new Error("Failed to fetch GitHub info");
     const data = await githubInfoResponse.json();
 
     const prsResponse = await fetch(
-      "https://api.github.com/search/issues?q=repo:projectx-codehagen/projectx+type:pr+is:merged",
+      "https://api.github.com/search/issues?q=repo:projectx-codehagen/badget+type:pr+is:merged",
     );
     if (!prsResponse.ok) throw new Error("Failed to fetch PRs info");
     const totalPR = await prsResponse.json();

@@ -51,7 +51,7 @@ export const SignInModal = () => {
             Unlock AI-Powered Money Management. Sign in seamlessly with your
             Google account with one simple click to access tailored financial
             insights, customized budget tracking and spending analysis from
-            ProjectX.
+            Badget.
           </p>
         </div>
 
