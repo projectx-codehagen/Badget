@@ -14,7 +14,14 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { compareAsc, format, parseISO } from "date-fns";
+import {
+  compareAsc,
+  compareDesc,
+  format,
+  isToday,
+  isYesterday,
+  parseISO,
+} from "date-fns";
 import {
   ArrowRightLeftIcon,
   BadgeDollarSign,
@@ -52,7 +59,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { payments } from "@/components/accounts/data";
+import { payments } from "@/components/transactions/data";
 
 export type Payment = {
   id: string;
@@ -216,7 +223,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function AccountsReviewTable({ mailId }) {
+export function AccountsReviewTable2({ mailId }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -247,25 +254,37 @@ export function AccountsReviewTable({ mailId }) {
     },
   });
 
+  const formatDate = (dateString) => {
+    const date = parseISO(dateString);
+    if (isToday(date)) {
+      return "Today";
+    } else if (isYesterday(date)) {
+      return "Yesterday";
+    } else {
+      // Example format: Wed, February 14
+      return format(date, "EEE, MMMM d");
+    }
+  };
+
   const groupedData = React.useMemo(() => {
-    // First sort the items by date
+    // Sort the items by date in descending order so the most recent dates come first
     const sortedItems = filteredPayments.sort((a, b) =>
-      compareAsc(parseISO(b.date), parseISO(a.date)),
+      compareDesc(parseISO(a.date), parseISO(b.date)),
     );
 
-    // Then group items by month and year
+    // Group items by "today", "yesterday", or specific date format
     return sortedItems.reduce(
       (acc, item) => {
-        const monthYear = format(parseISO(item.date), "MMMM yyyy");
-        if (!acc[monthYear]) {
-          acc[monthYear] = [];
+        const formattedDate = formatDate(item.date); // Use formatDate here
+        if (!acc[formattedDate]) {
+          acc[formattedDate] = [];
         }
-        acc[monthYear].push(item);
+        acc[formattedDate].push(item);
         return acc;
       },
       {} as Record<string, Payment[]>,
     );
-  }, [filteredPayments]);
+  }, [filteredPayments]); // No need to depend on formatDate if it's not changing
 
   return (
     <div className="mt-4">
