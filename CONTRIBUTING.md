@@ -14,8 +14,8 @@ Some thoughts to help you contribute to this project
 ## Setup (forks are preferred).
 
 ```sh
-$ git clone https://github.com/<your-name>/projectx
-$ cd projectx
+$ git clone https://github.com/<your-name>/badget
+$ cd badget
 $ pnpm i
 ```
 
@@ -37,7 +37,7 @@ $ pnpm run build
 6. A PR description and title are required. The title is required to begin with: "feat:" or "fix:"
 7. [Link to an issue](https://help.github.com/en/github/writing-on-github/autolinked-references-and-urls) in the project. Unsolicited code is welcomed, but an issue is required for announce your intentions. PR's without a linked issue will be marked invalid and closed.
 
-_note for maintainers: All pull requests need a label to assist automation. See the [template](https://github.com/meglerhagen/projectx/blob/HEAD/.github/release-drafter.yml) to guide which labels to use._
+_note for maintainers: All pull requests need a label to assist automation. See the [template](https://github.com/meglerhagen/badget/blob/HEAD/.github/release-drafter.yml) to guide which labels to use._
 
 ### PR Validation
 
@@ -59,7 +59,7 @@ GitHub has support for draft pull requests, which will disable the merge button 
 
 If you plan to contribute a change based on an open issue, please assign yourself by commenting on the following word `.take`. Issues that are not assigned are assumed open, and to avoid conflicts, please assign yourself before beginning work on any issues.
 
-If you would like to contribute to the project for the first time, please consider joining checking the [bug](https://github.com/meglerhagen/projectx/issues?q=is%3Aissue+is%3Aopen+label%3A%22%F0%9F%90%9B+bug%22) or [good first issue](https://github.com/meglerhagen/projectx/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+first+issue%22) labels.
+If you would like to contribute to the project for the first time, please consider joining checking the [bug](https://github.com/meglerhagen/badget/issues?q=is%3Aissue+is%3Aopen+label%3A%22%F0%9F%90%9B+bug%22) or [good first issue](https://github.com/meglerhagen/badget/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+first+issue%22) labels.
 
 Also, all questions are welcomed.
 
@@ -69,4 +69,4 @@ Do you have questions? Join the conversation in our [Discord](https://discord.gg
 
 ## License
 
-ProjectX is open-source under the GNU Affero General Public License Version 3 (AGPLv3) or any later version.
+Badget is open-source under the GNU Affero General Public License Version 3 (AGPLv3) or any later version.
