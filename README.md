@@ -10,8 +10,8 @@
   <!-- <a href="https://twitter.com/placeholder">
     <img src="https://img.shields.io/twitter/follow/badget?style=flat&label=%40badgety&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
   </a> -->
-  <a href="https://github.com/meglerhagen/badget/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/meglerhagen/badget?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
+  <a href="https://github.com/projectx-codehagen/Badget/blob/main/LICENSE.md">
+    <img src="https://img.shields.io/github/license/projectx-codehagen/Badget?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
   </a>
 </p>
 
@@ -58,7 +58,7 @@ badget is a monorepo managed by [Turborepo](https://turbo.build/repo). The monor
 Clone & create this repo locally with the following command:
 
 ```bash
-git clone https://github.com/meglerhagen/badget.git
+git clone https://github.com/projectx-codehagen/Badget
 ```
 
 1. Install dependencies using pnpm:
