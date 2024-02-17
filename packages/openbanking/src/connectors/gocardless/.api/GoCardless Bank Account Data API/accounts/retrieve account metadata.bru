@@ -1,0 +1,15 @@
+meta {
+  name: retrieve account metadata
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://bankaccountdata.gocardless.com/api/v2/accounts/{id}/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

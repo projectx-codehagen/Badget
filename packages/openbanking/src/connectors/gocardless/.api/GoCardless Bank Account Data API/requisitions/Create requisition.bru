@@ -1,0 +1,28 @@
+meta {
+  name: Create requisition
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://bankaccountdata.gocardless.com/api/v2/requisitions/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "redirect": "",
+    "institution_id": "",
+    "agreement": "",
+    "reference": "",
+    "user_language": "",
+    "ssn": "",
+    "account_selection": "",
+    "redirect_immediate": ""
+  }
+}

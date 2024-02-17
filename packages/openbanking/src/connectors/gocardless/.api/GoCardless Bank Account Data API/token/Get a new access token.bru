@@ -1,0 +1,21 @@
+meta {
+  name: Get a new access token
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://bankaccountdata.gocardless.com/api/v2/token/refresh/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "refresh": ""
+  }
+}

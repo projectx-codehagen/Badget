@@ -1,0 +1,15 @@
+meta {
+  name: retrieve EUA by id
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://bankaccountdata.gocardless.com/api/v2/agreements/enduser/{id}/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

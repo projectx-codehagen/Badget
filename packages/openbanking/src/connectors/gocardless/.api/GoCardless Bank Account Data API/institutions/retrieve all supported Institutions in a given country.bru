@@ -1,0 +1,31 @@
+meta {
+  name: retrieve all supported Institutions in a given country
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://bankaccountdata.gocardless.com/api/v2/institutions/
+  body: none
+  auth: bearer
+}
+
+query {
+  ~country: IT
+  ~access_scopes_supported: 
+  ~account_selection_supported: 
+  ~business_accounts_supported: 
+  ~card_accounts_supported: 
+  ~corporate_accounts_supported: 
+  ~payment_submission_supported: 
+  ~payments_enabled: 
+  ~pending_transactions_supported: 
+  ~private_accounts_supported: 
+  ~read_debtor_account_supported: 
+  ~read_refund_account_supported: 
+  ~ssn_verification_supported: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

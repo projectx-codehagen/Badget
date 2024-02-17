@@ -1,0 +1,22 @@
+meta {
+  name: accept EUA
+  type: http
+  seq: 5
+}
+
+put {
+  url: https://bankaccountdata.gocardless.com/api/v2/agreements/enduser/{id}/accept/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "user_agent": "",
+    "ip_address": ""
+  }
+}

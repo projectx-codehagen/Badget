@@ -13,10 +13,10 @@ export async function handleEvent(_payload: IntegrationsWebhookPayload) {
   // get active country codes
   const countryCodes = await db
     .select({
-      code: schema.countryCodes.code,
+      code: schema.country.iso,
     })
-    .from(schema.countryCodes)
-    .where(eq(schema.countryCodes.active, true));
+    .from(schema.country)
+    .where(eq(schema.country.active, true));
 
   // list all providers for connected connectors
   const providersMap = await facade.getProviders(

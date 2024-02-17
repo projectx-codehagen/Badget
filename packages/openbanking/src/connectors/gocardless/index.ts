@@ -1,1 +1,3 @@
-export const name = "gocardless";
+export * from "./client";
+export * from "./server";
+// export * from "./webhooks";

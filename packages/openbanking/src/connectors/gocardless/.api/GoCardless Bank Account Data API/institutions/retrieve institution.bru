@@ -1,0 +1,15 @@
+meta {
+  name: retrieve institution
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://bankaccountdata.gocardless.com/api/v2/institutions/{id}/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

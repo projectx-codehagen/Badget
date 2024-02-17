@@ -1,0 +1,26 @@
+meta {
+  name: Obtain new access-refresh token pair
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://bankaccountdata.gocardless.com/api/v2/token/new/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "secret_id": "{{secret_id}}",
+    "secret_key": "{{secret_key}}"
+  }
+}
+
+script:post-response {
+  bru.setVar("token", res.body.access);
+}

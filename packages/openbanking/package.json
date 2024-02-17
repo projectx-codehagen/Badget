@@ -25,6 +25,7 @@
   "dependencies": {
     "@projectx/db": "workspace:^0.1.0",
     "plaid": "^20.0.0",
+    "nordigen-node": "^1.4.0",
     "react-plaid-link": "^3.5.1",
     "zod": "^3.22.4"
   },

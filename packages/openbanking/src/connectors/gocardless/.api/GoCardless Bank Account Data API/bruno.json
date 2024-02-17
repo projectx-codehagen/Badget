@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "GoCardless Bank Account Data API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

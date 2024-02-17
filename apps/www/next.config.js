@@ -38,9 +38,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "tailwindui.com",
       },
+      // TODO: remove code below
       {
         protocol: "https",
         hostname: "pbs.twimg.com",
+      },
+      {
+        protocol: "https",
+        hostname: "asset.brandfetch.io",
       },
     ],
   },

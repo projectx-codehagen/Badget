@@ -415,6 +415,9 @@ importers:
       drizzle-orm:
         specifier: ^0.29.3
         version: 0.29.3(@planetscale/database@1.16.0)
+      iso-country-currency:
+        specifier: ^0.7.2
+        version: 0.7.2
     devDependencies:
       '@projectx/eslint-config':
         specifier: workspace:^0.2.0
@@ -449,6 +452,9 @@ importers:
       '@projectx/db':
         specifier: workspace:^0.1.0
         version: link:../db
+      nordigen-node:
+        specifier: ^1.4.0
+        version: 1.4.0
       plaid:
         specifier: ^20.0.0
         version: 20.0.0
@@ -7739,6 +7745,11 @@ packages:
     resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
     engines: {node: '>=12'}
 
+  /dotenv@10.0.0:
+    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
+    engines: {node: '>=10'}
+    dev: false
+
   /dotenv@16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
@@ -9774,6 +9785,10 @@ packages:
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  /iso-country-currency@0.7.2:
+    resolution: {integrity: sha512-RcFyqdvt1nbPPrUfAs2cuWnjynZYHU671r9MlcH7zn9Zkyif3tR9LJWVJmpFeSMDECDeycDUNiy9Mur+B21Sqw==}
+    dev: false
+
   /iterator.prototype@1.1.2:
     resolution: {integrity: sha512-DR33HMMr8EzwuRL8Y9D3u2BMj8+RqSE850jfGu59kS7tbmPLzGkZmVSfyCFSDxuZiEY6Rzt3T2NA/qU+NwVj1w==}
     dependencies:
@@ -11275,6 +11290,15 @@ packages:
     hasBin: true
     dependencies:
       abbrev: 2.0.0
+    dev: false
+
+  /nordigen-node@1.4.0:
+    resolution: {integrity: sha512-Vgazt4+/tG0By9ekTWtJVMqPQhosKY1G9CoqUHZKQB7Waxw97Qr68fzzf3iKq0kuonGd/YgbvGkEpj1fArNxQg==}
+    dependencies:
+      axios: 1.6.7
+      dotenv: 10.0.0
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /normalize-package-data@2.5.0:

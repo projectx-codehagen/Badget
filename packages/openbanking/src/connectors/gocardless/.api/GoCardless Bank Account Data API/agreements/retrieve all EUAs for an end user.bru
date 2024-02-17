@@ -1,0 +1,20 @@
+meta {
+  name: retrieve all EUAs for an end user
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://bankaccountdata.gocardless.com/api/v2/agreements/enduser/
+  body: none
+  auth: bearer
+}
+
+query {
+  ~limit: 
+  ~offset: 
+}
+
+auth:bearer {
+  token: {{token}}
+}
