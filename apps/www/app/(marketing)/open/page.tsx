@@ -13,7 +13,7 @@ import OpenUsersFunding from "@/components/open-page/OpenUsersFunding";
 import OpenUsersText from "@/components/open-page/OpenUsersText";
 
 export const metadata = {
-  title: "Projectx Open - Everything open",
+  title: "Badget Open - Everything open",
   description:
     "All our metrics, finances, and learnings are public. We believe in transparency.",
 };

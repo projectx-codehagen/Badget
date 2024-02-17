@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { allPages, allPosts } from "contentlayer/generated";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const domain = "projectx-eight-gilt.vercel.app"; // Replace with your actual domain
+  const domain = "https://www.badget.io/"; // Replace with your actual domain
 
   // Manually added static pages with today's date
   const staticPagesSitemap = [

@@ -6,7 +6,7 @@ import SettingSidebarNav from "@/components/layout/settings-sidebar-nav";
 
 export const metadata: Metadata = {
   title: "Settings",
-  description: "Settings-page for ProjectX",
+  description: "Settings-page for Badget",
 };
 
 const sidebarNavItems = [

@@ -19,11 +19,11 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              ProjectX
+              Badget
             </a>
             . Open source for{" "}
             <a
-              href="https://github.com/projectx-codehagen/projectx"
+              href="https://github.com/projectx-codehagen/badget"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
-  title: "Projectx | Open Source Friends",
+  title: "Badget | Open Source Friends",
   description: "Open-source projects and tools for an open world.",
 };
 

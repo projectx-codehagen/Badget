@@ -17,7 +17,7 @@ const CallToActionComponent = () => {
       >
         <Balancer>
           Streamline your property listings and client interactions with the
-          precision of AI. Projectx delivers a suite of tools that elevate your
+          precision of AI. Badget delivers a suite of tools that elevate your
           efficiency and let you focus on closing deals – not on paperwork.
         </Balancer>
       </p>
