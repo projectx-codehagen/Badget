@@ -1,0 +1,17 @@
+meta {
+  name: [cron] banking account data
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/cron/bank-account-data
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "countryCodes": ["IT"]
+  }
+}

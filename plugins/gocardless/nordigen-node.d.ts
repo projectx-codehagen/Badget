@@ -76,6 +76,21 @@ declare module "nordigen-node" {
     getRequisitions(
       request: GetRequisitionsRequest,
     ): Promise<GetRequisitionsResponse>;
+
+    getRequisitionById(requisitionId: string): Promise<{
+      id: string;
+      created: string;
+      redirect: string;
+      status: string;
+      institution_id: string;
+      agreement: string;
+      reference: string;
+      accounts: string[];
+      link: string;
+      ssn: string;
+      account_selection: boolean;
+      redirect_immediate: boolean;
+    }>;
   }
 
   // #endregion

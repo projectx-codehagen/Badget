@@ -8,6 +8,7 @@ import {
   CanonicalConnectorConfig,
   CanonicalCountry,
   CanonicalCurrency,
+  CanonicalResource,
   ConnectorStatus,
   ConnectorType,
   schema,
@@ -35,6 +36,7 @@ const main = async () => {
   const currencyData: CanonicalCurrency[] = [];
   const connectorsConfigData: CanonicalConnectorConfig[] = [];
   const connectorsData: CanonicalConnector[] = [];
+  const resourcesData: CanonicalResource[] = [];
 
   // seed country and currency
   getAllISOCodes().forEach((isoCode) => {
@@ -57,7 +59,7 @@ const main = async () => {
     "PLAID_CLIENT_SECRET" in process.env
   ) {
     connectorsConfigData.push({
-      id: 1,
+      id: BigInt(1),
       env: "SANDBOX",
       secret: {
         clientId: process.env.PLAID_CLIENT_ID,
@@ -70,7 +72,7 @@ const main = async () => {
     });
 
     connectorsData.push({
-      id: 1,
+      id: BigInt(1),
       name: "plaid",
       logoUrl:
         "https://pbs.twimg.com/profile_images/1415067514460000256/1iPIdd20_400x400.png",
@@ -86,7 +88,7 @@ const main = async () => {
     "GOCARDLESS_SECRET_KEY" in process.env
   ) {
     connectorsConfigData.push({
-      id: 2,
+      id: BigInt(2),
       env: "SANDBOX",
       secret: {
         secretId: process.env.GOCARDLESS_SECRET_ID,
@@ -99,7 +101,7 @@ const main = async () => {
     });
 
     connectorsData.push({
-      id: 2,
+      id: BigInt(2),
       name: "gocardless",
       logoUrl: "https://asset.brandfetch.io/idNfPDHpG3/idamTYtkQh.png",
       status: ConnectorStatus.ACTIVE,
@@ -108,6 +110,15 @@ const main = async () => {
       updatedAt: new Date(),
     });
   }
+
+  resourcesData.push({
+    id: 1,
+    externalId: "28ce28fb-877b-4e5c-882a-6066f3f5f728",
+    integrationId: BigInt(1),
+    userId: "user_",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
 
   console.log("Seed start");
   await db
@@ -119,12 +130,16 @@ const main = async () => {
     .values(currencyData)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   await db
-    .insert(schema.connectorConfigs)
+    .insert(schema.connectorConfig)
     .values(connectorsConfigData)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   await db
-    .insert(schema.connectors)
+    .insert(schema.connector)
     .values(connectorsData)
+    .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+  await db
+    .insert(schema.resource)
+    .values(resourcesData)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   console.log("Seed done");
 };

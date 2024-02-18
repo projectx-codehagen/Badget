@@ -21,18 +21,18 @@ const GoCardlessLink = ({
 
     const connectors = await db
       .select()
-      .from(schema.connectors)
-      .where(eq(schema.connectors.name, "gocardless"))
+      .from(schema.connector)
+      .where(eq(schema.connector.name, "gocardless"))
       .leftJoin(
-        schema.connectorConfigs,
-        eq(schema.connectors.id, schema.connectorConfigs.connectorId),
+        schema.connectorConfig,
+        eq(schema.connector.id, schema.connectorConfig.connectorId),
       );
 
     if (!connectors[0]) {
       throw new Error(`[gocardless] connector config not found`);
     }
 
-    const client = new GoCardlessClientAdapter(connectors[0].connectorConfigs);
+    const client = new GoCardlessClientAdapter(connectors[0].connectorConfig);
     await client.preConnect();
     // TODO: crete requisition and map it to resource
     const resource = await client.createResource();

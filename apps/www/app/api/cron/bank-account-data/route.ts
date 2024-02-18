@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { UpdateIntegrationsCronPayload } from "@projectx/connector-core";
 import { db, schema, sql } from "@projectx/db";
 
 import { env } from "@/env.mjs";
@@ -10,10 +9,7 @@ export async function POST(req: NextRequest) {
   // TODO: verify signature
 
   try {
-    const payload =
-      (await req.text()) as unknown as UpdateIntegrationsCronPayload;
-    console.log(payload);
-    await handleEvent(payload);
+    await handleEvent();
 
     console.log("✅ Handled Openbanking Event");
     return NextResponse.json({ received: true }, { status: 200 });
@@ -24,9 +20,9 @@ export async function POST(req: NextRequest) {
   }
 }
 
-const handleEvent = async (_payload: UpdateIntegrationsCronPayload) => {
+const handleEvent = async () => {
   const facade = await connectorFacade(toConnectorEnv(env.NODE_ENV));
-  const resourceMap = await facade.listResources();
+  const resourceMap = await facade.listResourcesFromDB();
 
   for (let [connectorId, resourceList] of resourceMap.entries()) {
     console.debug(
@@ -34,18 +30,35 @@ const handleEvent = async (_payload: UpdateIntegrationsCronPayload) => {
     );
 
     for (let resource of resourceList) {
-      const resourceAccountList = await facade.listResourcesAccounts(resource);
+      const bankingDataMap = await facade.getBankingAccountData(
+        resource,
+        connectorId.toString(),
+      );
 
-      for (let resourceAccount of resourceAccountList) {
-        const account = await facade.getAccount(resourceAccount);
-        const balanceList = await facade.listBalances(resourceAccount);
-        const transactionList = await facade.listTransactions(resourceAccount);
-
+      for (let [_, bankingData] of bankingDataMap) {
         await db.transaction(async (tx) => {
-          await tx.insert(schema.account).values(account);
+          const accountQuery = await tx
+            .insert(schema.account)
+            .values({
+              ...bankingData.account,
+              resourceId: resource.id,
+            })
+            .onDuplicateKeyUpdate({
+              set: {
+                name: sql`name`,
+              },
+            });
+
           await tx
             .insert(schema.balance)
-            .values(balanceList)
+            .values(
+              bankingData.balances.map((balance) => {
+                return {
+                  ...balance,
+                  accountId: BigInt(accountQuery.insertId),
+                };
+              }),
+            )
             .onDuplicateKeyUpdate({
               set: {
                 amount: sql`amount`,
@@ -54,7 +67,14 @@ const handleEvent = async (_payload: UpdateIntegrationsCronPayload) => {
             });
           await tx
             .insert(schema.transaction)
-            .values(transactionList)
+            .values(
+              bankingData.transactions.map((transaction) => {
+                return {
+                  ...transaction,
+                  accountId: BigInt(accountQuery.insertId),
+                };
+              }),
+            )
             .onDuplicateKeyUpdate({
               set: {
                 amount: sql`amount`,

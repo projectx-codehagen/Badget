@@ -4,13 +4,12 @@ import {
   CanonicalCountry,
   CanonicalIntegration,
   CanonicalResource,
+  CanonicalTransaction,
 } from "@projectx/db";
 
 export interface IConnectorClient {
-  get id(): bigint;
-  set id(newId: bigint);
-  get name(): string;
-  set name(newId: string);
+  id: string;
+  name: string;
 
   /**
    * @description setup can be done here
@@ -46,23 +45,29 @@ export interface IConnectorClient {
   /**
    * @description list all available Accounts for given Resource
    * @param {CanonicalResource} resource connected resource
-   * @returns {Promise<CanonicalAccount[]>}
+   * @returns {Promise<Map<string, CanonicalAccount>>}
    */
-  listAccounts(resource: CanonicalResource): Promise<CanonicalAccount[]>;
+  listAccounts(
+    resource: CanonicalResource,
+  ): Promise<Map<string, CanonicalAccount>>;
 
   /**
    * @description list all available Balances for given Account
-   * @param {CanonicalAccount} account connected account
-   * @returns {Promise<CanonicalBalance[]>}
+   * @param {CanonicalResource} resource connected resource
+   * @returns {Promise<Map<string, CanonicalBalance[]>>}
    */
-  listBalances(account: CanonicalAccount): Promise<CanonicalBalance[]>;
+  listBalances(
+    resource: CanonicalResource,
+  ): Promise<Map<string, CanonicalBalance[]>>;
 
   /**
    * @description list all available Trasactions for given Account
-   * @param {CanonicalAccount} account connected account
-   * @returns {Promise<CanonicalAccount[]>}
+   * @param {CanonicalResource} resource connected resource
+   * @returns {Promise<Map<string, CanonicalTransaction[]>>}
    */
-  listTransactions(account: CanonicalAccount): Promise<void>;
+  listTransactions(
+    resource: CanonicalResource,
+  ): Promise<Map<string, CanonicalTransaction[]>>;
 }
 
 export type UpdateIntegrationsCronPayload = {};

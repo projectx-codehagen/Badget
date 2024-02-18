@@ -1,11 +1,14 @@
 import { IConnectorClient } from "@projectx/connector-core";
 import {
+  and,
   CanonicalAccount,
   CanonicalBalance,
   CanonicalCountry,
   CanonicalIntegration,
   CanonicalResource,
+  CanonicalTransaction,
   ConnectorEnv,
+  ConnectorStatus,
   db,
   eq,
   schema,
@@ -16,7 +19,12 @@ export const connectorFacade = async (env: ConnectorEnv) => {
   const connectorWithConfigList = await db
     .select()
     .from(schema.connectorConfig)
-    .where(eq(schema.connectorConfig.env, env))
+    .where(
+      and(
+        eq(schema.connector.status, ConnectorStatus.ACTIVE),
+        eq(schema.connectorConfig.env, env),
+      ),
+    )
     .leftJoin(
       schema.connector,
       eq(schema.connectorConfig.connectorId, schema.connector.id),
@@ -33,7 +41,7 @@ export const connectorFacade = async (env: ConnectorEnv) => {
 
     // maybe delegate this to a factory?
     const connector = new Connector(connectorWithConfig.connectorConfig);
-    connector.id = connectorWithConfig.connector.id;
+    connector.id = connectorWithConfig.connector.id.toString();
     connector.name = connectorWithConfig.connector.name;
     await connector.preConnect();
 
@@ -56,7 +64,10 @@ const connectorFactory = async (connectorName: string) => {
 };
 
 class ConnectorFacade {
-  private connectorMap: Map<bigint, IConnectorClient>;
+  private connectorMap: Map<string, IConnectorClient> = new Map<
+    string,
+    IConnectorClient
+  >();
 
   constructor(...connectors: IConnectorClient[]) {
     connectors.forEach((connector) => {
@@ -75,41 +86,66 @@ class ConnectorFacade {
     return resultMap;
   }
 
-  async listResources(): Promise<Map<bigint, CanonicalResource[]>> {
+  async listResourcesFromDB() {
     const resultMap = new Map<bigint, CanonicalResource[]>();
 
-    for (const [connectorId, connector] of this.connectorMap) {
-      const resourceList = await connector.listResources();
-      resultMap.set(connectorId, resourceList);
-    }
+    const resourceWithIntegrationList = await db
+      .select()
+      .from(schema.resource)
+      .leftJoin(
+        schema.integration,
+        eq(schema.resource.integrationId, schema.integration.id),
+      );
+
+    resourceWithIntegrationList.forEach((resourceWithIntegration) => {
+      resultMap.set(resourceWithIntegration.integration!.connectorId!, [
+        resourceWithIntegration.resource,
+      ]);
+    });
 
     return resultMap;
   }
 
-  async listResourcesAccounts(
+  async getBankingAccountData(
     resource: CanonicalResource,
-  ): Promise<CanonicalAccount[]> {
-    if (!resource.connectorId || !this.connectorMap.has(resource.connectorId)) {
-      throw new Error("[www] resource has no connector");
+    connectorId: string,
+  ) {
+    if (!this.connectorMap.has(connectorId)) {
+      throw new Error("[www] connectorId not found");
     }
 
-    return await this.connectorMap
-      .get(resource.connectorId)!
+    const accountMap = await this.connectorMap
+      .get(connectorId)!
       .listAccounts(resource);
-  }
+    const balanceMap = await this.connectorMap
+      .get(connectorId)!
+      .listBalances(resource);
+    const transactionMap = await this.connectorMap
+      .get(connectorId)!
+      .listTransactions(resource);
 
-  async getAccount(account: CanonicalAccount): Promise<CanonicalAccount[]> {
-    throw new Error("Not implemented");
-  }
+    const bankingDataMap = new Map<string, BankingData>();
 
-  async listBalances(account: CanonicalAccount): Promise<CanonicalBalance[]> {
-    throw new Error("Not implemented");
-  }
+    for (const [accountId, account] of accountMap) {
+      const balances = balanceMap.get(accountId) || [];
+      const transactions = transactionMap.get(accountId) || [];
 
-  async listTransactions(account: CanonicalAccount): Promise<void[]> {
-    throw new Error("Not implemented");
+      bankingDataMap.set(accountId, {
+        account,
+        balances,
+        transactions,
+      });
+    }
+
+    return bankingDataMap;
   }
 }
+
+type BankingData = {
+  account: CanonicalAccount;
+  balances: CanonicalBalance[];
+  transactions: CanonicalTransaction[];
+};
 
 // TODO: move to connector-core
 export const toConnectorEnv = (env: string) => {

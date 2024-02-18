@@ -90,7 +90,7 @@ export const integration = mySqlTable(
 export const resource = mySqlTable(
   "resource",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -99,6 +99,8 @@ export const resource = mySqlTable(
     // TODO: add fields
     userId: varchar("user_id", { length: 36 }).notNull(),
     integrationId: bigint("integration_id", { mode: "bigint" }),
+
+    externalId: varchar("external_id", { length: 36 }).notNull(),
   },
   (table) => {
     return {

@@ -17,7 +17,7 @@ export const schema = {
   ...openbanking,
 };
 
-export type CanonicalResource = typeof schema.integration.$inferSelect;
+export type CanonicalResource = typeof schema.resource.$inferSelect;
 export type CanonicalCountry = typeof schema.country.$inferInsert;
 export type CanonicalCurrency = typeof schema.currency.$inferInsert;
 export type CanonicalConnectorConfig =
@@ -26,6 +26,7 @@ export type CanonicalConnector = typeof schema.connector.$inferSelect;
 export type CanonicalIntegration = typeof schema.integration.$inferInsert;
 export type CanonicalAccount = typeof schema.account.$inferInsert;
 export type CanonicalBalance = typeof schema.balance.$inferInsert;
+export type CanonicalTransaction = typeof schema.transaction.$inferInsert;
 
 export { mySqlTable as tableCreator } from "./schema/_table";
 export * from "./enum";

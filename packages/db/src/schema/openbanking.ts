@@ -7,6 +7,7 @@ import {
   json,
   mysqlEnum,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/mysql-core";
 
@@ -25,6 +26,8 @@ export const account = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     resourceId: bigint("resource_id", { mode: "bigint" }).notNull(),
+    externalId: varchar("external_id", { length: 36 }).notNull(),
+
     orgId: varchar("org_id", { length: 36 }),
     userId: varchar("user_id", { length: 36 }),
 
@@ -36,6 +39,7 @@ export const account = mySqlTable(
       resourceIdIdx: index("resource_id_idx").on(table.resourceId),
       orgIdIdx: index("org_id_idx").on(table.orgId),
       userIdIdx: index("user_id_idx").on(table.userId),
+      externalIdUnqIdx: uniqueIndex("external_id_idx").on(table.externalId),
     };
   },
 );

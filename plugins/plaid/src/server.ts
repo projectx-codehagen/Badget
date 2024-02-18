@@ -1,8 +1,8 @@
 import { Configuration, InstitutionsGetRequest, PlaidApi } from "plaid";
 
+import { IConnectorClient } from "@projectx/connector-core";
 import { CanonicalConnectorConfig, CanonicalIntegration } from "@projectx/db";
 
-import { IConnectorClient } from "../../../openbanking/src";
 import { toPlaidCountryCode } from "./mappers/country-code-mapper";
 import { toPlaidEnvironment } from "./mappers/env-mapper";
 import { toCanonicalIntegration } from "./mappers/institution-mapper";
@@ -13,6 +13,8 @@ const parseSecret = (secret: unknown) => {
 
 export default class PlaidClientAdapter implements IConnectorClient {
   private plaidClient: PlaidApi;
+  id: string;
+  name: string;
 
   constructor(config: CanonicalConnectorConfig) {
     const secret = parseSecret(config.secret);
@@ -28,21 +30,125 @@ export default class PlaidClientAdapter implements IConnectorClient {
 
     this.plaidClient = new PlaidApi(configuration);
   }
-
-  get id() {
-    return this.id;
+  listIntegrations(
+    countries?: {
+      name: string;
+      iso: string;
+      id?: number;
+      createdAt?: Date;
+      updatedAt?: Date;
+      active?: boolean;
+    }[],
+  ): Promise<
+    {
+      name: string;
+      id?: bigint;
+      createdAt?: Date;
+      updatedAt?: Date;
+      connectorId?: bigint;
+      logoUrl?: string;
+      connectorProviderId?: string;
+    }[]
+  > {
+    throw new Error("Method not implemented.");
   }
-
-  set id(newId: bigint) {
-    this.id = newId;
+  createResource(): Promise<{
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    userId: string;
+    integrationId: bigint;
+    externalId: string;
+  }> {
+    throw new Error("Method not implemented.");
   }
-
-  get name() {
-    return this.name;
+  listResources(): Promise<
+    {
+      id: number;
+      createdAt: Date;
+      updatedAt: Date;
+      userId: string;
+      integrationId: bigint;
+      externalId: string;
+    }[]
+  > {
+    throw new Error("Method not implemented.");
   }
-
-  set name(newName: string) {
-    this.name = newName;
+  listAccounts(resource: {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    userId: string;
+    integrationId: bigint;
+    externalId: string;
+  }): Promise<
+    Map<
+      string,
+      {
+        name: string;
+        externalId: string;
+        resourceId: bigint;
+        id?: bigint;
+        createdAt?: Date;
+        updatedAt?: Date;
+        orgId?: string;
+        userId?: string;
+        extraData?: unknown;
+      }
+    >
+  > {
+    throw new Error("Method not implemented.");
+  }
+  listBalances(resource: {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    userId: string;
+    integrationId: bigint;
+    externalId: string;
+  }): Promise<
+    Map<
+      string,
+      {
+        date: Date;
+        type: "AVAILABLE" | "BOOKED" | "EXPECTED";
+        accountId: bigint;
+        currencyId: bigint;
+        amount: number;
+        id?: bigint;
+        createdAt?: Date;
+        updatedAt?: Date;
+        extraData?: unknown;
+      }[]
+    >
+  > {
+    throw new Error("Method not implemented.");
+  }
+  listTransactions(resource: {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    userId: string;
+    integrationId: bigint;
+    externalId: string;
+  }): Promise<
+    Map<
+      string,
+      {
+        date: Date;
+        description: string;
+        accountId: bigint;
+        currencyId: bigint;
+        amount: number;
+        categoryId: bigint;
+        id?: bigint;
+        createdAt?: Date;
+        updatedAt?: Date;
+        extraData?: unknown;
+      }[]
+    >
+  > {
+    throw new Error("Method not implemented.");
   }
 
   preConnect() {
@@ -77,18 +183,6 @@ export default class PlaidClientAdapter implements IConnectorClient {
     }
 
     return result;
-  }
-
-  listAccounts(): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-
-  listBalances(): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-
-  listTransactions(): Promise<void> {
-    throw new Error("Method not implemented.");
   }
 
   postConnect() {
