@@ -10,8 +10,8 @@
   <!-- <a href="https://twitter.com/placeholder">
     <img src="https://img.shields.io/twitter/follow/badget?style=flat&label=%40badgety&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
   </a> -->
-  <a href="https://github.com/meglerhagen/badget/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/meglerhagen/badget?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
+  <a href="https://github.com/projectx-codehagen/Badget/blob/main/LICENSE.md">
+    <img src="https://img.shields.io/github/license/projectx-codehagen/Badget?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
   </a>
 </p>
 
@@ -26,19 +26,19 @@
 
 ## Introduction
 
-Welcome to badget, where we're ushering in a new era of financial management. Leveraging cutting-edge AI, badget redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions.
+Welcome to Badget, where we're ushering in a new era of financial management. Leveraging cutting-edge AI, Badget redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions.
 
-With badget, gain unparalleled insights into your spending habits and financial patterns, empowering you to budget better and experience more. Trusted by the world's most innovative companies, badget is here to revolutionize your financial management experience.
+With Badget, gain unparalleled insights into your spending habits and financial patterns, empowering you to budget better and experience more. Trusted by the world's most innovative companies, Badget is here to revolutionize your financial management experience.
 
 ## What we are using
 
 Lets goooo - Next.js 14, Turborepo, Drizzle ORM, Planetscale, Clerk, Resend, React Email, Shadcn/ui, and Stripe.
 <br/>
-All seamlessly integrated with the badget to accelerate the development.
+All seamlessly integrated with the Badget to accelerate the development.
 
 ## Directory Structure
 
-badget is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
+Badget is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
 
     .
     ├── apps                         # Its app workspace which contains
@@ -58,7 +58,7 @@ badget is a monorepo managed by [Turborepo](https://turbo.build/repo). The monor
 Clone & create this repo locally with the following command:
 
 ```bash
-git clone https://github.com/meglerhagen/badget.git
+git clone https://github.com/projectx-codehagen/Badget
 ```
 
 1. Install dependencies using pnpm:
@@ -153,11 +153,11 @@ The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you h
 
 We love our contributors! Here's how you can contribute:
 
-- [Open an issue](https://github.com/meglerhagen/badget/issues) if you believe you've encountered a bug.
-- Make a [pull request](https://github.com/meglerhagen/badget/pull) to add new features/make quality-of-life improvements/fix bugs.
+- [Open an issue](https://github.com/projectx-codehagen/badget/issues) if you believe you've encountered a bug.
+- Make a [pull request](https://github.com/projectx-codehagen/badget/pull) to add new features/make quality-of-life improvements/fix bugs.
 
-<a href="https://github.com/meglerhagen/badget/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=meglerhagen/badget" />
+<a href="https://github.com/projectx-codehagen/badget/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=projectx-codehagen/badget" />
 </a>
 
 ## Repo Activity
