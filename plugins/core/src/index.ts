@@ -7,7 +7,10 @@ import {
 } from "@projectx/db";
 
 export interface IConnectorClient {
+  get id(): bigint;
+  set id(newId: bigint);
   get name(): string;
+  set name(newId: string);
 
   /**
    * @description setup can be done here

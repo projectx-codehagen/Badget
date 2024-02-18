@@ -29,8 +29,20 @@ export default class PlaidClientAdapter implements IConnectorClient {
     this.plaidClient = new PlaidApi(configuration);
   }
 
+  get id() {
+    return this.id;
+  }
+
+  set id(newId: bigint) {
+    this.id = newId;
+  }
+
   get name() {
-    return "plaid";
+    return this.name;
+  }
+
+  set name(newName: string) {
+    this.name = newName;
   }
 
   preConnect() {

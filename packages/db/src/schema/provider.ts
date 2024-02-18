@@ -16,10 +16,10 @@ import { mySqlTable } from "./_table";
 import { country } from "./country";
 import { account } from "./openbanking";
 
-export const connectorConfigs = mySqlTable(
-  "connectorConfigs",
+export const connectorConfig = mySqlTable(
+  "connectorConfig",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -42,8 +42,8 @@ export const connectorConfigs = mySqlTable(
   },
 );
 
-export const connectors = mySqlTable("connectors", {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+export const connector = mySqlTable("connector", {
+  id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -63,10 +63,10 @@ export const connectors = mySqlTable("connectors", {
   ]).notNull(),
 });
 
-export const integrations = mySqlTable(
-  "integrations",
+export const integration = mySqlTable(
+  "integration",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -78,7 +78,7 @@ export const integrations = mySqlTable(
       length: 127,
     }).unique(),
 
-    connectorId: bigint("connector_id", { mode: "number" }),
+    connectorId: bigint("connector_id", { mode: "bigint" }),
   },
   (table) => {
     return {
@@ -132,9 +132,9 @@ export const resource = mySqlTable(
  * - connector <-> connectorConfig  -> 1-to-N
  * - connector <-> integration      -> 1-to-N
  */
-export const connectorsRelations = relations(connectors, ({ many }) => ({
-  connectorConfigs: many(connectorConfigs),
-  integrations: many(integrations),
+export const connectorsRelations = relations(connector, ({ many }) => ({
+  connectorConfigs: many(connectorConfig),
+  integrations: many(integration),
 }));
 
 /**
@@ -143,11 +143,11 @@ export const connectorsRelations = relations(connectors, ({ many }) => ({
  * - integration <-> provider  -> N-to-1
  */
 export const integrationsRelations = relations(
-  integrations,
+  integration,
   ({ one, many }) => ({
-    connector: one(connectors, {
-      fields: [integrations.connectorId],
-      references: [connectors.id],
+    connector: one(connector, {
+      fields: [integration.connectorId],
+      references: [connector.id],
     }),
     countries: many(country),
   }),
@@ -159,9 +159,9 @@ export const integrationsRelations = relations(
  * - resource <-> account     -> 1-to-N
  */
 export const resourcesRelations = relations(resource, ({ many, one }) => ({
-  integration: one(integrations, {
+  integration: one(integration, {
     fields: [resource.integrationId],
-    references: [integrations.id],
+    references: [integration.id],
   }),
   accounts: many(account),
 }));

@@ -17,13 +17,13 @@ export const schema = {
   ...openbanking,
 };
 
-export type CanonicalResource = typeof schema.integrations.$inferSelect;
+export type CanonicalResource = typeof schema.integration.$inferSelect;
 export type CanonicalCountry = typeof schema.country.$inferInsert;
 export type CanonicalCurrency = typeof schema.currency.$inferInsert;
 export type CanonicalConnectorConfig =
-  typeof schema.connectorConfigs.$inferSelect;
-export type CanonicalConnector = typeof schema.connectors.$inferSelect;
-export type CanonicalIntegration = typeof schema.integrations.$inferInsert;
+  typeof schema.connectorConfig.$inferSelect;
+export type CanonicalConnector = typeof schema.connector.$inferSelect;
+export type CanonicalIntegration = typeof schema.integration.$inferInsert;
 export type CanonicalAccount = typeof schema.account.$inferInsert;
 export type CanonicalBalance = typeof schema.balance.$inferInsert;
 

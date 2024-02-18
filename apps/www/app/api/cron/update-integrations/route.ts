@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { UpdateIntegrationsCronPayload } from "@projectx/connector-core";
-import { db, eq, inArray, schema, sql } from "@projectx/db";
+import { db, eq, schema, sql } from "@projectx/db";
 
 import { env } from "@/env.mjs";
 import { connectorFacade, toConnectorEnv } from "@/lib/connector";
@@ -36,27 +36,11 @@ const handleEvent = async (_payload: UpdateIntegrationsCronPayload) => {
   // list all providers for connected connectors
   const providersMap = await facade.getProviders(countries);
 
-  // get connectors from db
-  const connectors = await db
-    .select({
-      id: schema.connectors.id,
-      name: schema.connectors.name,
-    })
-    .from(schema.connectors)
-    .where(inArray(schema.connectors.name, [...providersMap.keys()]));
-
   // create integrations
-  for (let [connectorKey, connectorProviders] of providersMap.entries()) {
+  for (let [connectorId, connectorProviders] of providersMap.entries()) {
     console.debug(
-      `[openbanking] Upserting ${connectorProviders.length} integrations for connector-${connectorKey}`,
+      `[openbanking] Upserting ${connectorProviders.length} integrations for connector-${connectorId}`,
     );
-    const connector = connectors.find((c) => c.name === connectorKey);
-
-    // TODO: handle connector not found
-    if (!connector) {
-      console.warn(`[openbanking] Connector '${connectorKey}' not found`);
-      continue;
-    }
 
     // TODO: handle removed connector providers
 
@@ -67,7 +51,7 @@ const handleEvent = async (_payload: UpdateIntegrationsCronPayload) => {
       .insert(schema.integrations)
       .values(
         connectorProviders.map((cp) => {
-          return { connectorId: connector.id, ...cp };
+          return { connectorId, ...cp };
         }),
       )
       .onDuplicateKeyUpdate({

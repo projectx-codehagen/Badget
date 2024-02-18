@@ -1,7 +1,10 @@
 import { IConnectorClient } from "@projectx/connector-core";
 import {
+  CanonicalAccount,
+  CanonicalBalance,
   CanonicalCountry,
   CanonicalIntegration,
+  CanonicalResource,
   ConnectorEnv,
   db,
   eq,
@@ -10,26 +13,28 @@ import {
 
 export const connectorFacade = async (env: ConnectorEnv) => {
   // get configured connector based on env
-  const connectorsWithConfig = await db
+  const connectorWithConfigList = await db
     .select()
-    .from(schema.connectorConfigs)
-    .where(eq(schema.connectorConfigs.env, env))
+    .from(schema.connectorConfig)
+    .where(eq(schema.connectorConfig.env, env))
     .leftJoin(
-      schema.connectors,
-      eq(schema.connectorConfigs.connectorId, schema.connectors.id),
+      schema.connector,
+      eq(schema.connectorConfig.connectorId, schema.connector.id),
     );
 
   // dynamically instantiate all of the connectors
   const connectors: IConnectorClient[] = [];
-  for (const connectorWithConfig of connectorsWithConfig) {
-    const ConnectorClientAdapter = await connectorFactory(
-      connectorWithConfig.connectors!.name.toLowerCase(),
+  for (const connectorWithConfig of connectorWithConfigList) {
+    if (!connectorWithConfig.connector) continue;
+
+    const Connector = await connectorFactory(
+      connectorWithConfig.connector.name.toLowerCase(),
     );
 
     // maybe delegate this to a factory?
-    const connector = new ConnectorClientAdapter(
-      connectorWithConfig.connectorConfigs,
-    );
+    const connector = new Connector(connectorWithConfig.connectorConfig);
+    connector.id = connectorWithConfig.connector.id;
+    connector.name = connectorWithConfig.connector.name;
     await connector.preConnect();
 
     connectors.push(connector);
@@ -51,21 +56,58 @@ const connectorFactory = async (connectorName: string) => {
 };
 
 class ConnectorFacade {
-  private connectors: IConnectorClient[];
+  private connectorMap: Map<bigint, IConnectorClient>;
 
   constructor(...connectors: IConnectorClient[]) {
-    this.connectors = connectors;
+    connectors.forEach((connector) => {
+      this.connectorMap.set(connector.id, connector);
+    });
   }
 
   async getProviders(countries: CanonicalCountry[]) {
-    const resultMap = new Map<string, CanonicalIntegration[]>();
+    const resultMap = new Map<bigint, CanonicalIntegration[]>();
 
-    for (const connector of this.connectors) {
-      const providers = await connector.listIntegrations(countries);
-      resultMap.set(connector.name, providers);
+    for (const [connectorId, connector] of this.connectorMap) {
+      const integrationList = await connector.listIntegrations(countries);
+      resultMap.set(connectorId, integrationList);
     }
 
     return resultMap;
+  }
+
+  async listResources(): Promise<Map<bigint, CanonicalResource[]>> {
+    const resultMap = new Map<bigint, CanonicalResource[]>();
+
+    for (const [connectorId, connector] of this.connectorMap) {
+      const resourceList = await connector.listResources();
+      resultMap.set(connectorId, resourceList);
+    }
+
+    return resultMap;
+  }
+
+  async listResourcesAccounts(
+    resource: CanonicalResource,
+  ): Promise<CanonicalAccount[]> {
+    if (!resource.connectorId || !this.connectorMap.has(resource.connectorId)) {
+      throw new Error("[www] resource has no connector");
+    }
+
+    return await this.connectorMap
+      .get(resource.connectorId)!
+      .listAccounts(resource);
+  }
+
+  async getAccount(account: CanonicalAccount): Promise<CanonicalAccount[]> {
+    throw new Error("Not implemented");
+  }
+
+  async listBalances(account: CanonicalAccount): Promise<CanonicalBalance[]> {
+    throw new Error("Not implemented");
+  }
+
+  async listTransactions(account: CanonicalAccount): Promise<void[]> {
+    throw new Error("Not implemented");
   }
 }
 
