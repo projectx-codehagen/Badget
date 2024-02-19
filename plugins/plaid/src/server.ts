@@ -1,7 +1,14 @@
 import { Configuration, InstitutionsGetRequest, PlaidApi } from "plaid";
 
 import { IConnectorClient } from "@projectx/connector-core";
-import { CanonicalConnectorConfig, CanonicalIntegration } from "@projectx/db";
+import {
+  CanonicalAccount,
+  CanonicalBalance,
+  CanonicalConnectorConfig,
+  CanonicalIntegration,
+  CanonicalResource,
+  CanonicalTransaction,
+} from "@projectx/db";
 
 import { toPlaidCountryCode } from "./mappers/country-code-mapper";
 import { toPlaidEnvironment } from "./mappers/env-mapper";
@@ -13,7 +20,7 @@ const parseSecret = (secret: unknown) => {
 
 export default class PlaidClientAdapter implements IConnectorClient {
   private plaidClient: PlaidApi;
-  id: string;
+  id: bigint;
   name: string;
 
   constructor(config: CanonicalConnectorConfig) {
@@ -52,102 +59,30 @@ export default class PlaidClientAdapter implements IConnectorClient {
   > {
     throw new Error("Method not implemented.");
   }
-  createResource(): Promise<{
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    userId: string;
-    integrationId: bigint;
-    externalId: string;
-  }> {
+
+  createResource(): Promise<CanonicalResource> {
     throw new Error("Method not implemented.");
   }
-  listResources(): Promise<
-    {
-      id: number;
-      createdAt: Date;
-      updatedAt: Date;
-      userId: string;
-      integrationId: bigint;
-      externalId: string;
-    }[]
-  > {
+
+  listResources(): Promise<CanonicalResource[]> {
     throw new Error("Method not implemented.");
   }
-  listAccounts(resource: {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    userId: string;
-    integrationId: bigint;
-    externalId: string;
-  }): Promise<
-    Map<
-      string,
-      {
-        name: string;
-        externalId: string;
-        resourceId: bigint;
-        id?: bigint;
-        createdAt?: Date;
-        updatedAt?: Date;
-        orgId?: string;
-        userId?: string;
-        extraData?: unknown;
-      }
-    >
-  > {
+
+  listAccounts(
+    resource: CanonicalResource,
+  ): Promise<Map<string, CanonicalAccount>> {
     throw new Error("Method not implemented.");
   }
-  listBalances(resource: {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    userId: string;
-    integrationId: bigint;
-    externalId: string;
-  }): Promise<
-    Map<
-      string,
-      {
-        date: Date;
-        type: "AVAILABLE" | "BOOKED" | "EXPECTED";
-        accountId: bigint;
-        currencyId: bigint;
-        amount: number;
-        id?: bigint;
-        createdAt?: Date;
-        updatedAt?: Date;
-        extraData?: unknown;
-      }[]
-    >
-  > {
+
+  listBalances(
+    resource: CanonicalResource,
+  ): Promise<Map<string, CanonicalBalance[]>> {
     throw new Error("Method not implemented.");
   }
-  listTransactions(resource: {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    userId: string;
-    integrationId: bigint;
-    externalId: string;
-  }): Promise<
-    Map<
-      string,
-      {
-        date: Date;
-        description: string;
-        accountId: bigint;
-        currencyId: bigint;
-        amount: number;
-        categoryId: bigint;
-        id?: bigint;
-        createdAt?: Date;
-        updatedAt?: Date;
-        extraData?: unknown;
-      }[]
-    >
-  > {
+
+  listTransactions(
+    resource: CanonicalResource,
+  ): Promise<Map<string, CanonicalTransaction[]>> {
     throw new Error("Method not implemented.");
   }
 

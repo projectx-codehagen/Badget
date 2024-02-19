@@ -32,7 +32,7 @@ const handleEvent = async () => {
     for (let resource of resourceList) {
       const bankingDataMap = await facade.getBankingAccountData(
         resource,
-        connectorId.toString(),
+        connectorId,
       );
 
       for (let [_, bankingData] of bankingDataMap) {

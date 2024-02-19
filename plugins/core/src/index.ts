@@ -8,7 +8,7 @@ import {
 } from "@projectx/db";
 
 export interface IConnectorClient {
-  id: string;
+  id: bigint;
   name: string;
 
   /**

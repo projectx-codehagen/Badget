@@ -2,7 +2,12 @@ import { Client } from "@planetscale/database";
 import * as dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 
-import { connectorConfigs, connectors, resources } from "./data/mock";
+import {
+  connectorConfigs,
+  connectors,
+  integrations,
+  resources,
+} from "./data/mock";
 import { countries, currencies } from "./data/setup";
 import { schema, sql } from "./index";
 
@@ -45,6 +50,10 @@ const main = async () => {
   await db
     .insert(schema.connector)
     .values(connectors)
+    .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+  await db
+    .insert(schema.integration)
+    .values(integrations)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   await db
     .insert(schema.resource)

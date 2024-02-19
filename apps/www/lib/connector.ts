@@ -41,7 +41,7 @@ export const connectorFacade = async (env: ConnectorEnv) => {
 
     // maybe delegate this to a factory?
     const connector = new Connector(connectorWithConfig.connectorConfig);
-    connector.id = connectorWithConfig.connector.id.toString();
+    connector.id = connectorWithConfig.connector.id;
     connector.name = connectorWithConfig.connector.name;
     await connector.preConnect();
 
@@ -64,8 +64,8 @@ const connectorFactory = async (connectorName: string) => {
 };
 
 class ConnectorFacade {
-  private connectorMap: Map<string, IConnectorClient> = new Map<
-    string,
+  private connectorMap: Map<bigint, IConnectorClient> = new Map<
+    bigint,
     IConnectorClient
   >();
 
@@ -108,7 +108,7 @@ class ConnectorFacade {
 
   async getBankingAccountData(
     resource: CanonicalResource,
-    connectorId: string,
+    connectorId: bigint,
   ) {
     if (!this.connectorMap.has(connectorId)) {
       throw new Error("[www] connectorId not found");

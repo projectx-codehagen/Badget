@@ -131,7 +131,7 @@ export const transaction = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     accountId: bigint("account_id", { mode: "bigint" }).notNull(),
-    categoryId: bigint("category_id", { mode: "bigint" }).notNull(),
+    categoryId: bigint("category_id", { mode: "bigint" }),
     currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
 
     amount: float("amount").notNull(),

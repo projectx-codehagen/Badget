@@ -23,7 +23,7 @@ const parseSecret = (secret: unknown) => {
 
 export default class GoCardlessClientAdapter implements IConnectorClient {
   private goCardlessClient: NordigenClient;
-  id: string;
+  id: bigint;
   name: string;
 
   constructor(config: CanonicalConnectorConfig) {

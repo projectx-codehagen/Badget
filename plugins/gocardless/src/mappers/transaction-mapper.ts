@@ -7,8 +7,8 @@ export const toCanonicalTransaction = (
 ) => {
   return {
     amount: transaction.transactionAmount.amount,
-    // TODO: find a smart way to map this -> currencyId: transaction.transactionAmount.currency,
-    date: transaction.valueDate,
+    currencyIso: transaction.transactionAmount.currency,
+    date: new Date(transaction.valueDate),
     description: transaction.remittanceInformationUnstructured,
   } as CanonicalTransaction;
 };
