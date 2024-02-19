@@ -39,18 +39,7 @@ export function NavBar({
         <div className="flex items-center space-x-3">
           {rightElements}
 
-          {user ? (
-            <UserAccountNav user={user} />
-          ) : (
-            <Button
-              className="px-3"
-              variant="default"
-              size="sm"
-              onClick={signInModal.onOpen}
-            >
-              Sign In
-            </Button>
-          )}
+          <UserAccountNav />
         </div>
       </div>
     </header>
