@@ -3,8 +3,6 @@
 import { MainNavItem } from "@/types";
 
 import useScroll from "@/hooks/use-scroll";
-import { useSigninModal } from "@/hooks/use-signin-modal";
-import { Button } from "@/components/ui/button";
 
 import { MainNav } from "./main-nav";
 import { NormalizedUser, UserAccountNav } from "./user-account-nav";
@@ -25,7 +23,6 @@ export function NavBar({
   scroll = false,
 }: NavBarProps) {
   const scrolled = useScroll(50);
-  const signInModal = useSigninModal();
 
   return (
     <header
@@ -39,7 +36,7 @@ export function NavBar({
         <div className="flex items-center space-x-3">
           {rightElements}
 
-          <UserAccountNav />
+          <UserAccountNav user={user} />
         </div>
       </div>
     </header>
