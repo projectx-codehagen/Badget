@@ -3,7 +3,6 @@ import {
   bigint,
   float,
   index,
-  int,
   json,
   mysqlEnum,
   timestamp,
@@ -69,7 +68,7 @@ export const balance = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     accountId: bigint("account_id", { mode: "bigint" }).notNull(),
-    currencyId: bigint("currency_id", { mode: "bigint" }).notNull(),
+    currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
 
     amount: float("amount").notNull(),
     date: timestamp("date").notNull(),
@@ -98,8 +97,8 @@ export const balanceRelations = relations(balance, ({ one }) => ({
     references: [account.id],
   }),
   currency: one(currency, {
-    fields: [balance.currencyId],
-    references: [currency.id],
+    fields: [balance.currencyIso],
+    references: [currency.iso],
   }),
 }));
 
@@ -133,7 +132,7 @@ export const transaction = mySqlTable(
 
     accountId: bigint("account_id", { mode: "bigint" }).notNull(),
     categoryId: bigint("category_id", { mode: "bigint" }).notNull(),
-    currencyId: bigint("currency_id", { mode: "bigint" }).notNull(),
+    currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
 
     amount: float("amount").notNull(),
     date: timestamp("date").notNull(),
@@ -163,7 +162,7 @@ export const transactionRelations = relations(transaction, ({ one }) => ({
     references: [category.id],
   }),
   currency: one(currency, {
-    fields: [transaction.currencyId],
-    references: [currency.id],
+    fields: [transaction.currencyIso],
+    references: [currency.iso],
   }),
 }));

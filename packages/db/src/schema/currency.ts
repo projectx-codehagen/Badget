@@ -10,7 +10,7 @@ export const currency = mySqlTable("currency", {
     .notNull(),
   updatedAt: timestamp("updated_at").onUpdateNow(),
 
-  iso: varchar("iso", { length: 3 }).notNull(),
+  iso: varchar("iso", { length: 3 }).unique().notNull(),
   symbol: varchar("symbol", { length: 5 }).notNull(),
   numericCode: int("numeric_code"),
 });

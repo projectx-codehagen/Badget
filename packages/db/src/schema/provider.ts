@@ -1,13 +1,10 @@
 import { relations, sql } from "drizzle-orm";
 import {
   bigint,
-  boolean,
   index,
   json,
   mysqlEnum,
   timestamp,
-  unique,
-  uniqueIndex,
   varchar,
 } from "drizzle-orm/mysql-core";
 

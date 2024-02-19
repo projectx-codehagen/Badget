@@ -10,7 +10,7 @@ export const country = mySqlTable("country", {
     .notNull(),
   updatedAt: timestamp("updated_at").onUpdateNow(),
 
-  iso: varchar("iso", { length: 2 }).notNull(),
+  iso: varchar("iso", { length: 2 }).unique(),
   name: varchar("name", { length: 63 }).notNull(),
   active: boolean("active").default(true),
 });

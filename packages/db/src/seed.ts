@@ -1,19 +1,10 @@
 import { Client } from "@planetscale/database";
 import * as dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
-import { getAllISOCodes } from "iso-country-currency";
 
-import {
-  CanonicalConnector,
-  CanonicalConnectorConfig,
-  CanonicalCountry,
-  CanonicalCurrency,
-  CanonicalResource,
-  ConnectorStatus,
-  ConnectorType,
-  schema,
-  sql,
-} from "./index";
+import { connectorConfigs, connectors, resources } from "./data/mock";
+import { countries, currencies } from "./data/setup";
+import { schema, sql } from "./index";
 
 dotenv.config({ path: "../../.env.local" });
 
@@ -32,114 +23,32 @@ const main = async () => {
   }).connection();
   const db = drizzle(client);
 
-  const countryData: CanonicalCountry[] = [];
-  const currencyData: CanonicalCurrency[] = [];
-  const connectorsConfigData: CanonicalConnectorConfig[] = [];
-  const connectorsData: CanonicalConnector[] = [];
-  const resourcesData: CanonicalResource[] = [];
-
-  // seed country and currency
-  getAllISOCodes().forEach((isoCode) => {
-    countryData.push({
-      active: isoCode.iso === "IT",
-      iso: isoCode.iso,
-      name: isoCode.countryName,
-    });
-
-    currencyData.push({
-      numericCode: isoCode.numericCode,
-      symbol: isoCode.symbol,
-      iso: isoCode.currency,
-    });
-  });
-
-  // seed connectors
-  if (
-    "PLAID_CLIENT_ID" in process.env &&
-    "PLAID_CLIENT_SECRET" in process.env
-  ) {
-    connectorsConfigData.push({
-      id: BigInt(1),
-      env: "SANDBOX",
-      secret: {
-        clientId: process.env.PLAID_CLIENT_ID,
-        clientSecret: process.env.PLAID_CLIENT_SECRET,
-      },
-      orgId: "org_",
-      connectorId: BigInt(1),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-
-    connectorsData.push({
-      id: BigInt(1),
-      name: "plaid",
-      logoUrl:
-        "https://pbs.twimg.com/profile_images/1415067514460000256/1iPIdd20_400x400.png",
-      status: ConnectorStatus.ACTIVE,
-      type: ConnectorType.AGGREGATED,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-  }
-
-  if (
-    "GOCARDLESS_SECRET_ID" in process.env &&
-    "GOCARDLESS_SECRET_KEY" in process.env
-  ) {
-    connectorsConfigData.push({
-      id: BigInt(2),
-      env: "SANDBOX",
-      secret: {
-        secretId: process.env.GOCARDLESS_SECRET_ID,
-        secretKey: process.env.GOCARDLESS_SECRET_KEY,
-      },
-      orgId: "org_",
-      connectorId: BigInt(2),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-
-    connectorsData.push({
-      id: BigInt(2),
-      name: "gocardless",
-      logoUrl: "https://asset.brandfetch.io/idNfPDHpG3/idamTYtkQh.png",
-      status: ConnectorStatus.ACTIVE,
-      type: ConnectorType.AGGREGATED,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-  }
-
-  resourcesData.push({
-    id: 1,
-    externalId: "28ce28fb-877b-4e5c-882a-6066f3f5f728",
-    integrationId: BigInt(1),
-    userId: "user_",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
-
   console.log("Seed start");
   await db
     .insert(schema.country)
-    .values(countryData)
-    .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+    .values(countries)
+    .onDuplicateKeyUpdate({ set: { iso: sql`iso`, name: sql`name` } });
   await db
     .insert(schema.currency)
-    .values(currencyData)
-    .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+    .values(currencies)
+    .onDuplicateKeyUpdate({
+      set: {
+        iso: sql`iso`,
+        symbol: sql`symbol`,
+        numericCode: sql`numeric_code`,
+      },
+    });
   await db
     .insert(schema.connectorConfig)
-    .values(connectorsConfigData)
+    .values(connectorConfigs)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   await db
     .insert(schema.connector)
-    .values(connectorsData)
+    .values(connectors)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   await db
     .insert(schema.resource)
-    .values(resourcesData)
+    .values(resources)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   console.log("Seed done");
 };
