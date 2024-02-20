@@ -3,11 +3,15 @@ import { useRouter } from "next/navigation";
 import { SignedIn, SignedOut, SignInButton, useClerk } from "@clerk/nextjs";
 import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
 
-
-
 import { useSigninModal } from "@/hooks/use-signin-modal";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/shared/user-avatar";
 
 export type NormalizedUser = {

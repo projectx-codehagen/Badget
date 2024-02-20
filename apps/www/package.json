@@ -11,7 +11,7 @@
     "build": "contentlayer build && pnpm with-env next build",
     "clean": "git clean -xdf .next .turbo .contentlayer node_modules",
     "dev": "pnpm with-env next dev",
-    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "preview": "pnpm with-env next build && pnpm with-env next start",
     "start": "pnpm with-env next start",
