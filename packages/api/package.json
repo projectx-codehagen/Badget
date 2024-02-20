@@ -30,7 +30,7 @@
     "@projectx/validators": "workspace:^0.1.0",
     "@clerk/nextjs": "^4.29.6",
     "@dinero.js/currencies": "2.0.0-alpha.14",
-    "@trpc/server": "next",
+    "@trpc/client": "^10.38.5",
     "dinero.js": "2.0.0-alpha.14",
     "superjson": "2.2.1",
     "zod": "^3.22.4"

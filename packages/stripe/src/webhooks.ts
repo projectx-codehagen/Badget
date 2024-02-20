@@ -1,7 +1,7 @@
 import { clerkClient } from "@clerk/nextjs";
 import type Stripe from "stripe";
 
-import { db, eq, genId, schema } from "@projectx/db";
+import { db, eq, schema } from "@projectx/db";
 
 import { stripe } from ".";
 import { stripePriceToSubscriptionPlan } from "./plans";

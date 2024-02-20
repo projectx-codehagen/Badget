@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
-import * as currencies from "@dinero.js/currencies";
+// import * as currencies from "@dinero.js/currencies";
 import { dinero } from "dinero.js";
 import * as z from "zod";
 
@@ -72,18 +72,26 @@ export const stripeRouter = createTRPCRouter({
         ...PLANS.STANDARD,
         price: dinero({
           amount: stdPrice.unit_amount!,
-          currency:
-            currencies[stdPrice.currency as keyof typeof currencies] ??
-            currencies.USD,
+          currency: {
+            code: "USD",
+            base: 10,
+            exponent: 2,
+          },
+          // currencies[stdPrice.currency as keyof typeof currencies] ??
+          // currencies.EUR,
         }),
       },
       {
         ...PLANS.PRO,
         price: dinero({
           amount: proPrice.unit_amount!,
-          currency:
-            currencies[proPrice.currency as keyof typeof currencies] ??
-            currencies.USD,
+          currency: {
+            code: "USD",
+            base: 10,
+            exponent: 2,
+          },
+          // currencies[proPrice.currency as keyof typeof currencies] ??
+          // currencies.EUR,
         }),
       },
     ];
