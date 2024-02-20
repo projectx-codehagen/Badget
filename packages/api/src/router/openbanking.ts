@@ -9,7 +9,7 @@ export const connectorRouter = createTRPCRouter({
         balances: true,
       },
       where: or(
-        eq(schema.account.orgId, opts.ctx.auth.orgId),
+        eq(schema.account.orgId, opts.ctx.auth.orgId || "org_"),
         eq(schema.account.userId, opts.ctx.auth.userId),
       ),
     });
@@ -24,7 +24,7 @@ export const connectorRouter = createTRPCRouter({
         currency: true,
       },
       where: or(
-        eq(schema.account.orgId, opts.ctx.auth.orgId),
+        eq(schema.account.orgId, opts.ctx.auth.orgId || "org_"),
         eq(schema.account.userId, opts.ctx.auth.userId),
       ),
       limit: 100, // TODO: paginated response

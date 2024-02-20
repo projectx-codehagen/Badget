@@ -6,5 +6,6 @@ export const toGoCardlessCountryCode = (countryCode: CanonicalCountry) => {
       return "IT";
     default:
       console.error(`[gocardless] unknown country code ${countryCode}`);
+      return "";
   }
 };

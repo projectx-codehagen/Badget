@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    "docker:disable"
+  ],
+  "baseBranches": [
+    "main"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "^@projectx/"
+      ],
+      "enabled": false
+    }
+  ],
+  "automerge": false,
+  "branchConcurrentLimit": 3,
+  "rangeStrategy": "bump",
+  "updateInternalDeps": true,
+  "enabled": true
+}

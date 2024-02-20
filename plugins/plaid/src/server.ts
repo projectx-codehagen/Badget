@@ -1,10 +1,16 @@
-import { Configuration, InstitutionsGetRequest, PlaidApi } from "plaid";
+import {
+  Configuration,
+  CountryCode,
+  InstitutionsGetRequest,
+  PlaidApi,
+} from "plaid";
 
 import { IConnectorClient } from "@projectx/connector-core";
 import {
   CanonicalAccount,
   CanonicalBalance,
   CanonicalConnectorConfig,
+  CanonicalCountry,
   CanonicalIntegration,
   CanonicalResource,
   CanonicalTransaction,
@@ -38,25 +44,8 @@ export default class PlaidClientAdapter implements IConnectorClient {
     this.plaidClient = new PlaidApi(configuration);
   }
   listIntegrations(
-    countries?: {
-      name: string;
-      iso: string;
-      id?: number;
-      createdAt?: Date;
-      updatedAt?: Date;
-      active?: boolean;
-    }[],
-  ): Promise<
-    {
-      name: string;
-      id?: bigint;
-      createdAt?: Date;
-      updatedAt?: Date;
-      connectorId?: bigint;
-      logoUrl?: string;
-      connectorProviderId?: string;
-    }[]
-  > {
+    countries?: CanonicalCountry[],
+  ): Promise<CanonicalIntegration[]> {
     throw new Error("Method not implemented.");
   }
 

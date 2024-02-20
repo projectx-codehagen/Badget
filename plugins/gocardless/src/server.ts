@@ -6,6 +6,7 @@ import {
   CanonicalBalance,
   CanonicalConnectorConfig,
   CanonicalCountry,
+  CanonicalIntegration,
   CanonicalResource,
   CanonicalTransaction,
 } from "@projectx/db";
@@ -22,14 +23,14 @@ const parseSecret = (secret: unknown) => {
 };
 
 export default class GoCardlessClientAdapter implements IConnectorClient {
-  private goCardlessClient: NordigenClient;
-  id: bigint;
-  name: string;
+  private client: NordigenClient;
+  id: bigint = BigInt(0);
+  name: string = "";
 
   constructor(config: CanonicalConnectorConfig) {
     const secret = parseSecret(config.secret);
 
-    this.goCardlessClient = new NordigenClient({
+    this.client = new NordigenClient({
       secretId: secret.secretId,
       secretKey: secret.secretKey,
       baseUrl: "https://bankaccountdata.gocardless.com/api/v2",
@@ -37,9 +38,7 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
   }
 
   async preConnect() {
-    this.goCardlessClient.token = (
-      await this.goCardlessClient.generateToken()
-    ).access;
+    this.client.token = (await this.client.generateToken()).access;
   }
 
   async postConnect() {
@@ -47,15 +46,13 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
     return await Promise.resolve();
   }
 
-  async listIntegrations(countryCodes: CanonicalCountry[]) {
-    const providerPromiseList = countryCodes
+  async listIntegrations(countries: CanonicalCountry[]) {
+    const providerPromiseList = countries
       .map(toGoCardlessCountryCode)
-      .map((countryCode) =>
-        this.goCardlessClient.institution.getInstitutions({
-          country: countryCode,
-        }),
-      );
+      .filter(Boolean) // filter "" unmapped countries
+      .map((country) => this.client.institution.getInstitutions({ country }));
 
+    // TODO: all settled
     const providerList = await Promise.all(providerPromiseList);
     return providerList.flat().map(toCanonicalIntegration);
   }
@@ -66,11 +63,10 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
 
   async listResources(): Promise<CanonicalResource[]> {
     // TODO: manage paginated result
-    const requisitionList =
-      await this.goCardlessClient.requisition.getRequisitions({
-        limit: 100,
-        offset: 0,
-      });
+    const requisitionList = await this.client.requisition.getRequisitions({
+      limit: 100,
+      offset: 0,
+    });
 
     return requisitionList.results.map(toCanonicalResource);
   }
@@ -80,15 +76,12 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
   ): Promise<Map<string, CanonicalAccount>> {
     const result = new Map<string, CanonicalAccount>();
 
-    const requisition =
-      await this.goCardlessClient.requisition.getRequisitionById(
-        resource.externalId,
-      );
+    const requisition = await this.client.requisition.getRequisitionById(
+      resource.externalId,
+    );
 
     for (const accountId of requisition.accounts) {
-      const accountDetails = await this.goCardlessClient
-        .account(accountId)
-        .getDetails();
+      const accountDetails = await this.client.account(accountId).getDetails();
 
       result.set(accountId, {
         externalId: accountId,
@@ -104,15 +97,12 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
   ): Promise<Map<string, CanonicalBalance[]>> {
     const result = new Map<string, CanonicalBalance[]>();
 
-    const requisition =
-      await this.goCardlessClient.requisition.getRequisitionById(
-        resource.externalId,
-      );
+    const requisition = await this.client.requisition.getRequisitionById(
+      resource.externalId,
+    );
 
     for (const accountId of requisition.accounts) {
-      const response = await this.goCardlessClient
-        .account(accountId)
-        .getBalances();
+      const response = await this.client.account(accountId).getBalances();
 
       result.set(accountId, response.balances.map(toCanonicalBalance));
     }
@@ -125,15 +115,12 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
   ): Promise<Map<string, CanonicalTransaction[]>> {
     const result = new Map<string, CanonicalTransaction[]>();
 
-    const requisition =
-      await this.goCardlessClient.requisition.getRequisitionById(
-        resource.externalId,
-      );
+    const requisition = await this.client.requisition.getRequisitionById(
+      resource.externalId,
+    );
 
     for (const accountId of requisition.accounts) {
-      const response = await this.goCardlessClient
-        .account(accountId)
-        .getTransactions({});
+      const response = await this.client.account(accountId).getTransactions({});
 
       result.set(
         accountId,

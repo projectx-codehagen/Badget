@@ -11,7 +11,9 @@ export default async function SettingsProfilePage() {
         <h3 className="text-lg font-medium">Configured Connectors</h3>
         <p className="text-sm text-muted-foreground">Available connectors.</p>
       </div>
-      <ConnectorCards connectorsWithConfig={connectorsWithConfig} />
+      <section className="flex gap-6">
+        <ConnectorCards connectorsWithConfig={connectorsWithConfig} />
+      </section>
     </div>
   );
 }

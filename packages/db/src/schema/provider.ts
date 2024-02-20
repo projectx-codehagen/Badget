@@ -75,7 +75,7 @@ export const integration = mySqlTable(
       length: 127,
     }).unique(),
 
-    connectorId: bigint("connector_id", { mode: "bigint" }),
+    connectorId: bigint("connector_id", { mode: "bigint" }).notNull(),
   },
   (table) => {
     return {
@@ -95,7 +95,7 @@ export const resource = mySqlTable(
 
     // TODO: add fields
     userId: varchar("user_id", { length: 36 }).notNull(),
-    integrationId: bigint("integration_id", { mode: "bigint" }),
+    integrationId: bigint("integration_id", { mode: "bigint" }).notNull(),
 
     externalId: varchar("external_id", { length: 36 }).notNull(),
   },
@@ -105,26 +105,6 @@ export const resource = mySqlTable(
     };
   },
 );
-
-// export const session = mySqlTable(
-//   "session",
-//   {
-//     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-//     createdAt: timestamp("created_at")
-//       .default(sql`CURRENT_TIMESTAMP`)
-//       .notNull(),
-//     updatedAt: timestamp("updated_at").onUpdateNow(),
-
-//     // TODO: add fields
-//     userId: varchar("user_id", { length: 36 }).notNull(),
-//     integrationId: bigint("integration_id", { mode: "bigint" }),
-//   },
-//   (table) => {
-//     return {
-//       integrationIdIdx: index("integration_id_idx").on(table.integrationId),
-//     };
-//   },
-// );
 
 /**
  * 👇 This code block will tell Drizzle that connector is related to:

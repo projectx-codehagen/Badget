@@ -75,20 +75,24 @@ class ConnectorFacade {
     });
   }
 
-  async getProviders(countries: CanonicalCountry[]) {
-    const resultMap = new Map<bigint, CanonicalIntegration[]>();
-
-    for (const [connectorId, connector] of this.connectorMap) {
+  async listIntegrations(countries: CanonicalCountry[]) {
+    const resultList: CanonicalIntegration[] = [];
+    for (const [connectorId, connector] of this.connectorMap.entries()) {
       const integrationList = await connector.listIntegrations(countries);
-      resultMap.set(connectorId, integrationList);
+      resultList.push(
+        ...integrationList.map((integration) => {
+          return {
+            ...integration,
+            connectorId,
+          };
+        }),
+      );
     }
 
-    return resultMap;
+    return resultList;
   }
 
   async listResourcesFromDB() {
-    const resultMap = new Map<bigint, CanonicalResource[]>();
-
     const resourceWithIntegrationList = await db
       .select()
       .from(schema.resource)
@@ -97,16 +101,20 @@ class ConnectorFacade {
         eq(schema.resource.integrationId, schema.integration.id),
       );
 
-    resourceWithIntegrationList.forEach((resourceWithIntegration) => {
-      resultMap.set(resourceWithIntegration.integration!.connectorId!, [
-        resourceWithIntegration.resource,
-      ]);
-    });
-
-    return resultMap;
+    return resourceWithIntegrationList
+      .filter(
+        (resourceWithIntegration) =>
+          resourceWithIntegration.integration !== null,
+      )
+      .map((resourceWithIntegration) => {
+        return {
+          ...resourceWithIntegration.resource,
+          integration: resourceWithIntegration.integration!,
+        };
+      });
   }
 
-  async getBankingAccountData(
+  async listBankingAccountData(
     resource: CanonicalResource,
     connectorId: bigint,
   ) {
@@ -124,24 +132,24 @@ class ConnectorFacade {
       .get(connectorId)!
       .listTransactions(resource);
 
-    const bankingDataMap = new Map<string, BankingData>();
+    const bankingDataList: BankingData[] = [];
 
     for (const [accountId, account] of accountMap) {
       const balances = balanceMap.get(accountId) || [];
       const transactions = transactionMap.get(accountId) || [];
 
-      bankingDataMap.set(accountId, {
-        account,
+      bankingDataList.push({
+        account: { ...account, resourceId: resource.id },
         balances,
         transactions,
       });
     }
 
-    return bankingDataMap;
+    return bankingDataList;
   }
 }
 
-type BankingData = {
+export type BankingData = {
   account: CanonicalAccount;
   balances: CanonicalBalance[];
   transactions: CanonicalTransaction[];

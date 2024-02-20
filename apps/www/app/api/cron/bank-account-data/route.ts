@@ -3,89 +3,88 @@ import { NextRequest, NextResponse } from "next/server";
 import { db, schema, sql } from "@projectx/db";
 
 import { env } from "@/env.mjs";
-import { connectorFacade, toConnectorEnv } from "@/lib/connector";
+import { BankingData, connectorFacade, toConnectorEnv } from "@/lib/connector";
 
-export async function POST(req: NextRequest) {
+export async function POST(_req: NextRequest) {
   // TODO: verify signature
 
   try {
+    console.log("○ [openbanking]: Handling cron bank-account-data");
+
     await handleEvent();
 
-    console.log("✅ Handled Openbanking Event");
+    console.log("✓ [openbanking]: Handled cron bank-account-data");
     return NextResponse.json({ received: true }, { status: 200 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
-    console.log(`❌ Error when handling Openbanking Event: ${message}`);
+    console.log(`❌ [openbanking] Error when handling cron: ${message}`);
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }
 
 const handleEvent = async () => {
   const facade = await connectorFacade(toConnectorEnv(env.NODE_ENV));
-  const resourceMap = await facade.listResourcesFromDB();
+  const resourceList = await facade.listResourcesFromDB();
+  console.debug(`[○ openbanking] ${resourceList.length} resources`);
 
-  for (let [connectorId, resourceList] of resourceMap.entries()) {
-    console.debug(
-      `[openbanking] ${resourceList.length} resources for connector-${connectorId}`,
-    );
+  const promises = resourceList.map(({ integration, ...resource }) => {
+    return facade.listBankingAccountData(resource, integration.connectorId);
+  });
 
-    for (let resource of resourceList) {
-      const bankingDataMap = await facade.getBankingAccountData(
-        resource,
-        connectorId,
-      );
+  const results = await Promise.allSettled(promises);
+  // TODO: log errors
+  const errors = results.filter((r) => r.status === "rejected");
+  const successes = results.filter(
+    (r): r is PromiseFulfilledResult<BankingData[]> => r.status === "fulfilled",
+  );
 
-      for (let [_, bankingData] of bankingDataMap) {
-        await db.transaction(async (tx) => {
-          const accountQuery = await tx
-            .insert(schema.account)
-            .values({
-              ...bankingData.account,
-              resourceId: resource.id,
-            })
-            .onDuplicateKeyUpdate({
-              set: {
-                name: sql`name`,
-              },
-            });
+  const dbTransactionPromiseList = successes
+    .map((success) => success.value.map(upsertBankAccountData))
+    .flat();
 
-          await tx
-            .insert(schema.balance)
-            .values(
-              bankingData.balances.map((balance) => {
-                return {
-                  ...balance,
-                  accountId: BigInt(accountQuery.insertId),
-                };
-              }),
-            )
-            .onDuplicateKeyUpdate({
-              set: {
-                amount: sql`amount`,
-                date: sql`date`,
-              },
-            });
-          await tx
-            .insert(schema.transaction)
-            .values(
-              bankingData.transactions.map((transaction) => {
-                return {
-                  ...transaction,
-                  accountId: BigInt(accountQuery.insertId),
-                };
-              }),
-            )
-            .onDuplicateKeyUpdate({
-              set: {
-                amount: sql`amount`,
-                date: sql`date`,
-                description: sql`description`,
-              },
-            });
-        });
-      }
-    }
-  }
+  // TODO: use Promise.allSettled to better log
+  await Promise.all(dbTransactionPromiseList);
+};
 
-  console.log("✅ Openbanking Webhook Processed");
+const upsertBankAccountData = async (data: BankingData) => {
+  await db.transaction(async (tx) => {
+    const accountQuery = await tx
+      .insert(schema.account)
+      .values(data.account)
+      .onDuplicateKeyUpdate({ set: { name: sql`name` } });
+
+    await tx
+      .insert(schema.balance)
+      .values(
+        data.balances.map((balance) => {
+          return {
+            ...balance,
+            accountId: BigInt(accountQuery.insertId),
+          };
+        }),
+      )
+      .onDuplicateKeyUpdate({
+        set: {
+          amount: sql`amount`,
+          date: sql`date`,
+        },
+      });
+    await tx
+      .insert(schema.transaction)
+      .values(
+        data.transactions.map((transaction) => {
+          return {
+            ...transaction,
+            accountId: BigInt(accountQuery.insertId),
+          };
+        }),
+      )
+      .onDuplicateKeyUpdate({
+        set: {
+          amount: sql`amount`,
+          date: sql`date`,
+          description: sql`description`,
+        },
+      });
+  });
 };

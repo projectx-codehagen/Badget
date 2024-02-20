@@ -6,19 +6,19 @@ export const connectorRouter = createTRPCRouter({
   listConnectors: protectedProcedure.query(async (opts) => {
     const connectorsWithConfig = await opts.ctx.db
       .select({
-        id: schema.connectors.id,
-        name: schema.connectors.name,
-        logoUrl: schema.connectors.logoUrl,
-        status: schema.connectors.status,
+        id: schema.connector.id,
+        name: schema.connector.name,
+        logoUrl: schema.connector.logoUrl,
+        status: schema.connector.status,
         connectorConfig: {
-          env: schema.connectorConfigs.env,
-          secret: schema.connectorConfigs.secret,
+          env: schema.connectorConfig.env,
+          secret: schema.connectorConfig.secret,
         },
       })
-      .from(schema.connectors)
+      .from(schema.connector)
       .leftJoin(
-        schema.connectorConfigs,
-        eq(schema.connectors.id, schema.connectorConfigs.connectorId),
+        schema.connectorConfig,
+        eq(schema.connector.id, schema.connectorConfig.connectorId),
       );
 
     return connectorsWithConfig;
