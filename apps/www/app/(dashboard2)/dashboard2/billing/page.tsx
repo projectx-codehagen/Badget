@@ -6,9 +6,9 @@ import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 
 export const metadata = {
-  title: "Projectx Billing - Subscription Management",
+  title: "Badget Billing - Subscription Management",
   description:
-    "Access and manage your billing information, view subscription plans, and update payment methods on Projectx's Billing page.",
+    "Access and manage your billing information, view subscription plans, and update payment methods on Badget's Billing page.",
 };
 
 export default async function BillingPage() {
