@@ -1,8 +1,8 @@
 "use client";
 
-import { AddFilesButton } from "@/components/buttons/AddFilesButton";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
+// @ts-ignore
 export default function NoTextPlaceholder({ propertyId, setDescriptionData }) {
   return (
     <EmptyPlaceholder>

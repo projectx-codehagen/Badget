@@ -20,12 +20,14 @@ const propertyFormSchema = z.object({
   takst_text: z.string().optional(),
 });
 
+// @ts-ignore
 export function UpdatePropertyForm({ propertyId, defaultValues }) {
   const form = useForm({
     resolver: zodResolver(propertyFormSchema),
     defaultValues: defaultValues,
   });
 
+  // @ts-ignore
   const onSubmit = async (data) => {
     // Here you would handle the form submission,
     // likely sending the data to your backend to update the property

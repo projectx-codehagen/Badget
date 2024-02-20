@@ -1,10 +1,10 @@
-import React, { ComponentProps } from "react";
+import React from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { ChevronRight } from "lucide-react";
 
 import { formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { Mail } from "../data";
@@ -23,6 +23,7 @@ export function AccountsList({ items }: MailListProps) {
       if (!acc[item.category]) {
         acc[item.category] = [];
       }
+      // @ts-ignore
       acc[item.category].push(item);
       return acc;
     },

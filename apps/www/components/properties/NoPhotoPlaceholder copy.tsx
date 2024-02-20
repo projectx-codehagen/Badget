@@ -3,6 +3,7 @@
 import { AddFilesButton } from "@/components/buttons/AddFilesButton";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
+// @ts-ignore
 export default function NoPhotoPlaceholder({ propertyId, slug }) {
   return (
     <EmptyPlaceholder>

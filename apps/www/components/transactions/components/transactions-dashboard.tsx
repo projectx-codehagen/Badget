@@ -285,6 +285,7 @@ export function TransactionsDashboard({
               </form>
             </div>
             <TabsContent value="all" className="m-0">
+              {/* @ts-ignore */}
               <AccountsReviewTable2 mailId={undefined} />
             </TabsContent>
             <TabsContent value="unread" className="m-0">

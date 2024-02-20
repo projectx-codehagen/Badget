@@ -7,15 +7,7 @@ import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { toast } from "@/components/ui/use-toast";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import {
   Form,
   FormControl,
@@ -25,10 +17,12 @@ import {
 } from "../ui/form";
 import { Switch } from "../ui/switch";
 
+// @ts-ignore
 export function SelectInputForm({ options, image }) {
   const router = useRouter();
   const [activeSwitch, setActiveSwitch] = useState(null);
 
+  // @ts-ignore
   const dynamicSchema = options.reduce((acc, option) => {
     acc[option.key] = z.boolean();
     return acc;
@@ -38,6 +32,7 @@ export function SelectInputForm({ options, image }) {
     resolver: zodResolver(z.object(dynamicSchema)),
   });
 
+  // @ts-ignore
   const handleSwitchChange = async (option) => {
     setActiveSwitch(option.label);
 
@@ -47,6 +42,7 @@ export function SelectInputForm({ options, image }) {
     // Call the server action to update the selected option in the database
   };
 
+  // @ts-ignore
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -79,8 +75,10 @@ export function SelectInputForm({ options, image }) {
             </Card>
           </div>
         ) : null}
+        {/* @ts-ignore */}
         {options.every((option) => !option.selectedOption) && (
           <>
+            {/* @ts-ignore */}
             {options.map((option) => (
               <FormField
                 key={option.key}

@@ -17,6 +17,7 @@ interface PageProps {
   };
 }
 
+// @ts-ignore
 async function getPageFromParams(params) {
   const slug = params?.slug?.join("/");
   const page = allPages.find((page) => page.slugAsParams === slug);

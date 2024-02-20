@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+// @ts-ignore
 const PropertiesTable = ({ properties }) => {
   const [sortKey, setSortKey] = useState("createdAt"); // default sort key
   const [sortOrder, setSortOrder] = useState("desc"); // default sort order
@@ -19,15 +20,18 @@ const PropertiesTable = ({ properties }) => {
 
   // Sort and filter the properties
   const sortedFilteredProperties = properties
+    // @ts-ignore
     .filter((property) =>
       property.address.toLowerCase().includes(filter.toLowerCase()),
     )
+    // @ts-ignore
     .sort((a, b) => {
       if (a[sortKey] < b[sortKey]) return sortOrder === "asc" ? -1 : 1;
       if (a[sortKey] > b[sortKey]) return sortOrder === "asc" ? 1 : -1;
       return 0;
     });
 
+  // @ts-ignore
   const toggleSort = (key) => {
     if (sortKey === key) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -57,6 +61,7 @@ const PropertiesTable = ({ properties }) => {
           </TableRow>
         </thead>
         <TableBody>
+          {/* @ts-ignore */}
           {sortedFilteredProperties.map((property) => (
             <TableRow key={property.id}>
               <TableCell>

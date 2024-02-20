@@ -1,6 +1,6 @@
 import { formatISO, subDays } from "date-fns";
 
-const formatDateISO = (daysAgo) =>
+const formatDateISO = (daysAgo: number) =>
   formatISO(subDays(new Date(), daysAgo), { representation: "complete" });
 
 // Example usage to get today, yesterday, and a date 2 days ago

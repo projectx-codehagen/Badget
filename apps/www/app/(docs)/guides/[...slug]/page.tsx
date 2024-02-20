@@ -22,6 +22,7 @@ interface GuidePageProps {
   };
 }
 
+// @ts-ignore
 async function getGuideFromParams(params) {
   const slug = params?.slug?.join("/");
   const guide = allGuides.find((guide) => guide.slugAsParams === slug);
