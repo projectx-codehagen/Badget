@@ -10,15 +10,15 @@ import type { NextRequest } from "next/server";
 import type {
   SignedInAuthObject,
   SignedOutAuthObject,
-} from "@clerk/nextjs/server";
+} from "@clerk/nextjs/api";
+import { getAuth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { ZodError } from "zod";
 
-import { db } from "@projectx/db";
+import { and, db, eq, isNull, schema } from "@projectx/db";
 
 import { transformer } from "./transformer";
 
-type AuthContext = SignedInAuthObject | SignedOutAuthObject;
 /**
  * 1. CONTEXT
  *
@@ -29,8 +29,7 @@ type AuthContext = SignedInAuthObject | SignedOutAuthObject;
  *
  */
 interface CreateContextOptions {
-  headers: Headers;
-  auth: AuthContext;
+  auth: SignedInAuthObject | SignedOutAuthObject | null;
   apiKey?: string | null;
   req?: NextRequest;
 }
@@ -56,18 +55,14 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: {
-  headers: Headers;
-  auth: AuthContext;
-  req?: NextRequest;
-}) => {
-  const apiKey = opts.req?.headers.get("x-projectx-api-key");
+export const createTRPCContext = (opts: { req: NextRequest }) => {
+  const auth = getAuth(opts.req);
+  const apiKey = opts.req.headers.get("x-acme-api-key");
 
   return createInnerTRPCContext({
-    auth: opts.auth,
+    auth,
     apiKey,
     req: opts.req,
-    headers: opts.headers,
   });
 };
 
@@ -115,10 +110,10 @@ export const mergeRouters = t.mergeRouters;
 export const publicProcedure = t.procedure;
 
 /**
- * Reusable procedure that enforces users are logged in before running the
- * code
+ * Reusable middleware that enforces users are logged in before running the
+ * procedure
  */
-export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.auth?.userId) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
@@ -131,32 +126,29 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     },
   });
 });
-/**
- * Reusable procedure that enforces users are part of an organization before
- * running the code
- */
-export const protectedOrgProcedure = protectedProcedure.use(({ ctx, next }) => {
-  if (!ctx.auth?.orgId) {
-    throw new TRPCError({
-      code: "UNAUTHORIZED",
-      message: "You must be in an organization to perform this action",
-    });
-  }
-  return next({
-    ctx: {
-      auth: {
-        ...ctx.auth,
-        orgId: ctx.auth.orgId,
+
+const enforceUserInOrg = enforceUserIsAuthed.unstable_pipe(
+  async ({ ctx, next }) => {
+    if (!ctx.auth.orgId) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You must be in an organization to perform this action",
+      });
+    }
+
+    return next({
+      ctx: {
+        auth: {
+          ...ctx.auth,
+          orgId: ctx.auth.orgId,
+        },
       },
-    },
-  });
-});
-/**
- * Procedure that enforces users are admins of an organization before running
- * the code
- */
-export const protectedAdminProcedure = protectedOrgProcedure.use(
-  ({ ctx, next }) => {
+    });
+  },
+);
+
+const enforceUserIsAdmin = enforceUserInOrg.unstable_pipe(
+  async ({ ctx, next }) => {
     if (ctx.auth.orgRole !== "admin") {
       throw new TRPCError({
         code: "UNAUTHORIZED",
@@ -174,3 +166,68 @@ export const protectedAdminProcedure = protectedOrgProcedure.use(
     });
   },
 );
+
+/**
+ * Middleware to authenticate API requests with an API key
+ */
+const enforceApiKey = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.apiKey) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  // Check db for API key
+  const apiKey = await ctx.db
+    .select({
+      id: schema.apiKey.id,
+      key: schema.apiKey.key,
+      projectId: schema.apiKey.projectId,
+    })
+    .from(schema.apiKey)
+    .where(and(eq(schema.apiKey, ctx.apiKey), isNull(schema.apiKey.revokedAt)));
+
+  if (!apiKey?.[0]) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  void ctx.db
+    .update(schema.apiKey)
+    .set({
+      lastUsed: new Date(),
+    })
+    .where(eq(schema.apiKey.id, apiKey[0].id));
+
+  return next({
+    ctx: {
+      apiKey: apiKey[0],
+    },
+  });
+});
+
+/**
+ * Middleware to parse form data and put it in the rawInput
+ */
+export const formdataMiddleware = t.middleware(async (opts) => {
+  const formData = await opts.ctx.req?.formData?.();
+  if (!formData) throw new TRPCError({ code: "BAD_REQUEST" });
+
+  return opts.next({
+    rawInput: formData,
+  });
+});
+/**
+ * Protected (authed) procedure
+ *
+ * If you want a query or mutation to ONLY be accessible to logged in users, use
+ * this. It verifies the session is valid and guarantees ctx.session.user is not
+ * null
+ *
+ * @see https://trpc.io/docs/procedures
+ */
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedOrgProcedure = t.procedure.use(enforceUserInOrg);
+export const protectedAdminProcedure = t.procedure.use(enforceUserIsAdmin);
+
+export const protectedApiProcedure = t.procedure.use(enforceApiKey);
+export const protectedApiFormDataProcedure = t.procedure
+  .use(formdataMiddleware)
+  .use(enforceApiKey);
