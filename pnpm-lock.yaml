@@ -200,6 +200,9 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
+      dinero.js:
+        specifier: 2.0.0-alpha.14
+        version: 2.0.0-alpha.14
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.3.0
@@ -272,6 +275,9 @@ importers:
       stripe:
         specifier: ^14.15.0
         version: 14.15.0
+      superjson:
+        specifier: 2.2.1
+        version: 2.2.1
       tailwind-merge:
         specifier: ^2.2.1
         version: 2.2.1
