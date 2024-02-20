@@ -12,11 +12,12 @@ export const SubscriptionPlan = {
 export type SubscriptionPlan =
   (typeof SubscriptionPlan)[keyof typeof SubscriptionPlan];
 
-export const ItemStatus = {
+export const ResourceStatus = {
   BAD: "BAD",
   GOOD: "GOOD",
 } as const;
-export type ItemStatus = (typeof ItemStatus)[keyof typeof ItemStatus];
+export type ResourceStatus =
+  (typeof ResourceStatus)[keyof typeof ResourceStatus];
 
 // Plaid Enums
 
@@ -98,6 +99,15 @@ export const ConnectorType = {
   AGGREGATED: "AGGREGATED",
 } as const;
 export type ConnectorType = (typeof ConnectorType)[keyof typeof ConnectorType];
+
+export const ConnectorStatus = {
+  ACTIVE: "ACTIVE",
+  BETA: "BETA", // do we need this?
+  DEV: "DEV", // do we need this?
+  INACTIVE: "INACTIVE",
+} as const;
+export type ConnectorStatus =
+  (typeof ConnectorStatus)[keyof typeof ConnectorStatus];
 
 export const ConnectorEnv = {
   DEVELOPMENT: "DEVELOPMENT",

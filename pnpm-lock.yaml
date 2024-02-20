@@ -15,8 +15,8 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4
       turbo:
-        specifier: ^1.11.3
-        version: 1.11.3
+        specifier: ^1.12.4
+        version: 1.12.4
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -26,6 +26,9 @@ importers:
       '@clerk/nextjs':
         specifier: ^4.29.6
         version: 4.29.6(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/themes':
+        specifier: ^1.7.9
+        version: 1.7.9(react@18.2.0)
       '@dinero.js/currencies':
         specifier: 2.0.0-alpha.14
         version: 2.0.0-alpha.14
@@ -377,7 +380,7 @@ importers:
         version: link:../validators
       '@trpc/server':
         specifier: next
-        version: 11.0.0-next-beta.241
+        version: 11.0.0-next-beta.242
       dinero.js:
         specifier: 2.0.0-alpha.14
         version: 2.0.0-alpha.14
@@ -410,11 +413,11 @@ importers:
   packages/db:
     dependencies:
       '@planetscale/database':
-        specifier: ^1.14.0
-        version: 1.14.0
+        specifier: ^1.16.0
+        version: 1.16.0
       drizzle-orm:
         specifier: ^0.29.3
-        version: 0.29.3(@planetscale/database@1.14.0)
+        version: 0.29.3(@planetscale/database@1.16.0)
     devDependencies:
       '@projectx/eslint-config':
         specifier: workspace:^0.2.0
@@ -429,8 +432,8 @@ importers:
         specifier: ^7.3.0
         version: 7.3.0
       drizzle-kit:
-        specifier: ^0.20.13
-        version: 0.20.13
+        specifier: ^0.20.14
+        version: 0.20.14
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -1583,6 +1586,15 @@ packages:
       js-cookie: 3.0.1
       react: 18.2.0
       swr: 2.2.0(react@18.2.0)
+    dev: false
+
+  /@clerk/themes@1.7.9(react@18.2.0):
+    resolution: {integrity: sha512-9hXxgoPuUSlZ7sH9diJEK1rTWEnk0zGKBYw4Tqaqp0RA1dtB+OHE02DK5pnTypZTnreBJYac3VmxFVTxVV35xg==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@clerk/types@3.61.0:
@@ -3336,8 +3348,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@planetscale/database@1.14.0:
-    resolution: {integrity: sha512-7BB+iH6EH4YJuDeVeEbxpo60BFz3wIXJNXCmBGl40eC4HStRMGZ1COxKfiuPcINWwwrJhAhI9AEI97AOZYT7JQ==}
+  /@planetscale/database@1.16.0:
+    resolution: {integrity: sha512-HNUrTqrd8aTRZYMDcsoZ62s36sIWkMMmKZBOehoCWR2WrfNPKq+Q1yQef5okl3pSVlldFnu2h/dbHjOsDTHXug==}
     engines: {node: '>=16'}
     dev: false
 
@@ -5934,10 +5946,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/server@11.0.0-next-beta.241:
-    resolution: {integrity: sha512-PvMgRKfNNMjvDOkN0l4uc0rauuTSKI7eJMVN4Rt/zrYz5ufPEWinSkAM3eoZZFHrmvCgMeLedoh9W0GgDet+yQ==}
-    dev: false
-
   /@trpc/server@11.0.0-next-beta.242:
     resolution: {integrity: sha512-Aj49nseCZwCev3HYrdSgtetHZ4qqr2HvQhLGvzipHF9KkFy2bacKMPzxXpGJQqON9QC0Lgmdv7S0S/UqWm5otg==}
     dev: false
@@ -7755,8 +7763,8 @@ packages:
       wordwrap: 1.0.0
     dev: true
 
-  /drizzle-kit@0.20.13:
-    resolution: {integrity: sha512-j9oZSQXNWG+KBJm0Sg3S/zJpncHGKnpqNfFuM4NUxUMGTcihDHhP9SW6Jncqwb5vsP1Xm0a8JLm3PZUIspC/oA==}
+  /drizzle-kit@0.20.14:
+    resolution: {integrity: sha512-0fHv3YIEaUcSVPSGyaaBfOi9bmpajjhbJNdPsRMIUvYdLVxBu9eGjH8mRc3Qk7HVmEidFc/lhG1YyJhoXrn5yA==}
     hasBin: true
     dependencies:
       '@drizzle-team/studio': 0.0.39
@@ -7777,7 +7785,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.29.3(@planetscale/database@1.14.0):
+  /drizzle-orm@0.29.3(@planetscale/database@1.16.0):
     resolution: {integrity: sha512-uSE027csliGSGYD0pqtM+SAQATMREb3eSM/U8s6r+Y0RFwTKwftnwwSkqx3oS65UBgqDOM0gMTl5UGNpt6lW0A==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -7848,7 +7856,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@planetscale/database': 1.14.0
+      '@planetscale/database': 1.16.0
     dev: false
 
   /eastasianwidth@0.2.0:
@@ -13465,64 +13473,64 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /turbo-darwin-64@1.11.3:
-    resolution: {integrity: sha512-IsOOg2bVbIt3o/X8Ew9fbQp5t1hTHN3fGNQYrPQwMR2W1kIAC6RfbVD4A9OeibPGyEPUpwOH79hZ9ydFH5kifw==}
+  /turbo-darwin-64@1.12.4:
+    resolution: {integrity: sha512-dBwFxhp9isTa9RS/fz2gDVk5wWhKQsPQMozYhjM7TT4jTrnYn0ZJMzr7V3B/M/T8QF65TbniW7w1gtgxQgX5Zg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.11.3:
-    resolution: {integrity: sha512-FsJL7k0SaPbJzI/KCnrf/fi3PgCDCjTliMc/kEFkuWVA6Httc3Q4lxyLIIinz69q6JTx8wzh6yznUMzJRI3+dg==}
+  /turbo-darwin-arm64@1.12.4:
+    resolution: {integrity: sha512-1Uo5iI6xsJ1j9ObsqxYRsa3W26mEbUe6fnj4rQYV6kDaqYD54oAMJ6hM53q9rB8JvFxwdrUXGp3PwTw9A0qqkA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.11.3:
-    resolution: {integrity: sha512-SvW7pvTVRGsqtSkII5w+wriZXvxqkluw5FO/MNAdFw0qmoov+PZ237+37/NgArqE3zVn1GX9P6nUx9VO+xcQAg==}
+  /turbo-linux-64@1.12.4:
+    resolution: {integrity: sha512-ONg2aSqKP7LAQOg7ysmU5WpEQp4DGNxSlAiR7um+LKtbmC/UxogbR5+T+Uuq6zGuQ5kJyKjWJ4NhtvUswOqBsA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.11.3:
-    resolution: {integrity: sha512-YhUfBi1deB3m+3M55X458J6B7RsIS7UtM3P1z13cUIhF+pOt65BgnaSnkHLwETidmhRh8Dl3GelaQGrB3RdCDw==}
+  /turbo-linux-arm64@1.12.4:
+    resolution: {integrity: sha512-9FPufkwdgfIKg/9jj87Cdtftw8o36y27/S2vLN7FTR2pp9c0MQiTBOLVYadUr1FlShupddmaMbTkXEhyt9SdrA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.11.3:
-    resolution: {integrity: sha512-s+vEnuM2TiZuAUUUpmBHDr6vnNbJgj+5JYfnYmVklYs16kXh+EppafYQOAkcRIMAh7GjV3pLq5/uGqc7seZeHA==}
+  /turbo-windows-64@1.12.4:
+    resolution: {integrity: sha512-2mOtxHW5Vjh/5rDVu/aFwsMzI+chs8XcEuJHlY1sYOpEymYTz+u6AXbnzRvwZFMrLKr7J7fQOGl+v96sLKbNdA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.11.3:
-    resolution: {integrity: sha512-ZR5z5Zpc7cASwfdRAV5yNScCZBsgGSbcwiA/u3farCacbPiXsfoWUkz28iyrx21/TRW0bi6dbsB2v17swa8bjw==}
+  /turbo-windows-arm64@1.12.4:
+    resolution: {integrity: sha512-nOY5wae9qnxPOpT1fRuYO0ks6dTwpKMPV6++VkDkamFDLFHUDVM/9kmD2UTeh1yyrKnrZksbb9zmShhmfj1wog==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.11.3:
-    resolution: {integrity: sha512-RCJOUFcFMQNIGKSjC9YmA5yVP1qtDiBA0Lv9VIgrXraI5Da1liVvl3VJPsoDNIR9eFMyA/aagx1iyj6UWem5hA==}
+  /turbo@1.12.4:
+    resolution: {integrity: sha512-yUJ7elEUSToiGwFZogXpYKJpQ0BvaMbkEuQECIWtkBLcmWzlMOt6bActsIm29oN83mRU0WbzGt4e8H1KHWedhg==}
     hasBin: true
     optionalDependencies:
-      turbo-darwin-64: 1.11.3
-      turbo-darwin-arm64: 1.11.3
-      turbo-linux-64: 1.11.3
-      turbo-linux-arm64: 1.11.3
-      turbo-windows-64: 1.11.3
-      turbo-windows-arm64: 1.11.3
+      turbo-darwin-64: 1.12.4
+      turbo-darwin-arm64: 1.12.4
+      turbo-linux-64: 1.12.4
+      turbo-linux-arm64: 1.12.4
+      turbo-windows-64: 1.12.4
+      turbo-windows-arm64: 1.12.4
     dev: true
 
   /typanion@3.14.0:

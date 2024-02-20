@@ -5,10 +5,9 @@ import { customAlphabet } from "nanoid";
 import * as account from "./schema/account";
 import * as category from "./schema/category";
 import * as customer from "./schema/customer";
-import * as institution from "./schema/institution";
-import * as item from "./schema/item";
 import * as openbanking from "./schema/openbanking";
 import * as project from "./schema/project";
+import * as resource from "./schema/resource";
 import * as transaction from "./schema/transaction";
 
 export const schema = {
@@ -16,16 +15,15 @@ export const schema = {
   ...project,
   ...openbanking,
   ...account,
-  ...institution,
-  ...item,
+  ...resource,
   ...transaction,
   ...category,
 };
 
 export type Account = typeof schema.account.$inferSelect;
 export type Balance = typeof schema.balance.$inferSelect;
-export type Item = typeof schema.item.$inferSelect;
-export type ItemInsert = typeof schema.item.$inferInsert;
+export type Resource = typeof schema.resource.$inferSelect;
+export type ResourceInsert = typeof schema.resource.$inferInsert;
 export type Transaction = typeof schema.transaction.$inferSelect;
 export type Merchant = typeof schema.merchant.$inferSelect;
 export type TransactionInsert = typeof schema.transaction.$inferInsert;

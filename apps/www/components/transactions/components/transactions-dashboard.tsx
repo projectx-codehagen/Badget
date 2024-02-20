@@ -35,6 +35,7 @@ import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/works
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
+import { AccountsReviewTable2 } from "./accounts-review-table2";
 import { MailDisplay } from "./mail-display";
 import { MailList } from "./mail-list";
 import { Nav } from "./nav";
@@ -54,7 +55,7 @@ interface TransactionsDashboardProps {
 export function TransactionsDashboard({
   accounts,
   mails,
-  defaultLayout = [265, 440, 655],
+  defaultLayout = [20, 40, 40],
   defaultCollapsed = false,
   navCollapsedSize,
 }: TransactionsDashboardProps) {
@@ -66,7 +67,7 @@ export function TransactionsDashboard({
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+          document.cookie = `react-resizable-panels:layout-transactions=${JSON.stringify(
             sizes,
           )}`;
         }}
@@ -284,7 +285,7 @@ export function TransactionsDashboard({
               </form>
             </div>
             <TabsContent value="all" className="m-0">
-              <MailList items={mails} />
+              <AccountsReviewTable2 mailId={undefined} />
             </TabsContent>
             <TabsContent value="unread" className="m-0">
               <MailList items={mails.filter((item) => !item.read)} />

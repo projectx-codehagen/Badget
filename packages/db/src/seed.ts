@@ -6,6 +6,7 @@ import {
   CanonicalConnector,
   CanonicalConnectorConfig,
   CanonicalCountryCode,
+  ConnectorStatus,
   ConnectorType,
   schema,
   sql,
@@ -61,6 +62,9 @@ const main = async () => {
   connectorsData.push({
     id: 1,
     name: "plaid",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1415067514460000256/1iPIdd20_400x400.png",
+    status: ConnectorStatus.ACTIVE,
     type: ConnectorType.AGGREGATED,
     createdAt: new Date(),
     updatedAt: new Date(),

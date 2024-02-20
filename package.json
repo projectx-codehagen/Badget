@@ -1,5 +1,5 @@
 {
-  "name": "projectx",
+  "name": "badget",
   "version": "0.1.0",
   "license": "AGPL-3.0",
   "private": true,
@@ -15,24 +15,24 @@
     "clean": "git clean -xdf node_modules dist .next",
     "clean:workspaces": "turbo clean",
     "build": "turbo build",
-    "dev": "turbo dev --parallel --filter=!react-email-client",
-    "dev:web": "turbo dev --parallel --filter !@projectx/transactional --filter=!react-email-client",
-    "dev:email": "turbo dev --parallel --filter !www --filter=!react-email-client",
+    "dev": "turbo dev",
+    "dev:web": "turbo dev --filter=www",
+    "dev:email": "turbo dev --filter=@projectx/transactional",
     "test": "turbo test",
     "db:push": "pnpm -F db push",
     "db:studio": "pnpm -F db studio",
     "db:seed": "pnpm -F db seed",
-    "format": "turbo format --filter=!react-email-client --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
-    "format:check": "turbo format --filter=!react-email-client --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "format": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
+    "format:check": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
-    "typecheck": "turbo typecheck --filter=!react-email-client"
+    "typecheck": "turbo typecheck"
   },
   "devDependencies": {
     "@projectx/prettier-config": "^0.1.0",
     "prettier": "^3.2.4",
-    "turbo": "^1.11.3",
+    "turbo": "^1.12.4",
     "typescript": "^5.3.3"
   },
   "prettier": "@projectx/prettier-config"

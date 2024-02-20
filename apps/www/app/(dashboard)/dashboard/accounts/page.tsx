@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 import { AccountsDashboard } from "@/components/accounts/components/accounts-dashboard";
 import { accounts, mails } from "@/components/accounts/data";
@@ -10,7 +9,7 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  const layout = cookies().get("react-resizable-panels:layout");
+  const layout = cookies().get("react-resizable-panels:layout-accounts");
   const collapsed = cookies().get("react-resizable-panels:collapsed");
 
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;

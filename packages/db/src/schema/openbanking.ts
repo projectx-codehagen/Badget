@@ -11,7 +11,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 
-import { ConnectorEnv, ConnectorType } from "../enum";
+import { ConnectorEnv, ConnectorStatus, ConnectorType } from "../enum";
 import { mySqlTable } from "./_table";
 
 export const countryCodes = mySqlTable(
@@ -69,6 +69,13 @@ export const connectors = mySqlTable("connectors", {
   updatedAt: timestamp("updated_at").onUpdateNow(),
 
   name: varchar("name", { length: 36 }).notNull(), // TODO: maybe use enum ?
+  logoUrl: varchar("logo_url", { length: 255 }),
+  status: mysqlEnum("status", [
+    ConnectorStatus.ACTIVE,
+    ConnectorStatus.BETA,
+    ConnectorStatus.DEV,
+    ConnectorStatus.INACTIVE,
+  ]).notNull(),
   type: mysqlEnum("type", [
     ConnectorType.DIRECT,
     ConnectorType.AGGREGATED,

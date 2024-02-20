@@ -140,9 +140,9 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
           Email{" "}
           <a
             className="font-medium text-primary hover:underline"
-            href="mailto:support@Projectx.com"
+            href="mailto:info@Badget.io"
           >
-            support@Projectx.com
+            info@Badget.io
           </a>{" "}
           for to contact our support team.
           <br />

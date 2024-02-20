@@ -53,7 +53,7 @@ interface DashboardProps {
 export function Dashboard({
   accounts,
   mails,
-  defaultLayout = [265, 440, 655],
+  defaultLayout = [20, 40, 40],
   defaultCollapsed = false,
   navCollapsedSize,
 }: DashboardProps) {
@@ -140,7 +140,7 @@ export function Dashboard({
                 label: "",
                 icon: Repeat2,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/recurring",
               },
             ]}
           />

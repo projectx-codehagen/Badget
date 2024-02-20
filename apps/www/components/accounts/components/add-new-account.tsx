@@ -99,7 +99,7 @@ export function AddNewAccountDialog() {
         <DialogHeader>
           <DialogTitle>Select Bank Integration</DialogTitle>
           <DialogDescription>
-            Select the bank you want to connect to ProjectX.
+            Select the bank you want to connect to Badget.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">

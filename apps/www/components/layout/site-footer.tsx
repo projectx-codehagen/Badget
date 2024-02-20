@@ -19,17 +19,17 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              Codehagen
+              Badget
             </a>
-            {/* . Hosted on{" "}
+            . Open source for{" "}
             <a
-              href="https://vercel.com"
+              href="https://github.com/projectx-codehagen/badget"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
-              Vercel
-            </a> */}
+              everyone
+            </a>
             {/* . Illustrations by{" "}
             <a
               href="https://popsy.co"

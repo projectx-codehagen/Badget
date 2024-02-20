@@ -9,12 +9,13 @@ import { OpenSalaryTable } from "@/components/open-page/OpenSalaryTable";
 import OpenStartupSection from "@/components/open-page/OpenStartupSection";
 import { OpenTableTeam } from "@/components/open-page/OpenTableTeam";
 import OpenUsersDiagram from "@/components/open-page/OpenUsersDiagram";
+import OpenUsersFunding from "@/components/open-page/OpenUsersFunding";
 import OpenUsersText from "@/components/open-page/OpenUsersText";
 
 export const metadata = {
-  title: "Projectx Pricing - Tailored Plans for Your Real Estate Needs",
+  title: "Badget Open - Everything open",
   description:
-    "Explore competitive pricing plans for Projectx. Find the perfect package to boost your real estate listings with AI",
+    "All our metrics, finances, and learnings are public. We believe in transparency.",
 };
 
 export default async function PricingPage() {
@@ -33,6 +34,7 @@ export default async function PricingPage() {
       <OpenMiddleSection />
       <OpenUsersText />
       <OpenUsersDiagram />
+      <OpenUsersFunding />
     </div>
   );
 }

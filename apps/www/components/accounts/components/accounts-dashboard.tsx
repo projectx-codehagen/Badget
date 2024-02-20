@@ -54,7 +54,7 @@ interface AccountsDashboardProps {
 export function AccountsDashboard({
   accounts,
   mails,
-  defaultLayout = [265, 440, 655],
+  defaultLayout = [20, 40, 40],
   defaultCollapsed = false,
   navCollapsedSize,
 }: AccountsDashboardProps) {
@@ -66,7 +66,7 @@ export function AccountsDashboard({
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+          document.cookie = `react-resizable-panels:layout-accounts=${JSON.stringify(
             sizes,
           )}`;
         }}
@@ -141,7 +141,7 @@ export function AccountsDashboard({
                 label: "",
                 icon: Repeat2,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/recurring",
               },
             ]}
           />

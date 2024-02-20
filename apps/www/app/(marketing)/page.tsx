@@ -33,7 +33,7 @@ export default async function IndexPage() {
             <Balancer>
               Budget Better, Gain More Experience{" "}
               <span className="relative bg-gradient-to-r from-indigo-500 to-purple-500/80 bg-clip-text font-extrabold text-transparent">
-                Projectx
+                Badget
               </span>
             </Balancer>
           </h1>
@@ -54,7 +54,7 @@ export default async function IndexPage() {
           >
             <GetStartedButton />
             <Link
-              href="https://projectx-eight-gilt.vercel.app"
+              href="https://www.badget.io/"
               target="_blank"
               rel="noreferrer"
               className={cn(
@@ -65,7 +65,7 @@ export default async function IndexPage() {
               <Icons.chevrondown className="mr-2 h-4 w-4" />
               <p>
                 <span className="hidden sm:inline-block">Lets explore</span>{" "}
-                Projectx{" "}
+                Badget{" "}
               </p>
             </Link>
           </div>
