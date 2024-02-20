@@ -1,18 +1,13 @@
-"use client";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useClerk } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/dist/types/server";
+import { SignedIn, SignedOut, SignInButton, useClerk } from "@clerk/nextjs";
 import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
+
+import { useSigninModal } from "@/hooks/use-signin-modal";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/shared/user-avatar";
 
 export type NormalizedUser = {
@@ -22,14 +17,15 @@ export type NormalizedUser = {
 };
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user: NormalizedUser;
+  user: NormalizedUser | null;
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
   const { signOut } = useClerk();
   const router = useRouter();
+  const signInModal = useSigninModal();
 
-  return (
+  return user ? (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
@@ -58,12 +54,6 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
             <p className="text-sm">Dashboard</p>
           </Link>
         </DropdownMenuItem>
-        {/* <DropdownMenuItem asChild>
-          <Link href="/dashboard2" className="flex items-center space-x-2.5">
-            <LayoutDashboard className="h-4 w-4" />
-            <p className="text-sm">Another layout</p>
-          </Link>
-        </DropdownMenuItem> */}
         <DropdownMenuItem asChild>
           <Link
             href="/dashboard/billing"
@@ -97,5 +87,14 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  ) : (
+    <Button
+      className="px-3"
+      variant="default"
+      size="sm"
+      onClick={signInModal.onOpen}
+    >
+      Sign In
+    </Button>
   );
 }
