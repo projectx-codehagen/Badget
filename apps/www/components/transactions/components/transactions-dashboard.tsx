@@ -39,6 +39,7 @@ import { AccountsReviewTable2 } from "./accounts-review-table2";
 import { MailDisplay } from "./mail-display";
 import { MailList } from "./mail-list";
 import { Nav } from "./nav";
+import { TransactionsDisplay } from "./transactions-display";
 
 interface TransactionsDashboardProps {
   accounts: {
@@ -295,9 +296,12 @@ export function TransactionsDashboard({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
-          <MailDisplay
+          <TransactionsDisplay
             mail={mails.find((item) => item.id === mail.selected) || null}
           />
+          {/* <MailDisplay
+            mail={mails.find((item) => item.id === mail.selected) || null}
+          /> */}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
