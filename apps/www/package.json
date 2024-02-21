@@ -108,7 +108,7 @@
     "superjson": "2.2.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.7.7",
+    "vaul": "^0.7.9",
     "zod": "^3.22.4",
     "zustand": "^4.4.5"
   },
