@@ -1,13 +1,11 @@
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
 
-import { siteConfig } from "@/config/site";
-import { cn, nFormatter } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { GetStartedButton } from "@/components/buttons/GetStartedButton";
 import { BusinessLine } from "@/components/dashboard/businessline";
 import CallToActionComponent from "@/components/dashboard/calltoaction";
-import FeatureSection1 from "@/components/dashboard/featuresection1";
 import Featuressection from "@/components/dashboard/feautressection";
 import { Icons } from "@/components/shared/icons";
 

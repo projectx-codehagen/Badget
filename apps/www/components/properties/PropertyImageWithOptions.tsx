@@ -2,6 +2,7 @@
 import { SelectInputForm } from "../forms/select-input-form";
 import PropertyPicture from "./PropertyPicture";
 
+// @ts-ignore
 const PropertyImageWithOptions = ({ image }) => {
   console.log(image);
   // Transform the image options into the correct format for SelectInputForm

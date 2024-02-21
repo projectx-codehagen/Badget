@@ -18,6 +18,7 @@ const data = [
 const COLORS = ["#888888", "#FAFAFA"]; // Adjust colors for better visibility if necessary
 
 // Custom Tooltip component
+// @ts-ignore
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
@@ -31,6 +32,7 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 // Custom legend formatter function
+// @ts-ignore
 const renderColorfulLegendText = (value, entry) => {
   const { color } = entry;
   return <span style={{ color }}>{`${value} ${entry.payload.value}%`}</span>;

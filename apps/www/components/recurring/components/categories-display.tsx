@@ -1,45 +1,9 @@
 import { formatDistanceToNow } from "date-fns";
-import addDays from "date-fns/addDays";
-import addHours from "date-fns/addHours";
-import format from "date-fns/format";
-import nextSaturday from "date-fns/nextSaturday";
-import {
-  Archive,
-  ArchiveX,
-  Clock,
-  Forward,
-  MoreVertical,
-  Reply,
-  ReplyAll,
-  Trash2,
-} from "lucide-react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import { formatCurrency } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { TransactionsReviewTable } from "@/components/new-dashboard/components/transaction-review-table";
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";
@@ -323,6 +287,7 @@ export function CategoriesDisplay({ mail }: MailDisplayProps) {
 
           <Separator className="" />
           <KeyMetricsTable />
+          {/* @ts-ignore */}
           <AccountsReviewTable mailId={mail ? mail.id : null} />
         </div>
       ) : (

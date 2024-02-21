@@ -7,6 +7,7 @@ export async function POST(request: NextRequest) {
   const { allResponses, text } = requestBody;
 
   // Construct messages for the chat completion request
+  // @ts-ignore
   const messages = allResponses.map((response) => {
     return {
       role: "user",

@@ -1,17 +1,14 @@
 import React from "react";
 
 import NoTextPlaceholder from "../properties/NoTextPlaceholder";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardContent, CardFooter } from "../ui/card";
 
 const DescriptionDisplay = ({
+  // @ts-ignore
   descriptionData,
+  // @ts-ignore
   propertyId,
+  // @ts-ignore
   setDescriptionData,
 }) => {
   // Check if descriptionData is empty
@@ -52,6 +49,7 @@ const DescriptionDisplay = ({
   }
 
   // Function to recursively render content
+  // @ts-ignore
   const renderContent = (data, isNested = false) => {
     if (typeof data === "object" && !Array.isArray(data) && data !== null) {
       return Object.entries(data).map(([key, value], index) => (

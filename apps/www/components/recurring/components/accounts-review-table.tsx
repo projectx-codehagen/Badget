@@ -1,11 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -25,30 +21,19 @@ import {
   Building,
   Car,
   Check,
-  CreditCard,
   Divide,
   Mail,
   MessageSquare,
   PlusCircle,
   Repeat2,
-  Settings,
   ShoppingCartIcon,
-  UserPlus,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -59,7 +44,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -89,7 +73,7 @@ const labelToIconMap = {
 };
 
 // Helper function to get the icon based on the label
-const getIconForLabel = (label) => {
+const getIconForLabel = (label: keyof typeof labelToIconMap) => {
   return labelToIconMap[label] || null; // Return null if no icon is found for the label
 };
 
@@ -127,9 +111,15 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "label",
     header: "Label",
     cell: ({ row }) => {
-      const label = row.getValue("label") as string;
+      const label = row.getValue("label") as keyof typeof labelToIconMap;
       const icon = getIconForLabel(label);
-      let badgeVariant;
+      let badgeVariant:
+        | "default"
+        | "secondary"
+        | "destructive"
+        | "outline"
+        | null
+        | undefined;
 
       // Example logic to determine the badge variant based on the label
       switch (label) {
@@ -233,7 +223,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function AccountsReviewTable({ mailId }) {
+export function AccountsReviewTable({ mailId }: { mailId: string }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -277,7 +267,7 @@ export function AccountsReviewTable({ mailId }) {
         if (!acc[monthYear]) {
           acc[monthYear] = [];
         }
-        acc[monthYear].push(item);
+        acc[monthYear]?.push(item);
         return acc;
       },
       {} as Record<string, Payment[]>,

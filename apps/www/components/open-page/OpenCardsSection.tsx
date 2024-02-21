@@ -15,6 +15,7 @@ const githubData = {
   totalContributors: 43,
 };
 
+// @ts-ignore
 export default function OpenCardSection({ githubData }) {
   return (
     <section className="container -mt-10 flex flex-col items-center">

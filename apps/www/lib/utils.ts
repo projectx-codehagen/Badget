@@ -111,6 +111,7 @@ export const normalizeUser = (clerkUser: User | null) => {
         email:
           clerkUser.emailAddresses.find(
             (e) => e.id === clerkUser.primaryEmailAddressId,
+            // @ts-ignore
           )?.emailAddress ?? clerkUser.emailAddresses[0].emailAddress,
         imageUrl: clerkUser.imageUrl,
       } satisfies NormalizedUser);

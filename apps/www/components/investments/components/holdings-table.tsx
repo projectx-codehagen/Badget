@@ -16,30 +16,15 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import {
-  ArrowRightLeftIcon,
-  BadgeDollarSign,
-  Building,
-  Car,
   CarIcon,
-  Check,
   CoffeeIcon,
-  CreditCard,
-  Divide,
   HomeIcon,
   KeyIcon,
-  Mail,
-  MessageSquare,
-  PlusCircle,
-  Repeat2,
-  Settings,
   ShoppingBagIcon,
-  ShoppingCartIcon,
   StarIcon,
-  UserPlus,
 } from "lucide-react";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
 
-import { Progress } from "@/components/ui/progress";
 import {
   Table,
   TableBody,
@@ -150,6 +135,7 @@ const iconMap = {
   // ... add other icon mappings
 };
 const iconMaptoCDN = (iconName: string) => {
+  // @ts-ignore
   const sanitizedWord = iconName.split(/\W+/)[0].toLowerCase();
   return (
     <Image

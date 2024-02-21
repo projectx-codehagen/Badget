@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+// @ts-ignore
 export default function PropertyPicture({ src, alt }) {
   // If you want to have a default image, you can set it here
   const defaultImage = "default_image_path.jpg";

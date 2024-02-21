@@ -1,11 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -25,30 +21,19 @@ import {
   Building,
   Car,
   Check,
-  CreditCard,
   Divide,
   Mail,
   MessageSquare,
   PlusCircle,
   Repeat2,
-  Settings,
   ShoppingCartIcon,
-  UserPlus,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -59,7 +44,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -89,7 +73,8 @@ const labelToIconMap = {
 };
 
 // Helper function to get the icon based on the label
-const getIconForLabel = (label) => {
+const getIconForLabel = (label: string) => {
+  // @ts-ignore
   return labelToIconMap[label] || null; // Return null if no icon is found for the label
 };
 
@@ -149,6 +134,7 @@ export const columns: ColumnDef<Payment>[] = [
       }
 
       return (
+        // @ts-ignore
         <Badge variant={badgeVariant}>
           {icon && React.cloneElement(icon, { className: "h-4 w-4" })}
           <span className="ml-2">{label}</span>
@@ -233,6 +219,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
+// @ts-ignore
 export function AccountsReviewTable({ mailId }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -277,6 +264,7 @@ export function AccountsReviewTable({ mailId }) {
         if (!acc[monthYear]) {
           acc[monthYear] = [];
         }
+        // @ts-ignore
         acc[monthYear].push(item);
         return acc;
       },

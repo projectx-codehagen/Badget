@@ -23,10 +23,12 @@ export function BillingFormButton({
   let [isPending, startTransition] = useTransition();
   const generateUserStripeSession = generateUserStripe.bind(
     null,
+    // @ts-ignore
     offer.stripeIds[year ? "yearly" : "monthly"],
   );
 
   const stripeSessionAction = () =>
+    // @ts-ignore
     startTransition(async () => await generateUserStripeSession());
 
   return (
@@ -43,6 +45,7 @@ export function BillingFormButton({
       ) : (
         <>
           {subscriptionPlan?.stripeId ===
+          // @ts-ignore
           offer.stripeIds[year ? "yearly" : "monthly"]
             ? "Manage Subscription"
             : "Upgrade"}

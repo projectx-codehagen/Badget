@@ -7,6 +7,7 @@ type Config = {
 };
 
 const configAtom = atom<Config>({
+  // @ts-ignore
   selected: mails[0].id,
 });
 

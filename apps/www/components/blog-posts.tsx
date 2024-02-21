@@ -4,6 +4,7 @@ import Balancer from "react-wrap-balancer";
 
 import { formatDate } from "@/lib/utils";
 
+// @ts-ignore
 export function BlogPosts({ posts }) {
   return (
     <div className="container space-y-10 py-6 md:py-10">
@@ -40,6 +41,7 @@ export function BlogPosts({ posts }) {
       <section>
         <h2 className="mb-4 font-heading text-3xl">Blog Posts</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* @ts-ignore */}
           {posts.slice(1).map((post) => (
             <article
               key={post._id}

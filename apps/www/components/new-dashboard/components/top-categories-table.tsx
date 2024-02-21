@@ -3,11 +3,6 @@
 import * as React from "react";
 import { BoltIcon } from "@heroicons/react/20/solid";
 import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
-import {
   ColumnDef,
   ColumnFiltersState,
   flexRender,
@@ -20,30 +15,14 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import {
-  ArrowRightLeftIcon,
-  BadgeDollarSign,
-  Building,
-  Car,
   CarIcon,
-  Check,
   CoffeeIcon,
-  CreditCard,
-  Divide,
   HomeIcon,
   KeyIcon,
-  Mail,
-  MessageSquare,
-  PlusCircle,
-  Repeat2,
-  Settings,
   ShoppingBagIcon,
-  ShoppingCartIcon,
   StarIcon,
-  UserPlus,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -51,21 +30,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import {
   Table,
@@ -176,6 +140,7 @@ export const columns: ColumnDef<Category>[] = [
       const icon = row.original.icon; // Assuming 'icon' is the key in your data for icon names
       return (
         <div className="flex items-center">
+          {/* @ts-ignore */}
           {iconMap[icon]} {/* Render the corresponding icon */}
           <div className="capitalize">{name}</div>
         </div>
