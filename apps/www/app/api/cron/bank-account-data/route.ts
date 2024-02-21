@@ -25,7 +25,7 @@ export async function POST(_req: NextRequest) {
 const handleEvent = async () => {
   const facade = await connectorFacade(toConnectorEnv(env.NODE_ENV));
   const resourceList = await facade.listResourcesFromDB();
-  console.debug(`[○ openbanking] ${resourceList.length} resources`);
+  console.debug(`○ [openbanking] ${resourceList.length} resources`);
 
   const promises = resourceList.map(({ integration, ...resource }) => {
     return facade.listBankingAccountData(resource, integration.connectorId);

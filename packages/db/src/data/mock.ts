@@ -71,7 +71,7 @@ integrationsData.push({
 
 resourcesData.push({
   id: BigInt(1),
-  externalId: "28ce28fb-877b-4e5c-882a-6066f3f5f728",
+  originalId: "28ce28fb-877b-4e5c-882a-6066f3f5f728",
   integrationId: BigInt(1),
   userId: "user_",
   createdAt: new Date(),

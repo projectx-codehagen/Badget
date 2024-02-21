@@ -9,15 +9,15 @@ export async function POST(_req: NextRequest) {
   // TODO: verify signature
 
   try {
-    console.log("✅ [openbanking]: Handling cron update-integrations");
+    console.log("✓ [cron]: Handling cron update-integrations");
 
     await handleEvent();
 
-    console.log("✅ [openbanking]: Handled cron update-integrations");
+    console.log("✓ [cron]: Handled cron update-integrations");
     return NextResponse.json({ received: true }, { status: 200 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
-    console.log(`❌ [openbanking] Error when handling cron: ${message}`);
+    console.log(`❌ [cron] Error when handling cron: ${message}`);
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }
@@ -33,7 +33,7 @@ const handleEvent = async () => {
 
   // list all providers for connected connectors
   const integrationList = await facade.listIntegrations(countries);
-  console.debug(`[openbanking] upsert ${integrationList.length} integrations`);
+  console.debug(`○ [cron] upsert ${integrationList.length} integrations`);
 
   // TODO: handle removed connector providers
 

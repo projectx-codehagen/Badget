@@ -6,7 +6,6 @@ import {
   CanonicalBalance,
   CanonicalConnectorConfig,
   CanonicalCountry,
-  CanonicalIntegration,
   CanonicalResource,
   CanonicalTransaction,
 } from "@projectx/db";
@@ -77,15 +76,15 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
     const result = new Map<string, CanonicalAccount>();
 
     const requisition = await this.client.requisition.getRequisitionById(
-      resource.externalId,
+      resource.originalId,
     );
 
     for (const accountId of requisition.accounts) {
       const accountDetails = await this.client.account(accountId).getDetails();
 
       result.set(accountId, {
-        externalId: accountId,
         ...toCanonicalAccount(accountDetails.account),
+        originalId: accountId,
       });
     }
 
@@ -98,7 +97,7 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
     const result = new Map<string, CanonicalBalance[]>();
 
     const requisition = await this.client.requisition.getRequisitionById(
-      resource.externalId,
+      resource.originalId,
     );
 
     for (const accountId of requisition.accounts) {
@@ -116,11 +115,11 @@ export default class GoCardlessClientAdapter implements IConnectorClient {
     const result = new Map<string, CanonicalTransaction[]>();
 
     const requisition = await this.client.requisition.getRequisitionById(
-      resource.externalId,
+      resource.originalId,
     );
 
     for (const accountId of requisition.accounts) {
-      const response = await this.client.account(accountId).getTransactions({});
+      const response = await this.client.account(accountId).getTransactions();
 
       result.set(
         accountId,

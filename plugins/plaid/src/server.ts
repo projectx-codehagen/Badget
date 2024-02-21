@@ -26,8 +26,8 @@ const parseSecret = (secret: unknown) => {
 
 export default class PlaidClientAdapter implements IConnectorClient {
   private plaidClient: PlaidApi;
-  id: bigint;
-  name: string;
+  id: bigint = BigInt(0);
+  name: string = "";
 
   constructor(config: CanonicalConnectorConfig) {
     const secret = parseSecret(config.secret);

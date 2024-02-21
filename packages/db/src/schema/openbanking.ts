@@ -25,20 +25,19 @@ export const account = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     resourceId: bigint("resource_id", { mode: "bigint" }).notNull(),
-    externalId: varchar("external_id", { length: 36 }).notNull(),
-
+    originalId: varchar("original_id", { length: 36 }).notNull(),
     orgId: varchar("org_id", { length: 36 }),
     userId: varchar("user_id", { length: 36 }),
 
     name: varchar("name", { length: 255 }).notNull(),
-    extraData: json("extra_data"),
+    originalPayload: json("original_payload"),
   },
   (table) => {
     return {
       resourceIdIdx: index("resource_id_idx").on(table.resourceId),
       orgIdIdx: index("org_id_idx").on(table.orgId),
       userIdIdx: index("user_id_idx").on(table.userId),
-      externalIdUnqIdx: uniqueIndex("external_id_idx").on(table.externalId),
+      originalIdUnqIdx: uniqueIndex("original_id_unq_idx").on(table.originalId),
     };
   },
 );
@@ -77,7 +76,7 @@ export const balance = mySqlTable(
       BalanceType.BOOKED,
       BalanceType.EXPECTED,
     ]).notNull(),
-    extraData: json("extra_data"),
+    originalPayload: json("original_payload"),
   },
   (table) => {
     return {
@@ -133,15 +132,17 @@ export const transaction = mySqlTable(
     accountId: bigint("account_id", { mode: "bigint" }).notNull(),
     categoryId: bigint("category_id", { mode: "bigint" }),
     currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
+    originalId: varchar("original_id", { length: 36 }).notNull(),
 
     amount: float("amount").notNull(),
     date: timestamp("date").notNull(),
     description: varchar("description", { length: 255 }).notNull(),
-    extraData: json("extra_data"),
+    originalPayload: json("original_payload"),
   },
   (table) => {
     return {
       accountIdIdx: index("account_id_idx").on(table.accountId),
+      originalIdUnqIdx: uniqueIndex("original_id_unq_idx").on(table.originalId),
     };
   },
 );

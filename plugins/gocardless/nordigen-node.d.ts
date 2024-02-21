@@ -203,7 +203,7 @@ declare module "nordigen-node" {
     getDetails(): Promise<GetDetailsResponse>;
     getBalances(): Promise<GetBalancesResponse>;
     getTransactions(
-      request: GetTransactionsRequest,
+      request?: GetTransactionsRequest,
     ): Promise<GetTransactionsResponse>;
   }
 

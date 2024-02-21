@@ -10,5 +10,7 @@ export const toCanonicalTransaction = (
     currencyIso: transaction.transactionAmount.currency,
     date: new Date(transaction.valueDate),
     description: transaction.remittanceInformationUnstructured,
+    originalId: transaction.transactionId,
+    originalPayload: transaction,
   } as CanonicalTransaction;
 };

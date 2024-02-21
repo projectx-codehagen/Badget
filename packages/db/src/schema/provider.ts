@@ -94,10 +94,9 @@ export const resource = mySqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
     // TODO: add fields
-    userId: varchar("user_id", { length: 36 }).notNull(),
     integrationId: bigint("integration_id", { mode: "bigint" }).notNull(),
-
-    externalId: varchar("external_id", { length: 36 }).notNull(),
+    originalId: varchar("original_id", { length: 36 }).notNull(),
+    userId: varchar("user_id", { length: 36 }).notNull(),
   },
   (table) => {
     return {

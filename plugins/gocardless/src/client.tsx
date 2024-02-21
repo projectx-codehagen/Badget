@@ -28,7 +28,7 @@ const GoCardlessLink = ({
         eq(schema.connector.id, schema.connectorConfig.connectorId),
       );
 
-    if (!connectors[0]) {
+    if (!connectors[0]?.connectorConfig) {
       throw new Error(`[gocardless] connector config not found`);
     }
 
