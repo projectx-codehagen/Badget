@@ -1,4 +1,4 @@
-import { UseChatHelpers } from "ai/react";
+// import { UseChatHelpers } from "ai/react";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";

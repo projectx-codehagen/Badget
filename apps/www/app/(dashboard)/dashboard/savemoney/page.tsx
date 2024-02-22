@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 
 import { accounts, mails } from "@/components/new-dashboard/data";
-import { SaveMoneyDashboard } from "@/components/savemoney/components/ai-magic-dashboard";
+import { SaveMoneyDashboard } from "@/components/savemoney/components/save-money-dashboard";
 
 export const metadata = {
   title: "Dasboard",
