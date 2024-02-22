@@ -33,6 +33,7 @@ import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/works
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
+import { EmptyScreen } from "./empty-screen";
 import { CardsChat } from "./mini-chat";
 import { Nav } from "./nav";
 import { SankeyCard } from "./sankey-card";
@@ -265,6 +266,7 @@ export function AiMagicDashboard({
               <form></form>
             </div>
             <CardsChat />
+            <EmptyScreen />
             {/* <SankeyCard />
             <CardsStats /> */}
             {/* <div className="ml-6 mt-6 flex gap-4"> */}
