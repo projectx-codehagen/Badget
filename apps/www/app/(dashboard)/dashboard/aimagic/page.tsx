@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 
 import { accounts, mails } from "@/components/new-dashboard/data";
-import { SaveMoneyDashboard } from "@/components/savemoney/components/ai-magic-dashboard";
+import { AiMagicDashboard } from "@/components/savemoney/components/ai-magic-dashboard";
 
 export const metadata = {
   title: "Dasboard",
@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   return (
     <>
       <div className="flex flex-col">
-        <SaveMoneyDashboard
+        <AiMagicDashboard
           accounts={accounts}
           mails={mails}
           defaultLayout={defaultLayout}
