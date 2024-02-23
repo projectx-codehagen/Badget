@@ -259,10 +259,15 @@ export function Dashboard({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <ScrollArea className="h-screen">
-            <div className="flex h-[52px] items-center px-4 py-2">
-              <h1 className="text-xl font-bold">Dashboard</h1>
-              <AddAssetButton />
-              <AddRealEstateButton />
+            <div className="flex h-[52px] items-center justify-between px-4 py-2">
+              <div>
+                <h1 className="text-xl font-bold">Dashboard</h1>
+              </div>
+              <div className="flex items-center gap-4">
+                <AddAssetButton />
+
+                <AddRealEstateButton />
+              </div>
             </div>
             <Separator />
 
