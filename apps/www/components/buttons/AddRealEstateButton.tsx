@@ -45,7 +45,7 @@ export function AddRealEstateButton() {
         <DialogHeader>
           <DialogTitle>Add Real Estate</DialogTitle>
           <DialogDescription>
-            Add your property here. Click save when you're done.
+            Add your property here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-2">
