@@ -1,4 +1,12 @@
+"use client";
+
+import * as React from "react";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +18,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import {
   Select,
@@ -21,50 +34,20 @@ import {
 import { Textarea } from "../ui/textarea";
 
 export function AddRealEstateButton() {
+  const [date, setDate] = React.useState<Date>();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">Add Property</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Add Real Estate</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Add your property here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        {/* <div className="grid grid-cols-2 gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="area">Area</Label>
-            <Select defaultValue="billing">
-              <SelectTrigger id="area">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="team">Team</SelectItem>
-                <SelectItem value="billing">Billing</SelectItem>
-                <SelectItem value="account">Account</SelectItem>
-                <SelectItem value="deployments">Deployments</SelectItem>
-                <SelectItem value="support">Support</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="area">Area</Label>
-            <Select defaultValue="account">
-              <SelectTrigger id="area">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="team">Team</SelectItem>
-                <SelectItem value="billing">Billing</SelectItem>
-                <SelectItem value="account">Account</SelectItem>
-                <SelectItem value="deployments">Deployments</SelectItem>
-                <SelectItem value="support">Support</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div> */}
         <div className="grid gap-2">
           <Label htmlFor="subject">Address</Label>
           <Input id="subject" placeholder="Address..." />
@@ -84,22 +67,41 @@ export function AddRealEstateButton() {
           </div>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="subject">Subject</Label>
-          <Input id="subject" placeholder="I need help with..." />
+          <Label htmlFor="subject">Purchase Date</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "justify-start text-left font-normal",
+                  !date && "text-muted-foreground",
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PPP") : <span>Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="subject">Subject</Label>
-          <Input id="subject" placeholder="I need help with..." />
+          <Label htmlFor="subject">Purchase Value</Label>
+          <Input id="subject" placeholder="Purchase Value..." />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="description">Description</Label>
-          <Textarea
-            id="description"
-            placeholder="Please include all information relevant to your issue."
-          />
+          <Label htmlFor="subject">Curent value</Label>
+          <Input id="subject" placeholder="Curent value..." />
         </div>
+
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">Add Property</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
