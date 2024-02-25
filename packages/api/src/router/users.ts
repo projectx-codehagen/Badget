@@ -28,6 +28,29 @@ export const usersRouter = createTRPCRouter({
       });
     }
   }),
+  getUser: publicProcedure.query(async (opts) => {
+    try {
+      // Directly querying the user table using the schema defined in Drizzle
+      const users = await opts.ctx.db
+        .select({
+          id: schema.user.id,
+        })
+        .from(schema.user)
+        .where(eq(schema.user.clerkUserId, opts.input.clerkUserId))
+        .execute();
+
+      return users.map((user) => ({
+        id: user.id,
+        // Map other fields as necessary
+      }));
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to fetch users",
+      });
+    }
+  }),
   create: publicProcedure
     .input(
       z.object({
@@ -42,7 +65,9 @@ export const usersRouter = createTRPCRouter({
       }),
     )
     .mutation(async (opts) => {
-      const getCustomerId = async (clerkUserId: string) => {
+      const getCustomerId = async (
+        clerkUserId: string,
+      ): Promise<number | null> => {
         const customer = await opts.ctx.db
           .select({
             id: schema.customer.id,
@@ -50,6 +75,10 @@ export const usersRouter = createTRPCRouter({
           .from(schema.customer)
           .where(eq(schema.customer.clerkUserId, clerkUserId))
           .execute();
+
+        if (customer.length === 0) {
+          return null;
+        }
 
         return customer[0]?.id;
       };
@@ -59,7 +88,8 @@ export const usersRouter = createTRPCRouter({
         .values({
           status: opts.input.status,
           clerkUserId: opts.ctx.auth.userId,
-          customerId: await getCustomerId(opts.input.clerkUserId),
+          customerId:
+            (await getCustomerId(opts.input.clerkUserId)) ?? undefined,
         })
         .execute();
     }),
