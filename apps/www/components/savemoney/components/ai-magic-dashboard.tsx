@@ -266,7 +266,7 @@ export function AiMagicDashboard({
               <form></form>
             </div>
             <CardsChat />
-            <EmptyScreen />
+            {/* <EmptyScreen /> */}
             {/* <SankeyCard />
             <CardsStats /> */}
             {/* <div className="ml-6 mt-6 flex gap-4"> */}
