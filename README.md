@@ -102,7 +102,7 @@ To set up Stripe locally with environment variables:
 4. Reveal your secret key and paste it into your `.env.local` file.
 5. For the webhook key, switch to the Webhooks tab, add an endpoint to reveal the secret key.
 6. To get the `PRODUCT_ID` and `PRICE_ID`, head over to [Stripe's API Docs](https://docs.stripe.com/api/prices/object).
-7. From the docs, use the API with your `STRIPE_API_KEY` to create a price object.
+7. From the docs, use the API with your `STRIPE_API_KEY` to create a product & price object.
 8. The response object from the API contains two keys: `id` and `product`.
 9. Use the `id` as your `PRICE_ID` and `product` as your `PRODUCT_ID`.
 10. You can use the same keys for the STD and PRO variables.
