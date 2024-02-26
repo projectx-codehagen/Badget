@@ -39,7 +39,7 @@ const data = [
 
 export function TotalBalanceCard() {
   return (
-    <div className="">
+    <div className="p-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-base font-normal">Total balance</CardTitle>
