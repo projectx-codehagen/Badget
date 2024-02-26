@@ -36,6 +36,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import { EmptyScreen } from "./empty-screen";
+
 const users = [
   {
     name: "Olivia Martin",
@@ -89,11 +91,13 @@ export function CardsChat() {
     },
   ]);
   const [input, setInput] = React.useState("");
+  const [chatSuggestions, setChatSuggestions] = React.useState(true);
   const inputLength = input.trim().length;
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (inputLength === 0) return;
+    setChatSuggestions(false);
 
     // Add user message
     const newUserMessage = {
@@ -160,7 +164,7 @@ export function CardsChat() {
           </TooltipProvider>
         </CardHeader>
         <CardContent>
-          {messages.length > 0 ? (
+          {/* {messages.length > 0 ? (
             <div className="space-y-4">
               {messages.map((message, index) => (
                 <div
@@ -181,6 +185,49 @@ export function CardsChat() {
               <p className="text-center text-lg text-muted-foreground">
                 No messages yet. Start a conversation!
               </p>
+            </div>
+          )} */}
+          {/* {messages.length > 0 ? (
+            <div className="space-y-4">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
+                    message.role === "user"
+                      ? "ml-auto bg-primary text-primary-foreground"
+                      : "bg-muted",
+                  )}
+                >
+                  {message.content}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <p className="text-center text-lg text-muted-foreground">
+                No messages yet. Start a conversation!
+              </p>
+              <EmptyScreen setChatInput={setInput} />
+            </div>
+          )} */}
+
+          {chatSuggestions && <EmptyScreen setChatInput={setInput} />}
+          {!chatSuggestions && messages.length > 0 && (
+            <div className="space-y-4">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
+                    message.role === "user"
+                      ? "ml-auto bg-primary text-primary-foreground"
+                      : "bg-muted",
+                  )}
+                >
+                  {message.content}
+                </div>
+              ))}
             </div>
           )}
         </CardContent>
