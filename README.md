@@ -19,7 +19,6 @@
   <a href="#introduction"><strong>Introduction</strong></a> ·
   <a href="#installation"><strong>Installation</strong></a> ·
   <a href="#tech-stack--features"><strong>Tech Stack + Features</strong></a> ·
-  <a href="#author"><strong>Author</strong></a> ·
   <a href="#contributing"><strong>Credits</strong></a>
 </p>
 <br/>
@@ -78,7 +77,7 @@ cp .env.example .env.local
    1. Create [Clerk](https://clerk.com) Account
    2. Create [Planet Scale](https://planetscale.com/) Account
    3. Create [Resend](https://resend.com) Account
-   4. Create [Stripe](https://stripe.com) Account
+   4. Create [Stripe](https://stripe.com) Account and download [Stripe CLI](https://docs.stripe.com/stripe-cli)
    5. Create [Edge Store](https://edgestore.dev) Account
 
 5. Start the development server from either yarn or turbo:
