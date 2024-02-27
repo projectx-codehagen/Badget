@@ -1,3 +1,5 @@
+/// <reference path="../types/nordigen-node.d.ts" />
+
 import { NordigenBalance } from "nordigen-node";
 
 import { CanonicalBalance } from "@projectx/db";

@@ -1,5 +1,6 @@
+/// <reference path="../types/nordigen-node.d.ts" />
+
 import { NordigenInstitution } from "nordigen-node";
-import { Institution } from "plaid";
 
 import { CanonicalIntegration } from "@projectx/db";
 

@@ -1,3 +1,5 @@
+/// <reference path="../types/nordigen-node.d.ts" />
+
 import { NordigenBookedTransaction } from "nordigen-node";
 
 import { CanonicalTransaction } from "@projectx/db";

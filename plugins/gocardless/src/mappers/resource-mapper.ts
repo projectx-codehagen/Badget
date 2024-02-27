@@ -1,3 +1,5 @@
+/// <reference path="../types/nordigen-node.d.ts" />
+
 import { NordigenRequisition } from "nordigen-node";
 
 import { CanonicalResource } from "@projectx/db";
