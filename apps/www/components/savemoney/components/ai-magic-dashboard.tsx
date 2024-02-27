@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -30,16 +29,15 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AddAssetButton } from "@/components/buttons/AddAssetButton";
-import { AddRealEstateButton } from "@/components/buttons/AddRealEstateButton";
 import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
+import { EmptyScreen } from "./empty-screen";
+import { CardsChat } from "./mini-chat";
 import { Nav } from "./nav";
+import { SankeyCard } from "./sankey-card";
 import { CardsStats } from "./stats";
-import { TopCategoriesTable } from "./top-categories-table";
-import { TransactionsReviewTable } from "./transaction-review-table";
 
 interface DashboardProps {
   accounts: {
@@ -53,10 +51,10 @@ interface DashboardProps {
   navCollapsedSize: number;
 }
 
-export function Dashboard({
+export function AiMagicDashboard({
   accounts,
   mails,
-  defaultLayout = [20, 40, 40],
+  defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
 }: DashboardProps) {
@@ -93,7 +91,7 @@ export function Dashboard({
         >
           <div
             className={cn(
-              "flex h-[52px] items-center justify-center px-2",
+              "flex h-[52px] items-center justify-center",
               isCollapsed ? "h-[52px]" : "px-2",
             )}
           >
@@ -107,7 +105,7 @@ export function Dashboard({
                 title: "Dashboard",
                 label: "",
                 icon: LayoutDashboard,
-                variant: "default",
+                variant: "ghost",
                 link: "/dashboard/",
               },
               {
@@ -143,7 +141,7 @@ export function Dashboard({
                 label: "",
                 icon: Repeat2,
                 variant: "ghost",
-                link: "/dashboard/recurring",
+                link: "/dashboard/",
               },
             ]}
           />
@@ -155,8 +153,8 @@ export function Dashboard({
                 title: "Ai Magic",
                 label: "",
                 icon: Sparkle,
-                variant: "ghost",
-                link: "/dashboard/",
+                variant: "default",
+                link: "/dashboard/aimagic",
               },
               {
                 title: "Save Money",
@@ -259,26 +257,22 @@ export function Dashboard({
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <ScrollArea className="h-screen">
-            <div className="flex h-[52px] items-center justify-between px-4 py-2">
-              <div>
-                <h1 className="text-xl font-bold">Dashboard</h1>
-              </div>
-              <div className="flex items-center gap-4">
-                <AddAssetButton />
-                <AddRealEstateButton />
-              </div>
+            <div className="flex h-[52px] items-center px-4 py-2">
+              <h1 className="text-xl font-bold">Badget Magic</h1>
             </div>
             <Separator />
 
             <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <form></form>
             </div>
-
-            <CardsStats />
+            <CardsChat />
+            {/* <EmptyScreen /> */}
+            {/* <SankeyCard />
+            <CardsStats /> */}
             {/* <div className="ml-6 mt-6 flex gap-4"> */}
             <div className="mx-6 mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
-              <TransactionsReviewTable />
-              <TopCategoriesTable />
+              {/* <TransactionsReviewTable />
+              <TopCategoriesTable /> */}
             </div>
           </ScrollArea>
         </ResizablePanel>

@@ -19,7 +19,6 @@
   <a href="#introduction"><strong>Introduction</strong></a> ·
   <a href="#installation"><strong>Installation</strong></a> ·
   <a href="#tech-stack--features"><strong>Tech Stack + Features</strong></a> ·
-  <a href="#author"><strong>Author</strong></a> ·
   <a href="#contributing"><strong>Credits</strong></a>
 </p>
 <br/>
@@ -78,7 +77,7 @@ cp .env.example .env.local
    1. Create [Clerk](https://clerk.com) Account
    2. Create [Planet Scale](https://planetscale.com/) Account
    3. Create [Resend](https://resend.com) Account
-   4. Create [Stripe](https://stripe.com) Account
+   4. Create [Stripe](https://stripe.com) Account and download [Stripe CLI](https://docs.stripe.com/stripe-cli)
    5. Create [Edge Store](https://edgestore.dev) Account
 
 5. Start the development server from either yarn or turbo:
@@ -91,6 +90,21 @@ pnpm run dev
 cd apps/www
 pnpm dev
 ```
+
+## Stripe
+
+To set up Stripe locally with environment variables:
+
+1. Create a [Stripe](https://stripe.com/in) account.
+2. After signing in, go to the dashboard and switch to Test mode.
+3. In the dashboard, switch to the API keys section.
+4. Reveal your secret key and paste it into your `.env.local` file.
+5. For the webhook key, switch to the Webhooks tab, add an endpoint to reveal the secret key.
+6. To get the `PRODUCT_ID` and `PRICE_ID`, head over to [Stripe's API Docs](https://docs.stripe.com/api/prices/object).
+7. From the docs, use the API with your `STRIPE_API_KEY` to create a product & price object.
+8. The response object from the API contains two keys: `id` and `product`.
+9. Use the `id` as your `PRICE_ID` and `product` as your `PRODUCT_ID`.
+10. You can use the same keys for the STD and PRO variables.
 
 ## Database
 
