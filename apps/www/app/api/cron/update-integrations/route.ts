@@ -5,9 +5,23 @@ import { db, eq, schema, sql } from "@projectx/db";
 import { env } from "@/env.mjs";
 import { connectorFacade, toConnectorEnv } from "@/lib/connector";
 
-export async function POST(_req: NextRequest) {
-  // TODO: verify signature
+export async function POST(req: NextRequest) {
+  // get the bearer token from the header
+  const authToken = (req.headers.get("authorization") || "")
+    .split("Bearer ")
+    .at(1);
 
+  // if not found OR the bearer token does NOT equal the CRON_SECRET
+  if (!authToken || authToken !== env.CRON_SECRET) {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      {
+        status: 401,
+      },
+    );
+  }
+
+  // if token exists then move on with the cron job
   try {
     console.log("✓ [cron]: Handling cron update-integrations");
 

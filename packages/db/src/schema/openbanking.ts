@@ -24,8 +24,8 @@ export const account = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    resourceId: bigint("resource_id", { mode: "bigint" }).notNull(),
-    originalId: varchar("original_id", { length: 36 }).notNull(),
+    resourceId: bigint("resource_id", { mode: "bigint" }),
+    originalId: varchar("original_id", { length: 36 }),
     orgId: varchar("org_id", { length: 36 }),
     userId: varchar("user_id", { length: 36 }),
 
@@ -132,7 +132,7 @@ export const transaction = mySqlTable(
     accountId: bigint("account_id", { mode: "bigint" }).notNull(),
     categoryId: bigint("category_id", { mode: "bigint" }),
     currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
-    originalId: varchar("original_id", { length: 36 }).notNull(),
+    originalId: varchar("original_id", { length: 36 }),
 
     amount: float("amount").notNull(),
     date: timestamp("date").notNull(),
