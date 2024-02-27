@@ -154,7 +154,7 @@ export function RecurringDashboard({
                 label: "",
                 icon: Sparkle,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/aimagic",
               },
               {
                 title: "Save Money",
