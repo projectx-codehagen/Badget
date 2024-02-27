@@ -28,7 +28,11 @@ const exampleMessages = [
 
 //TODO - Maybe do this  export function EmptyScreen({ setInput }: Pick<UseChatHelpers, "setInput">) {
 
-export function EmptyScreen() {
+type EmptyScreenProps = {
+  setChatInput: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export function EmptyScreen({ setChatInput }: EmptyScreenProps) {
   return (
     <Card className="mx-auto max-w-2xl">
       <CardHeader>
@@ -44,11 +48,14 @@ export function EmptyScreen() {
           <Button
             key={index}
             variant="link"
-            className="h-auto p-0 text-base"
-            // onClick={() => setInput(message.message)}
+            className="group h-auto p-0 text-base"
+            onClick={() => setChatInput(message.message)}
           >
-            <ArrowRight className="mr-2 text-muted-foreground" />
             {message.heading}
+            <ArrowRight
+              className="ml-2 text-muted-foreground transition-all group-hover:ml-4"
+              size={16}
+            />
           </Button>
         ))}
       </CardContent>
