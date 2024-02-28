@@ -602,10 +602,10 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.0
         version: 8.57.0
       prettier:
-        specifier: ^3.2.4
+        specifier: ^3.2.5
         version: 3.2.5
       typescript:
         specifier: ^5.3.3
@@ -639,10 +639,10 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.0
         version: 8.57.0
       prettier:
-        specifier: ^3.2.4
+        specifier: ^3.2.5
         version: 3.2.5
       typescript:
         specifier: ^5.3.3
