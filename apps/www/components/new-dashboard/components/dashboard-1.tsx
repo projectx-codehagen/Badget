@@ -258,7 +258,7 @@ export function Dashboard({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <ScrollArea className="h-screen">
+          <ScrollArea className="h-fit min-h-screen">
             <div className="flex h-[52px] items-center justify-between px-4 py-2">
               <div>
                 <h1 className="text-xl font-bold">Dashboard</h1>
@@ -268,17 +268,21 @@ export function Dashboard({
                 <AddRealEstateButton />
               </div>
             </div>
+
             <Separator />
 
-            <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <form></form>
-            </div>
+            <div className="flex flex-col gap-4 p-4">
+              <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                <form></form>
+              </div>
 
-            <CardsStats />
-            {/* <div className="ml-6 mt-6 flex gap-4"> */}
-            <div className="mx-6 mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
-              <TransactionsReviewTable />
-              <TopCategoriesTable />
+              <CardsStats />
+              {/* <div className="ml-6 mt-6 flex gap-4"> */}
+
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+                <TransactionsReviewTable />
+                <TopCategoriesTable />
+              </div>
             </div>
           </ScrollArea>
         </ResizablePanel>

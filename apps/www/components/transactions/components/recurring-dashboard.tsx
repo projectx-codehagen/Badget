@@ -256,7 +256,7 @@ export function RecurringDashboard({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <Separator />
+          {/* <Separator /> */}
           <RecurringSpentSoFarCard />
           <div>
             {/* <SmallInvestmentCard /> */}

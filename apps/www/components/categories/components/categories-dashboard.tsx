@@ -260,8 +260,10 @@ export function CategoriesDashboard({
           defaultSize={defaultLayout[1]}
           minSize={30}
         >
-          <Separator />
-          <SpentSoFarCard />
+          {/* <Separator /> */}
+          <div className="p-4">
+            <SpentSoFarCard />
+          </div>
           <div>
             {/* <SmallInvestmentCard /> */}
             <CategoriesTable />
@@ -270,7 +272,9 @@ export function CategoriesDashboard({
           <div>
             <Investmentcards items={mails} />
           </div>
-          <TopCategoriesTable />
+          <div className="p-4">
+            <TopCategoriesTable />
+          </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
