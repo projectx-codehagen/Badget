@@ -264,7 +264,7 @@ export function InvestmentsDashboard({
         >
           <Separator />
           <TotalBalanceCard />
-          <div className="overflow-scroll">
+          <div className="overflow-auto">
             <SmallInvestmentCard />
             <AllocationTable />
             <HoldingsTable />
