@@ -14,16 +14,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.16",
-    "postcss": "8.4.31",
-    "tailwindcss": "3.3.5"
+    "autoprefixer": "^10.4.17",
+    "postcss": "8.4.35",
+    "tailwindcss": "^3.4.1"
   },
   "devDependencies": {
     "@projectx/eslint-config": "workspace:^0.2.0",
     "@projectx/prettier-config": "workspace:^0.1.0",
     "@projectx/tsconfig": "workspace:^0.1.0",
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.4",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
