@@ -5,13 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api } from "@/trpc/client";
 import { useOrganization, useOrganizationList, useUser } from "@clerk/nextjs";
-import { toDecimal } from "dinero.js";
 import { Check, ChevronDown, ChevronsUpDown, PlusCircle } from "lucide-react";
 
 import type { PurchaseOrg } from "@projectx/validators";
 import { purchaseOrgSchema } from "@projectx/validators";
 
-import { currencySymbol } from "@/lib/currency";
+
 import { cn } from "@/lib/utils";
 import { useZodForm } from "@/lib/zod-form";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -49,8 +48,6 @@ import {
 } from "@/components/ui/popover";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -244,7 +241,8 @@ export function WorkspaceSwitcher({ isCollapsed }: WorkspaceSwitcherProps) {
 }
 
 function NewOrganizationDialog(props: { closeDialog: () => void }) {
-  const plans = React.use(api.stripe.plans.query());
+  // Removes need for Stripe integration while in development
+  // const plans = React.use(api.stripe.plans.query());
 
   const form = useZodForm({ schema: purchaseOrgSchema });
 
@@ -316,6 +314,9 @@ function NewOrganizationDialog(props: { closeDialog: () => void }) {
                       <SelectValue placeholder="Select a plan" />
                     </SelectTrigger>
                   </FormControl>
+                  
+                  {/* Removes need for Stripe integration while in development
+
                   <SelectContent>
                     {plans.map((plan) => (
                       <SelectItem key={plan.priceId} value={plan.priceId}>
@@ -330,7 +331,7 @@ function NewOrganizationDialog(props: { closeDialog: () => void }) {
                         </span>
                       </SelectItem>
                     ))}
-                  </SelectContent>
+                  </SelectContent> */}
                 </Select>
                 <FormMessage />
               </FormItem>
