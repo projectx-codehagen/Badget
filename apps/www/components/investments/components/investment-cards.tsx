@@ -31,16 +31,16 @@ export function Investmentcards({ items }: MailListProps) {
   );
 
   return (
-    <ScrollArea className="h-screen">
+    <ScrollArea className="h-fit">
       <div className="flex flex-col gap-4 p-4 pt-0">
         {Object.entries(groupedItems).map(([category, items]) => (
           <React.Fragment key={category}>
-            <h2 className="text-lg font-semibold">{category}</h2>
+            <h2 className="ml-4 text-lg font-semibold">{category}</h2>
             {items.map((item) => (
               <Card
                 key={item.id}
                 onClick={() => setMail({ ...mail, selected: item.id })}
-                className="group flex items-center justify-between p-3 hover:bg-gray-100 hover:text-background"
+                className="group flex items-center justify-between p-3 hover:bg-gray-100 hover:text-black"
               >
                 <div className="flex grow flex-col">
                   <CardTitle className="font-bold">{item.name}</CardTitle>

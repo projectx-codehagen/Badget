@@ -156,7 +156,7 @@ export function InvestmentsDashboard({
                 label: "",
                 icon: Sparkle,
                 variant: "ghost",
-                link: "/dashboard/",
+                link: "/dashboard/aimagic",
               },
               {
                 title: "Save Money",
@@ -264,7 +264,7 @@ export function InvestmentsDashboard({
         >
           <Separator />
           <TotalBalanceCard />
-          <div className="overflow-scroll">
+          <div className="overflow-auto">
             <SmallInvestmentCard />
             <AllocationTable />
             <HoldingsTable />
