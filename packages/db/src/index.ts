@@ -9,6 +9,7 @@ import * as openbanking from "./schema/openbanking";
 import * as project from "./schema/project";
 import * as resource from "./schema/resource";
 import * as transaction from "./schema/transaction";
+import * as user from "./schema/user";
 
 export const schema = {
   ...customer,
@@ -18,6 +19,7 @@ export const schema = {
   ...resource,
   ...transaction,
   ...category,
+  ...user,
 };
 
 export type Account = typeof schema.account.$inferSelect;
@@ -27,6 +29,7 @@ export type ResourceInsert = typeof schema.resource.$inferInsert;
 export type Transaction = typeof schema.transaction.$inferSelect;
 export type Merchant = typeof schema.merchant.$inferSelect;
 export type TransactionInsert = typeof schema.transaction.$inferInsert;
+export type User = typeof schema.user.$inferSelect;
 
 export type CanonicalCountryCode = typeof schema.countryCodes.$inferSelect;
 export type CanonicalConnectorConfig =
