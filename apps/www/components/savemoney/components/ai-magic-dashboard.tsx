@@ -265,7 +265,9 @@ export function AiMagicDashboard({
             <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <form></form>
             </div>
-            <CardsChat />
+            <div className="p-4">
+              <CardsChat />
+            </div>
             {/* <EmptyScreen /> */}
             {/* <SankeyCard />
             <CardsStats /> */}

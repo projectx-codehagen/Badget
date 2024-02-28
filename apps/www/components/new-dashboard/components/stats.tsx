@@ -52,7 +52,7 @@ const debtChange = calculateChange(10936, 10500); // replace with real data if n
 
 export function CardsStats() {
   return (
-    <div className="mx-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-base font-normal">
@@ -133,7 +133,7 @@ export function CardsStats() {
                   dataKey="subscription"
                   style={
                     {
-                      fill: "var(--theme-primary)",
+                      fill: "currentColor",
                       opacity: 1,
                     } as React.CSSProperties
                   }

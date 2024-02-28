@@ -242,7 +242,7 @@ export function CategoriesDisplay({ mail }: MailDisplayProps) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div> */}
-      <Separator />
+      {/* <Separator /> */}
 
       {mail ? (
         <div className="flex flex-1 flex-col">

@@ -272,7 +272,9 @@ export function InvestmentsDashboard({
           <div>
             <Investmentcards items={mails} />
           </div>
-          <TopCategoriesTable />
+          <div className="p-4">
+            <TopCategoriesTable />
+          </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
