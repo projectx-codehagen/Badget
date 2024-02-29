@@ -131,8 +131,6 @@ The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you h
 ## Roadmap
 
 - [x] ~Initial setup~
-- [ ] Start removing template
-- [ ] Update UI to match the product
 - [ ] XXXXXXXX
 
 ## Tech Stack + Features
