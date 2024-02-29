@@ -3,14 +3,13 @@ import * as dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 
 import {
-  CanonicalConnector,
-  CanonicalConnectorConfig,
-  CanonicalCountryCode,
-  ConnectorStatus,
-  ConnectorType,
-  schema,
-  sql,
-} from "./index";
+  connectorConfigs,
+  connectors,
+  integrations,
+  resources,
+} from "./data/mock";
+import { countries, currencies } from "./data/setup";
+import { schema, sql } from "./index";
 
 dotenv.config({ path: "../../.env.local" });
 
@@ -20,10 +19,6 @@ if (!("DATABASE_USERNAME" in process.env))
   throw new Error("DATABASE_USERNAME not found on .env.local");
 if (!("DATABASE_PASSWORD" in process.env))
   throw new Error("DATABASE_PASSWORD not found on .env.local");
-if (!("PLAID_CLIENT_ID" in process.env))
-  throw new Error("PLAID_CLIENT_ID not found on .env.local");
-if (!("PLAID_CLIENT_SECRET" in process.env))
-  throw new Error("PLAID_CLIENT_SECRET not found on .env.local");
 
 const main = async () => {
   const client = new Client({
@@ -33,55 +28,36 @@ const main = async () => {
   }).connection();
   const db = drizzle(client);
 
-  const countryCodeData: CanonicalCountryCode[] = [];
-  const connectorsConfigData: CanonicalConnectorConfig[] = [];
-  const connectorsData: CanonicalConnector[] = [];
-
-  countryCodeData.push({
-    id: 1,
-    code: "IT",
-    active: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    integrationId: BigInt(1), // NOTE: why is this required?
-  });
-
-  connectorsConfigData.push({
-    id: 1,
-    env: "SANDBOX",
-    secret: {
-      clientId: process.env.PLAID_CLIENT_ID!,
-      clientSecret: process.env.PLAID_CLIENT_SECRET!,
-    },
-    orgId: "org_",
-    connectorId: BigInt(1),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
-
-  connectorsData.push({
-    id: 1,
-    name: "plaid",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1415067514460000256/1iPIdd20_400x400.png",
-    status: ConnectorStatus.ACTIVE,
-    type: ConnectorType.AGGREGATED,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
-
   console.log("Seed start");
   await db
-    .insert(schema.countryCodes)
-    .values(countryCodeData)
+    .insert(schema.country)
+    .values(countries)
+    .onDuplicateKeyUpdate({ set: { iso: sql`iso`, name: sql`name` } });
+  await db
+    .insert(schema.currency)
+    .values(currencies)
+    .onDuplicateKeyUpdate({
+      set: {
+        iso: sql`iso`,
+        symbol: sql`symbol`,
+        numericCode: sql`numeric_code`,
+      },
+    });
+  await db
+    .insert(schema.connectorConfig)
+    .values(connectorConfigs)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   await db
-    .insert(schema.connectorConfigs)
-    .values(connectorsConfigData)
+    .insert(schema.connector)
+    .values(connectors)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   await db
-    .insert(schema.connectors)
-    .values(connectorsData)
+    .insert(schema.integration)
+    .values(integrations)
+    .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+  await db
+    .insert(schema.resource)
+    .values(resources)
     .onDuplicateKeyUpdate({ set: { id: sql`id` } });
   console.log("Seed done");
 };

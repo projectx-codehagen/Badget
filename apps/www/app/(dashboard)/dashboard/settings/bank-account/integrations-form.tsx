@@ -35,7 +35,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
-  integration: z.number({
+  integration: z.bigint({
     required_error: "Please select an integration.",
   }),
   accountHolderName: z

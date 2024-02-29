@@ -1,166 +1,169 @@
 import { relations, sql } from "drizzle-orm";
 import {
   bigint,
-  boolean,
+  float,
   index,
   json,
   mysqlEnum,
   timestamp,
-  unique,
   uniqueIndex,
   varchar,
 } from "drizzle-orm/mysql-core";
 
-import { ConnectorEnv, ConnectorStatus, ConnectorType } from "../enum";
+import { BalanceType } from "../enum";
 import { mySqlTable } from "./_table";
+import { currency } from "./currency";
+import { resource } from "./provider";
 
-export const countryCodes = mySqlTable(
-  "countryCodes",
+export const account = mySqlTable(
+  "account",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    code: varchar("code", { length: 2 }).notNull(),
-    active: boolean("active").default(true),
+    resourceId: bigint("resource_id", { mode: "bigint" }),
+    originalId: varchar("original_id", { length: 36 }),
+    orgId: varchar("org_id", { length: 36 }),
+    userId: varchar("user_id", { length: 36 }),
 
-    integrationId: bigint("integration_id", { mode: "bigint" }),
+    name: varchar("name", { length: 255 }).notNull(),
+    originalPayload: json("original_payload"),
   },
   (table) => {
     return {
-      integrationIdIdx: index("integration_id_idx").on(table.integrationId),
+      resourceIdIdx: index("resource_id_idx").on(table.resourceId),
+      orgIdIdx: index("org_id_idx").on(table.orgId),
+      userIdIdx: index("user_id_idx").on(table.userId),
+      originalIdUnqIdx: uniqueIndex("original_id_unq_idx").on(table.originalId),
     };
   },
 );
 
-export const connectorConfigs = mySqlTable(
-  "connectorConfigs",
+/**
+ * 👇 This code block will tell Drizzle that account is related to:
+ * - account <-> balance      -> 1-to-N
+ * - account <-> transaction  -> 1-to-N
+ * - account <-> resource     -> 1-to-1
+ */
+export const accountRelations = relations(account, ({ many, one }) => ({
+  balances: many(balance),
+  transactions: many(transaction),
+  resource: one(resource, {
+    fields: [account.resourceId],
+    references: [resource.id],
+  }),
+}));
+
+export const balance = mySqlTable(
+  "balance",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    orgId: varchar("org_id", { length: 36 }).notNull(),
-    secret: json("secret"),
-    env: mysqlEnum("env", [
-      ConnectorEnv.DEVELOPMENT,
-      ConnectorEnv.SANDBOX,
-      ConnectorEnv.PRODUCTION,
+    accountId: bigint("account_id", { mode: "bigint" }).notNull(),
+    currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
+
+    amount: float("amount").notNull(),
+    date: timestamp("date").notNull(),
+    type: mysqlEnum("type", [
+      BalanceType.AVAILABLE,
+      BalanceType.BOOKED,
+      BalanceType.EXPECTED,
     ]).notNull(),
-
-    connectorId: bigint("connector_id", { mode: "bigint" }),
+    originalPayload: json("original_payload"),
   },
   (table) => {
     return {
-      orgIdIdx: uniqueIndex("org_id_idx").on(table.orgId),
+      accountIdIdx: index("account_id_idx").on(table.accountId),
     };
   },
 );
 
-export const connectors = mySqlTable("connectors", {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+/**
+ * 👇 This code block will tell Drizzle that balance is related to:
+ * - balance <-> account      -> 1-to-1
+ * - balance <-> currency     -> 1-to-1
+ */
+export const balanceRelations = relations(balance, ({ one }) => ({
+  account: one(account, {
+    fields: [balance.accountId],
+    references: [account.id],
+  }),
+  currency: one(currency, {
+    fields: [balance.currencyIso],
+    references: [currency.iso],
+  }),
+}));
+
+export const category = mySqlTable("category", {
+  id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   updatedAt: timestamp("updated_at").onUpdateNow(),
 
-  name: varchar("name", { length: 36 }).notNull(), // TODO: maybe use enum ?
-  logoUrl: varchar("logo_url", { length: 255 }),
-  status: mysqlEnum("status", [
-    ConnectorStatus.ACTIVE,
-    ConnectorStatus.BETA,
-    ConnectorStatus.DEV,
-    ConnectorStatus.INACTIVE,
-  ]).notNull(),
-  type: mysqlEnum("type", [
-    ConnectorType.DIRECT,
-    ConnectorType.AGGREGATED,
-  ]).notNull(),
+  name: varchar("name", { length: 63 }).notNull(),
+  icon: varchar("icon", { length: 63 }).notNull(),
 });
 
-export const integrations = mySqlTable(
-  "integrations",
-  {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-    createdAt: timestamp("created_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
-
-    name: varchar("name", { length: 255 }).notNull(),
-    logoUrl: varchar("logo_url", { length: 255 }),
-    connectorProviderId: varchar("connector_provider_id", {
-      length: 63,
-    }).unique(),
-
-    connectorId: bigint("connector_id", { mode: "number" }),
-  },
-  (table) => {
-    return {
-      connectorIdNameUnq: unique().on(table.connectorId, table.name),
-      connectorIdIdx: index("connector_id_idx").on(table.connectorId),
-    };
-  },
-);
-
-export const resources = mySqlTable(
-  "resources",
-  {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-    createdAt: timestamp("created_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
-
-    // TODO: add fields
-    userId: varchar("user_id", { length: 36 }).notNull(),
-
-    integrationId: bigint("integration_id", { mode: "bigint" }),
-  },
-  (table) => {
-    return {
-      integrationIdIdx: index("integration_id_idx").on(table.integrationId),
-    };
-  },
-);
-
 /**
- * 👇 This code block will tell Drizzle that connector is related to:
- * - connector <-> connectorConfig  -> 1-to-N
- * - connector <-> integration      -> 1-to-N
+ * 👇 This code block will tell Drizzle that category is related to:
+ * - cateogry <-> transaction -> 1-to-1
  */
-export const connectorsRelations = relations(connectors, ({ many }) => ({
-  connectorConfigs: many(connectorConfigs),
-  integrations: many(integrations),
+export const categoryRelations = relations(category, ({ many }) => ({
+  transactions: many(transaction),
 }));
 
-/**
- * 👇 This code block will tell Drizzle that integration is related to:
- * - integration <-> connector -> N-to-1
- * - integration <-> provider  -> N-to-1
- */
-export const integrationsRelations = relations(
-  integrations,
-  ({ one, many }) => ({
-    connector: one(connectors, {
-      fields: [integrations.connectorId],
-      references: [connectors.id],
-    }),
-    countryCodes: many(countryCodes),
-  }),
+export const transaction = mySqlTable(
+  "transaction",
+  {
+    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at").onUpdateNow(),
+
+    accountId: bigint("account_id", { mode: "bigint" }).notNull(),
+    categoryId: bigint("category_id", { mode: "bigint" }),
+    currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
+    originalId: varchar("original_id", { length: 36 }),
+
+    amount: float("amount").notNull(),
+    date: timestamp("date").notNull(),
+    description: varchar("description", { length: 255 }).notNull(),
+    originalPayload: json("original_payload"),
+  },
+  (table) => {
+    return {
+      accountIdIdx: index("account_id_idx").on(table.accountId),
+      originalIdUnqIdx: uniqueIndex("original_id_unq_idx").on(table.originalId),
+    };
+  },
 );
 
 /**
- * 👇 This code block will tell Drizzle that resource is related to:
- * - resource <-> integration -> 1-to-1
+ * 👇 This code block will tell Drizzle that transaction is related to:
+ * - transaction <-> account  -> 1-to-1
+ * - transaction <-> category -> 1-to-1
+ * - transaction <-> currency -> 1-to-1
  */
-export const resourcesRelations = relations(resources, ({ one }) => ({
-  integration: one(integrations, {
-    fields: [resources.integrationId],
-    references: [integrations.id],
+export const transactionRelations = relations(transaction, ({ one }) => ({
+  account: one(account, {
+    fields: [transaction.accountId],
+    references: [account.id],
+  }),
+  category: one(category, {
+    fields: [transaction.categoryId],
+    references: [category.id],
+  }),
+  currency: one(currency, {
+    fields: [transaction.currencyIso],
+    references: [currency.iso],
   }),
 }));

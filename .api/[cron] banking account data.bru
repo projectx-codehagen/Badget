@@ -1,11 +1,11 @@
 meta {
-  name: [wb] integrations
+  name: [cron] banking account data
   type: http
-  seq: 1
+  seq: 2
 }
 
 post {
-  url: {{base_url}}/api/cron/update-integrations
+  url: {{base_url}}/api/cron/bank-account-data
   body: json
   auth: none
 }

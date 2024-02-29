@@ -1,5 +1,5 @@
 {
-  "name": "@projectx/db",
+  "name": "@projectx/connector-core",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,35 +9,27 @@
   "typesVersions": {
     "*": {
       "*": [
-        "src/*",
-        "drizzle.config.ts"
+        "src/*"
       ]
     }
   },
   "license": "MIT",
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint . --no-error-on-unmatched-pattern",
-    "push": "drizzle-kit push:mysql",
-    "studio": "drizzle-kit studio",
-    "seed": "tsx ./src/seed.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@planetscale/database": "^1.16.0",
-    "drizzle-orm": "^0.29.3",
-    "iso-country-currency": "^0.7.2"
+    "@projectx/db": "workspace:^0.1.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@projectx/eslint-config": "workspace:^0.2.0",
     "@projectx/prettier-config": "workspace:^0.1.0",
     "@projectx/tsconfig": "workspace:^0.1.0",
-    "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.14",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

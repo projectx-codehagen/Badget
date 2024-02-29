@@ -115,3 +115,10 @@ export const ConnectorEnv = {
   PRODUCTION: "PRODUCTION",
 } as const;
 export type ConnectorEnv = (typeof ConnectorEnv)[keyof typeof ConnectorEnv];
+
+export const BalanceType = {
+  AVAILABLE: "AVAILABLE",
+  BOOKED: "BOOKED",
+  EXPECTED: "EXPECTED",
+} as const;
+export type BalanceType = (typeof BalanceType)[keyof typeof BalanceType];

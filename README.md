@@ -43,8 +43,9 @@ Badget is a monorepo managed by [Turborepo](https://turbo.build/repo). The monor
     ├── apps                         # Its app workspace which contains
     │    ├── www                     # Nextjs app which is deployed in Vercel
     │    └── ...
+    ├── packages                     # are the shared packages that are used by the apps (e.g. `@badget/api`)
+    ├── plugins                      # are the connectors that are used to connect to open-finance data (e.g. `@badget/connector-plaid`)
     ├── tooling                      # are the shared configuration that are used by the apps and packages (e.g. `@badget/eslint-config`)
-    ├── packages                     # are the shared packages that are used by the apps (e.g. `@badget/components`)
     ├── docker-compose.yml
     ├── LICENSE
     └── README.md
@@ -79,16 +80,13 @@ cp .env.example .env.local
    3. Create [Resend](https://resend.com) Account
    4. Create [Stripe](https://stripe.com) Account and download [Stripe CLI](https://docs.stripe.com/stripe-cli)
    5. Create [Edge Store](https://edgestore.dev) Account
+   6. Secure [CRON](https://dev.to/chrisnowicki/how-to-secure-vercel-cron-job-routes-in-nextjs-13-9g8) jobs
 
 5. Start the development server from either yarn or turbo:
 
 ```sh
 # At the root of the mono repo
-pnpm run dev
-
-# Or from the app directory
-cd apps/www
-pnpm dev
+pnpm run dev:web
 ```
 
 ## Stripe

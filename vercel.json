@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/update-integrations",
+      "schedule": "0 2 * * * *"
+    },
+    {
+      "path": "/api/cron/update-bank-account-data",
+      "schedule": "0 2 * * * *"
+    }
+  ]
+}

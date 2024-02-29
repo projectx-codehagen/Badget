@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
+    CRON_SECRET: z.string().min(1),
     DATABASE_HOST: z.string().min(1),
     DATABASE_USERNAME: z.string().min(1),
     DATABASE_PASSWORD: z.string().min(1),
@@ -12,6 +13,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
     EDGE_STORE_ACCESS_KEY: z.string().optional(),
     EDGE_STORE_SECRET_KEY: z.string().optional(),
+    NODE_ENV: z.enum(["development", "production", "test"]).default("test"),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -21,6 +23,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID: z.string().min(1),
   },
   runtimeEnv: {
+    CRON_SECRET: process.env.CRON_SECRET,
     DATABASE_HOST: process.env.DATABASE_HOST,
     DATABASE_USERNAME: process.env.DATABASE_USERNAME,
     DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,

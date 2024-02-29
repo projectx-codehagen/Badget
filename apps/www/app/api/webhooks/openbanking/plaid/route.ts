@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { handlePlaidEvent } from "@projectx/openbanking";
+import { handlePlaidEvent } from "@projectx/connector-plaid";
 
 export async function POST(req: NextRequest) {
   // TODO: verify signature

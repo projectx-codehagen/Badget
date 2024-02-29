@@ -1,10 +1,11 @@
 {
-  "name": "@projectx/openbanking",
+  "name": "@projectx/connector-plaid",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./server": "./src/server.ts",
     "./webhooks": "./src/webhooks.ts",
     "./env": "./src/env.mjs"
   },
@@ -17,12 +18,13 @@
   },
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "git clean -xdf node_modules .turbo",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint . --no-error-on-unmatched-pattern",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@projectx/connector-core": "workspace:^0.1.0",
     "@projectx/db": "workspace:^0.1.0",
     "plaid": "^20.0.0",
     "react-plaid-link": "^3.5.1",

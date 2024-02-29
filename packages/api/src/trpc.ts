@@ -168,42 +168,6 @@ const enforceUserIsAdmin = enforceUserInOrg.unstable_pipe(
 );
 
 /**
- * Middleware to authenticate API requests with an API key
- */
-const enforceApiKey = t.middleware(async ({ ctx, next }) => {
-  if (!ctx.apiKey) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-
-  // Check db for API key
-  const apiKey = await ctx.db
-    .select({
-      id: schema.apiKey.id,
-      key: schema.apiKey.key,
-      projectId: schema.apiKey.projectId,
-    })
-    .from(schema.apiKey)
-    .where(and(eq(schema.apiKey, ctx.apiKey), isNull(schema.apiKey.revokedAt)));
-
-  if (!apiKey?.[0]) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-
-  void ctx.db
-    .update(schema.apiKey)
-    .set({
-      lastUsed: new Date(),
-    })
-    .where(eq(schema.apiKey.id, apiKey[0].id));
-
-  return next({
-    ctx: {
-      apiKey: apiKey[0],
-    },
-  });
-});
-
-/**
  * Middleware to parse form data and put it in the rawInput
  */
 export const formdataMiddleware = t.middleware(async (opts) => {
@@ -227,7 +191,5 @@ export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
 export const protectedOrgProcedure = t.procedure.use(enforceUserInOrg);
 export const protectedAdminProcedure = t.procedure.use(enforceUserIsAdmin);
 
-export const protectedApiProcedure = t.procedure.use(enforceApiKey);
-export const protectedApiFormDataProcedure = t.procedure
-  .use(formdataMiddleware)
-  .use(enforceApiKey);
+export const protectedApiFormDataProcedure =
+  t.procedure.use(formdataMiddleware);

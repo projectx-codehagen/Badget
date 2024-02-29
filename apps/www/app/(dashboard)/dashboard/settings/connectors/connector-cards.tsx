@@ -13,16 +13,12 @@ import {
 } from "@/components/ui/card";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
-import { ConnectorConfigForm } from "./connector-config-form";
 
 type ConnectorWithConfig =
   RouterOutputs["connectors"]["listConnectors"][number];
@@ -35,10 +31,12 @@ export function ConnectorCards({ connectorsWithConfig }: ConnectorCardsProps) {
   return (
     <>
       {connectorsWithConfig.map((connectorWithConfig, index) => (
-        <Card className="mb-4 w-[350px]" key={index}>
+        <Card className="mb-4 w-[300px]" key={index}>
           <CardHeader className="grid grid-cols-2 items-center gap-4">
             <div className="mt-2 space-y-1">
-              <CardTitle>{connectorWithConfig.name}</CardTitle>
+              <CardTitle className="capitalize">
+                {connectorWithConfig.name}
+              </CardTitle>
             </div>
             <div className="flex justify-end">
               <Badge
@@ -84,21 +82,25 @@ export function ConnectorCards({ connectorsWithConfig }: ConnectorCardsProps) {
               </SheetTrigger>
               <SheetContent>
                 <SheetHeader>
-                  <SheetTitle>Add connector config</SheetTitle>
+                  <SheetTitle>Connector config</SheetTitle>
                   <SheetDescription>
-                    Add you bank connector to display the right information
+                    You can provide your personal connectors config only in the
+                    self-hosted version of Badget.
                   </SheetDescription>
                 </SheetHeader>
 
-                <ConnectorConfigForm
-                  connectorConfig={connectorWithConfig.connectorConfig}
-                />
-
-                <SheetFooter>
-                  <SheetClose asChild>
-                    <Button type="submit">Create</Button>
-                  </SheetClose>
-                </SheetFooter>
+                <pre className="mt-4 w-[340px] rounded-md bg-slate-950 p-4">
+                  <code className="text-white">
+                    {JSON.stringify(
+                      {
+                        secretId: "***",
+                        secretKey: "***",
+                      },
+                      null,
+                      2,
+                    )}
+                  </code>
+                </pre>
               </SheetContent>
             </Sheet>
           </CardFooter>
