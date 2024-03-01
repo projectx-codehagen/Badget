@@ -1,17 +1,18 @@
 import { useCallback, useMemo } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { FlowStep, useFlowControl } from "@/hooks/use-flow-control";
 import { useFlowModalState } from "@/hooks/use-flow-modal-state";
 import { Button } from "@/components/ui/button";
 import {
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { AccountForm } from "@/components/forms/account-form";
 
 import { AccountTypeSelection } from "./components/account-type-selection";
+import { Footer } from "./components/footer";
 import { HeaderControls } from "./components/header-controls";
 
 export type AccountType =
@@ -88,19 +89,28 @@ export const AddAssetFlow = () => {
     <>
       <HeaderControls
         currentStepId={currentStepId}
-        goToPreviousStep={goToPreviousStep}
+        goToPreviousStep={() => {
+          goToPreviousStep();
+        }}
       />
       <DialogHeader>
         <DialogTitle>{currentStep?.title}</DialogTitle>
         <DialogDescription>{currentStep?.description}</DialogDescription>
       </DialogHeader>
-      {currentStep?.component}
-      {/* TODO: make this part as a component */}
-      {currentStepId === steps.length - 1 && (
-        <DialogFooter>
-          <Button>Add Property</Button>
-        </DialogFooter>
-      )}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStepId}
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -10, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          {currentStep?.component}
+          <Footer show={currentStepId === steps.length - 1}>
+            <Button>Add Property</Button>
+          </Footer>
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 };
