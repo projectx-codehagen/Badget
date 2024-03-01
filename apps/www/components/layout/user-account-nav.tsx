@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SignedIn, SignedOut, SignInButton, useClerk } from "@clerk/nextjs";
+import { useClerk } from "@clerk/nextjs";
 import { CreditCard, LayoutDashboard, LogOut, Settings } from "lucide-react";
 
-import { useSigninModal } from "@/hooks/use-signin-modal";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -27,7 +26,6 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 export function UserAccountNav({ user }: UserAccountNavProps) {
   const { signOut } = useClerk();
   const router = useRouter();
-  const signInModal = useSigninModal();
 
   return user ? (
     <DropdownMenu>
@@ -96,7 +94,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
       className="px-3"
       variant="default"
       size="sm"
-      onClick={signInModal.onOpen}
+      onClick={() => router.push("/signin")}
     >
       Sign In
     </Button>
