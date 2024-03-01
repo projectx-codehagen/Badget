@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { authMiddleware, clerkClient } from "@clerk/nextjs";
+import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
   signInUrl: "/signin",
@@ -14,6 +14,7 @@ export default authMiddleware({
     "/pricing(.*)",
     "/privacy(.*)",
     "/api(.*)",
+    "/blog(.*)",
   ],
   async afterAuth(auth, req) {
     if (auth.isPublicRoute) {
