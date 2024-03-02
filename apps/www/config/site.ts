@@ -1,5 +1,4 @@
 import { SiteConfig } from "@/types";
-
 import { env } from "@/env.mjs";
 
 const site_url = env.NEXT_PUBLIC_APP_URL;
@@ -12,7 +11,7 @@ export const siteConfig: SiteConfig = {
   ogImage: `${site_url}/opengraph-image`,
   links: {
     twitter: "https://twitter.com/codehagen",
-    github: "https://github.com/meglerhagen",
+    github: "https://github.com/projectx-codehagen/Badget",
   },
   mailSupport: "christer@sailsdock.com",
 };
