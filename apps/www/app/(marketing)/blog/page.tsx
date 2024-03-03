@@ -17,7 +17,7 @@ export default async function BlogPage() {
     });
 
   return (
-    <main>
+    <main className="mx-auto max-w-6xl">
       <BlogPosts posts={posts} />
     </main>
   );
