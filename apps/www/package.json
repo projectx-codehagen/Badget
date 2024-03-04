@@ -82,6 +82,7 @@
     "date-fns": "^2.30.0",
     "dinero.js": "2.0.0-alpha.14",
     "dotenv-cli": "^7.3.0",
+    "framer-motion": "^11.0.8",
     "jotai": "^2.6.1",
     "lucide-react": "^0.314.0",
     "ms": "^2.1.3",

@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -31,7 +30,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AddAssetButton } from "@/components/buttons/AddAssetButton";
-import { AddRealEstateButton } from "@/components/buttons/AddRealEstateButton";
+import { AddAssetFlow } from "@/components/modals/add-asset-flow";
 import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
 import { Mail } from "../data";
@@ -264,8 +263,9 @@ export function Dashboard({
                 <h1 className="text-xl font-bold">Dashboard</h1>
               </div>
               <div className="flex items-center gap-4">
-                <AddAssetButton />
-                <AddRealEstateButton />
+                <AddAssetButton triggerLabel="Add Asset">
+                  <AddAssetFlow />
+                </AddAssetButton>
               </div>
             </div>
 
