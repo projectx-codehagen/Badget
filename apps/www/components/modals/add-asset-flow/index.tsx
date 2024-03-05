@@ -1,6 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
+
+
 import { FlowStep, useFlowControl } from "@/hooks/use-flow-control";
 import { useFlowModalState } from "@/hooks/use-flow-modal-state";
 import { Button } from "@/components/ui/button";
@@ -38,6 +40,9 @@ export const AddAssetFlow = () => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleSelectAccountType = useCallback(
     (selectedAccountType: AccountTypeInfo) => {
+      if (form.formState.dirtyFields.name) {
+        form.resetField("name");
+      }
       setAccountTypeInfo(selectedAccountType);
       goToNextStep();
     },

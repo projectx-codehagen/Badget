@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const baseSchema = z.object({
+  name: z.string(),
   purchaseDate: z.date(),
   purchaseValue: z.string(),
   currentValue: z.string(),
@@ -40,6 +41,7 @@ export function useFlowModalState() {
   const form = useForm<z.infer<typeof currentFormSchema>>({
     resolver: zodResolver(currentFormSchema),
     defaultValues: {
+      name: "",
       purchaseDate: new Date(),
       purchaseValue: "",
       currentValue: "",
