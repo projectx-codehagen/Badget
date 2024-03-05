@@ -1,19 +1,21 @@
 import { useFormContext } from "react-hook-form";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+
+
+import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+
+
 import { CommonAccountFields } from "./common-account-fields";
+import { NameField } from "./name-field";
 
 export const RealEstateFormFields = () => {
   const { control } = useFormContext();
   return (
     <>
+      {/* Name Field  */}
+      <NameField />
       {/* Address Field  */}
       <div className="grid gap-2">
         <FormField

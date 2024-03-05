@@ -2,7 +2,9 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
-import { cn } from "@/lib/utils";
+
+
+import { cn, formatNumberWithSpaces } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -19,7 +21,13 @@ import {
 } from "@/components/ui/popover";
 
 export const CommonAccountFields = () => {
-  const { control } = useFormContext();
+  const { control, setValue } = useFormContext();
+
+  const handleNumberChange = (name: string, value: string) => {
+    const unformattedValue = value.replace(/\s/g, "");
+    setValue(name, unformattedValue);
+  };
+
   return (
     <>
       {/* Purchase Date Field  */}
@@ -75,7 +83,14 @@ export const CommonAccountFields = () => {
           <FormItem className="flex flex-col">
             <FormLabel>Purchase Value</FormLabel>
             <FormControl>
-              <Input {...field} placeholder="Purchase Value..." />
+              <Input
+                {...field}
+                value={formatNumberWithSpaces(field.value)}
+                onChange={(e) =>
+                  handleNumberChange("purchaseValue", e.target.value)
+                }
+                placeholder="Purchase Value..."
+              />
             </FormControl>
           </FormItem>
         )}
@@ -88,7 +103,14 @@ export const CommonAccountFields = () => {
           <FormItem className="flex flex-col">
             <FormLabel>Current Value</FormLabel>
             <FormControl>
-              <Input {...field} placeholder="Current Value..." />
+              <Input
+                {...field}
+                value={formatNumberWithSpaces(field.value)}
+                onChange={(e) =>
+                  handleNumberChange("currentValue", e.target.value)
+                }
+                placeholder="Current Value..."
+              />
             </FormControl>
           </FormItem>
         )}
