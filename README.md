@@ -2,6 +2,8 @@
   <h1 align="center">Badget: Revolutionizing Financial Management</h1>
 </a>
 
+ <img width="1440" alt="dashboard_mockup" src="https://github.com/projectx-codehagen/Badget/assets/24507211/2c2b8e43-3d18-4b28-b8d0-5dc0cbdb530f">
+
 <p align="center">
   Empower your financial management with Badget - AI-driven insights at your fingertips. Optimize your finances effortlessly.
 </p>
