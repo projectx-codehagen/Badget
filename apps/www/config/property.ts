@@ -6,10 +6,10 @@ export const propertyConfig: PropertyConfig = {
       title: "Dashboard",
       href: "/dashboard",
     },
-    // {
-    //   title: "Documentation",
-    //   href: "/docs",
-    // },
+    {
+      title: "Documentation",
+      href: "/docs",
+    },
     {
       title: "Support",
       href: "/support",

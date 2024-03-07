@@ -123,27 +123,6 @@ export function Dashboard({
                 variant: "ghost",
                 link: "/dashboard/accounts",
               },
-              {
-                title: "Investments",
-                label: "",
-                icon: BarChart,
-                variant: "ghost",
-                link: "/dashboard/investments",
-              },
-              {
-                title: "Categories",
-                label: "",
-                icon: Tag,
-                variant: "ghost",
-                link: "/dashboard/categories",
-              },
-              {
-                title: "Recurring",
-                label: "",
-                icon: Repeat2,
-                variant: "ghost",
-                link: "/dashboard/recurring",
-              },
             ]}
           />
           <Separator />
@@ -151,22 +130,45 @@ export function Dashboard({
             isCollapsed={isCollapsed}
             links={[
               {
+                title: "Investments",
+                label: "Next",
+                icon: BarChart,
+                variant: "ghost",
+                link: "/dashboard/investments",
+              },
+              {
+                title: "Categories",
+                label: "Upcoming",
+                icon: Tag,
+                variant: "ghost",
+                link: "/dashboard/categories",
+              },
+              {
+                title: "Recurring",
+                label: "Upcoming",
+
+                icon: Repeat2,
+                variant: "ghost",
+                link: "/dashboard/recurring",
+              },
+              {
                 title: "Ai Magic",
-                label: "",
+                label: "Upcoming",
+
                 icon: Sparkle,
                 variant: "ghost",
                 link: "/dashboard/aimagic",
               },
               {
                 title: "Save Money",
-                label: "",
+                label: "Future",
                 icon: Wallet,
                 variant: "ghost",
                 link: "/dashboard/savemoney",
               },
               {
                 title: "Grow Assets",
-                label: "",
+                label: "Future",
                 icon: Sprout,
                 variant: "ghost",
                 link: "/dashboard/",
@@ -174,7 +176,7 @@ export function Dashboard({
             ]}
           />
           <Separator />
-          <Nav
+          {/* <Nav
             isCollapsed={isCollapsed}
             links={[
               {
@@ -233,7 +235,7 @@ export function Dashboard({
                 link: "/dashboard/",
               },
             ]}
-          />
+          /> */}
           <Separator />
           <Nav
             isCollapsed={isCollapsed}

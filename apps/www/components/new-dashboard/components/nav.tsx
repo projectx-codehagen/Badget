@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
@@ -34,12 +35,10 @@ export function Nav({ links, isCollapsed }: NavProps) {
             <Tooltip key={index} delayDuration={0}>
               <TooltipTrigger asChild>
                 <Link
-                  href={link.link} // Updated to use the link property
+                  href={link.link}
                   className={cn(
                     buttonVariants({ variant: link.variant, size: "icon" }),
                     "h-9 w-9",
-                    link.variant === "default" &&
-                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                   )}
                 >
                   <link.icon className="h-4 w-4" />
@@ -48,37 +47,39 @@ export function Nav({ links, isCollapsed }: NavProps) {
               </TooltipTrigger>
               <TooltipContent side="right" className="flex items-center gap-4">
                 {link.title}
-                {link.label && (
-                  <span className="ml-auto text-muted-foreground">
-                    {link.label}
-                  </span>
-                )}
+                <span className="ml-auto text-muted-foreground">
+                  {link.label ? link.label : <Badge>Coming soon</Badge>}
+                </span>
               </TooltipContent>
             </Tooltip>
           ) : (
             <Link
               key={index}
-              href={link.link} // Updated to use the link property
+              href={link.link}
               className={cn(
                 buttonVariants({ variant: link.variant, size: "sm" }),
-                link.variant === "default" &&
-                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
                 "justify-start",
               )}
             >
               <link.icon className="mr-2 h-4 w-4" />
               {link.title}
-              {link.label && (
-                <span
-                  className={cn(
-                    "ml-auto",
-                    link.variant === "default" &&
-                      "text-background dark:text-white",
-                  )}
-                >
-                  {link.label}
-                </span>
-              )}
+              <span
+                className={cn(
+                  "ml-auto",
+                  link.variant === "default" && "text-background",
+                )}
+              >
+                {link.label === "" ? null : [
+                    "Upcoming",
+                    "Next",
+                    "Future",
+                    "Soon",
+                  ].includes(link.label || "") ? (
+                  <Badge>{link.label}</Badge>
+                ) : (
+                  link.label
+                )}
+              </span>
             </Link>
           ),
         )}
