@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { investmentData } from "@/components/investments/data";
 
+import { useIsEquity } from "../use-equity";
 import { useMail } from "../use-mail";
 
 // Sample data structure
@@ -107,13 +108,17 @@ import { useMail } from "../use-mail";
 
 export function SmallInvestmentCard() {
   const [mail, setMail] = useMail();
+  const [isEquity, setIsEquity] = useIsEquity();
   return (
     <ScrollArea>
       <div className="flex w-max gap-4 p-4">
         {investmentData.map((item) => (
           <Card
             key={item.id}
-            onClick={() => setMail({ ...mail, selected: item.mailId })}
+            onClick={() => {
+              setMail({ ...mail, selected: item.mailId });
+              setIsEquity(false);
+            }}
             className="bg-dark-card w-[100px] shrink-0 hover:bg-gray-100/10"
           >
             <CardHeader className="flex  justify-between p-2">
