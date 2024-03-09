@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -8,23 +9,29 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { navItems } from "@/app/config";
+import { sideNavItems } from "@/app/config";
+
+type NavItem = (typeof sideNavItems)[number];
 
 const CollapsedItem = ({
   item,
-  key,
+  currentPath,
 }: {
-  item: (typeof navItems)[number];
-  key: string;
+  item: NavItem;
+  currentPath: string;
 }) => {
   return (
-    <Tooltip key={key} delayDuration={0}>
+    <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>
         <Link
           href={item.href}
           className={cn(
             buttonVariants({ variant: "ghost", size: "icon" }),
             "h-9 w-9",
+            currentPath === item.href
+              ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+              : "transparent",
+            "soon" === item.badge && "cursor-not-allowed opacity-80",
           )}
         >
           <item.icon className="h-4 w-4" />
@@ -41,18 +48,21 @@ const CollapsedItem = ({
 
 const ExpandedItem = ({
   item,
-  key,
+  currentPath,
 }: {
-  item: (typeof navItems)[number];
-  key: string;
+  item: NavItem;
+  currentPath: string;
 }) => {
   return (
     <Link
-      key={key}
       href={item.href}
       className={cn(
         buttonVariants({ variant: "ghost", size: "sm" }),
         "justify-start",
+        currentPath === item.href
+          ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+          : "transparent",
+        "soon" === item.badge && "cursor-not-allowed opacity-80",
       )}
     >
       <item.icon className="mr-2 h-4 w-4" />
@@ -66,16 +76,31 @@ const ExpandedItem = ({
 
 // TODO: idx not needed as key when all items have unique hrefs
 // also, the active link should be filtered by href and not idx
-export function MainNav({ isCollapsed }: { isCollapsed: boolean }) {
+export function SidebarNav({ isCollapsed }: { isCollapsed: boolean }) {
+  const params = useParams<{ workspaceId: string }>();
+  const path = usePathname();
+
+  // remove the workspaceId from the path when comparing active links in sidebar
+  const pathname = path.replace(`/${params.workspaceId}`, "") || "/";
+  const [_, currentPath] = pathname.split("/");
+
   return (
     <nav
       className={cn("grid gap-1 px-2", { "justify-center px-2": isCollapsed })}
     >
-      {navItems.map((link) =>
+      {sideNavItems.map((link) =>
         isCollapsed ? (
-          <CollapsedItem key={link.href} item={link} />
+          <CollapsedItem
+            key={link.href}
+            item={link}
+            currentPath={"/" + currentPath}
+          />
         ) : (
-          <ExpandedItem key={link.href} item={link} />
+          <ExpandedItem
+            key={link.href}
+            item={link}
+            currentPath={"/" + currentPath}
+          />
         ),
       )}
     </nav>

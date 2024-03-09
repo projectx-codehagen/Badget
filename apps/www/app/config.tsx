@@ -20,8 +20,7 @@ export const siteConfig = {
 export type NavItem = {
   href: Route;
   title: string;
-  badge?: "upcoming" | "next" | "future" | "soon";
-  group?: "openbanking" | "investments" | "savings" | "assets" | "liabilities";
+  badge?: string;
   icon?: LucideIcon;
 };
 
@@ -36,16 +35,43 @@ export const topNavItems = [
   },
 ] satisfies NavItem[];
 
-export const navItems = [
+export const marketingTopNavItems = [
+  {
+    title: "Blog",
+    href: "/blog",
+  },
+  {
+    title: "Open Startup",
+    href: "/open",
+  },
+  {
+    title: "Open Source Friends",
+    href: "/oss-friends",
+  },
+] satisfies NavItem[];
+
+export const sideNavItems = [
   {
     href: "/dashboard",
     title: "Dashboard",
     icon: LayoutDashboard,
   },
   {
-    href: "/openbanking",
-    title: "Open Banking",
+    href: "/banking",
+    title: "Banking",
     icon: Layers,
+  },
+  {
+    href: "/investments",
+    title: "Investments",
+    badge: "soon",
+    icon: BarChart,
+  },
+  {
+    href: "/assets",
+    title: "Assets",
+    badge: "soon",
+    icon: Building,
   },
   {
     href: "/savings",
@@ -54,21 +80,9 @@ export const navItems = [
     icon: Sprout,
   },
   {
-    href: "/investments",
-    title: "Investments",
-    badge: "future",
-    icon: BarChart,
-  },
-  {
-    href: "/assets",
-    title: "Assets",
-    badge: "upcoming",
-    icon: Building,
-  },
-  {
     href: "/liabilities",
     title: "Liabilities",
-    badge: "next",
+    badge: "soon",
     icon: CreditCard,
   },
 ] satisfies NavItem[];

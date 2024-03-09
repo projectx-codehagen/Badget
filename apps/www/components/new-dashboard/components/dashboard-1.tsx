@@ -14,10 +14,9 @@ import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AddAssetButton } from "@/components/buttons/AddAssetButton";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
-import { MainNav } from "@/app/(dashboard)/dashboard/_components/main-nav";
-import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
+import { WorkspaceSwitcher } from "@/app/(dashboard)/_components/workspace-switcher";
+import { SidebarNav } from "@/app/(dashboard)/(workspaceId)/_components/sidebar-nav";
 
-import { useMail } from "../use-mail";
 import { Nav } from "./nav";
 import { CardsStats } from "./stats";
 import { TopCategoriesTable } from "./top-categories-table";
@@ -27,15 +26,16 @@ interface DashboardProps {
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;
+  children: React.ReactNode;
 }
 
 export function Dashboard({
   defaultLayout = [20, 40, 40],
   defaultCollapsed = false,
   navCollapsedSize,
+  children,
 }: DashboardProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
-  const [mail] = useMail();
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -78,7 +78,7 @@ export function Dashboard({
             data-collapsed={isCollapsed}
             className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
           >
-            <MainNav isCollapsed={isCollapsed} />
+            <SidebarNav isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
@@ -103,34 +103,7 @@ export function Dashboard({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <ScrollArea className="h-fit min-h-screen">
-            <div className="flex h-[52px] items-center justify-between px-4 py-2">
-              <div>
-                <h1 className="text-xl font-bold">Dashboard</h1>
-              </div>
-              <div className="flex items-center gap-4">
-                <AddAssetButton triggerLabel="Add Asset">
-                  <AddAssetFlow />
-                </AddAssetButton>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div className="flex flex-col gap-4 p-4">
-              <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <form></form>
-              </div>
-
-              <CardsStats />
-              {/* <div className="ml-6 mt-6 flex gap-4"> */}
-
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
-                <TransactionsReviewTable />
-                <TopCategoriesTable />
-              </div>
-            </div>
-          </ScrollArea>
+          <ScrollArea className="h-fit min-h-screen">{children}</ScrollArea>
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

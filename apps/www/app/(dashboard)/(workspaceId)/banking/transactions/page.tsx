@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 
 import { TransactionsDashboard } from "@/components/transactions/components/transactions-dashboard";
-import { accounts, mails } from "@/components/transactions/data";
+import { mails } from "@/components/transactions/data";
 
 export const metadata = {
   title: "Transactions",
@@ -18,7 +18,6 @@ export default async function DashboardPage() {
     <>
       <div className="flex flex-col">
         <TransactionsDashboard
-          accounts={accounts}
           mails={mails}
           defaultLayout={defaultLayout}
           defaultCollapsed={defaultCollapsed}
