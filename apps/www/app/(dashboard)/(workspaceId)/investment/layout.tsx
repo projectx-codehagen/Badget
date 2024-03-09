@@ -4,10 +4,9 @@ import { DashboardShell } from "../../_components/dashboard-shell";
 
 const breadcrumbItems = [
   { title: "Overview", href: "" },
-  { title: "Accounts", href: "accounts" },
-  { title: "Transactions", href: "transactions" },
-  { title: "Categories", href: "categories" },
-  { title: "Recurring", href: "recurring" },
+  { title: "Stocks", href: "stocks" },
+  { title: "Crypto", href: "crypto" },
+  { title: "Commodities", href: "commodities" },
 ] satisfies NavItem[];
 
 export default function WorkspaceLayout(props: {
@@ -18,7 +17,7 @@ export default function WorkspaceLayout(props: {
     <>
       <DashboardShell
         breadcrumbItems={breadcrumbItems}
-        title="Banking"
+        title="Investments"
         description="Projects for this workspace will show up here"
         // headerAction={
         //   <AddAssetButton triggerLabel="Add Asset">

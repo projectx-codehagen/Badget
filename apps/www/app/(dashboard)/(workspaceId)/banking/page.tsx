@@ -1,8 +1,8 @@
 "use client";
 
-import { CardsStats } from "@/components/new-dashboard/components/stats";
-import { TopCategoriesTable } from "@/components/new-dashboard/components/top-categories-table";
-import { TransactionsReviewTable } from "@/components/new-dashboard/components/transaction-review-table";
+import { CardsStats } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/stats";
+import { TopCategoriesTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/top-categories-table";
+import { TransactionsReviewTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/transaction-review-table";
 
 export default function Page(_props: { params: { workspaceId: string } }) {
   return (

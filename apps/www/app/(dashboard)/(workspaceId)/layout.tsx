@@ -1,7 +1,7 @@
 // import { SyncActiveOrgFromUrl } from "./sync-active-org-from-url";
 import { cookies } from "next/headers";
 
-import { Dashboard } from "@/components/new-dashboard/components/dashboard-1";
+import { Dashboard } from "./dashboard/_components/dashboard-1";
 
 export default function WorkspaceLayout(props: {
   children: React.ReactNode;

@@ -1,9 +1,11 @@
 import { cookies } from "next/headers";
-import Image from "next/image";
 
-import { accounts } from "@/components/investments/data";
-import { RecurringDashboard } from "@/components/transactions/components/recurring-dashboard";
-import { mails } from "@/components/transactions/data";
+import {
+  accounts,
+  mails,
+} from "@/app/(dashboard)/(workspaceId)/investment/data";
+
+import { RecurringDashboard } from "./_components/categories-dashboard";
 
 export const metadata = {
   title: "Transactions",

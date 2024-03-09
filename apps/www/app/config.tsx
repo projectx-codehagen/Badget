@@ -6,6 +6,7 @@ import {
   Layers,
   LayoutDashboard,
   LucideIcon,
+  Sparkle,
   Sprout,
 } from "lucide-react";
 
@@ -50,6 +51,13 @@ export const marketingTopNavItems = [
   },
 ] satisfies NavItem[];
 
+export const docsTopNavItems = [
+  {
+    title: "Documentation",
+    href: "/docs",
+  },
+] satisfies NavItem[];
+
 export const sideNavItems = [
   {
     href: "/dashboard",
@@ -62,7 +70,7 @@ export const sideNavItems = [
     icon: Layers,
   },
   {
-    href: "/investments",
+    href: "/investment",
     title: "Investments",
     badge: "soon",
     icon: BarChart,
@@ -84,5 +92,11 @@ export const sideNavItems = [
     title: "Liabilities",
     badge: "soon",
     icon: CreditCard,
+  },
+  {
+    href: "/aimagic",
+    title: "AI Magic",
+    badge: "soon",
+    icon: Sparkle,
   },
 ] satisfies NavItem[];

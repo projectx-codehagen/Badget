@@ -1,19 +1,15 @@
 import { cookies } from "next/headers";
 
-import {
-  accounts,
-  mails,
-} from "@/app/(dashboard)/(workspaceId)/investment/data";
-
-import { CategoriesDashboard } from "./_components/categories-dashboard";
+import { SaveMoneyDashboard } from "./_components/save-money-dashboard";
+import { accounts, mails } from "./data";
 
 export const metadata = {
-  title: "Categories",
-  description: "Categories description",
+  title: "Savings",
+  description: "Savings description",
 };
 
-export default async function BankingCategoryPage() {
-  const layout = cookies().get("react-resizable-panels:layout-categories");
+export default async function DashboardPage() {
+  const layout = cookies().get("react-resizable-panels:layout");
   const collapsed = cookies().get("react-resizable-panels:collapsed");
 
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
@@ -22,7 +18,7 @@ export default async function BankingCategoryPage() {
   return (
     <>
       <div className="flex flex-col">
-        <CategoriesDashboard
+        <SaveMoneyDashboard
           accounts={accounts}
           mails={mails}
           defaultLayout={defaultLayout}
