@@ -1,24 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  BadgeDollarSign,
-  BarChart,
-  Briefcase,
-  Building,
-  CreditCard,
-  DollarSign,
-  HelpCircle,
-  Layers,
-  LayoutDashboard,
-  PiggyBank,
-  Repeat2,
-  Settings,
-  Sparkle,
-  Sprout,
-  Tag,
-  Wallet,
-} from "lucide-react";
+import { HelpCircle, Settings } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -31,9 +14,9 @@ import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AddAssetButton } from "@/components/buttons/AddAssetButton";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
+import { MainNav } from "@/app/(dashboard)/dashboard/_components/main-nav";
 import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
-import { Mail } from "../data";
 import { useMail } from "../use-mail";
 import { Nav } from "./nav";
 import { CardsStats } from "./stats";
@@ -41,20 +24,12 @@ import { TopCategoriesTable } from "./top-categories-table";
 import { TransactionsReviewTable } from "./transaction-review-table";
 
 interface DashboardProps {
-  accounts: {
-    label: string;
-    email: string;
-    icon: React.ReactNode;
-  }[];
-  mails: Mail[];
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;
 }
 
 export function Dashboard({
-  accounts,
-  mails,
   defaultLayout = [20, 40, 40],
   defaultCollapsed = false,
   navCollapsedSize,
@@ -99,143 +74,12 @@ export function Dashboard({
             <WorkspaceSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Dashboard",
-                label: "",
-                icon: LayoutDashboard,
-                variant: "default",
-                link: "/dashboard/",
-              },
-              {
-                title: "Transactions",
-                label: "9",
-                icon: Layers,
-                variant: "ghost",
-                link: "/dashboard/transactions",
-              },
-              {
-                title: "Accounts",
-                label: "3",
-                icon: CreditCard,
-                variant: "ghost",
-                link: "/dashboard/accounts",
-              },
-            ]}
-          />
-          <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Investments",
-                label: "Next",
-                icon: BarChart,
-                variant: "ghost",
-                link: "/dashboard/investments",
-              },
-              {
-                title: "Categories",
-                label: "Upcoming",
-                icon: Tag,
-                variant: "ghost",
-                link: "/dashboard/categories",
-              },
-              {
-                title: "Recurring",
-                label: "Upcoming",
-
-                icon: Repeat2,
-                variant: "ghost",
-                link: "/dashboard/recurring",
-              },
-              {
-                title: "Ai Magic",
-                label: "Upcoming",
-
-                icon: Sparkle,
-                variant: "ghost",
-                link: "/dashboard/aimagic",
-              },
-              {
-                title: "Save Money",
-                label: "Future",
-                icon: Wallet,
-                variant: "ghost",
-                link: "/dashboard/savemoney",
-              },
-              {
-                title: "Grow Assets",
-                label: "Future",
-                icon: Sprout,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-            ]}
-          />
-          <Separator />
-          {/* <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Credit Card",
-                label: "972",
-                icon: CreditCard,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-              {
-                title: "Credit Card",
-                label: "342",
-                icon: CreditCard,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-              {
-                title: "Checking",
-                label: "128",
-                icon: DollarSign,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-              {
-                title: "Savings",
-                label: "8",
-                icon: PiggyBank,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-              {
-                title: "Banking",
-                label: "21",
-                icon: Building,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-            ]}
-          />
-          <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Funds",
-                label: "483",
-                icon: Briefcase,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-              {
-                title: "Coinbase",
-                label: "145",
-                icon: BadgeDollarSign,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-            ]}
-          /> */}
+          <div
+            data-collapsed={isCollapsed}
+            className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
+          >
+            <MainNav isCollapsed={isCollapsed} />
+          </div>
           <Separator />
           <Nav
             isCollapsed={isCollapsed}
