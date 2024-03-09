@@ -1,8 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-
-
 import { FlowStep, useFlowControl } from "@/hooks/use-flow-control";
 import { useFlowModalState } from "@/hooks/use-flow-modal-state";
 import { Button } from "@/components/ui/button";
@@ -21,7 +19,7 @@ export type AccountType =
   | "real-estate"
   | "crypto"
   | "investment"
-  | "input"
+  | "bank-account"
   | "car"
   | "misc";
 
@@ -73,7 +71,7 @@ export const AddAssetFlow = () => {
         title: accountFormTitle,
         description: accountFormDescription,
         component: accountTypeInfo ? (
-          <AccountForm type={accountTypeInfo.type} form={form} />
+          <AccountForm type={accountTypeInfo.type} />
         ) : null,
       },
     ],
@@ -111,9 +109,6 @@ export const AddAssetFlow = () => {
           transition={{ duration: 0.2 }}
         >
           {currentStep?.component}
-          <Footer show={currentStepId === steps.length - 1}>
-            <Button>Add Property</Button>
-          </Footer>
         </motion.div>
       </AnimatePresence>
     </>

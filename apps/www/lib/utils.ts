@@ -142,9 +142,3 @@ export async function fetchGithubData() {
     throw error;
   }
 }
-
-export const formatNumberWithSpaces = (value: number) => {
-  if (!value) return value;
-  const numberAsString = value.toString();
-  return numberAsString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-}

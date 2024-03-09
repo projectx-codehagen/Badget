@@ -1,5 +1,7 @@
+import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+import { account } from "@projectx/db/schema/openbanking";
 import { PLANS } from "@projectx/stripe/plans";
 
 export const userAuthSchema = z.object({
@@ -72,3 +74,11 @@ export const updateConnectorConfigSchema = z.object({
   secret: z.string().min(1, "Secret is required"),
 });
 export type UpdateConnectorConfig = z.infer<typeof updateConnectorConfigSchema>;
+
+// Schema for inserting a user - can be used to validate API requests
+export const createAccountSchema = z.object({
+  name: z.string(),
+  currencyIso: z.string(),
+  amount: z.coerce.number().min(0).optional(),
+});
+export type CreateAccount = z.infer<typeof createAccountSchema>;

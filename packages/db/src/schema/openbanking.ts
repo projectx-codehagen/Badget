@@ -34,10 +34,8 @@ export const account = mySqlTable(
   },
   (table) => {
     return {
-      resourceIdIdx: index("resource_id_idx").on(table.resourceId),
       orgIdIdx: index("org_id_idx").on(table.orgId),
       userIdIdx: index("user_id_idx").on(table.userId),
-      originalIdUnqIdx: uniqueIndex("original_id_unq_idx").on(table.originalId),
     };
   },
 );

@@ -6,6 +6,7 @@ import {
   Folder,
   GitGraph,
   MoreHorizontal,
+  PiggyBank,
 } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
@@ -18,6 +19,14 @@ interface AccountTypeSelectionProps {
 }
 
 const accountTypes: AccountTypeInfo[] = [
+  {
+    title: "Bank",
+    description: "Add details about your bank account.",
+    type: "bank-account",
+    value: "bank-account",
+    label: "Bank",
+    Icon: PiggyBank,
+  },
   {
     title: "Real Estate",
     description: "Add details about your real estate.",
@@ -41,14 +50,6 @@ const accountTypes: AccountTypeInfo[] = [
     value: "investment",
     label: "Investment",
     Icon: GitGraph,
-  },
-  {
-    title: "Input",
-    description: "Add details about your input.",
-    type: "input",
-    value: "input",
-    label: "Input",
-    Icon: Folder,
   },
   {
     title: "Car",
