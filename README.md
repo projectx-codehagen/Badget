@@ -119,8 +119,9 @@ This project uses MySQL database on PlanetScale. To setup a DB for your local de
 You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
 
 1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
-2. run `docker-compose --env-file .env.local up` to start the DB.
-3. run `pnpm run db:push`.
+2. Edit `DATABASE_USERNAME`,`DATABASE_PASSWORD`,`DATABASE_HOST=localhost`,`DATABASE_NAME` values in `.env.local` according to step 1
+3. run `docker-compose --env-file .env.local up` to start the DB.
+4. run `pnpm run db:push`.
 
 ## Email provider
 

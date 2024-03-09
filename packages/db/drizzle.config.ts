@@ -3,7 +3,7 @@ import type { Config } from "drizzle-kit";
 
 dotenv.config({ path: "../../.env.local" });
 
-const uri = [
+const baseUri = [
   "mysql://",
   process.env.DATABASE_USERNAME,
   ":",
@@ -12,8 +12,12 @@ const uri = [
   process.env.DATABASE_HOST,
   ":3306/",
   process.env.DATABASE_NAME,
-  '?ssl={"rejectUnauthorized":true}',
 ].join("");
+
+const uri =
+  process.env.DATABASE_HOST !== "localhost"
+    ? `${baseUri}?ssl={"rejectUnauthorized":true}`
+    : baseUri;
 
 export default {
   schema: "./src/schema",
