@@ -122,3 +122,22 @@ export const BalanceType = {
   EXPECTED: "EXPECTED",
 } as const;
 export type BalanceType = (typeof BalanceType)[keyof typeof BalanceType];
+
+export const AccountType = {
+  BANK: "BANK",
+  CRYPTO: "CRYPTO",
+  INVESTMENT: "INVESTMENT",
+} as const;
+export type AccountType = (typeof AccountType)[keyof typeof AccountType];
+
+export const AssetType = {
+  STOCKS: "STOCKS",
+  CRYPTO: "CRYPTO",
+  BONDS: "BONDS",
+  ETF: "ETF",
+  OPTIONS: "OPTIONS",
+  FUTURES: "FUTURES",
+  REAL_ESTATE: "REAL ESTATE",
+  COMMODITIES: "COMMODITIES",
+} as const;
+export type AssetType = (typeof AssetType)[keyof typeof AssetType];

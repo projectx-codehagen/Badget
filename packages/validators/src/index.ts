@@ -1,7 +1,7 @@
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { account } from "@projectx/db/schema/openbanking";
+import { AccountType } from "@projectx/db";
 import { PLANS } from "@projectx/stripe/plans";
 
 export const userAuthSchema = z.object({
@@ -79,6 +79,19 @@ export type UpdateConnectorConfig = z.infer<typeof updateConnectorConfigSchema>;
 export const createAccountSchema = z.object({
   name: z.string(),
   currencyIso: z.string(),
+  accountType: z.nativeEnum(AccountType).nullable(),
   amount: z.coerce.number().min(0).optional(),
 });
 export type CreateAccount = z.infer<typeof createAccountSchema>;
+
+export const createRealEstateSchema = z.object({
+  name: z.string(),
+  address: z.string(),
+  city: z.string(),
+  state: z.string(),
+  postalCode: z.string(),
+  purchaseDate: z.date(),
+  purchaseValue: z.coerce.number().min(0),
+  currentValue: z.coerce.number().min(0).optional(),
+});
+export type CreateRealEstate = z.infer<typeof createRealEstateSchema>;

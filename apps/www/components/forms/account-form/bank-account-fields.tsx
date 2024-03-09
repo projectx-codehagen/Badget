@@ -6,6 +6,7 @@ import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { AccountType } from "@projectx/db";
 import { createAccountSchema } from "@projectx/validators";
 
 import { cn } from "@/lib/utils";
@@ -32,6 +33,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 
 export const BankAccountFields = () => {
@@ -41,6 +51,7 @@ export const BankAccountFields = () => {
     resolver: zodResolver(createAccountSchema),
     defaultValues: {
       name: "",
+      accountType: null,
       currencyIso: "",
       amount: 0,
     },
@@ -79,67 +90,107 @@ export const BankAccountFields = () => {
           )}
         />
         {/* Currency Field */}
-        <FormField
-          name="currencyIso"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Currency</FormLabel>
-              <FormControl>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "w-[300px] justify-between",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        {field.value
-                          ? currencies.find(
-                              (currency) => currency.iso === field.value,
-                            )?.symbol
-                          : "Select integration"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="h-[300px] overflow-y-auto p-0">
-                    <Command>
-                      <CommandInput placeholder="Search the currency..." />
-                      <CommandEmpty>No currency found.</CommandEmpty>
-                      <ScrollArea className="max-h-[300px]">
-                        <CommandGroup>
-                          {currencies.map((currency) => (
-                            <CommandItem
-                              value={currency.iso}
-                              key={currency.iso}
-                              onSelect={() => {
-                                form.setValue("currencyIso", currency.iso);
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  currency.iso === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0",
-                                )}
-                              />
-                              {currency.symbol}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </ScrollArea>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormControl>
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-2">
+            <FormField
+              name="currencyIso"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Currency</FormLabel>
+                  <FormControl>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "justify-between",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value
+                              ? currencies.find(
+                                  (currency) => currency.iso === field.value,
+                                )?.symbol
+                              : "Select currency..."}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="h-[300px] overflow-y-auto p-0">
+                        <Command>
+                          <CommandInput placeholder="Search the currency..." />
+                          <CommandEmpty>No currency found.</CommandEmpty>
+                          <ScrollArea className="max-h-[300px]">
+                            <CommandGroup>
+                              {currencies.map((currency) => (
+                                <CommandItem
+                                  value={currency.iso}
+                                  key={currency.iso}
+                                  onSelect={() => {
+                                    form.setValue("currencyIso", currency.iso);
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      currency.iso === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                  {currency.symbol}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </ScrollArea>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <FormField
+              name="accountType"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Type</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={() => {
+                        form.setValue("accountType", field.value);
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select the account type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value={AccountType.BANK}>
+                            {AccountType.BANK}
+                          </SelectItem>
+                          <SelectItem value={AccountType.CRYPTO}>
+                            {AccountType.CRYPTO}
+                          </SelectItem>
+                          <SelectItem value={AccountType.INVESTMENT}>
+                            {AccountType.INVESTMENT}
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
         {/* Current Value Field */}
         <FormField
           name="amount"
@@ -157,7 +208,7 @@ export const BankAccountFields = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Add Property</Button>
+        <Button type="submit">Add bank account</Button>
       </form>
     </Form>
   );

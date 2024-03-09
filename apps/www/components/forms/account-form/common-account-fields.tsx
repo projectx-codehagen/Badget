@@ -80,33 +80,6 @@ export const CommonAccountFields = () => {
           </FormItem>
         )}
       />
-      {/* Currency Field */}
-      <FormField
-        control={control}
-        name="currency"
-        render={({ field }) => (
-          <FormItem className="flex flex-col">
-            <FormLabel>Currency</FormLabel>
-            <FormControl>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a fruit" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Fruits</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </FormControl>
-          </FormItem>
-        )}
-      />
       {/* Purchase Value Field */}
       <FormField
         control={control}

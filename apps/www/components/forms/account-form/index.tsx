@@ -11,8 +11,8 @@ import { RealEstateFormFields } from "./real-estate-fields";
 
 const generateFormFields = (accountType: AccountType) => {
   switch (accountType) {
-    // case "real-estate":
-    //   return <RealEstateFormFields />;
+    case "real-estate":
+      return <RealEstateFormFields />;
     // case "crypto":
     //   return <CryptoFormFields />;
     // case "investment":
