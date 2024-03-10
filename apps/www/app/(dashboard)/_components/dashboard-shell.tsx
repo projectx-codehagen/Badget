@@ -17,7 +17,7 @@ export function DashboardShell(props: {
     <div>
       <nav className="flex h-[52px] items-center justify-between p-4">
         <div className="flex items-center gap-4">
-          <h1 className="font-cal text-xl font-semibold capitalize leading-none">
+          <h1 className="font-cal hidden text-xl font-semibold capitalize leading-none md:inline">
             {props.title}
           </h1>
           {props.breadcrumbItems && (

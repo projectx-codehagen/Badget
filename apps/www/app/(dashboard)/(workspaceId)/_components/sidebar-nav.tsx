@@ -10,9 +10,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { sideNavItems } from "@/app/config";
+import { NavItem, sideNavItems } from "@/app/config";
 
-type NavItem = (typeof sideNavItems)[number];
+import { WorkspaceSwitcher } from "../../_components/workspace-switcher";
 
 const CollapsedItem = ({
   item,
@@ -35,7 +35,7 @@ const CollapsedItem = ({
             "soon" === item.badge && "cursor-not-allowed opacity-80",
           )}
         >
-          <item.icon className="h-4 w-4" />
+          {item.icon && <item.icon className="h-4 w-4" />}
           <span className="sr-only">{item.title}</span>
         </Link>
       </TooltipTrigger>
@@ -66,7 +66,7 @@ const ExpandedItem = ({
         "soon" === item.badge && "cursor-not-allowed opacity-80",
       )}
     >
-      <item.icon className="mr-2 h-4 w-4" />
+      {item.icon && <item.icon className="mr-2 h-4 w-4" />}
       {item.title}
       <span className={cn("ml-auto")}>
         {item?.badge && <Badge>{item.badge}</Badge>}
@@ -87,23 +87,38 @@ export function SidebarNav({ isCollapsed }: { isCollapsed: boolean }) {
 
   return (
     <nav
-      className={cn("grid gap-1 px-2", { "justify-center px-2": isCollapsed })}
+      className={cn("flex flex-col", {
+        "items-center justify-center": isCollapsed,
+      })}
     >
-      {sideNavItems.map((link) =>
-        isCollapsed ? (
-          <CollapsedItem
-            key={link.href}
-            item={link}
-            currentPath={"/" + currentPath}
-          />
-        ) : (
-          <ExpandedItem
-            key={link.href}
-            item={link}
-            currentPath={"/" + currentPath}
-          />
-        ),
-      )}
+      <div className="p-2">
+        <WorkspaceSwitcher isCollapsed={isCollapsed} />
+      </div>
+
+      {sideNavItems.map((group) => {
+        return (
+          <>
+            <Separator />
+            <div className="flex flex-col gap-1 p-2" key={group.group}>
+              {group.items.map((link, idx) => {
+                return isCollapsed ? (
+                  <CollapsedItem
+                    key={link.href}
+                    item={link}
+                    currentPath={"/" + currentPath}
+                  />
+                ) : (
+                  <ExpandedItem
+                    key={link.href}
+                    item={link}
+                    currentPath={"/" + currentPath}
+                  />
+                );
+              })}
+            </div>
+          </>
+        );
+      })}
     </nav>
   );
 }

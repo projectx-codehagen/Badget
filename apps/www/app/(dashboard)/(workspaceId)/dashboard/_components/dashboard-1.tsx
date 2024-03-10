@@ -65,45 +65,11 @@ export function Dashboard({
               "min-w-[50px] transition-all duration-300 ease-in-out",
           )}
         >
-          <div
-            className={cn(
-              "flex h-[52px] items-center justify-center px-2",
-              isCollapsed ? "h-[52px]" : "px-2",
-            )}
-          >
-            <WorkspaceSwitcher isCollapsed={isCollapsed} />
-          </div>
-          <Separator />
-          <div
-            data-collapsed={isCollapsed}
-            className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
-          >
-            <SidebarNav isCollapsed={isCollapsed} />
-          </div>
-          <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Get help",
-                label: "",
-                icon: HelpCircle,
-                variant: "ghost",
-                link: "/dashboard/",
-              },
-              {
-                title: "Settings",
-                label: "",
-                icon: Settings,
-                variant: "ghost",
-                link: "/settings",
-              },
-            ]}
-          />
+          <SidebarNav isCollapsed={isCollapsed} />
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <ScrollArea className="h-fit min-h-screen">{children}</ScrollArea>
+          {children}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

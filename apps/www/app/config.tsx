@@ -3,15 +3,17 @@ import {
   BarChart,
   Building,
   CreditCard,
+  HelpCircle,
   Layers,
   LayoutDashboard,
   LucideIcon,
+  Settings,
   Sparkle,
   Sprout,
 } from "lucide-react";
 
 export const siteConfig = {
-  name: "Badget.",
+  name: "Badget",
   description:
     "Empower your financial management with AI-driven insights, making tracking and optimizing your finances effortless.",
   github: "https://github.com/projectx-codehagen/Badget",
@@ -23,6 +25,11 @@ export type NavItem = {
   title: string;
   badge?: string;
   icon?: LucideIcon;
+};
+
+export type GroupedNavItems = {
+  group: string;
+  items: NavItem[];
 };
 
 export const topNavItems = [
@@ -58,45 +65,70 @@ export const docsTopNavItems = [
   },
 ] satisfies NavItem[];
 
-export const sideNavItems = [
+export const sideNavItems: GroupedNavItems[] = [
   {
-    href: "/dashboard",
-    title: "Dashboard",
-    icon: LayoutDashboard,
+    group: "main",
+    items: [
+      {
+        href: "/dashboard",
+        title: "Dashboard",
+        icon: LayoutDashboard,
+      },
+      {
+        href: "/banking",
+        title: "Banking",
+        icon: Layers,
+      },
+      {
+        href: "/investment",
+        title: "Investments",
+        badge: "soon",
+        icon: BarChart,
+      },
+      {
+        href: "/assets",
+        title: "Assets",
+        badge: "soon",
+        icon: Building,
+      },
+      {
+        href: "/savings",
+        title: "Savings",
+        badge: "soon",
+        icon: Sprout,
+      },
+      {
+        href: "/liabilities",
+        title: "Liabilities",
+        badge: "soon",
+        icon: CreditCard,
+      },
+    ],
   },
   {
-    href: "/banking",
-    title: "Banking",
-    icon: Layers,
+    group: "secondary",
+    items: [
+      {
+        href: "/aimagic",
+        title: "AI Magic",
+        badge: "soon",
+        icon: Sparkle,
+      },
+    ],
   },
   {
-    href: "/investment",
-    title: "Investments",
-    badge: "soon",
-    icon: BarChart,
+    group: "tertiary",
+    items: [
+      {
+        href: "/help",
+        title: "Get Help",
+        icon: HelpCircle,
+      },
+      {
+        href: "/settings",
+        title: "Settings",
+        icon: Settings,
+      },
+    ],
   },
-  {
-    href: "/assets",
-    title: "Assets",
-    badge: "soon",
-    icon: Building,
-  },
-  {
-    href: "/savings",
-    title: "Savings",
-    badge: "soon",
-    icon: Sprout,
-  },
-  {
-    href: "/liabilities",
-    title: "Liabilities",
-    badge: "soon",
-    icon: CreditCard,
-  },
-  {
-    href: "/aimagic",
-    title: "AI Magic",
-    badge: "soon",
-    icon: Sparkle,
-  },
-] satisfies NavItem[];
+];

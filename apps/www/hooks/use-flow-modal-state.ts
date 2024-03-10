@@ -1,10 +1,14 @@
 "use client";
 
-import { AccountType, AccountTypeInfo } from '@/components/modals/add-asset-flow';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import {
+  AccountType,
+  AccountTypeInfo,
+} from "@/components/modals/add-asset-flow";
 
 const baseSchema = z.object({
   name: z.string(),
@@ -28,7 +32,7 @@ export type FormFields = BaseFormFields | RealEstateFormFields;
 
 const generateFormSchema = (accountType?: AccountType) => {
   switch (accountType) {
-    case 'real-estate':
+    case "real-estate":
       return realEstateSchema;
     default:
       return baseSchema;
@@ -36,7 +40,9 @@ const generateFormSchema = (accountType?: AccountType) => {
 };
 
 export function useFlowModalState() {
-  const [accountTypeInfo, setAccountTypeInfo] = useState<AccountTypeInfo | undefined>();
+  const [accountTypeInfo, setAccountTypeInfo] = useState<
+    AccountTypeInfo | undefined
+  >();
   const currentFormSchema = generateFormSchema(accountTypeInfo?.type);
   const form = useForm<z.infer<typeof currentFormSchema>>({
     resolver: zodResolver(currentFormSchema),
@@ -45,11 +51,11 @@ export function useFlowModalState() {
       purchaseDate: new Date(),
       purchaseValue: "",
       currentValue: "",
-    }
+    },
   });
 
   const submitFlowData = () => {
-    console.log('Submitting flow data');
+    console.log("Submitting flow data");
   };
 
   return {
@@ -57,5 +63,5 @@ export function useFlowModalState() {
     submitFlowData,
     accountTypeInfo,
     setAccountTypeInfo,
-  }
+  };
 }
