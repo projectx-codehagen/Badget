@@ -3,13 +3,10 @@ import { api } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import {
-  createAccountSchema,
-  createRealEstateSchema,
-} from "@projectx/validators";
+import { createRealEstateSchema } from "@projectx/validators";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -37,9 +34,6 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "@/components/ui/use-toast";
 
-import { CommonAccountFields } from "./common-account-fields";
-import { NameField } from "./name-field";
-
 export const RealEstateFormFields = () => {
   const currencies = use(api.currency.findAll.query());
 
@@ -53,23 +47,28 @@ export const RealEstateFormFields = () => {
       postalCode: "",
       purchaseDate: new Date(),
       purchaseValue: 0,
-      currentValue: 0,
+      currentValue: undefined,
     },
   });
 
   const onSubmit = async (data: z.infer<typeof createRealEstateSchema>) => {
-    // const accountBalance = await api.account.addBankAccount
-    //   .mutate(data)
-    //   .catch(() => ({ success: false as const }));
+    const asset = await api.asset.addGenericAsset
+      .mutate(data)
+      .catch(() => ({ success: false as const }));
 
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    const realEstate = await api.asset.addRealEstate
+      .mutate({
+        ...data,
+        assetId: BigInt((asset as { assetId: number }).assetId),
+      })
+      .catch(() => ({ success: false as const }));
+
+    if (asset.success && realEstate.success) {
+      toast({
+        title: "Property added with success!",
+        description: "Your property was added with success.",
+      });
+    }
   };
 
   return (
@@ -190,6 +189,69 @@ export const RealEstateFormFields = () => {
             </FormItem>
           )}
         />
+
+        <FormField
+          name="currencyIso"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Currency</FormLabel>
+              <FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "justify-between",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value
+                          ? currencies.find(
+                              (currency) => currency.iso === field.value,
+                            )?.symbol
+                          : "Select currency..."}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="h-[300px] overflow-y-auto p-0">
+                    <Command>
+                      <CommandInput placeholder="Search the currency..." />
+                      <CommandEmpty>No currency found.</CommandEmpty>
+                      <ScrollArea className="max-h-[300px]">
+                        <CommandGroup>
+                          {currencies.map((currency) => (
+                            <CommandItem
+                              value={currency.iso}
+                              key={currency.iso}
+                              onSelect={() => {
+                                form.setValue("currencyIso", currency.iso);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  currency.iso === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0",
+                                )}
+                              />
+                              {currency.symbol}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </ScrollArea>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
         {/* Purchase Value Field */}
         <FormField
           control={form.control}

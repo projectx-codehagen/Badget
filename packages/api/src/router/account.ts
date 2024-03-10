@@ -4,7 +4,7 @@ import { createAccountSchema } from "@projectx/validators";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const accountRouter = createTRPCRouter({
-  addBankAccount: protectedProcedure
+  addAccount: protectedProcedure
     .input(createAccountSchema)
     .mutation(async (opts: any) => {
       const { userId } = opts.ctx.auth;
@@ -14,6 +14,8 @@ export const accountRouter = createTRPCRouter({
           .insert(schema.account)
           .values({
             name: createAccountSchema.parse(opts.input).name,
+            accountType:
+              createAccountSchema.parse(opts.input).accountType ?? "BANK",
             userId,
             originalPayload: createAccountSchema.parse(opts.input),
           })
@@ -27,6 +29,7 @@ export const accountRouter = createTRPCRouter({
             amount: createAccountSchema.parse(opts.input).amount ?? 0,
             date: new Date(),
             type: "AVAILABLE",
+            originalPayload: createAccountSchema.parse(opts.input),
           })
           .onDuplicateKeyUpdate({
             set: {

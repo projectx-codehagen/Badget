@@ -12,16 +12,9 @@ import {
 import { AccountForm } from "@/components/forms/account-form";
 
 import { AccountTypeSelection } from "./components/account-type-selection";
-import { Footer } from "./components/footer";
 import { HeaderControls } from "./components/header-controls";
 
-export type AccountType =
-  | "real-estate"
-  | "crypto"
-  | "investment"
-  | "bank-account"
-  | "car"
-  | "misc";
+export type AccountType = "real-estate" | "investment" | "account" | "asset";
 
 export interface AccountTypeInfo {
   type: AccountType;
@@ -60,8 +53,8 @@ export const AddAssetFlow = () => {
     () => [
       {
         id: 0,
-        title: "Add new account",
-        description: "Add the account type you want.",
+        title: "Add new account or asset",
+        description: "Add the account or asset you want.",
         component: (
           <AccountTypeSelection onSelectAccountType={handleSelectAccountType} />
         ),

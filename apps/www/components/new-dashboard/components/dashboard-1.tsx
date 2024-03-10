@@ -265,7 +265,7 @@ export function Dashboard({
                 <h1 className="text-xl font-bold">Dashboard</h1>
               </div>
               <div className="flex items-center gap-4">
-                <AddAssetButton triggerLabel="Add Asset">
+                <AddAssetButton triggerLabel="Add account or asset">
                   <AddAssetFlow />
                 </AddAssetButton>
               </div>

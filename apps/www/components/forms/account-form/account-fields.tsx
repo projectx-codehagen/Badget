@@ -1,8 +1,7 @@
 import { use } from "react";
 import { api } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
-import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -11,7 +10,6 @@ import { createAccountSchema } from "@projectx/validators";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Command,
   CommandEmpty,
@@ -38,27 +36,26 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 
-export const BankAccountFields = () => {
+export const AccountFields = () => {
   const currencies = use(api.currency.findAll.query());
 
   const form = useForm<z.infer<typeof createAccountSchema>>({
     resolver: zodResolver(createAccountSchema),
     defaultValues: {
       name: "",
-      accountType: null,
-      currencyIso: "",
+      accountType: undefined,
+      currencyIso: undefined,
       amount: 0,
     },
   });
 
   const onSubmit = async (data: z.infer<typeof createAccountSchema>) => {
-    const accountBalance = await api.account.addBankAccount
+    const accountBalance = await api.account.addAccount
       .mutate(data)
       .catch(() => ({ success: false as const }));
 
@@ -159,17 +156,17 @@ export const BankAccountFields = () => {
             <FormField
               name="accountType"
               control={form.control}
-              render={({ field }) => (
+              render={() => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Type</FormLabel>
+                  <FormLabel>Account type</FormLabel>
                   <FormControl>
                     <Select
-                      onValueChange={() => {
-                        form.setValue("accountType", field.value);
+                      onValueChange={(value: AccountType) => {
+                        form.setValue("accountType", value);
                       }}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select the account type" />
+                        <SelectValue placeholder="Select the type" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>

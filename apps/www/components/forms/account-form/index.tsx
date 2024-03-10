@@ -2,7 +2,7 @@ import { type FC } from "react";
 
 import { type AccountType } from "@/components/modals/add-asset-flow";
 
-import { BankAccountFields } from "./bank-account-fields";
+import { AccountFields } from "./account-fields";
 import { CarFormFields } from "./car-fields";
 import { CryptoFormFields } from "./crypto-fields";
 import { InvestmentFormFields } from "./investment-fields";
@@ -17,8 +17,8 @@ const generateFormFields = (accountType: AccountType) => {
     //   return <CryptoFormFields />;
     // case "investment":
     //   return <InvestmentFormFields />;
-    case "bank-account":
-      return <BankAccountFields />;
+    case "account":
+      return <AccountFields />;
     // case "car":
     //   return <CarFormFields />;
     // case "misc":

@@ -3,10 +3,9 @@ import {
   Bitcoin,
   Building,
   Car,
-  Folder,
   GitGraph,
   MoreHorizontal,
-  PiggyBank,
+  Vault,
 } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
@@ -20,12 +19,12 @@ interface AccountTypeSelectionProps {
 
 const accountTypes: AccountTypeInfo[] = [
   {
-    title: "Bank",
-    description: "Add details about your bank account.",
-    type: "bank-account",
-    value: "bank-account",
-    label: "Bank",
-    Icon: PiggyBank,
+    title: "Account",
+    description: "Add details about your account.",
+    type: "account",
+    value: "account",
+    label: "Account",
+    Icon: Vault,
   },
   {
     title: "Real Estate",
@@ -36,14 +35,6 @@ const accountTypes: AccountTypeInfo[] = [
     Icon: Building,
   },
   {
-    title: "Crypto",
-    description: "Add details about your crypto.",
-    type: "crypto",
-    value: "crypto",
-    label: "Crypto",
-    Icon: Bitcoin,
-  },
-  {
     title: "Investment",
     description: "Add details about your investment.",
     type: "investment",
@@ -52,19 +43,11 @@ const accountTypes: AccountTypeInfo[] = [
     Icon: GitGraph,
   },
   {
-    title: "Car",
-    description: "Add details about your car.",
-    type: "car",
-    value: "car",
-    label: "Car",
-    Icon: Car,
-  },
-  {
-    title: "Misc",
-    description: "Add details about your misc.",
-    type: "misc",
-    value: "misc",
-    label: "Misc",
+    title: "Generic asset",
+    description: "Add details about your asset.",
+    type: "asset",
+    value: "asset",
+    label: "Asset",
     Icon: MoreHorizontal,
   },
 ];
@@ -82,7 +65,7 @@ export const AccountTypeSelection: FC<AccountTypeSelectionProps> = ({
   };
   return (
     <RadioGroup
-      className="mb-4 grid grid-cols-3 gap-4"
+      className="mb-4 grid grid-cols-2 gap-4"
       onValueChange={(accountType) => handleSelectAccountType(accountType)}
     >
       {accountTypes.map((accountType) => (

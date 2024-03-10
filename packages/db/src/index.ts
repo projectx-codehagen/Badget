@@ -2,6 +2,7 @@ import { Client } from "@planetscale/database";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 import { customAlphabet } from "nanoid";
 
+import * as asset from "./schema/asset";
 import * as countryCode from "./schema/country";
 import * as currency from "./schema/currency";
 import * as customer from "./schema/customer";
@@ -15,6 +16,7 @@ export const schema = {
   ...provider,
   ...provider,
   ...openbanking,
+  ...asset,
 };
 
 export type CanonicalResource = typeof schema.resource.$inferSelect;
