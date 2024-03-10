@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { BoltIcon, MusicalNoteIcon } from "@heroicons/react/20/solid";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -15,6 +14,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import {
+  BoltIcon,
   CarIcon,
   Check,
   CloudIcon,
@@ -22,6 +22,7 @@ import {
   CreditCard,
   HomeIcon,
   KeyIcon,
+  MusicIcon,
   PhoneIcon,
   Settings,
   ShoppingBagIcon,
@@ -144,7 +145,7 @@ const iconMap = {
   Settings: <Settings className="mr-2 h-5 w-5" />,
   Phone: <PhoneIcon className="mr-2 h-5 w-5" />,
   Wifi: <WifiIcon className="mr-2 h-5 w-5" />,
-  Music: <MusicalNoteIcon className="mr-2 h-5 w-5" />,
+  Music: <MusicIcon className="mr-2 h-5 w-5" />,
   Cloud: <CloudIcon className="mr-2 h-5 w-5" />,
 };
 

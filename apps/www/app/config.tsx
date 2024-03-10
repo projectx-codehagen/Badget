@@ -67,7 +67,7 @@ export const docsTopNavItems = [
 
 export const sideNavItems: GroupedNavItems[] = [
   {
-    group: "main",
+    group: "primary",
     items: [
       {
         href: "/dashboard",

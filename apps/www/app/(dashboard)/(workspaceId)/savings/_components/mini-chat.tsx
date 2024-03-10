@@ -138,7 +138,7 @@ export function CardsChat() {
         <CardHeader className="flex flex-row items-center">
           <div className="flex items-center space-x-4">
             <Avatar>
-              <AvatarImage src="/avatars/01.png" alt="Image" />
+              {/* <AvatarImage src="/avatars/01.png" alt="Image" /> */}
               <AvatarFallback>AI</AvatarFallback>
             </Avatar>
             <div>

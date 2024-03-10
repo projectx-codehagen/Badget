@@ -205,10 +205,10 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
             {/* Left section with avatar and text */}
             <div className="flex items-center gap-4">
               <Avatar>
-                <AvatarImage
+                {/* <AvatarImage
                   src="/path-to-your-avatar-image.png"
                   alt={mail.name}
-                />
+                /> */}
                 <AvatarFallback delayMs={600}>
                   {mail.name
                     .split(" ")

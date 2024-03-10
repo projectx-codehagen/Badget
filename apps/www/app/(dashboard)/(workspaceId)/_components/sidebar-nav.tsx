@@ -103,13 +103,13 @@ export function SidebarNav({ isCollapsed }: { isCollapsed: boolean }) {
               {group.items.map((link, idx) => {
                 return isCollapsed ? (
                   <CollapsedItem
-                    key={link.href}
+                    key={link.href + idx}
                     item={link}
                     currentPath={"/" + currentPath}
                   />
                 ) : (
                   <ExpandedItem
-                    key={link.href}
+                    key={link.href + idx}
                     item={link}
                     currentPath={"/" + currentPath}
                   />

@@ -1,17 +1,11 @@
-import {
-  ArrowPathIcon,
-  CloudArrowUpIcon,
-  Cog6ToothIcon,
-  FingerPrintIcon,
-  LockClosedIcon,
-  ServerIcon,
-} from "@heroicons/react/20/solid";
+import { LockClosedIcon } from "@radix-ui/react-icons";
+import { ArrowUpIcon, CloudUpload } from "lucide-react";
 import { Balancer } from "react-wrap-balancer";
 
 const FeatureSection1 = () => {
   const features = [
     {
-      icon: CloudArrowUpIcon,
+      icon: CloudUpload,
       title: "Instant Listing Drafts",
       description:
         "Harness AI to generate captivating property listings instantly. Save time and attract more buyers with eloquent, detail-rich descriptions that stand out.",
@@ -23,7 +17,7 @@ const FeatureSection1 = () => {
         "With our robust SSL encryption, your sensitive property data and client information are safeguarded at every step.",
     },
     {
-      icon: ArrowPathIcon,
+      icon: ArrowUpIcon,
       title: "Effortless Organization",
       description:
         "Manage queues of properties with ease. Our system simplifies task management, making follow-ups and updates a breeze.",

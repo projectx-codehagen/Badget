@@ -28,7 +28,7 @@
     "@projectx/db": "workspace:^0.1.0",
     "@projectx/stripe": "workspace:^0.1.0",
     "@projectx/validators": "workspace:^0.1.0",
-    "@clerk/nextjs": "^4.29.6",
+    "@clerk/nextjs": "^4.29.9",
     "@dinero.js/currencies": "2.0.0-alpha.14",
     "@trpc/client": "^10.38.5",
     "dinero.js": "2.0.0-alpha.14",

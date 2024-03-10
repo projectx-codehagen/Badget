@@ -3,9 +3,7 @@ import { currentUser } from "@clerk/nextjs";
 import {
   CreditCard,
   LayoutDashboard,
-  LogIn,
   LogOut,
-  PlusCircle,
   Settings,
   User,
 } from "lucide-react";
@@ -25,18 +23,11 @@ import {
 
 export async function UserNav() {
   const user = await currentUser();
-  // if (!user) redirect("/signin");
 
   if (!user) {
     return (
       <Link href="/signin">
-        <Button variant="ghost" className="relative h-8 w-8 rounded">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-transparent">
-              <LogIn className="h-6 w-6" />
-            </AvatarFallback>
-          </Avatar>
-        </Button>
+        <Button className="relative rounded-lg">Sign In</Button>
       </Link>
     );
   }
