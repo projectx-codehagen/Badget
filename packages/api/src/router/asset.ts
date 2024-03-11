@@ -1,21 +1,24 @@
 import { AssetType, db, schema, sql } from "@projectx/db";
-import { createRealEstateSchema } from "@projectx/validators";
+import {
+  createAssetSchema,
+  createRealEstateSchema,
+} from "@projectx/validators";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const assetRouter = createTRPCRouter({
   addGenericAsset: protectedProcedure
-    .input(createRealEstateSchema)
+    .input(createAssetSchema)
     .mutation(async (opts: any) => {
       const { userId } = opts.ctx.auth;
 
       const assetQuery = await opts.ctx.db
         .insert(schema.asset)
         .values({
-          name: createRealEstateSchema.parse(opts.input).name,
+          name: createAssetSchema.parse(opts.input).name,
           userId,
           assetType: AssetType.REAL_ESTATE,
-          originalPayload: createRealEstateSchema.parse(opts.input),
+          originalPayload: createAssetSchema.parse(opts.input),
         })
         .onDuplicateKeyUpdate({ set: { name: sql`name` } });
 
@@ -28,11 +31,11 @@ export const assetRouter = createTRPCRouter({
           .insert(schema.balance)
           .values({
             assetId: BigInt(assetQuery.insertId),
-            currencyIso: createRealEstateSchema.parse(opts.input).currencyIso,
-            amount: createRealEstateSchema.parse(opts.input).purchaseValue ?? 0,
+            currencyIso: createAssetSchema.parse(opts.input).currencyIso,
+            amount: createAssetSchema.parse(opts.input).amount ?? 0,
             date: new Date(),
             type: "AVAILABLE",
-            originalPayload: createRealEstateSchema.parse(opts.input),
+            originalPayload: createAssetSchema.parse(opts.input),
           })
           .onDuplicateKeyUpdate({
             set: {
@@ -45,11 +48,11 @@ export const assetRouter = createTRPCRouter({
           .insert(schema.transaction)
           .values({
             assetId: BigInt(assetQuery.insertId),
-            amount: createRealEstateSchema.parse(opts.input).purchaseValue ?? 0,
-            currencyIso: createRealEstateSchema.parse(opts.input).currencyIso,
+            amount: createAssetSchema.parse(opts.input).amount ?? 0,
+            currencyIso: createAssetSchema.parse(opts.input).currencyIso,
             date: new Date(),
             description: "Initial deposit",
-            originalPayload: createRealEstateSchema.parse(opts.input),
+            originalPayload: createAssetSchema.parse(opts.input),
           })
           .onDuplicateKeyUpdate({
             set: {

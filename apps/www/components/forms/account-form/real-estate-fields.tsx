@@ -53,7 +53,12 @@ export const RealEstateFormFields = () => {
 
   const onSubmit = async (data: z.infer<typeof createRealEstateSchema>) => {
     const asset = await api.asset.addGenericAsset
-      .mutate(data)
+      .mutate({
+        name: data.name,
+        assetType: "REAL ESTATE",
+        currencyIso: data.currencyIso,
+        amount: data.purchaseValue,
+      })
       .catch(() => ({ success: false as const }));
 
     const realEstate = await api.asset.addRealEstate
@@ -264,23 +269,6 @@ export const RealEstateFormFields = () => {
                   type="number"
                   {...field}
                   placeholder="Purchase Value..."
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        {/* Current Value Field */}
-        <FormField
-          control={form.control}
-          name="currentValue"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Current Value</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  {...field}
-                  placeholder="Current Value..."
                 />
               </FormControl>
             </FormItem>

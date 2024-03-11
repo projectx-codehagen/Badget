@@ -1,7 +1,7 @@
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { AccountType } from "@projectx/db";
+import { AccountType, AssetType } from "@projectx/db";
 import { PLANS } from "@projectx/stripe/plans";
 
 export const userAuthSchema = z.object({
@@ -83,6 +83,14 @@ export const createAccountSchema = z.object({
   amount: z.coerce.number().min(1),
 });
 export type CreateAccount = z.infer<typeof createAccountSchema>;
+
+export const createAssetSchema = z.object({
+  name: z.string().min(1),
+  currencyIso: z.string().min(2).max(3),
+  assetType: z.nativeEnum(AssetType),
+  amount: z.coerce.number().min(1),
+});
+export type CreateAsset = z.infer<typeof createAssetSchema>;
 
 export const createRealEstateSchema = z.object({
   assetId: z.bigint().optional(),

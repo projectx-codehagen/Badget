@@ -5,8 +5,8 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { AccountType } from "@projectx/db";
-import { createAccountSchema } from "@projectx/validators";
+import { AccountType, AssetType } from "@projectx/db";
+import { createAccountSchema, createAssetSchema } from "@projectx/validators";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -41,34 +41,30 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 
-export const AccountFields = () => {
+export const AssetFields = () => {
   const currencies = use(api.currency.findAll.query());
 
-  const form = useForm<z.infer<typeof createAccountSchema>>({
-    resolver: zodResolver(createAccountSchema),
+  const form = useForm<z.infer<typeof createAssetSchema>>({
+    resolver: zodResolver(createAssetSchema),
     defaultValues: {
       name: "",
-      accountType: undefined,
+      assetType: undefined,
       currencyIso: undefined,
       amount: 0,
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof createAccountSchema>) => {
-    const accountBalance = await api.account.addAccount
+  const onSubmit = async (data: z.infer<typeof createAssetSchema>) => {
+    const asset = await api.asset.addGenericAsset
       .mutate(data)
       .catch(() => ({ success: false as const }));
 
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify(accountBalance, null, 2)}
-          </code>
-        </pre>
-      ),
-    });
+    if (asset.success) {
+      toast({
+        title: "Asset added with success!",
+        description: "Your asset was added with success.",
+      });
+    }
   };
 
   return (
@@ -154,15 +150,15 @@ export const AccountFields = () => {
 
           <div className="grid gap-2">
             <FormField
-              name="accountType"
+              name="assetType"
               control={form.control}
               render={() => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Account type</FormLabel>
+                  <FormLabel>Asset type</FormLabel>
                   <FormControl>
                     <Select
-                      onValueChange={(value: AccountType) => {
-                        form.setValue("accountType", value);
+                      onValueChange={(value: AssetType) => {
+                        form.setValue("assetType", value);
                       }}
                     >
                       <SelectTrigger>
@@ -170,17 +166,26 @@ export const AccountFields = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem
-                            key={AccountType.BANK}
-                            value={AccountType.BANK}
-                          >
-                            {AccountType.BANK}
+                          <SelectItem value={AssetType.STOCKS}>
+                            {AssetType.STOCKS}
                           </SelectItem>
-                          <SelectItem
-                            key={AccountType.CRYPTO}
-                            value={AccountType.CRYPTO}
-                          >
-                            {AccountType.CRYPTO}
+                          <SelectItem value={AssetType.BONDS}>
+                            {AssetType.BONDS}
+                          </SelectItem>
+                          <SelectItem value={AssetType.CRYPTO}>
+                            {AssetType.CRYPTO}
+                          </SelectItem>
+                          <SelectItem value={AssetType.ETF}>
+                            {AssetType.ETF}
+                          </SelectItem>
+                          <SelectItem value={AssetType.OPTIONS}>
+                            {AssetType.OPTIONS}
+                          </SelectItem>
+                          <SelectItem value={AssetType.FUTURES}>
+                            {AssetType.FUTURES}
+                          </SelectItem>
+                          <SelectItem value={AssetType.COMMODITIES}>
+                            {AssetType.COMMODITIES}
                           </SelectItem>
                         </SelectGroup>
                       </SelectContent>

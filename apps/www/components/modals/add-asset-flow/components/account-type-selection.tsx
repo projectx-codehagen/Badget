@@ -19,7 +19,7 @@ interface AccountTypeSelectionProps {
 
 const accountTypes: AccountTypeInfo[] = [
   {
-    title: "Account",
+    title: "account",
     description: "Add details about your account.",
     type: "account",
     value: "account",
@@ -27,7 +27,7 @@ const accountTypes: AccountTypeInfo[] = [
     Icon: Vault,
   },
   {
-    title: "Real Estate",
+    title: "real estate",
     description: "Add details about your real estate.",
     type: "real-estate",
     value: "real-estate",
@@ -35,15 +35,15 @@ const accountTypes: AccountTypeInfo[] = [
     Icon: Building,
   },
   {
-    title: "Investment",
-    description: "Add details about your investment.",
+    title: "investment account",
+    description: "Add details about your investment account.",
     type: "investment",
     value: "investment",
     label: "Investment",
     Icon: GitGraph,
   },
   {
-    title: "Generic asset",
+    title: "generic asset",
     description: "Add details about your asset.",
     type: "asset",
     value: "asset",
