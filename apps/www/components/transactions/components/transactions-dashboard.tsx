@@ -291,7 +291,7 @@ export function TransactionsDashboard({
               </form>
             </div>
             <TabsContent value="all" className="m-0">
-              <AccountsReviewTable2 mailId={undefined} />
+              <AccountsReviewTable2 mailId="" />
             </TabsContent>
             <TabsContent value="unread" className="m-0">
               <MailList items={mails.filter((item) => !item.read)} />
