@@ -1,7 +1,8 @@
 import { dinero } from "dinero.js";
 import type { Dinero, DineroSnapshot } from "dinero.js";
 import superjson from "superjson";
-import type { JSONValue } from "superjson/dist/types";
+
+// import type { JSONValue } from "superjson/dist/types";
 
 /**
  * TODO: Maybe put this in a shared package that can be safely shared between `api`, `nextjs` and `expo` packages
@@ -18,7 +19,7 @@ superjson.registerCustom(
       }
     },
     serialize: (val) => {
-      return val.toJSON() as JSONValue;
+      return val.toJSON() as unknown as any; // as JSONValue;
     },
     deserialize: (val) => {
       return dinero(val as DineroSnapshot<number>);

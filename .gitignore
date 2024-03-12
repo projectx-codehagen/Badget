@@ -39,8 +39,5 @@ yarn-error.log*
 # email
 .react-email/
 
-# contentlayer
-.contentlayer
-
 # turbo
 .turbo

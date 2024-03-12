@@ -1,4 +1,4 @@
-import { User } from "@clerk/nextjs/dist/types/server";
+import { User } from "@clerk/nextjs/server";
 import { AvatarProps } from "@radix-ui/react-avatar";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

@@ -1,0 +1,32 @@
+# Planet Scale
+
+## Planet Scale is a hosted MySQL database
+
+---
+
+1. Go to https://planetscale.com and create an account
+
+You will be redirected to the dashboard.
+
+2. Click **Create a new database**
+
+   1. Name your database whatever you want.
+   2. Choose the region closest to you.
+   3. Choose **Hobby** as the plan type.
+   4. You will need to provide a credit card to continue. You won't be charged.
+   5. Click **Create Database**.
+
+You will be redirected to the integrations page. Select **Drizzle** and choose a password name.
+
+Scroll down to the **Add credentials to .env** sectio and copy those values to your `.env.local` file. Set your database name as the `DATABASE_NAME` value.
+
+Lastly, run `pnpm run db:push`
+
+### Local Alternative
+
+If you don't want to use PlanetScale, or don't have a credit card, you can use a local MySQL database. MySQL is open source and free to use.
+[Here are instructions to get started](https://dev.mysql.com/doc/mysql-getting-started/en/#mysql-getting-started-installing).
+
+Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER and MYSQL_PASSWORD` values in `.env.local`
+
+Run `pnpm run db:push`

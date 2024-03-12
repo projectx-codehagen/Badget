@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { updateUserName, type FormData } from "@/actions/update-user-name";
-import { User } from "@clerk/nextjs/dist/types/server";
+import { User } from "@clerk/nextjs/server";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 

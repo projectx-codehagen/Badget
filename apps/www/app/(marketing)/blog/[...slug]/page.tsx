@@ -1,17 +1,16 @@
 import { notFound } from "next/navigation";
-import { allAuthors, allPosts } from "contentlayer/generated";
-
-import { Mdx } from "@/components/content/mdx-components";
+import matter from "gray-matter";
 
 import "@/styles/mdx.css";
 
-import { Metadata } from "next";
+import fs from "fs";
+import path from "path";
 import Image from "next/image";
 import Link from "next/link";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import Balancer from "react-wrap-balancer";
 
-import { env } from "@/env.mjs";
-import { absoluteUrl, cn, formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 
@@ -21,81 +20,58 @@ interface PostPageProps {
   };
 }
 
-// @ts-ignore
-async function getPostFromParams(params) {
+function getPostFromParams(params: { slug: string[] }) {
   const slug = params?.slug?.join("/");
-  const post = allPosts.find((post) => post.slugAsParams === slug);
 
-  if (!post) {
-    null;
-  }
+  // find all files in the blog directory
+  const postsDir = "app/(marketing)/blog/_posts";
+  const files = fs.readdirSync(path.join(postsDir));
 
-  return post;
+  // for each blog found
+  const allPosts = files.map((filename) => {
+    const fileContent = fs.readFileSync(path.join(postsDir, filename), "utf-8");
+    const { data: frontMatter, content } = matter(fileContent);
+
+    return {
+      meta: frontMatter,
+      slug: filename.replace(".mdx", ""),
+      content,
+    };
+  });
+
+  return allPosts.find((post) => post.slug === slug);
 }
 
-export async function generateMetadata({
-  params,
-}: PostPageProps): Promise<Metadata> {
-  const post = await getPostFromParams(params);
+function getAuthorFromPost(name: string[]) {
+  // find all files in the blog directory
+  const authorsDir = "app/(marketing)/blog/_authors";
+  const files = fs.readdirSync(path.join(authorsDir));
 
-  if (!post) {
-    return {};
-  }
+  // for each blog found
+  const allAuthors = files.map((filename) => {
+    const fileContent = fs.readFileSync(
+      path.join(authorsDir, filename),
+      "utf-8",
+    );
+    const { data: frontMatter } = matter(fileContent);
 
-  const url = env.NEXT_PUBLIC_APP_URL;
+    return {
+      meta: frontMatter,
+      slug: filename.replace(".mdx", ""),
+    };
+  });
 
-  const ogUrl = new URL(`${url}/api/og`);
-  ogUrl.searchParams.set("heading", post.title);
-  ogUrl.searchParams.set("type", "Blog Post");
-  ogUrl.searchParams.set("mode", "dark");
-
-  return {
-    title: post.title,
-    description: post.description,
-    authors: post.authors.map((author) => ({
-      name: author,
-    })),
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      type: "article",
-      url: absoluteUrl(post.slug),
-      images: [
-        {
-          url: ogUrl.toString(),
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
-      images: [ogUrl.toString()],
-    },
-  };
-}
-
-export async function generateStaticParams(): Promise<
-  PostPageProps["params"][]
-> {
-  return allPosts.map((post) => ({
-    slug: post.slugAsParams.split("/"),
-  }));
+  return allAuthors.filter((author) => name.includes(author.meta.title));
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const post = await getPostFromParams(params);
+  const post = getPostFromParams(params);
 
   if (!post) {
     notFound();
   }
 
-  const authors = post.authors.map((author) =>
-    allAuthors.find(({ slug }) => slug === `/authors/${author}`),
-  );
+  const authors = getAuthorFromPost(post.meta.authors);
 
   return (
     <article className="container relative max-w-3xl py-6 lg:py-10">
@@ -110,37 +86,37 @@ export default async function PostPage({ params }: PostPageProps) {
         See all posts
       </Link>
       <div>
-        {post.date && (
+        {post.meta.date && (
           <time
-            dateTime={post.date}
+            dateTime={post.meta.date}
             className="block text-sm text-muted-foreground"
           >
-            Published on {formatDate(post.date)}
+            Published on {formatDate(post.meta.date)}
           </time>
         )}
         <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
-          <Balancer>{post.title}</Balancer>
+          <Balancer>{post.meta.title}</Balancer>
         </h1>
         {authors?.length ? (
           <div className="mt-4 flex space-x-4">
             {authors.map((author) =>
               author ? (
                 <Link
-                  key={author._id}
-                  href={`https://twitter.com/${author.twitter}`}
+                  key={author.meta._id}
+                  href={`https://twitter.com/${author.meta.twitter}`}
                   className="flex items-center space-x-2 text-sm"
                 >
                   <Image
-                    src={author.avatar}
-                    alt={author.title}
+                    src={author.meta.avatar}
+                    alt={author.meta.title}
                     width={42}
                     height={42}
                     className="rounded-full bg-white"
                   />
                   <div className="flex-1 text-left leading-tight">
-                    <p className="font-medium">{author.title}</p>
+                    <p className="font-medium">{author.meta.title}</p>
                     <p className="text-[12px] text-muted-foreground">
-                      @{author.twitter}
+                      @{author.meta.twitter}
                     </p>
                   </div>
                 </Link>
@@ -149,17 +125,17 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
         ) : null}
       </div>
-      {post.image && (
+      {post.meta.image && (
         <Image
-          src={post.image}
-          alt={post.title}
+          src={post.meta.image}
+          alt={post.meta.title}
           width={720}
           height={405}
           className="my-8 rounded-md border bg-muted transition-colors"
           priority
         />
       )}
-      <Mdx code={post.body.code} />
+      <MDXRemote source={post.content} />
       <hr className="mt-12" />
       <div className="flex justify-center py-6 lg:py-10">
         <Link href="/blog" className={cn(buttonVariants({ variant: "ghost" }))}>
