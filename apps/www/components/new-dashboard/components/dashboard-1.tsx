@@ -2,16 +2,11 @@
 
 import * as React from "react";
 import {
-  BadgeDollarSign,
   BarChart,
-  Briefcase,
-  Building,
   CreditCard,
-  DollarSign,
   HelpCircle,
   Layers,
   LayoutDashboard,
-  PiggyBank,
   Repeat2,
   Settings,
   Sparkle,
@@ -29,11 +24,11 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AddAssetButton } from "@/components/buttons/AddAssetButton";
+import { AddButton } from "@/components/buttons/AddButton";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
 import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
 
-import { Mail } from "../data";
+import type { Mail } from "../data";
 import { useMail } from "../use-mail";
 import { Nav } from "./nav";
 import { CardsStats } from "./stats";
@@ -265,9 +260,9 @@ export function Dashboard({
                 <h1 className="text-xl font-bold">Dashboard</h1>
               </div>
               <div className="flex items-center gap-4">
-                <AddAssetButton triggerLabel="Add Asset">
+                <AddButton triggerLabel="Add Asset">
                   <AddAssetFlow />
-                </AddAssetButton>
+                </AddButton>
               </div>
             </div>
 
