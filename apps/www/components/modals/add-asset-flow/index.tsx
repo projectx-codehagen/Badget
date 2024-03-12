@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 
 
-import { FlowStep, useFlowControl } from "@/hooks/use-flow-control";
+import { useFlowControl, type FlowStep } from "@/hooks/use-flow-control";
 import { useFlowModalState } from "@/hooks/use-flow-modal-state";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/dialog";
 import { AccountForm } from "@/components/forms/account-form";
 
+import { Footer } from "../parts/footer";
 import { AccountTypeSelection } from "./components/account-type-selection";
-import { Footer } from "./components/footer";
 import { HeaderControls } from "./components/header-controls";
 
 export type AccountType =
