@@ -26,14 +26,13 @@ import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AddButton } from "@/components/buttons/AddButton";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
-import { WorkspaceSwitcher } from "@/app/(dashboard)/dashboard/_components/workspace-switcher";
-
-import type { Mail } from "../data";
-import { useMail } from "../use-mail";
-import { Nav } from "./nav";
-import { CardsStats } from "./stats";
-import { TopCategoriesTable } from "./top-categories-table";
-import { TransactionsReviewTable } from "./transaction-review-table";
+import { WorkspaceSwitcher } from "@/app/(dashboard)/_components/workspace-switcher";
+import { Nav } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/nav";
+import { CardsStats } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/stats";
+import { TopCategoriesTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/top-categories-table";
+import { TransactionsReviewTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/transaction-review-table";
+import type { Mail } from "@/app/(dashboard)/(workspaceId)/dashboard/data";
+import { useMail } from "@/app/(dashboard)/(workspaceId)/dashboard/use-mail";
 
 interface DashboardProps {
   accounts: {
@@ -270,7 +269,7 @@ export function Dashboard({
 
             <div className="flex flex-col gap-4 p-4">
               <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <form></form>
+                <form />
               </div>
 
               <CardsStats />
