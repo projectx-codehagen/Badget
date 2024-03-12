@@ -4,11 +4,9 @@ import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { siteConfig } from "@/config/site";
-import { EdgeStoreProvider } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@/components/analytics";
-import { ModalProvider } from "@/components/modal-provider";
 import { Providers } from "@/components/providers";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 
@@ -67,10 +65,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <Providers attribute="class" defaultTheme="system" enableSystem>
-            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+            {children}
             <Analytics />
             <Toaster />
-            <ModalProvider />
             <TailwindIndicator />
           </Providers>
         </body>

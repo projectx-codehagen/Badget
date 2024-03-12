@@ -1,7 +1,7 @@
+"use client";
+
 import { useCallback, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
-
 
 import { useFlowControl, type FlowStep } from "@/hooks/use-flow-control";
 import { useFlowModalState } from "@/hooks/use-flow-modal-state";
