@@ -1,11 +1,12 @@
 import { useFormContext } from "react-hook-form";
 
-
-
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-
 
 import { CommonAccountFields } from "./common-account-fields";
 import { NameField } from "./name-field";

@@ -7,7 +7,6 @@ import Balancer from "react-wrap-balancer";
 import { RouterOutputs } from "@projectx/api";
 
 import { pricingData } from "@/config/subscriptions";
-import { useSigninModal } from "@/hooks/use-signin-modal";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { BillingFormButton } from "@/components/forms/billing-form-button";
@@ -21,7 +20,7 @@ interface PricingCardsProps {
 export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
   const isYearlyDefault = false; // TODO: review when business model is defined
   const [isYearly, setIsYearly] = useState<boolean>(!!isYearlyDefault);
-  const signInModal = useSigninModal();
+  // const signInModal = useSigninModal();
 
   const toggleBilling = () => {
     setIsYearly(!isYearly);
@@ -128,7 +127,9 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
                   />
                 )
               ) : (
-                <Button onClick={signInModal.onOpen}>Sign in</Button>
+                <Link href="/signin">
+                  <Button className="relative rounded-lg">Sign In</Button>
+                </Link>
               )}
             </div>
           </div>

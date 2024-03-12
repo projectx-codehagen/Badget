@@ -34,12 +34,6 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "files.edgestore.dev",
-        port: "",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
         hostname: "tailwindui.com",
       },
       // TODO: remove code below

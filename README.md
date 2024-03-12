@@ -81,8 +81,7 @@ cp .env.example .env.local
    2. Create [Planet Scale](https://planetscale.com/) Account
    3. Create [Resend](https://resend.com) Account
    4. Create [Stripe](https://stripe.com) Account and download [Stripe CLI](https://docs.stripe.com/stripe-cli)
-   5. Create [Edge Store](https://edgestore.dev) Account
-   6. Secure [CRON](https://dev.to/chrisnowicki/how-to-secure-vercel-cron-job-routes-in-nextjs-13-9g8) jobs
+   5. Secure [CRON](https://dev.to/chrisnowicki/how-to-secure-vercel-cron-job-routes-in-nextjs-13-9g8) jobs
 
 5. Start the development server from either yarn or turbo:
 
@@ -151,7 +150,6 @@ The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you h
 - [Vercel](https://vercel.com/) – Easily preview & deploy changes with git
 - [PlanetScale](https://planetscale.com/) – A cutting-edge database platform for seamless, scalable data management
 - [Resend](https://resend.com/) – A powerful email framework for streamlined email development
-- [Edge Store](https://edgestore.dev/) - Storage, CDN and a super easy to use type-safe library.
 - [Stripe](https://stripe.com) - Payments
 
 ### UI

@@ -1,14 +1,12 @@
 import Link from "next/link";
-import { currentUser } from "@clerk/nextjs";
 
-import { docsConfig } from "@/config/docs";
 import { siteConfig } from "@/config/site";
-import { normalizeUser } from "@/lib/utils";
 import { DocsSearch } from "@/components/docs/search";
-import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
-import { NavBar } from "@/components/layout/navbar";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { TopNav } from "@/components/layout/top-nav";
 import { Icons } from "@/components/shared/icons";
+
+import { docsTopNavItems } from "../config";
 
 interface DocsLayoutProps {
   children: React.ReactNode;
@@ -32,18 +30,9 @@ const rightHeader = () => (
 );
 
 export default async function DocsLayout({ children }: DocsLayoutProps) {
-  const clerkUser = await currentUser();
-  const user = normalizeUser(clerkUser);
-
   return (
     <div className="flex min-h-screen flex-col">
-      <NavBar
-        user={user}
-        items={docsConfig.mainNav}
-        rightElements={rightHeader()}
-      >
-        <DocsSidebarNav items={docsConfig.sidebarNav} />
-      </NavBar>
+      <TopNav navItems={docsTopNavItems} />
       <div className="container flex-1">{children}</div>
       <SiteFooter />
     </div>
