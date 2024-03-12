@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 import { handleEvent, stripe } from "@projectx/stripe";
 
-import { env } from "@/env.js";
+import { env } from "@/env";
 
 export async function POST(req: NextRequest) {
   const payload = await req.text();
