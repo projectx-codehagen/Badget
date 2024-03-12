@@ -1,13 +1,33 @@
 "use client";
 
 import * as React from "react";
-import { BadgeDollarSign, BarChart, Briefcase, Building, CreditCard, DollarSign, HelpCircle, Layers, LayoutDashboard, PiggyBank, Repeat2, Search, Settings, Sparkle, Sprout, Tag, Wallet } from "lucide-react";
-
-
+import {
+  BadgeDollarSign,
+  BarChart,
+  Briefcase,
+  Building,
+  CreditCard,
+  DollarSign,
+  HelpCircle,
+  Layers,
+  LayoutDashboard,
+  PiggyBank,
+  Repeat2,
+  Search,
+  Settings,
+  Sparkle,
+  Sprout,
+  Tag,
+  Wallet,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
