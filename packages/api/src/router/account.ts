@@ -9,18 +9,22 @@ export const accountRouter = createTRPCRouter({
     .mutation(async (opts: any) => {
       const { userId } = opts.ctx.auth;
 
-      await db.transaction(async (tx) => {
-        const accountQuery = await tx
-          .insert(schema.account)
-          .values({
-            name: createAccountSchema.parse(opts.input).name,
-            accountType:
-              createAccountSchema.parse(opts.input).accountType ?? "BANK",
-            userId,
-            originalPayload: createAccountSchema.parse(opts.input),
-          })
-          .onDuplicateKeyUpdate({ set: { name: sql`name` } });
+      const accountQuery = await opts.ctx.db
+        .insert(schema.account)
+        .values({
+          name: createAccountSchema.parse(opts.input).name,
+          accountType:
+            createAccountSchema.parse(opts.input).accountType ?? "BANK",
+          userId,
+          originalPayload: createAccountSchema.parse(opts.input),
+        })
+        .onDuplicateKeyUpdate({ set: { name: sql`name` } });
 
+      if (accountQuery.rowsAffected === 0) {
+        return { success: false };
+      }
+
+      await db.transaction(async (tx) => {
         await tx
           .insert(schema.balance)
           .values({
@@ -56,5 +60,7 @@ export const accountRouter = createTRPCRouter({
             },
           });
       });
+
+      return { success: true, assetId: accountQuery.insertId };
     }),
 });

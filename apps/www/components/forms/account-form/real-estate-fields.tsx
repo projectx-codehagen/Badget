@@ -68,12 +68,21 @@ export const RealEstateFormFields = () => {
       })
       .catch(() => ({ success: false as const }));
 
+    if (!asset.success) {
+      return toast({
+        title: "Failed to add your property",
+        description: "Please try again later.",
+      });
+    }
+
     if (asset.success && realEstate.success) {
       toast({
         title: "Property added with success!",
         description: "Your property was added with success.",
       });
     }
+
+    form.reset();
   };
 
   return (

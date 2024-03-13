@@ -59,12 +59,21 @@ export const AssetFields = () => {
       .mutate(data)
       .catch(() => ({ success: false as const }));
 
+    if (!asset.success) {
+      return toast({
+        title: "Failed to add your asset",
+        description: "Please try again later.",
+      });
+    }
+
     if (asset.success) {
       toast({
         title: "Asset added with success!",
         description: "Your asset was added with success.",
       });
     }
+
+    form.reset();
   };
 
   return (

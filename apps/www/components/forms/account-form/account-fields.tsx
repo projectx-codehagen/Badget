@@ -59,16 +59,21 @@ export const AccountFields = () => {
       .mutate(data)
       .catch(() => ({ success: false as const }));
 
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify(accountBalance, null, 2)}
-          </code>
-        </pre>
-      ),
-    });
+    if (!accountBalance.success) {
+      return toast({
+        title: "Failed to add your account",
+        description: "Please try again later.",
+      });
+    }
+
+    if (accountBalance.success) {
+      toast({
+        title: "Account added with success!",
+        description: "Your account was added with success.",
+      });
+    }
+
+    form.reset();
   };
 
   return (

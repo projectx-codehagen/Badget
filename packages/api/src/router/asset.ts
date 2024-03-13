@@ -22,7 +22,7 @@ export const assetRouter = createTRPCRouter({
         })
         .onDuplicateKeyUpdate({ set: { name: sql`name` } });
 
-      if (assetQuery.insertId === 0) {
+      if (assetQuery.rowsAffected === 0) {
         return { success: false };
       }
 
@@ -62,10 +62,6 @@ export const assetRouter = createTRPCRouter({
             },
           });
       });
-
-      if (assetQuery.insertId === 0) {
-        return { success: false };
-      }
 
       return { success: true, assetId: assetQuery.insertId };
     }),
