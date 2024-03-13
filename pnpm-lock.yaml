@@ -505,9 +505,15 @@ importers:
 
   packages/validators:
     dependencies:
+      '@projectx/db':
+        specifier: workspace:^0.1.0
+        version: link:../db
       '@projectx/stripe':
         specifier: workspace:^0.1.0
         version: link:../stripe
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.29.3)(zod@3.22.4)
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -6524,6 +6530,16 @@ packages:
         optional: true
     dependencies:
       '@planetscale/database': 1.16.0
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.29.3)(zod@3.22.4):
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+    dependencies:
+      drizzle-orm: 0.29.3(@planetscale/database@1.16.0)
+      zod: 3.22.4
     dev: false
 
   /eastasianwidth@0.2.0:

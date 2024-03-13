@@ -10,8 +10,9 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 
-import { BalanceType } from "../enum";
+import { AccountType, BalanceType } from "../enum";
 import { mySqlTable } from "./_table";
+import { asset } from "./asset";
 import { currency } from "./currency";
 import { resource } from "./provider";
 
@@ -30,14 +31,19 @@ export const account = mySqlTable(
     userId: varchar("user_id", { length: 36 }),
 
     name: varchar("name", { length: 255 }).notNull(),
+    accountType: mysqlEnum("account_type", [
+      AccountType.BANK,
+      AccountType.CRYPTO,
+      AccountType.INVESTMENT,
+    ])
+      .notNull()
+      .default(AccountType.BANK),
     originalPayload: json("original_payload"),
   },
   (table) => {
     return {
-      resourceIdIdx: index("resource_id_idx").on(table.resourceId),
       orgIdIdx: index("org_id_idx").on(table.orgId),
       userIdIdx: index("user_id_idx").on(table.userId),
-      originalIdUnqIdx: uniqueIndex("original_id_unq_idx").on(table.originalId),
     };
   },
 );
@@ -66,7 +72,8 @@ export const balance = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    accountId: bigint("account_id", { mode: "bigint" }).notNull(),
+    accountId: bigint("account_id", { mode: "bigint" }),
+    assetId: bigint("asset_id", { mode: "bigint" }),
     currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
 
     amount: float("amount").notNull(),
@@ -88,12 +95,17 @@ export const balance = mySqlTable(
 /**
  * 👇 This code block will tell Drizzle that balance is related to:
  * - balance <-> account      -> 1-to-1
+ * - balance <-> asset      -> 1-to-1
  * - balance <-> currency     -> 1-to-1
  */
 export const balanceRelations = relations(balance, ({ one }) => ({
   account: one(account, {
     fields: [balance.accountId],
     references: [account.id],
+  }),
+  asset: one(asset, {
+    fields: [balance.assetId],
+    references: [asset.id],
   }),
   currency: one(currency, {
     fields: [balance.currencyIso],
@@ -129,7 +141,8 @@ export const transaction = mySqlTable(
       .notNull(),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    accountId: bigint("account_id", { mode: "bigint" }).notNull(),
+    accountId: bigint("account_id", { mode: "bigint" }),
+    assetId: bigint("asset_id", { mode: "bigint" }),
     categoryId: bigint("category_id", { mode: "bigint" }),
     currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
     originalId: varchar("original_id", { length: 36 }),
@@ -150,6 +163,7 @@ export const transaction = mySqlTable(
 /**
  * 👇 This code block will tell Drizzle that transaction is related to:
  * - transaction <-> account  -> 1-to-1
+ * - transaction <-> asset  -> 1-to-1
  * - transaction <-> category -> 1-to-1
  * - transaction <-> currency -> 1-to-1
  */
@@ -157,6 +171,10 @@ export const transactionRelations = relations(transaction, ({ one }) => ({
   account: one(account, {
     fields: [transaction.accountId],
     references: [account.id],
+  }),
+  asset: one(asset, {
+    fields: [transaction.assetId],
+    references: [asset.id],
   }),
   category: one(category, {
     fields: [transaction.categoryId],

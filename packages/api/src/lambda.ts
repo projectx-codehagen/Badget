@@ -1,4 +1,5 @@
 import { connectorRouter } from "./router/connector";
+import { currencyRouter } from "./router/currency";
 import { integrationsRouter } from "./router/integrations";
 import { createTRPCRouter } from "./trpc";
 
@@ -6,4 +7,5 @@ import { createTRPCRouter } from "./trpc";
 export const lambdaRouter = createTRPCRouter({
   integrations: integrationsRouter,
   connectors: connectorRouter,
+  currency: currencyRouter,
 });

@@ -10,7 +10,7 @@ const getBaseUrl = () => {
   return `http://localhost:3000`;
 };
 
-const lambdas = ["integrations", "connectors"];
+const lambdas = ["integrations", "connectors", "currency"];
 
 export const endingLink = (opts?: {
   headers?: HTTPHeaders | (() => HTTPHeaders);

@@ -1,3 +1,5 @@
+import { accountRouter } from "./router/account";
+import { assetRouter } from "./router/asset";
 import { authRouter } from "./router/auth";
 import { customerRouter } from "./router/customer";
 import { organizationsRouter } from "./router/organizations";
@@ -12,4 +14,6 @@ export const edgeRouter = createTRPCRouter({
   organization: organizationsRouter,
   customer: customerRouter,
   users: usersRouter,
+  account: accountRouter,
+  asset: assetRouter,
 });

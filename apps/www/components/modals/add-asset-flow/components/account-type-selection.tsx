@@ -3,9 +3,9 @@ import {
   Bitcoin,
   Building,
   Car,
-  Folder,
   GitGraph,
   MoreHorizontal,
+  Vault,
 } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
@@ -19,7 +19,15 @@ interface AccountTypeSelectionProps {
 
 const accountTypes: AccountTypeInfo[] = [
   {
-    title: "Real Estate",
+    title: "account",
+    description: "Add details about your account.",
+    type: "account",
+    value: "account",
+    label: "Account",
+    Icon: Vault,
+  },
+  {
+    title: "real estate",
     description: "Add details about your real estate.",
     type: "real-estate",
     value: "real-estate",
@@ -27,43 +35,19 @@ const accountTypes: AccountTypeInfo[] = [
     Icon: Building,
   },
   {
-    title: "Crypto",
-    description: "Add details about your crypto.",
-    type: "crypto",
-    value: "crypto",
-    label: "Crypto",
-    Icon: Bitcoin,
-  },
-  {
-    title: "Investment",
-    description: "Add details about your investment.",
+    title: "investment account",
+    description: "Add details about your investment account.",
     type: "investment",
     value: "investment",
     label: "Investment",
     Icon: GitGraph,
   },
   {
-    title: "Input",
-    description: "Add details about your input.",
-    type: "input",
-    value: "input",
-    label: "Input",
-    Icon: Folder,
-  },
-  {
-    title: "Car",
-    description: "Add details about your car.",
-    type: "car",
-    value: "car",
-    label: "Car",
-    Icon: Car,
-  },
-  {
-    title: "Misc",
-    description: "Add details about your misc.",
-    type: "misc",
-    value: "misc",
-    label: "Misc",
+    title: "generic asset",
+    description: "Add details about your asset.",
+    type: "asset",
+    value: "asset",
+    label: "Asset",
     Icon: MoreHorizontal,
   },
 ];
@@ -81,7 +65,7 @@ export const AccountTypeSelection: FC<AccountTypeSelectionProps> = ({
   };
   return (
     <RadioGroup
-      className="mb-4 grid grid-cols-3 gap-4"
+      className="mb-4 grid grid-cols-2 gap-4"
       onValueChange={(accountType) => handleSelectAccountType(accountType)}
     >
       {accountTypes.map((accountType) => (

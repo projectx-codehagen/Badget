@@ -1,5 +1,7 @@
+import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+import { AccountType, AssetType } from "@projectx/db";
 import { PLANS } from "@projectx/stripe/plans";
 
 export const userAuthSchema = z.object({
@@ -72,3 +74,34 @@ export const updateConnectorConfigSchema = z.object({
   secret: z.string().min(1, "Secret is required"),
 });
 export type UpdateConnectorConfig = z.infer<typeof updateConnectorConfigSchema>;
+
+// Schema for inserting a user - can be used to validate API requests
+export const createAccountSchema = z.object({
+  name: z.string().min(1),
+  currencyIso: z.string().min(2).max(3),
+  accountType: z.nativeEnum(AccountType),
+  amount: z.coerce.number().min(1),
+});
+export type CreateAccount = z.infer<typeof createAccountSchema>;
+
+export const createAssetSchema = z.object({
+  name: z.string().min(1),
+  currencyIso: z.string().min(2).max(3),
+  assetType: z.nativeEnum(AssetType),
+  amount: z.coerce.number().min(1),
+});
+export type CreateAsset = z.infer<typeof createAssetSchema>;
+
+export const createRealEstateSchema = z.object({
+  assetId: z.bigint().optional(),
+  name: z.string().min(1),
+  address: z.string().min(1),
+  city: z.string().min(1),
+  state: z.string().min(1),
+  postalCode: z.string().min(1),
+  purchaseDate: z.date(),
+  currencyIso: z.string().min(2).max(3),
+  purchaseValue: z.coerce.number().min(1),
+  currentValue: z.coerce.number().min(0).optional(),
+});
+export type CreateRealEstate = z.infer<typeof createRealEstateSchema>;
