@@ -122,8 +122,10 @@ export async function fetchGithubData() {
   }
 }
 
-export const formatNumberWithSpaces = (value: number) => {
+export const formatNumberWithSpaces = (value: number | string) => {
   if (!value) return value;
-  const numberAsString = value.toString();
-  return numberAsString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  if (typeof value === "string") {
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };

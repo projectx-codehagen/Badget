@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { DialogProps } from "@radix-ui/react-dialog";
+import type { DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
 import { Search } from "lucide-react";
 
@@ -142,6 +142,28 @@ const CommandShortcut = ({
 };
 CommandShortcut.displayName = "CommandShortcut";
 
+const CommandAddNew = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div"> & {
+    content?: React.ReactNode;
+    onAdd: () => void;
+  }
+>(({ className, content, onAdd, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "cursor-pointer py-6 text-center text-sm hover:bg-gray-100",
+      className,
+    )}
+    onClick={onAdd}
+    {...props}
+  >
+    {content ?? "Add new"}
+  </div>
+));
+
+CommandAddNew.displayName = "CommandAddNew";
+
 export {
   Command,
   CommandDialog,
@@ -152,4 +174,5 @@ export {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
+  CommandAddNew,
 };
