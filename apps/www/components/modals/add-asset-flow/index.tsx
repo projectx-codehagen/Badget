@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { FlowStep, useFlowControl } from "@/hooks/use-flow-control";
+import { useFlowControl, type FlowStep } from "@/hooks/use-flow-control";
 import { useFlowModalState } from "@/hooks/use-flow-modal-state";
 import {
   DialogDescription,
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { AccountForm } from "@/components/forms/account-form";
 
+import { Footer } from "../parts/footer";
 import { AccountTypeSelection } from "./components/account-type-selection";
 import { HeaderControls } from "./components/header-controls";
 

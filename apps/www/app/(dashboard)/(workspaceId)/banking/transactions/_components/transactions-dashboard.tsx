@@ -12,6 +12,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AddButton } from "@/components/buttons/AddButton";
+import AddTransactionModal from "@/components/modals/add-transaction";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
@@ -55,20 +57,25 @@ export function TransactionsDashboard({
                   <Input placeholder="Search" className="pl-8" />
                 </div>
               </form>
-              <TabsList>
-                <TabsTrigger
-                  value="all"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
-                  All transactions
-                </TabsTrigger>
-                <TabsTrigger
-                  value="unread"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
-                  Unread
-                </TabsTrigger>
-              </TabsList>
+              <div className="ms-4 flex flex-grow items-center justify-between">
+                <TabsList>
+                  <TabsTrigger
+                    value="all"
+                    className="text-zinc-600 dark:text-zinc-200"
+                  >
+                    All transactions
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="unread"
+                    className="text-zinc-600 dark:text-zinc-200"
+                  >
+                    Unread
+                  </TabsTrigger>
+                </TabsList>
+                <AddButton triggerLabel="Add Transaction">
+                  <AddTransactionModal />
+                </AddButton>
+              </div>
             </div>
             <Separator />
             <TabsContent value="all" className="m-0">

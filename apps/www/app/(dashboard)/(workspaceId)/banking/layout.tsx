@@ -1,6 +1,6 @@
-import { AddAssetButton } from "@/components/buttons/AddAssetButton";
+import { AddButton } from "@/components/buttons/AddButton";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
-import { NavItem } from "@/app/config";
+import type { NavItem } from "@/app/config";
 
 import { DashboardShell } from "../../_components/dashboard-shell";
 
@@ -23,9 +23,9 @@ export default function WorkspaceLayout(props: {
         title="Banking"
         description="Projects for this workspace will show up here"
         headerAction={
-          <AddAssetButton triggerLabel="Add Asset">
+          <AddButton triggerLabel="Add Asset">
             <AddAssetFlow />
-          </AddAssetButton>
+          </AddButton>
         }
       >
         {props.children}
