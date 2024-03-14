@@ -1,26 +1,23 @@
-import { motion } from "framer-motion";
-import {
-  BrainCircuit,
-  AreaChart,
-  PiggyBank,
-} from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { STAGGER_CHILD_VARIANTS } from "./onboarding-constants";
 import { useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
+import { AreaChart, BrainCircuit, PiggyBank } from "lucide-react";
+
+import { STAGGER_CHILD_VARIANTS } from "./onboarding-constants";
 
 export default function FinancialGoals() {
   const router = useRouter();
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
 
-      return params.toString()
+      return params.toString();
     },
-    [searchParams]
-  )
+    [searchParams],
+  );
 
   return (
     <motion.div
@@ -53,33 +50,45 @@ export default function FinancialGoals() {
       </motion.div>
       <motion.div
         variants={STAGGER_CHILD_VARIANTS}
-        className="grid w-full grid-cols-1 divide-y divide-border text-foreground rounded-md border border-border md:grid-cols-3 md:divide-x"
+        className="grid w-full grid-cols-1 divide-y divide-border rounded-md border border-border text-foreground md:grid-cols-3 md:divide-x"
       >
         <button
-          className="flex flex-col items-center justify-center overflow-hidden p-5 space-y-5 transition-colors hover:bg-gray-200 hover:dark:bg-gray-800 md:p-10 min-h-[200px]"
+          className="flex min-h-[200px] flex-col items-center justify-center space-y-5 overflow-hidden p-5 transition-colors hover:bg-zinc-200 hover:dark:bg-zinc-800 md:p-10"
           onClick={() =>
-            router.push("/onboarding" + "?" + createQueryString("step", "connect-accounts"))
+            router.push(
+              "/onboarding" +
+                "?" +
+                createQueryString("step", "connect-accounts"),
+            )
           }
         >
-          <PiggyBank className="h-auto pointer-events-none w-12 sm:w-12" />
+          <PiggyBank className="pointer-events-none h-auto w-12 sm:w-12" />
           <p>Save more money</p>
         </button>
         <button
-          className="flex flex-col items-center justify-center overflow-hidden p-5 space-y-5 transition-colors hover:bg-gray-200 hover:dark:bg-gray-800 md:p-10 min-h-[200px]"
+          className="flex min-h-[200px] flex-col items-center justify-center space-y-5 overflow-hidden p-5 transition-colors hover:bg-zinc-200 hover:dark:bg-zinc-800 md:p-10"
           onClick={() =>
-            router.push("/onboarding" + "?" + createQueryString("step", "connect-accounts"))
+            router.push(
+              "/onboarding" +
+                "?" +
+                createQueryString("step", "connect-accounts"),
+            )
           }
         >
-          <AreaChart className="h-auto pointer-events-none w-12 sm:w-12" />
+          <AreaChart className="pointer-events-none h-auto w-12 sm:w-12" />
           <p>Track my expenses</p>
         </button>
         <button
-          className="flex flex-col items-center justify-center overflow-hidden p-5 space-y-5 transition-colors hover:bg-gray-200 hover:dark:bg-gray-800 md:p-10 min-h-[200px]"
+          className="flex min-h-[200px] flex-col items-center justify-center space-y-5 overflow-hidden p-5 transition-colors hover:bg-zinc-200 hover:dark:bg-zinc-800 md:p-10"
           onClick={() =>
-            router.push("/onboarding" + "?" + createQueryString("step", "connect-accounts"))
+            router.push(
+              "/onboarding" +
+                "?" +
+                createQueryString("step", "connect-accounts"),
+            )
           }
         >
-          <BrainCircuit className="h-auto pointer-events-none w-12 sm:w-12" />
+          <BrainCircuit className="pointer-events-none h-auto w-12 sm:w-12" />
           <p>Use AI Intelligence</p>
         </button>
       </motion.div>
