@@ -1,5 +1,4 @@
 import { MetadataRoute } from "next";
-import { allPages, allPosts } from "contentlayer/generated";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const domain = "https://www.badget.io/"; // Replace with your actual domain
@@ -24,13 +23,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // }));
 
   // Sitemap for blog posts
-  const postsSitemap = allPosts
-    .filter((post) => post.published)
-    .map((post) => ({
-      url: `https://${domain}/${post.slug.replace(/^\/+/g, "")}`, // Correct path and remove leading slashes
-      lastModified: new Date(post.date),
-    }));
+  // const postsSitemap = allPosts
+  //   .filter((post) => post.published)
+  //   .map((post) => ({
+  //     url: `https://${domain}/${post.slug.replace(/^\/+/g, "")}`, // Correct path and remove leading slashes
+  //     lastModified: new Date(post.date),
+  //   }));
 
   // Combine sitemaps
-  return [...staticPagesSitemap, ...postsSitemap];
+  return [...staticPagesSitemap];
 }

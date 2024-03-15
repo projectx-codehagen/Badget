@@ -10,13 +10,6 @@
     "./lambda": "./src/lambda.ts",
     "./transformer": "./src/transformer.ts"
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",

@@ -1,13 +1,18 @@
-// FIX: I changed .mjs to .js
-// More info: https://github.com/shadcn-ui/taxonomy/issues/100#issuecomment-1605867844
+import { fileURLToPath } from "url";
+import withMDX from "@next/mdx";
+import _jiti from "jiti";
 
-const { createContentlayerPlugin } = require("next-contentlayer");
+const jiti = _jiti(fileURLToPath(import.meta.url));
 
-import("./env.mjs");
+// Import env files to validate at build time. Use jiti so we can load .ts files in here.
+jiti("./env");
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const config = {
   reactStrictMode: true,
+
+  // Configure `pageExtensions` to include MDX files
+  pageExtensions: ["mdx", "ts", "tsx"],
 
   transpilePackages: [
     "@projectx/api",
@@ -49,8 +54,4 @@ const nextConfig = {
   },
 };
 
-const withContentlayer = createContentlayerPlugin({
-  // Additional Contentlayer config options
-});
-
-module.exports = withContentlayer(nextConfig);
+export default withMDX()(config);

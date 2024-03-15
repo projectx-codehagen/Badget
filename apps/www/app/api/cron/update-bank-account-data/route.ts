@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { db, schema, sql } from "@projectx/db";
 
-import { env } from "@/env.mjs";
+import { env } from "@/env";
 import { BankingData, connectorFacade, toConnectorEnv } from "@/lib/connector";
 
 export async function POST(req: NextRequest) {
