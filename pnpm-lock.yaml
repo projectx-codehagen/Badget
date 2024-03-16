@@ -59,6 +59,9 @@ importers:
       '@projectx/db':
         specifier: workspace:^0.1.0
         version: link:../../packages/db
+      '@projectx/stripe':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/stripe
       '@projectx/transactional':
         specifier: workspace:^0.1.0
         version: link:../../packages/transactional
