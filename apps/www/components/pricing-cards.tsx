@@ -119,9 +119,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
                   >
                     Go to dashboard
                   </Link>
-                ) : (
-                  null
-                )
+                ) : null
               ) : (
                 <Link href="/signin">
                   <Button className="relative rounded-lg">Sign In</Button>
