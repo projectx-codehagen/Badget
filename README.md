@@ -79,8 +79,7 @@ cp .env.example .env.local
 
    1. Create [Clerk](https://clerk.com) Account
    2. Create [Planet Scale](https://planetscale.com/) Account
-   3. Create [Resend](https://resend.com) Account
-   4. Secure [CRON](https://dev.to/chrisnowicki/how-to-secure-vercel-cron-job-routes-in-nextjs-13-9g8) jobs
+   3. Secure [CRON](https://dev.to/chrisnowicki/how-to-secure-vercel-cron-job-routes-in-nextjs-13-9g8) jobs
 
 5. Start the development server from either yarn or turbo:
 
@@ -104,14 +103,6 @@ You can also use `docker-compose` to have a Mysql database locally, instead of r
 1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
 2. run `docker-compose --env-file .env.local up` to start the DB.
 3. run `pnpm run db:push`.
-
-## Email provider
-
-This project uses [Resend](https://resend.com/) to handle transactional emails. You need to add create an account and get an api key needed for authentication.
-
-Please be aware that the Resend is designed to send test emails exclusively to the email address registered with the account, or to `delivered@resend.dev`, where they are logged on their dashboard.
-
-The default setting for `TEST_EMAIL_ADDRESS` is `delivered@resend.dev` but you have the option to change it to the email address that is associated with your Resend account.
 
 ## Roadmap
 
