@@ -13,7 +13,6 @@ export const env = createEnv({
    * This way you can ensure the app isn't built with invalid env vars.
    */
   server: {
-    CRON_SECRET: z.string().min(1),
     DATABASE_HOST: z.string().min(1),
     DATABASE_USERNAME: z.string().min(1),
     DATABASE_PASSWORD: z.string().min(1),

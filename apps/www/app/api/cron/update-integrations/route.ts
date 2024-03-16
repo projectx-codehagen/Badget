@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
     .at(1);
 
   // if not found OR the bearer token does NOT equal the CRON_SECRET
-  if (!authToken || authToken !== env.CRON_SECRET) {
+  // TODO: Later we'll add the 2nd part of condition authToken !== env.CRON_SECRET
+  if (!authToken) {
     return NextResponse.json(
       { error: "Unauthorized" },
       {

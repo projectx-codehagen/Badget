@@ -79,7 +79,6 @@ cp .env.example .env.local
 
    1. Create [Clerk](https://clerk.com) Account
    2. Create [Planet Scale](https://planetscale.com/) Account
-   3. Secure [CRON](https://dev.to/chrisnowicki/how-to-secure-vercel-cron-job-routes-in-nextjs-13-9g8) jobs
 
 5. Start the development server from either yarn or turbo:
 
