@@ -1,8 +1,6 @@
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 import { AccountType, AssetType } from "@projectx/db";
-import { PLANS } from "@projectx/stripe/plans";
 
 export const userAuthSchema = z.object({
   email: z.string().email(),
@@ -36,13 +34,13 @@ export type RenameProject = z.infer<typeof renameProjectSchema>;
 
 export const purchaseOrgSchema = z.object({
   orgName: z.string().min(5, "Name must be at least 5 characters"),
-  planId: z.string().refine(
-    (str) =>
-      Object.values(PLANS)
-        .map((p) => p.priceId)
-        .includes(str),
-    "Invalid planId",
-  ),
+  // planId: z.string().refine(
+  //   (str) =>
+  //     Object.values(PLANS)
+  //       .map((p) => p.priceId)
+  //       .includes(str),
+  //   "Invalid planId",
+  // ),
 });
 export type PurchaseOrg = z.infer<typeof purchaseOrgSchema>;
 

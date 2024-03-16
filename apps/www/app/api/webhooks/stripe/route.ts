@@ -3,8 +3,6 @@ import type { NextRequest } from "next/server";
 
 import { handleEvent, stripe } from "@projectx/stripe";
 
-import { env } from "@/env";
-
 export async function POST(req: NextRequest) {
   const payload = await req.text();
   const signature = req.headers.get("Stripe-Signature")!;
@@ -13,7 +11,7 @@ export async function POST(req: NextRequest) {
     const event = stripe.webhooks.constructEvent(
       payload,
       signature,
-      env.STRIPE_WEBHOOK_SECRET,
+      "", // INFO: later this should be the env variable env.STRIPE_WEBHOOK_SECRET
     );
 
     await handleEvent(event);

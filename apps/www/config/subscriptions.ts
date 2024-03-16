@@ -1,6 +1,4 @@
-import { SubscriptionPlan } from "@/types";
-
-import { env } from "@/env";
+import type { SubscriptionPlan } from "@/types";
 
 export const pricingData: SubscriptionPlan[] = [
   {
@@ -42,7 +40,7 @@ export const pricingData: SubscriptionPlan[] = [
       monthly: 10,
     },
     stripeIds: {
-      monthly: env.NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID,
+      monthly: "", // INFO: Later this will be env.NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID
     },
   },
   {
@@ -60,7 +58,7 @@ export const pricingData: SubscriptionPlan[] = [
       monthly: 20,
     },
     stripeIds: {
-      monthly: env.NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID,
+      monthly: "", // INFO: Later this will be env.NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID
     },
   },
 ];

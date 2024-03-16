@@ -80,8 +80,7 @@ cp .env.example .env.local
    1. Create [Clerk](https://clerk.com) Account
    2. Create [Planet Scale](https://planetscale.com/) Account
    3. Create [Resend](https://resend.com) Account
-   4. Create [Stripe](https://stripe.com) Account and download [Stripe CLI](https://docs.stripe.com/stripe-cli)
-   5. Secure [CRON](https://dev.to/chrisnowicki/how-to-secure-vercel-cron-job-routes-in-nextjs-13-9g8) jobs
+   4. Secure [CRON](https://dev.to/chrisnowicki/how-to-secure-vercel-cron-job-routes-in-nextjs-13-9g8) jobs
 
 5. Start the development server from either yarn or turbo:
 
@@ -89,21 +88,6 @@ cp .env.example .env.local
 # At the root of the mono repo
 pnpm run dev:web
 ```
-
-## Stripe
-
-To set up Stripe locally with environment variables:
-
-1. Create a [Stripe](https://stripe.com/in) account.
-2. After signing in, go to the dashboard and switch to Test mode.
-3. In the dashboard, switch to the API keys section.
-4. Reveal your secret key and paste it into your `.env.local` file.
-5. For the webhook key, switch to the Webhooks tab, add an endpoint to reveal the secret key.
-6. To get the `PRODUCT_ID` and `PRICE_ID`, head over to [Stripe's API Docs](https://docs.stripe.com/api/prices/object).
-7. From the docs, use the API with your `STRIPE_API_KEY` to create a product & price object.
-8. The response object from the API contains two keys: `id` and `product`.
-9. Use the `id` as your `PRICE_ID` and `product` as your `PRODUCT_ID`.
-10. You can use the same keys for the STD and PRO variables.
 
 ## Database
 
