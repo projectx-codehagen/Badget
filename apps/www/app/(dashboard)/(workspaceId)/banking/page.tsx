@@ -14,7 +14,7 @@ export default function Page(_props: { params: { workspaceId: string } }) {
       <CardsStats />
       {/* <div className="ml-6 mt-6 flex gap-4"> */}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-2">
         <TransactionsReviewTable />
         <TopCategoriesTable />
       </div>

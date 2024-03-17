@@ -81,7 +81,7 @@ export function Dashboard({
           }}
           className={cn(
             isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
+            "min-w-[50px] transition-all duration-300 ease-in-out",
           )}
         >
           <div
