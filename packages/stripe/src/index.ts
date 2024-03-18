@@ -4,20 +4,21 @@ import { env } from "./env.mjs";
 
 export * from "./plans";
 export * from "./webhooks";
+export * from "./utils";
 
 export type { Stripe };
 
-let stripe: Stripe | undefined;
-
-const useStripe = env.USE_STRIPE === "true";
-
-if (useStripe && env.STRIPE_API_KEY) {
-  stripe = new Stripe(env.STRIPE_API_KEY, {
-    apiVersion: "2023-10-16",
-    typescript: true,
-  });
-} else {
+export const initializeStripe = (): Stripe | undefined => {
+  if (env.USE_STRIPE === "true" && env.STRIPE_API_KEY) {
+    return new Stripe(env.STRIPE_API_KEY, {
+      apiVersion: "2023-10-16",
+      typescript: true,
+    });
+  }
   console.log("Stripe integration is disabled or not properly configured.");
-}
+  return undefined;
+};
+
+const stripe = initializeStripe();
 
 export { stripe };

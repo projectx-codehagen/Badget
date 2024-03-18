@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { api } from "@/trpc/server";
 import { currentUser } from "@clerk/nextjs";
 
-import { stripe } from "@projectx/stripe";
+import { withStripe } from "@projectx/stripe";
 
 import { absoluteUrl } from "@/lib/utils";
 
@@ -18,10 +18,10 @@ const billingUrl = absoluteUrl("/pricing");
 
 export async function generateUserStripe(
   priceId: string,
-): Promise<responseAction> {
-  let redirectUrl: string = "";
+): Promise<responseAction | null> {
+  return withStripe<responseAction>(async (stripe) => {
+    let redirectUrl = "";
 
-  try {
     const user = await currentUser();
 
     if (!user || !user.emailAddresses) {
@@ -60,10 +60,8 @@ export async function generateUserStripe(
 
       redirectUrl = stripeSession.url as string;
     }
-  } catch (error) {
-    throw new Error("Failed to generate user stripe session");
-  }
 
-  // no revalidatePath because redirect
-  redirect(redirectUrl);
+    // no revalidatePath because redirect
+    redirect(redirectUrl);
+  });
 }

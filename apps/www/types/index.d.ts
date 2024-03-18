@@ -46,6 +46,6 @@ export type SubscriptionPlan = {
     monthly: number;
   };
   stripeIds: {
-    monthly: string | null;
+    monthly: string | null | undefined;
   };
 };

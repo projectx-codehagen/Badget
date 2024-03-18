@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { AccountType, AssetType } from "@projectx/db";
-import { PLANS } from "@projectx/stripe/plans";
+import { PLANS, type PlanInfo } from "@projectx/stripe/plans";
 
 export const userAuthSchema = z.object({
   email: z.string().email(),
@@ -38,6 +38,7 @@ export const purchaseOrgSchema = z.object({
   planId: z.string().refine(
     (str) =>
       Object.values(PLANS)
+        .filter((p): p is PlanInfo => p !== undefined)
         .map((p) => p.priceId)
         .includes(str),
     "Invalid planId",

@@ -9,6 +9,7 @@ import { toDecimal } from "dinero.js";
 import { Check, ChevronDown, ChevronsUpDown, PlusCircle } from "lucide-react";
 
 import { env } from "@projectx/stripe/env";
+import type { ExtendedPlanInfo, PlansResponse } from "@projectx/stripe/plans";
 import type { PurchaseOrg } from "@projectx/validators";
 import { purchaseOrgSchema } from "@projectx/validators";
 
@@ -247,9 +248,9 @@ export function WorkspaceSwitcher({ isCollapsed }: WorkspaceSwitcherProps) {
 function NewOrganizationDialog(props: { closeDialog: () => void }) {
   const useStripe = env.USE_STRIPE === "true";
 
-  let plans: any = null;
+  let plans: any | null = null;
   if (useStripe) {
-    plans = React.use(api.stripe.plans.query());
+    plans = api.stripe.plans.query();
   }
 
   const form = useZodForm({ schema: purchaseOrgSchema });
@@ -261,7 +262,7 @@ function NewOrganizationDialog(props: { closeDialog: () => void }) {
       .mutate(data)
       .catch(() => ({ success: false as const }));
 
-    if (response.success) window.location.href = response.url;
+    if (response?.success) window.location.href = response.url as string;
     else
       toaster.toast({
         title: "Error",
@@ -324,7 +325,7 @@ function NewOrganizationDialog(props: { closeDialog: () => void }) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {plans.map((plan) => (
+                      {plans?.map((plan: ExtendedPlanInfo) => (
                         <SelectItem key={plan.priceId} value={plan.priceId}>
                           <span className="font-medium">{plan.name}</span> -{" "}
                           <span className="text-muted-foreground">
