@@ -16,6 +16,8 @@ export const env = createEnv({
     DATABASE_HOST: z.string().min(1),
     DATABASE_USERNAME: z.string().min(1),
     DATABASE_PASSWORD: z.string().min(1),
+    STRIPE_API_KEY: z.string().min(1),
+    STRIPE_WEBHOOK_SECRET: z.string().min(1),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -23,6 +25,10 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID: z.string().min(1),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -31,6 +37,14 @@ export const env = createEnv({
     VERCEL_ENV: process.env.VERCEL_ENV,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID:
+      process.env.NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID,
+    NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID:
+      process.env.NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID,
+    NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID:
+      process.env.NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID,
+    NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID:
+      process.env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

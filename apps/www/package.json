@@ -103,6 +103,7 @@
     "react-textarea-autosize": "^8.5.3",
     "react-wrap-balancer": "^1.1.0",
     "recharts": "^2.10.3",
+    "stripe": "^14.15.0",
     "superjson": "2.2.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",

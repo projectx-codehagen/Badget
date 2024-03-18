@@ -31,13 +31,13 @@ export const stripeRouter = createTRPCRouter({
         /**
          * User is subscribed, create a billing portal session
          */
-        // const session = await stripe.billingPortal.sessions.create({
-        //   customer: customer[0].stripeId,
-        //   return_url: returnUrl,
-        // });
+        const session = await stripe.billingPortal.sessions.create({
+          customer: customer[0].stripeId,
+          return_url: returnUrl,
+        });
         return {
           success: true as const,
-          url: returnUrl, // INFO: Later we'll return the session.url
+          url: session.url,
         };
       }
 
@@ -46,26 +46,26 @@ export const stripeRouter = createTRPCRouter({
        * Use existing email address if available
        */
 
-      // const user = await currentUser();
-      // const email = user?.emailAddresses.find(
-      //   (addr) => addr.id === user?.primaryEmailAddressId,
-      // )?.emailAddress;
+      const user = await currentUser();
+      const email = user?.emailAddresses.find(
+        (addr) => addr.id === user?.primaryEmailAddressId,
+      )?.emailAddress;
 
-      // const session = await stripe.checkout.sessions.create({
-      //   mode: "subscription",
-      //   payment_method_types: ["card"],
-      //   customer_email: email,
-      //   client_reference_id: userId,
-      //   subscription_data: { metadata: { userId } },
-      //   cancel_url: returnUrl,
-      //   success_url: returnUrl,
-      //   line_items: [{ price: PLANS.PRO?.priceId, quantity: 1 }],
-      // });
+      const session = await stripe.checkout.sessions.create({
+        mode: "subscription",
+        payment_method_types: ["card"],
+        customer_email: email,
+        client_reference_id: userId,
+        subscription_data: { metadata: { userId } },
+        cancel_url: returnUrl,
+        success_url: returnUrl,
+        line_items: [{ price: PLANS.PRO?.priceId, quantity: 1 }],
+      });
 
-      // if (!session.url) return { success: false as const };
+      if (!session.url) return { success: false as const };
       return {
         success: true as const,
-        url: returnUrl, // INFO: Later we'll return the session.url
+        url: session.url,
       };
     }),
 
@@ -106,27 +106,27 @@ export const stripeRouter = createTRPCRouter({
   purchaseOrg: protectedProcedure
     .input(purchaseOrgSchema)
     .mutation(async (opts) => {
-      // const { userId } = opts.ctx.auth;
-      // const { orgName } = opts.input;
+      const { userId } = opts.ctx.auth;
+      const { orgName, planId } = opts.input;
 
       const baseUrl = new URL(opts.ctx.req?.nextUrl ?? env.NEXTJS_URL).origin;
 
-      // const session = await stripe.checkout.sessions.create({
-      //   mode: "subscription",
-      //   payment_method_types: ["card"],
-      //   client_reference_id: userId,
-      //   subscription_data: {
-      //     metadata: { userId, organizationName: orgName },
-      //   },
-      //   success_url: `${baseUrl}/onboarding`,
-      //   cancel_url: baseUrl,
-      //   line_items: [{ price: planId, quantity: 1 }],
-      // });
+      const session = await stripe.checkout.sessions.create({
+        mode: "subscription",
+        payment_method_types: ["card"],
+        client_reference_id: userId,
+        subscription_data: {
+          metadata: { userId, organizationName: orgName },
+        },
+        success_url: `${baseUrl}/onboarding`,
+        cancel_url: baseUrl,
+        line_items: [{ price: planId, quantity: 1 }],
+      });
 
-      // if (!session.url) return { success: false as const };
+      if (!session.url) return { success: false as const };
       return {
         success: true as const,
-        url: `${baseUrl}/onboarding`, // INFO: Later we'll return the session.url
+        url: session.url,
       };
     }),
 });

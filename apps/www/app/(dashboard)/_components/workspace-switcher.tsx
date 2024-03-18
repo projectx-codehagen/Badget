@@ -244,7 +244,7 @@ export function WorkspaceSwitcher({ isCollapsed }: WorkspaceSwitcherProps) {
 }
 
 function NewOrganizationDialog(props: { closeDialog: () => void }) {
-  // const plans = React.use(api.stripe.plans.query());
+  const plans = React.use(api.stripe.plans.query());
 
   const form = useZodForm({ schema: purchaseOrgSchema });
 
@@ -293,7 +293,7 @@ function NewOrganizationDialog(props: { closeDialog: () => void }) {
             )}
           />
 
-          {/* <FormField
+          <FormField
             control={form.control}
             name="planId"
             render={({ field }) => (
@@ -335,7 +335,7 @@ function NewOrganizationDialog(props: { closeDialog: () => void }) {
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
 
           <DialogFooter>
             <Button variant="outline" onClick={() => props.closeDialog()}>

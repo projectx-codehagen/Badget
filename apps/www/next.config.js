@@ -18,6 +18,7 @@ const config = {
     "@projectx/api",
     "@projectx/db",
     "@projectx/openbanking",
+    "@projectx/stripe",
     "@projectx/transactional",
     "@projectx/validators",
   ],
