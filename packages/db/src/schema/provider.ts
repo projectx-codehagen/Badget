@@ -1,73 +1,78 @@
 import { relations, sql } from "drizzle-orm";
-import {
-  bigint,
-  index,
-  json,
-  mysqlEnum,
-  timestamp,
-  varchar,
-} from "drizzle-orm/mysql-core";
+import { index, json, pgEnum, timestamp, varchar } from "drizzle-orm/pg-core";
 
 import { ConnectorEnv, ConnectorStatus, ConnectorType } from "../enum";
-import { mySqlTable } from "./_table";
+import { pgTable } from "./_table";
 import { country } from "./country";
 import { account } from "./openbanking";
 
-export const connectorConfig = mySqlTable(
+export const connectorEnvEnum = pgEnum("env", [
+  ConnectorEnv.DEVELOPMENT,
+  ConnectorEnv.SANDBOX,
+  ConnectorEnv.PRODUCTION,
+]);
+
+export const connectorConfig = pgTable(
   "connectorConfig",
   {
-    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
+    id: varchar("id", { length: 30 }).primaryKey(), // prefix_ + nanoid (16)
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
 
     orgId: varchar("org_id", { length: 36 }).notNull(),
     secret: json("secret"),
-    env: mysqlEnum("env", [
-      ConnectorEnv.DEVELOPMENT,
-      ConnectorEnv.SANDBOX,
-      ConnectorEnv.PRODUCTION,
-    ]).notNull(),
+    env: connectorEnvEnum("env").notNull(),
 
-    connectorId: bigint("connector_id", { mode: "bigint" }),
+    connectorId: varchar("connector_id", { length: 30 }),
   },
   (table) => {
     return {
-      orgIdIdx: index("org_id_idx").on(table.orgId),
+      orgIdIdx: index().on(table.orgId),
     };
   },
 );
 
-export const connector = mySqlTable("connector", {
-  id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
+export const connectorStatusEnum = pgEnum("status", [
+  ConnectorStatus.ACTIVE,
+  ConnectorStatus.BETA,
+  ConnectorStatus.DEV,
+  ConnectorStatus.INACTIVE,
+]);
+
+export const connectorTypeEnum = pgEnum("type", [
+  ConnectorType.DIRECT,
+  ConnectorType.AGGREGATED,
+]);
+
+export const connector = pgTable("connector", {
+  id: varchar("id", { length: 30 }).primaryKey(), // prefix_ + nanoid (16)
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updated_at").onUpdateNow(),
+  updatedAt: timestamp("updated_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 
   name: varchar("name", { length: 36 }).notNull(), // TODO: maybe use enum ?
   logoUrl: varchar("logo_url", { length: 255 }),
-  status: mysqlEnum("status", [
-    ConnectorStatus.ACTIVE,
-    ConnectorStatus.BETA,
-    ConnectorStatus.DEV,
-    ConnectorStatus.INACTIVE,
-  ]).notNull(),
-  type: mysqlEnum("type", [
-    ConnectorType.DIRECT,
-    ConnectorType.AGGREGATED,
-  ]).notNull(),
+  status: connectorStatusEnum("status").notNull(),
+  type: connectorTypeEnum("type").notNull(),
 });
 
-export const integration = mySqlTable(
+export const integration = pgTable(
   "integration",
   {
-    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
+    id: varchar("id", { length: 30 }).primaryKey(), // prefix_ + nanoid (16)
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
 
     name: varchar("name", { length: 255 }).notNull(),
     logoUrl: varchar("logo_url", { length: 255 }),
@@ -75,40 +80,42 @@ export const integration = mySqlTable(
       length: 127,
     }).unique(),
 
-    connectorId: bigint("connector_id", { mode: "bigint" }).notNull(),
+    connectorId: varchar("connector_id", { length: 30 }).notNull(),
   },
   (table) => {
     return {
-      connectorIdIdx: index("connector_id_idx").on(table.connectorId),
+      connectorIdIdx: index().on(table.connectorId),
     };
   },
 );
 
-export const resource = mySqlTable(
+export const resource = pgTable(
   "resource",
   {
-    id: bigint("id", { mode: "bigint" }).primaryKey().autoincrement(),
+    id: varchar("id", { length: 30 }).primaryKey(), // prefix_ + nanoid (16)
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
 
     // TODO: add fields
-    integrationId: bigint("integration_id", { mode: "bigint" }).notNull(),
+    integrationId: varchar("integration_id", { length: 30 }).notNull(),
     originalId: varchar("original_id", { length: 36 }).notNull(),
     userId: varchar("user_id", { length: 36 }).notNull(),
   },
   (table) => {
     return {
-      integrationIdIdx: index("integration_id_idx").on(table.integrationId),
+      integrationIdIdx: index().on(table.integrationId),
     };
   },
 );
 
 /**
  * 👇 This code block will tell Drizzle that connector is related to:
- * - connector <-> connectorConfig  -> 1-to-N
- * - connector <-> integration      -> 1-to-N
+ * - connector <-> connectorConfig -> 1-to-N
+ * - connector <-> integration     -> 1-to-N
  */
 export const connectorsRelations = relations(connector, ({ many }) => ({
   connectorConfigs: many(connectorConfig),

@@ -1,44 +1,40 @@
 import { sql } from "drizzle-orm";
-import {
-  bigint,
-  index,
-  mysqlEnum,
-  timestamp,
-  varchar,
-} from "drizzle-orm/mysql-core";
+import { index, pgEnum, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 
 import { SubscriptionPlan } from "../enum";
-import { mySqlTable } from "./_table";
+import { pgTable } from "./_table";
 
-export const customer = mySqlTable(
+export const planEnum = pgEnum("plan", [
+  SubscriptionPlan.FREE,
+  SubscriptionPlan.STANDARD,
+  SubscriptionPlan.PRO,
+]);
+
+export const customer = pgTable(
   "customer",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    id: varchar("id", { length: 30 }).primaryKey(), // prefix_ + nanoid (16)
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
+    updatedAt: timestamp("updated_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
 
     stripeId: varchar("stripe_id", { length: 36 }).notNull().unique(),
     subscriptionId: varchar("subscription_id", { length: 36 }),
-    clerkUserId: varchar("clerk_user_id", { length: 36 }).notNull(),
-    clerkOrganizationId: varchar("clerk_organization_id", { length: 36 }),
+    userId: varchar("user_id", { length: 36 }).notNull(),
+    orgId: varchar("org_id", { length: 36 }),
 
     name: varchar("name", { length: 256 }),
-    plan: mysqlEnum("plan", [
-      SubscriptionPlan.FREE,
-      SubscriptionPlan.STANDARD,
-      SubscriptionPlan.PRO,
-    ]),
+    plan: planEnum("plan"),
     paidUntil: timestamp("paid_until"),
     endsAt: timestamp("ends_at"),
   },
   (table) => {
     return {
-      clerkUserIdIdx: index("clerk_user_id_idx").on(table.clerkUserId),
-      clerkOrganizationIdIDX: index("clerk_organization_id_idx").on(
-        table.clerkOrganizationId,
-      ),
+      userIdIdx: index().on(table.userId),
+      orgIdIdx: index().on(table.orgId),
     };
   },
 );

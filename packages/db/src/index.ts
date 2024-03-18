@@ -30,7 +30,7 @@ export type CanonicalAccount = typeof schema.account.$inferInsert;
 export type CanonicalBalance = typeof schema.balance.$inferInsert;
 export type CanonicalTransaction = typeof schema.transaction.$inferInsert;
 
-export { mySqlTable as tableCreator } from "./schema/_table";
+export { pgTable as tableCreator } from "./schema/_table";
 export * from "./enum";
 
 export * from "drizzle-orm";
