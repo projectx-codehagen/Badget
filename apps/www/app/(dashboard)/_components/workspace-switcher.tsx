@@ -8,6 +8,7 @@ import { useOrganization, useOrganizationList, useUser } from "@clerk/nextjs";
 import { toDecimal } from "dinero.js";
 import { Check, ChevronDown, ChevronsUpDown, PlusCircle } from "lucide-react";
 
+import { env } from "@projectx/stripe/env";
 import type { PurchaseOrg } from "@projectx/validators";
 import { purchaseOrgSchema } from "@projectx/validators";
 
@@ -244,7 +245,12 @@ export function WorkspaceSwitcher({ isCollapsed }: WorkspaceSwitcherProps) {
 }
 
 function NewOrganizationDialog(props: { closeDialog: () => void }) {
-  const plans = React.use(api.stripe.plans.query());
+  const useStripe = env.USE_STRIPE === "true";
+
+  let plans: any = null;
+  if (useStripe) {
+    plans = React.use(api.stripe.plans.query());
+  }
 
   const form = useZodForm({ schema: purchaseOrgSchema });
 
@@ -293,49 +299,51 @@ function NewOrganizationDialog(props: { closeDialog: () => void }) {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="planId"
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex justify-between">
-                  <FormLabel>Subscription plan *</FormLabel>
-                  <Link
-                    href="/pricing"
-                    className="text-xs text-muted-foreground hover:underline"
+          {useStripe && (
+            <FormField
+              control={form.control}
+              name="planId"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex justify-between">
+                    <FormLabel>Subscription plan *</FormLabel>
+                    <Link
+                      href="/pricing"
+                      className="text-xs text-muted-foreground hover:underline"
+                    >
+                      What&apos;s included in each plan?
+                    </Link>
+                  </div>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
                   >
-                    What&apos;s included in each plan?
-                  </Link>
-                </div>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a plan" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {plans.map((plan) => (
-                      <SelectItem key={plan.priceId} value={plan.priceId}>
-                        <span className="font-medium">{plan.name}</span> -{" "}
-                        <span className="text-muted-foreground">
-                          {toDecimal(
-                            plan.price,
-                            ({ value, currency }) =>
-                              `${currencySymbol(currency.code)}${value}`,
-                          )}{" "}
-                          per month
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a plan" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {plans.map((plan) => (
+                        <SelectItem key={plan.priceId} value={plan.priceId}>
+                          <span className="font-medium">{plan.name}</span> -{" "}
+                          <span className="text-muted-foreground">
+                            {toDecimal(
+                              plan.price,
+                              ({ value, currency }) =>
+                                `${currencySymbol(currency.code)}${value}`,
+                            )}{" "}
+                            per month
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
           <DialogFooter>
             <Button variant="outline" onClick={() => props.closeDialog()}>
