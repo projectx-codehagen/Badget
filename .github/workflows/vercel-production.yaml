@@ -1,0 +1,27 @@
+name: Vercel Production Deployment
+
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Deploy-Production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ env.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ env.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ env.VERCEL_TOKEN }}

@@ -1,0 +1,104 @@
+name: Vercel Preview Deployment
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  NEON_API_KEY: ${{ secrets.NEON_API_KEY }} # You can generate a an API key in your account settings
+  NEON_DATABASE_USERNAME: ${{ secrets.NEON_DATABASE_USERNAME }} # change this to your database username
+  NEON_DATABASE: ${{ secrets.NEON_DATABASE }}
+  NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }} # You can find this in your project settings
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+  SCHEMA_PATH: packages/db/src/schema/
+  NEON_STAGING_BRANCH: main
+
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: ./tooling/github/setup
+
+      - name: Check if PR has schema changes
+        id: check_schema_changes
+        run: |
+          if git diff --quiet HEAD^..HEAD -- ${{ env.SCHEMA_PATH }}; then
+            echo "CHANGED=false" >> $GITHUB_OUTPUT
+          else
+            echo "CHANGED=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get branch name
+        if: steps.check_schema_changes.outputs.CHANGED == 'true'
+        id: branch-name
+        uses: tj-actions/branch-names@v8
+
+      - name: Upsert a new branch on Neon
+        if: steps.check_schema_changes.outputs.CHANGED == 'true'
+        id: create_branch
+        uses: neondatabase/create-branch-action@v5
+        with:
+          project_id: ${{ env.NEON_PROJECT_ID }}
+          parent: ${{ env.NEON_STAGING_BRANCH  }} # optional (defaults to your primary branch)
+          branch_name: preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }}
+          username: ${{ env.NEON_DATABASE_USERNAME }}
+          api_key: ${{ env.NEON_API_KEY }}
+          database: ${{ env.NEON_DATABASE }}
+
+      - name: Sync schema changes to the PR branch
+        if: steps.check_schema_changes.outputs.CHANGED == 'true'
+        run: |
+          export DATABASE_URL=${{ steps.create_branch.outputs.db_url_with_pooler }}
+          export DATABASE_URL_UNPOOLED=${{ steps.create_branch.outputs.db_url }}
+          pnpm run db:generate
+          pnpm run db:migrate
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Update Vercel environment variables with new credentials
+        if: steps.check_schema_changes.outputs.CHANGED == 'true'
+        run: |
+          vercel env add DATABASE_URL "${{ steps.create_branch.outputs.db_url_with_pooler }}" --scope=preview --token=${{ env.VERCEL_TOKEN }}
+          vercel env add DATABASE_URL_UNPOOLED "${{ steps.create_branch.outputs.db_url }}" --scope=preview --token=${{ env.VERCEL_TOKEN }}
+
+      # Reset the state if the PR had schema changes but then they were removed
+      - name: Remove Vercel env overrides
+        if: steps.check_schema_changes.outputs.CHANGED == 'false'
+        run: |
+          vercel env rm DATABASE_URL --scope=preview --token=${{ env.VERCEL_TOKEN }}
+          vercel env rm DATABASE_URL_UNPOOLED --scope=preview --token=${{ env.VERCEL_TOKEN }}
+          echo "Deleted environment variable overrides"
+
+      # Reset the state if the PR had schema changes but then they were removed
+      - name: Delete Neon branch
+        if: steps.check_schema_changes.outputs.CHANGED == 'false'
+        uses: neondatabase/delete-branch-action@v3.1.4
+        with:
+          project_id: ${{ env.NEON_PROJECT_ID }}
+          branch: preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }}
+          api_key: ${{ env.NEON_API_KEY }}
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ env.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ env.VERCEL_TOKEN }}
+
+      - name: Deploy Preview to Vercel
+        id: deploy
+        run: echo preview_url=$(vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }}) >> $GITHUB_OUTPUT
+
+      - name: Comment on Pull Request
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          GITHUB_TOKEN: ${{ env.GH_TOKEN }}
+          message: |
+            Vercel Preview URL :rocket: : ${{ steps.deploy.outputs.preview_url }}
+            Neon branch :elephant: : https://console.neon.tech/app/projects/${{ env.NEON_PROJECT_ID }}/branches/${{ steps.create_branch.outputs.branch_id }}

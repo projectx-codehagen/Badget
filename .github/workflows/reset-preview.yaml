@@ -1,0 +1,42 @@
+name: Reset Preview State
+
+on:
+  pull_request:
+    types: [closed]
+
+env:
+  NEON_API_KEY: ${{ secrets.NEON_API_KEY }} # You can generate a an API key in your account settings
+  NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }} # You can find this in your project settings
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TEAM: ${{ secrets.VERCEL_TEAM }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+jobs:
+  delete-db-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: ./tooling/github/setup
+
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v8
+
+      - name: Delete DB branches linked to this branch, will also remove passwords and close open DRs
+        uses: neondatabase/delete-branch-action@v3.1.4
+        with:
+          project_id: ${{ env.NEON_PROJECT_ID }}
+          branch: preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }}
+          api_key: ${{ env.NEON_API_KEY }}
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Remove Vercel env overrides
+        run: |
+          vercel env rm DATABASE_URL --scope=preview --token=${{ env.VERCEL_TOKEN }}
+          vercel env rm DATABASE_URL_UNPOOLED --scope=preview --token=${{ env.VERCEL_TOKEN }}
+          echo "Deleted environment variable overrides"
