@@ -122,3 +122,5 @@ export function SidebarNav({ isCollapsed }: { isCollapsed: boolean }) {
     </nav>
   );
 }
+
+export { ExpandedItem };

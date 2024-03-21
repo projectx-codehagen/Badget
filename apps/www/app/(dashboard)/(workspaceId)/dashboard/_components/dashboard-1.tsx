@@ -46,7 +46,7 @@ export function Dashboard({
             sizes,
           )}`;
         }}
-        className="h-full max-h-[1200px] items-stretch"
+        className="h-full items-stretch"
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
@@ -62,7 +62,8 @@ export function Dashboard({
           }}
           className={cn(
             isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
+            "min-w-[50px] transition-all duration-300 ease-in-out",
+            "hidden lg:block"
           )}
         >
           <SidebarNav isCollapsed={isCollapsed} />
