@@ -7,6 +7,13 @@ import { stripe } from ".";
 import { stripePriceToSubscriptionPlan } from "./plans";
 
 export async function handleEvent(event: Stripe.Event) {
+  if (!stripe) {
+    console.error(
+      "Stripe is not initialized. Please check the USE_STRIPE environment variable.",
+    );
+    return;
+  }
+
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object;

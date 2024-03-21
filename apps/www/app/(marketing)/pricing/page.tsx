@@ -1,5 +1,8 @@
 import { api } from "@/trpc/server";
 import { currentUser } from "@clerk/nextjs";
+import { User } from "@clerk/nextjs/server";
+
+import { env } from "@projectx/stripe/env";
 
 import { PricingCards } from "@/components/pricing-cards";
 import { PricingFaq } from "@/components/pricing-faq";
@@ -11,12 +14,24 @@ export const metadata = {
 };
 
 export default async function PricingPage() {
-  const user = await currentUser();
-  const subscriptionPlan = await api.auth.mySubscription.query();
+  const useStripe = env.USE_STRIPE === "true";
+
+  let user: User | null = null;
+  let subscriptionPlan: any = null;
+
+  if (useStripe) {
+    user = await currentUser();
+    subscriptionPlan = await api.auth.mySubscription.query();
+  }
+
+  // const user = await currentUser();
+  // const subscriptionPlan = await api.auth.mySubscription.query();
 
   return (
     <div className="flex w-full flex-col gap-16 py-8 md:py-8">
-      <PricingCards userId={user?.id} subscriptionPlan={subscriptionPlan} />
+      {useStripe && (
+        <PricingCards userId={user?.id} subscriptionPlan={subscriptionPlan} />
+      )}
       <hr className="container" />
       <PricingFaq />
     </div>

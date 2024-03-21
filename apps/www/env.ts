@@ -13,13 +13,11 @@ export const env = createEnv({
    * This way you can ensure the app isn't built with invalid env vars.
    */
   server: {
-    CRON_SECRET: z.string().min(1),
     DATABASE_HOST: z.string().min(1),
     DATABASE_USERNAME: z.string().min(1),
     DATABASE_PASSWORD: z.string().min(1),
-    RESEND_API_KEY: z.string().min(1),
-    STRIPE_API_KEY: z.string().min(1),
-    STRIPE_WEBHOOK_SECRET: z.string().min(1),
+    STRIPE_API_KEY: z.string().min(1).optional(),
+    STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -27,10 +25,10 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
-    NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID: z.string().min(1),
-    NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID: z.string().min(1),
-    NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID: z.string().min(1),
-    NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_STD_PRODUCT_ID: z.string().min(1).optional(),
+    NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID: z.string().min(1).optional(),
+    NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID: z.string().min(1).optional(),
+    NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID: z.string().min(1).optional(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.

@@ -1,4 +1,4 @@
-import { SubscriptionPlan } from "@/types";
+import type { SubscriptionPlan } from "@/types";
 
 import { env } from "@/env";
 

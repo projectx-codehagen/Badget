@@ -1,6 +1,4 @@
-import type { Icon } from "lucide-react";
-
-import { Icons } from "@/components/shared/icons";
+import type { Icons } from "@/components/shared/icons";
 
 export type SidebarNavItem = {
   title: string;
@@ -48,6 +46,6 @@ export type SubscriptionPlan = {
     monthly: number;
   };
   stripeIds: {
-    monthly: string | null;
+    monthly: string | null | undefined;
   };
 };
