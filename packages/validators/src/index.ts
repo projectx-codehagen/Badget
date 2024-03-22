@@ -105,3 +105,18 @@ export const createRealEstateSchema = z.object({
   currentValue: z.coerce.number().min(0).optional(),
 });
 export type CreateRealEstate = z.infer<typeof createRealEstateSchema>;
+
+export const createTransactionSchema = z.object({
+  assetId: z.bigint().optional(),
+  accountId: z.bigint().optional(),
+  name: z.string().min(1),
+  address: z.string().min(1),
+  city: z.string().min(1),
+  state: z.string().min(1),
+  postalCode: z.string().min(1),
+  purchaseDate: z.date(),
+  currencyIso: z.string().min(2).max(3),
+  purchaseValue: z.coerce.number().min(1),
+  currentValue: z.coerce.number().min(0).optional(),
+});
+export type CreateTransaction = z.infer<typeof createTransactionSchema>;

@@ -1,4 +1,4 @@
-import { AssetType, db, schema, sql } from "@projectx/db";
+import { AssetType, db, eq, schema, sql } from "@projectx/db";
 import {
   createAssetSchema,
   createRealEstateSchema,
@@ -83,4 +83,18 @@ export const assetRouter = createTRPCRouter({
 
       return { success: true };
     }),
+
+  listAssets: protectedProcedure.query(async (opts) => {
+    const { userId } = opts.ctx.auth;
+
+    return await opts.ctx.db
+      .select({
+        id: schema.asset.id,
+        name: schema.asset.name,
+        type: schema.asset.assetType,
+      })
+      .from(schema.asset)
+      .where(eq(schema.asset.userId, userId))
+      .execute();
+  }),
 });

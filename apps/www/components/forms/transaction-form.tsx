@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { use, useState } from "react";
+import { api } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
@@ -6,7 +7,9 @@ import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { cn, formatNumberWithSpaces } from "@/lib/utils";
+import { createTransactionSchema } from "@projectx/validators";
+
+import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
@@ -28,92 +31,87 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-
-const bankAccounts = [
-  { label: "Chase", value: "chase" },
-  { label: "Wells Fargo", value: "wells_fargo" },
-  { label: "Bank of America", value: "bank_of_america" },
-  { label: "Citi", value: "citi" },
-  { label: "PNC", value: "pnc" },
-  { label: "TD", value: "td" },
-];
-
-const FormSchema = z.object({
-  purchaseDate: z.date({
-    required_error: "Please enter a purchase date",
-  }),
-  purchaseValue: z.string({
-    required_error: "Please enter a purchase value",
-  }),
-  bankAccount: z.string({
-    required_error: "Please select a bank account",
-  }),
-  category: z.string({
-    required_error: "Please select a category",
-  }),
-});
-
-type FormFields = keyof z.infer<typeof FormSchema>;
+import { toast } from "../ui/use-toast";
 
 const TransactionForm = () => {
   const [isCategoryPopoverOpen, setIsCategoryPopoverOpen] =
     useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      purchaseDate: new Date(),
-      purchaseValue: "",
-      bankAccount: "",
-      category: "",
-    },
+  const currencies = use(api.currency.findAll.query());
+  const accounts = use(api.account.listAccounts.query());
+  const assets = use(api.asset.listAssets.query());
+
+  const assetsAndAccounts = [
+    ...accounts.map((account) => ({
+      label: account.name,
+      value: account.id,
+    })),
+    ...assets.map((asset) => ({
+      label: asset.name,
+      value: asset.id,
+    })),
+  ];
+
+  const form = useForm<z.infer<typeof createTransactionSchema>>({
+    resolver: zodResolver(createTransactionSchema),
+    defaultValues: {},
   });
 
-  const [transactionCategories, setTransactionCategories] = useState([
-    { label: "Groceries", value: "groceries" },
-    { label: "Utilities", value: "utilities" },
-    { label: "Entertainment", value: "entertainment" },
-  ]);
+  // const [transactionCategories, setTransactionCategories] = useState([
+  //   { label: "Groceries", value: "groceries" },
+  //   { label: "Utilities", value: "utilities" },
+  //   { label: "Entertainment", value: "entertainment" },
+  // ]);
 
-  const [categorySearchQuery, setCategorySearchQuery] = useState("");
+  // const [categorySearchQuery, setCategorySearchQuery] = useState("");
 
-  const noCategoriesFound =
-    transactionCategories.filter((category) =>
-      category.label.includes(categorySearchQuery),
-    ).length === 0 && categorySearchQuery !== "";
+  // const noCategoriesFound =
+  //   transactionCategories.filter((category) =>
+  //     category.label.includes(categorySearchQuery),
+  //   ).length === 0 && categorySearchQuery !== "";
 
-  // TODO: make this more reusable
-  const handleNumberChange = (name: FormFields, value: string) => {
-    const unformattedValue = value.replace(/\s/g, "");
-    form.setValue(name, unformattedValue);
-  };
+  // const handleCategorySelect = (value: string) => {
+  //   form.setValue("category", value);
+  //   setIsCategoryPopoverOpen(false);
+  // };
 
-  const handleCategorySelect = (value: string) => {
-    form.setValue("category", value);
-    setIsCategoryPopoverOpen(false);
-  };
+  // const onAddNewCategoryHandler = () => {
+  //   setTransactionCategories([
+  //     ...transactionCategories,
+  //     { label: categorySearchQuery, value: categorySearchQuery },
+  //   ]);
+  //   form.setValue("category", categorySearchQuery);
+  //   setCategorySearchQuery("");
+  //   setIsCategoryPopoverOpen(false);
+  // };
 
-  const onAddNewCategoryHandler = () => {
-    setTransactionCategories([
-      ...transactionCategories,
-      { label: categorySearchQuery, value: categorySearchQuery },
-    ]);
-    form.setValue("category", categorySearchQuery);
-    setCategorySearchQuery("");
-    setIsCategoryPopoverOpen(false);
-  };
+  const onSubmit = async (data: z.infer<typeof createTransactionSchema>) => {
+    const transaction = await api.transaction.addTransaction
+      .mutate(data)
+      .catch(() => ({ success: false as const }));
 
-  const onSubmitHandler = (data: z.infer<typeof FormSchema>) => {
-    console.log("Submitting data", data);
+    if (!transaction.success) {
+      return toast({
+        title: "Failed to add your account",
+        description: "Please try again later.",
+      });
+    }
+
+    toast({
+      title: "Account added with success!",
+      description: "Your account was added with success.",
+    });
+
+    form.reset();
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmitHandler)} className="space-y-3">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
         {/* Bank Account Field */}
         <FormField
           control={form.control}
-          name="bankAccount"
+          name="accountId"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Bank Account</FormLabel>
@@ -129,8 +127,8 @@ const TransactionForm = () => {
                       )}
                     >
                       {field.value
-                        ? bankAccounts.find(
-                            (bank) => bank.value === field.value,
+                        ? assetsAndAccounts.find(
+                            (data) => data.value === field.value,
                           )?.label
                         : "Select bank account"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -145,19 +143,19 @@ const TransactionForm = () => {
                     />
                     <CommandEmpty>No bank accounts found.</CommandEmpty>
                     <CommandGroup>
-                      {bankAccounts.map((bank) => (
+                      {assetsAndAccounts.map((data) => (
                         <CommandItem
-                          value={bank.label}
-                          key={bank.value}
+                          value={data.label}
+                          key={data.value}
                           onSelect={() => {
-                            form.setValue("bankAccount", bank.value);
+                            form.setValue("accountId", data.value);
                           }}
                         >
-                          {bank.label}
+                          {data.label}
                           <CheckIcon
                             className={cn(
                               "ml-auto h-4 w-4",
-                              bank.value === field.value
+                              data.value === field.value
                                 ? "opacity-100"
                                 : "opacity-0",
                             )}
@@ -179,7 +177,7 @@ const TransactionForm = () => {
             name="purchaseDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Purchase Date</FormLabel>
+                <FormLabel>Date</FormLabel>
                 <FormControl>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -223,22 +221,22 @@ const TransactionForm = () => {
           name="purchaseValue"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Purchase Value</FormLabel>
+              <FormLabel>Amount</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  value={formatNumberWithSpaces(field.value)}
+                  type="number"
                   onChange={(e) =>
                     handleNumberChange("purchaseValue", e.target.value)
                   }
-                  placeholder="Purchase Value..."
+                  placeholder="Insert the amount..."
                 />
               </FormControl>
             </FormItem>
           )}
         />
         {/* Category Field */}
-        <FormField
+        {/* <FormField
           control={form.control}
           name="category"
           render={({ field }) => (
@@ -317,14 +315,13 @@ const TransactionForm = () => {
                         ))}
                       </CommandGroup>
                     )}
-                    {/* <CommandEmpty>No categories found.</CommandEmpty> */}
                   </Command>
                 </PopoverContent>
               </Popover>
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
       </form>
     </Form>
   );

@@ -1,4 +1,5 @@
-import { db, schema, sql } from "@projectx/db";
+import { db, eq, schema, sql } from "@projectx/db";
+import { account } from "@projectx/db/schema/openbanking";
 import { createAccountSchema } from "@projectx/validators";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -63,4 +64,18 @@ export const accountRouter = createTRPCRouter({
 
       return { success: true, assetId: accountQuery.insertId };
     }),
+
+  listAccounts: protectedProcedure.query(async (opts) => {
+    const { userId } = opts.ctx.auth;
+
+    return await opts.ctx.db
+      .select({
+        id: schema.account.id,
+        name: schema.account.name,
+        type: schema.account.accountType,
+      })
+      .from(schema.account)
+      .where(eq(schema.account.userId, userId))
+      .execute();
+  }),
 });

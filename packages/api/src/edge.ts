@@ -4,6 +4,7 @@ import { authRouter } from "./router/auth";
 import { customerRouter } from "./router/customer";
 import { organizationsRouter } from "./router/organizations";
 import { stripeRouter } from "./router/stripe";
+import { transactionRouter } from "./router/transaction";
 import { usersRouter } from "./router/users";
 import { createTRPCRouter } from "./trpc";
 
@@ -16,4 +17,5 @@ export const edgeRouter = createTRPCRouter({
   users: usersRouter,
   account: accountRouter,
   asset: assetRouter,
+  transaction: transactionRouter,
 });

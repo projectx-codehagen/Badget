@@ -121,12 +121,3 @@ export async function fetchGithubData() {
     throw error;
   }
 }
-
-export const formatNumberWithSpaces = (value: number | string) => {
-  if (!value) return value;
-  if (typeof value === "string") {
-    return value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  }
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-};
-
