@@ -81,7 +81,7 @@ export default function Featuressection() {
       <div className="relative overflow-hidden pt-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Image
-            src="https://tailwindui.com/img/component-images/project-app-screenshot.png"
+            src="https://raw.githubusercontent.com/auxibee/badget/main/project-app-screenshot.webp"
             alt="App screenshot"
             className="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-gray-900/10"
             width={2432}

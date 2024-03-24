@@ -41,6 +41,10 @@ const config = {
         protocol: "https",
         hostname: "tailwindui.com",
       },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+      },
       // TODO: remove code below
       {
         protocol: "https",
