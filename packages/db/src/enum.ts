@@ -141,3 +141,27 @@ export const AssetType = {
   COMMODITIES: "COMMODITIES",
 } as const;
 export type AssetType = (typeof AssetType)[keyof typeof AssetType];
+
+export const TransactionType = {
+  INCOME: "INCOME",
+  DEPOSIT: "DEPOSIT",
+  WITHDRAWAL: "WITHDRAWAL",
+  GIFT: "GIFT",
+  TRANSFER: "TRANSFER",
+  BILL: "BILL",
+  PURCHASE: "PURCHASE",
+  ATM: "ATM",
+  FEE: "FEE",
+  INTEREST: "INTEREST",
+  LOAN_PAYMENT: "LOAN PAYMENT",
+  ACCOUNT_MAINTENANCE: "ACCOUNT MAINTENANCE",
+  DONATION: "DONATION",
+  REFUND: "REFUND",
+  SALE: "SALE",
+  TAX: "TAX",
+  INSURANCE: "INSURANCE",
+  RECONCILIATION: "RECONCILIATION",
+  GENERIC: "GENERIC",
+} as const;
+export type TransactionType =
+  (typeof TransactionType)[keyof typeof TransactionType];

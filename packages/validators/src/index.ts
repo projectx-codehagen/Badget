@@ -1,7 +1,7 @@
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { AccountType, AssetType } from "@projectx/db";
+import { AccountType, AssetType, TransactionType } from "@projectx/db";
 import { PLANS } from "@projectx/stripe/plans";
 
 export const userAuthSchema = z.object({
@@ -107,16 +107,13 @@ export const createRealEstateSchema = z.object({
 export type CreateRealEstate = z.infer<typeof createRealEstateSchema>;
 
 export const createTransactionSchema = z.object({
-  assetId: z.bigint().optional(),
-  accountId: z.bigint().optional(),
-  name: z.string().min(1),
-  address: z.string().min(1),
-  city: z.string().min(1),
-  state: z.string().min(1),
-  postalCode: z.string().min(1),
-  purchaseDate: z.date(),
+  account: z.string().optional(),
+  accountId: z.string().optional(),
+  assetId: z.string().optional(),
+  date: z.date(),
   currencyIso: z.string().min(2).max(3),
-  purchaseValue: z.coerce.number().min(1),
-  currentValue: z.coerce.number().min(0).optional(),
+  amount: z.coerce.number().min(1),
+  description: z.string().min(1),
+  type: z.nativeEnum(TransactionType),
 });
 export type CreateTransaction = z.infer<typeof createTransactionSchema>;

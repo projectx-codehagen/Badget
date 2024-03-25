@@ -1,35 +1,24 @@
-import { db, schema, sql } from "@projectx/db";
-import {
-  createAccountSchema,
-  createTransactionSchema,
-} from "@projectx/validators";
+import { schema } from "@projectx/db";
+import { createTransactionSchema } from "@projectx/validators";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const transactionRouter = createTRPCRouter({
   addTransaction: protectedProcedure
-    .input(createAccountSchema)
+    .input(createTransactionSchema)
     .mutation(async (opts: any) => {
-      const transactionQuery = await opts.ctx.db
-        .insert(schema.transaction)
-        .values({
-          accountId: createTransactionSchema.parse(opts.ctx.input.accountId),
-          assetId: createTransactionSchema.parse(opts.ctx.input.assetId),
-          currencyIso: createTransactionSchema.parse(
-            opts.ctx.input.currencyIso,
-          ),
-          originalId: createTransactionSchema.parse(opts.ctx.input.originalId),
-          amount: createTransactionSchema.parse(opts.ctx.input.amount) ?? 0,
-          date: createTransactionSchema.parse(opts.ctx.input.date),
-          description: createTransactionSchema.parse(
-            opts.ctx.input.description,
-          ),
-          originalPayload: createTransactionSchema.parse(
-            opts.ctx.input.originalPayload,
-          ),
-        });
+      const response = await opts.ctx.db.insert(schema.transaction).values({
+        accountId: createTransactionSchema.parse(opts.input).accountId,
+        assetId: createTransactionSchema.parse(opts.input).assetId,
+        currencyIso: createTransactionSchema.parse(opts.input).currencyIso,
+        amount: createTransactionSchema.parse(opts.input).amount,
+        date: createTransactionSchema.parse(opts.input).date,
+        description: createTransactionSchema.parse(opts.input).description,
+        originalPayload: createTransactionSchema.parse(opts.input),
+        type: createTransactionSchema.parse(opts.input).type,
+      });
 
-      if (transactionQuery.rowsAffected === 0) {
+      if (response.insertId === 0) {
         return { success: false };
       }
 

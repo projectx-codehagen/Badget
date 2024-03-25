@@ -11,9 +11,6 @@ const AddTransactionModal = () => {
         <DialogDescription>Add a new transaction...</DialogDescription>
       </DialogHeader>
       <TransactionForm />
-      <Footer show={true}>
-        <Button>Add Transaction</Button>
-      </Footer>
     </>
   );
 };

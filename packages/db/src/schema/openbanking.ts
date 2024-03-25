@@ -10,7 +10,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 
-import { AccountType, BalanceType } from "../enum";
+import { AccountType, BalanceType, TransactionType } from "../enum";
 import { mySqlTable } from "./_table";
 import { asset } from "./asset";
 import { currency } from "./currency";
@@ -146,6 +146,30 @@ export const transaction = mySqlTable(
     categoryId: bigint("category_id", { mode: "bigint" }),
     currencyIso: varchar("currency_iso", { length: 3 }).notNull(),
     originalId: varchar("original_id", { length: 36 }),
+
+    type: mysqlEnum("type", [
+      TransactionType.INCOME,
+      TransactionType.DEPOSIT,
+      TransactionType.WITHDRAWAL,
+      TransactionType.GIFT,
+      TransactionType.TRANSFER,
+      TransactionType.BILL,
+      TransactionType.PURCHASE,
+      TransactionType.ATM,
+      TransactionType.FEE,
+      TransactionType.INTEREST,
+      TransactionType.LOAN_PAYMENT,
+      TransactionType.ACCOUNT_MAINTENANCE,
+      TransactionType.DONATION,
+      TransactionType.REFUND,
+      TransactionType.SALE,
+      TransactionType.TAX,
+      TransactionType.INSURANCE,
+      TransactionType.RECONCILIATION,
+      TransactionType.GENERIC,
+    ])
+      .notNull()
+      .default(TransactionType.GENERIC),
 
     amount: float("amount").notNull(),
     date: timestamp("date").notNull(),
