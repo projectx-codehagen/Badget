@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { api } from "@/trpc/client";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
@@ -36,6 +37,8 @@ import {
   ShoppingCartIcon,
 } from "lucide-react";
 
+import { CreateTransaction } from "@projectx/validators";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -59,31 +62,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { payments } from "@/app/(dashboard)/(workspaceId)/banking/transactions/data";
 
-export type Payment = {
-  id: string;
-  amount: number;
-  status: string;
-  label: string;
-  date: string;
-};
+import { Transaction } from "../data";
 
 // Define the icon mapping
-const labelToIconMap = {
-  Subscriptions: <BadgeDollarSign />,
-  Car: <Car />, // Use the actual icon component
-  House: <Building />,
-  Food: <ShoppingCartIcon />,
-  // Add other mappings as needed
-};
+// const labelToIconMap = {
+//   Subscriptions: <BadgeDollarSign />,
+//   Car: <Car />, // Use the actual icon component
+//   House: <Building />,
+//   Food: <ShoppingCartIcon />,
+//   // Add other mappings as needed
+// };
 
-// Helper function to get the icon based on the label
-const getIconForLabel = (label: keyof typeof labelToIconMap) => {
-  return labelToIconMap[label] || null; // Return null if no icon is found for the label
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Transaction>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -107,44 +98,25 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "description",
     header: "Description",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{row.getValue("description")}</div>
     ),
   },
   {
-    accessorKey: "label",
-    header: "Label",
+    accessorKey: "category",
+    header: "Category",
     cell: ({ row }) => {
-      const label = row.getValue("label") as keyof typeof labelToIconMap;
-      const icon = getIconForLabel(label);
-      let badgeVariant;
+      let badgeVariant = "default";
 
-      // Example logic to determine the badge variant based on the label
-      switch (label) {
-        case "Subscriptions":
-          badgeVariant = "default";
-          break;
-        case "Car":
-          badgeVariant = "secondary";
-          break;
-        case "House":
-          badgeVariant = "destructive";
-          break;
-        case "Food":
-        default:
-          badgeVariant = "outline";
-          break;
-      }
-
-      return (
-        // @ts-ignore
-        <Badge variant={badgeVariant}>
-          {icon && React.cloneElement(icon, { className: "h-4 w-4" })}
-          <span className="ml-2">{label}</span>
-        </Badge>
-      );
+      // return (
+      //   // @ts-ignore
+      //   <Badge variant={badgeVariant}>
+      //     <span className="ml-2">{""}</span>
+      //   </Badge>
+      // );
+      return <div className="capitalize">{row.getValue("category")}</div>;
     },
   },
   {
@@ -162,69 +134,70 @@ export const columns: ColumnDef<Payment>[] = [
       return <div className="text-right font-medium">{formatted}</div>;
     },
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
+  // {
+  //   id: "actions",
+  //   enableHiding: false,
+  //   cell: ({ row }) => {
+  //     const payment = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              <Check className="mr-2 h-4 w-4" />
-              <span>Review</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Divide className="mr-2 h-4 w-4" />
-              <span>Split</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Repeat2 className="mr-2 h-4 w-4" />
-              <span>Recurring</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <ArrowRightLeftIcon className="mr-2 h-4 w-4" />
-                <span>Transaction Type</span>
-              </DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>
-                    <Mail className="mr-2 h-4 w-4" />
-                    <span>Internal transfer</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    <span>Regular</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    <span>More...</span>
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
+  //     return (
+  //       <DropdownMenu>
+  //         <DropdownMenuTrigger asChild>
+  //           <Button variant="ghost" className="h-8 w-8 p-0">
+  //             <span className="sr-only">Open menu</span>
+  //             <DotsHorizontalIcon className="h-4 w-4" />
+  //           </Button>
+  //         </DropdownMenuTrigger>
+  //         <DropdownMenuContent align="end">
+  //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+  //           <DropdownMenuItem
+  //             onClick={() => navigator.clipboard.writeText(payment.id)}
+  //           >
+  //             <Check className="mr-2 h-4 w-4" />
+  //             <span>Review</span>
+  //           </DropdownMenuItem>
+  //           <DropdownMenuSeparator />
+  //           <DropdownMenuItem>
+  //             <Divide className="mr-2 h-4 w-4" />
+  //             <span>Split</span>
+  //           </DropdownMenuItem>
+  //           <DropdownMenuItem>
+  //             <Repeat2 className="mr-2 h-4 w-4" />
+  //             <span>Recurring</span>
+  //           </DropdownMenuItem>
+  //           <DropdownMenuSeparator />
+  //           <DropdownMenuSub>
+  //             <DropdownMenuSubTrigger>
+  //               <ArrowRightLeftIcon className="mr-2 h-4 w-4" />
+  //               <span>Transaction Type</span>
+  //             </DropdownMenuSubTrigger>
+  //             <DropdownMenuPortal>
+  //               <DropdownMenuSubContent>
+  //                 <DropdownMenuItem>
+  //                   <Mail className="mr-2 h-4 w-4" />
+  //                   <span>Internal transfer</span>
+  //                 </DropdownMenuItem>
+  //                 <DropdownMenuItem>
+  //                   <MessageSquare className="mr-2 h-4 w-4" />
+  //                   <span>Regular</span>
+  //                 </DropdownMenuItem>
+  //                 <DropdownMenuSeparator />
+  //                 <DropdownMenuItem>
+  //                   <PlusCircle className="mr-2 h-4 w-4" />
+  //                   <span>More...</span>
+  //                 </DropdownMenuItem>
+  //               </DropdownMenuSubContent>
+  //             </DropdownMenuPortal>
+  //           </DropdownMenuSub>
+  //         </DropdownMenuContent>
+  //       </DropdownMenu>
+  //     );
+  //   },
+  // },
 ];
 
-export function AccountsReviewTable2({ mailId }: { mailId: string }) {
+export function TransactionList({ data }: { data: Transaction[] }) {
+  const transactionList = data;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -232,12 +205,9 @@ export function AccountsReviewTable2({ mailId }: { mailId: string }) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const filteredPayments = React.useMemo(() => {
-    return payments.filter((payment) => payment.mailId === mailId);
-  }, [mailId]);
 
   const table = useReactTable({
-    data: filteredPayments,
+    data,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -256,7 +226,7 @@ export function AccountsReviewTable2({ mailId }: { mailId: string }) {
   });
 
   const formatDate = (dateString: string) => {
-    const date = parseISO(dateString);
+    const date = parseISO(new Date(dateString).toISOString());
     if (isToday(date)) {
       return "Today";
     } else if (isYesterday(date)) {
@@ -269,23 +239,23 @@ export function AccountsReviewTable2({ mailId }: { mailId: string }) {
 
   const groupedData = React.useMemo(() => {
     // Sort the items by date in descending order so the most recent dates come first
-    const sortedItems = filteredPayments.sort((a, b) =>
-      compareDesc(parseISO(a.date), parseISO(b.date)),
+    const sortedItems = transactionList.sort((a, b) =>
+      compareDesc(parseISO(a.date.toString()), parseISO(b.date.toString())),
     );
 
     // Group items by "today", "yesterday", or specific date format
     return sortedItems.reduce(
       (acc, item) => {
-        const formattedDate = formatDate(item.date); // Use formatDate here
+        const formattedDate = formatDate(item.date.toString()); // Use formatDate here
         if (!acc[formattedDate]) {
           acc[formattedDate] = [];
         }
         acc[formattedDate]!.push(item);
         return acc;
       },
-      {} as Record<string, Payment[]>,
+      {} as Record<string, Transaction[]>,
     );
-  }, [filteredPayments]); // No need to depend on formatDate if it's not changing
+  }, [transactionList]); // No need to depend on formatDate if it's not changing
 
   return (
     <div className="mt-4">

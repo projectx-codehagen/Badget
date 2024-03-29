@@ -6,11 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
-import { Mail } from "../data";
+import { Mail, Transaction } from "../data";
 import { useMail } from "../use-mail";
 
 interface MailListProps {
-  items: Mail[];
+  items: Transaction[];
 }
 
 export function MailList({ items }: MailListProps) {

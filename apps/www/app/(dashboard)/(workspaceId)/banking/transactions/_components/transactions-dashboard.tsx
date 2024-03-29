@@ -15,14 +15,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AddButton } from "@/components/buttons/AddButton";
 import AddTransactionModal from "@/components/modals/add-transaction";
 
-import { Mail } from "../data";
+import { Mail, Transaction } from "../data";
 import { useMail } from "../use-mail";
-import { AccountsReviewTable2 } from "./accounts-review-table2";
 import { MailList } from "./mail-list";
+import { TransactionList } from "./transaction-list";
 import { TransactionsDisplay } from "./transactions-display";
 
 interface TransactionsDashboardProps {
-  transactions: Mail[];
+  transactions: Transaction[];
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;
@@ -64,18 +64,17 @@ export function TransactionsDashboard({
             <Separator />
             <TabsContent value="all" className="m-0">
               {/* @ts-ignore */}
-              <AccountsReviewTable2 mailId={undefined} />
-            </TabsContent>
-            <TabsContent value="unread" className="m-0">
-              <MailList items={transactions.filter((item) => !item.read)} />
+              <TransactionList data={transactions} />
             </TabsContent>
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <TransactionsDisplay
-            mail={
-              transactions.find((item) => item.id === mail.selected) || null
+            data={
+              transactions.find(
+                (item) => item.id.toString() === mail.selected,
+              ) || null
             }
           />
           {/* <MailDisplay

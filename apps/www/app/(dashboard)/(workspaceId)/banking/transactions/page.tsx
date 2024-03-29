@@ -1,7 +1,8 @@
+import { use } from "react";
 import { cookies } from "next/headers";
+import { api } from "@/trpc/server";
 
 import { TransactionsDashboard } from "./_components/transactions-dashboard";
-import { mails } from "./data";
 
 export const metadata = {
   title: "Transactions",
@@ -14,11 +15,14 @@ export default async function DashboardPage() {
 
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
   const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined;
+
+  const listTransactions = await api.transaction.listTransactions.query();
+
   return (
     <>
       <div className="flex flex-col">
         <TransactionsDashboard
-          transactions={mails}
+          transactions={listTransactions}
           defaultLayout={defaultLayout}
           defaultCollapsed={defaultCollapsed}
           navCollapsedSize={4}

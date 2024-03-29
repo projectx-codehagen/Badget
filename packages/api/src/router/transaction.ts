@@ -1,4 +1,4 @@
-import { schema } from "@projectx/db";
+import { eq, schema } from "@projectx/db";
 import { createTransactionSchema } from "@projectx/validators";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -24,4 +24,27 @@ export const transactionRouter = createTRPCRouter({
 
       return { success: true };
     }),
+
+  listTransactions: protectedProcedure.query(async (opts) => {
+    return await opts.ctx.db
+      .select({
+        id: schema.transaction.id,
+        assetName: schema.asset.name,
+        accountName: schema.account.name,
+        categoryId: schema.transaction.categoryId,
+        currencyIso: schema.transaction.currencyIso,
+        originalId: schema.transaction.originalId,
+        type: schema.transaction.type,
+        amount: schema.transaction.amount,
+        date: schema.transaction.date,
+        description: schema.transaction.description,
+      })
+      .from(schema.transaction)
+      .leftJoin(schema.asset, eq(schema.asset.id, schema.transaction.assetId))
+      .leftJoin(
+        schema.account,
+        eq(schema.account.id, schema.transaction.accountId),
+      )
+      .execute();
+  }),
 });

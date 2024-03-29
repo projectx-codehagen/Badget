@@ -73,9 +73,11 @@ export const accountRouter = createTRPCRouter({
         id: schema.account.id,
         name: schema.account.name,
         type: schema.account.accountType,
+        amount: schema.balance.amount,
       })
       .from(schema.account)
       .where(eq(schema.account.userId, userId))
+      .leftJoin(schema.balance, eq(schema.account.id, schema.balance.accountId))
       .execute();
   }),
 });

@@ -14,6 +14,13 @@ const generateMonthlyIncomeData = (baseIncome: number): MonthlyIncomeData[] => {
   return monthlyData;
 };
 
+export type Account = {
+  id: BigInt;
+  name: string;
+  type: string;
+  amount: number | null;
+};
+
 export const mails = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
@@ -239,7 +246,7 @@ export const accounts = [
   },
 ];
 
-export type Account = (typeof accounts)[number];
+export type AccountData = (typeof accounts)[number];
 
 export const contacts = [
   {

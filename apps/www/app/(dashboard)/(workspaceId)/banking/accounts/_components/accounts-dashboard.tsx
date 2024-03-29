@@ -13,18 +13,19 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-import { Mail } from "../data";
+import { Transaction } from "../../transactions/data";
+import { Account, Mail } from "../data";
 import { useMail } from "../use-mail";
 import { AccountsDisplay } from "./accounts-display";
 import { AccountsList } from "./accounts-list";
 
 interface AccountsDashboardProps {
-  mails: Mail[];
+  accountList: Account[];
   defaultLayout: number[] | undefined;
 }
 
 export function AccountsDashboard({
-  mails,
+  accountList,
   defaultLayout = [20, 40, 40],
 }: AccountsDashboardProps) {
   const [mail] = useMail();
@@ -66,17 +67,21 @@ export function AccountsDashboard({
             </div>
             <Separator />
             <TabsContent value="all" className="m-0">
-              <AccountsList items={mails} />
+              <AccountsList items={accountList} />
             </TabsContent>
             <TabsContent value="unread" className="m-0">
-              <AccountsList items={mails.filter((item) => !item.read)} />
+              <AccountsList items={accountList} />
             </TabsContent>
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
           <AccountsDisplay
-            mail={mails.find((item) => item.id === mail.selected) || null}
+            account={
+              accountList.find(
+                (item) => item.id.toString() === mail.selected,
+              ) || null
+            }
           />
         </ResizablePanel>
       </ResizablePanelGroup>

@@ -34,9 +34,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AddButton } from "@/components/buttons/AddButton";
 import AddTransactionModal from "@/components/modals/add-transaction";
 import { WorkspaceSwitcher } from "@/app/(dashboard)/_components/workspace-switcher";
-import { AccountsReviewTable2 } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/accounts-review-table2";
 import { MailList } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/mail-list";
 import { Nav } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/nav";
+import { TransactionList } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/transaction-list";
 import { TransactionsDisplay } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/transactions-display";
 import type { Mail } from "@/app/(dashboard)/(workspaceId)/banking/transactions/data";
 import { useMail } from "@/app/(dashboard)/(workspaceId)/banking/transactions/use-mail";
@@ -277,7 +277,7 @@ export function TransactionsDashboard({
               </form>
             </div>
             <TabsContent value="all" className="m-0">
-              <AccountsReviewTable2 mailId="" />
+              <TransactionList />
             </TabsContent>
             <TabsContent value="unread" className="m-0">
               <MailList items={mails.filter((item) => !item.read)} />

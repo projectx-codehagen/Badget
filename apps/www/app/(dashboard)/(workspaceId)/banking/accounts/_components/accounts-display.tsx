@@ -44,19 +44,18 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { TransactionsReviewTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/transaction-review-table";
 
-import { Mail } from "../data";
+import { Account, Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";
 import { AddNewAccountDialog } from "./add-new-account";
 
 interface MailDisplayProps {
-  mail: Mail | null;
+  account: Account | null;
 }
 
-export function AccountsDisplay({ mail }: MailDisplayProps) {
+export function AccountsDisplay({ account }: MailDisplayProps) {
   const today = new Date();
-  const data = mail ? mail.monthlyIncomeData : [];
+  const data = account ? account.amount : [];
 
   return (
     <div className="flex h-full flex-col">
@@ -64,7 +63,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
         <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!account}>
                 <Archive className="h-4 w-4" />
                 <span className="sr-only">Archive</span>
               </Button>
@@ -73,7 +72,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!account}>
                 <ArchiveX className="h-4 w-4" />
                 <span className="sr-only">Move to junk</span>
               </Button>
@@ -82,7 +81,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!account}>
                 <Trash2 className="h-4 w-4" />
                 <span className="sr-only">Move to trash</span>
               </Button>
@@ -94,7 +93,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
             <Popover>
               <PopoverTrigger asChild>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" disabled={!mail}>
+                  <Button variant="ghost" size="icon" disabled={!account}>
                     <Clock className="h-4 w-4" />
                     <span className="sr-only">Snooze</span>
                   </Button>
@@ -163,7 +162,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
         <div className="ml-auto flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!account}>
                 <Reply className="h-4 w-4" />
                 <span className="sr-only">Reply</span>
               </Button>
@@ -172,7 +171,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!account}>
                 <ReplyAll className="h-4 w-4" />
                 <span className="sr-only">Reply all</span>
               </Button>
@@ -181,7 +180,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!account}>
                 <Forward className="h-4 w-4" />
                 <span className="sr-only">Forward</span>
               </Button>
@@ -192,7 +191,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
         <Separator orientation="vertical" className="mx-2 h-6" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" disabled={!mail}>
+            <Button variant="ghost" size="icon" disabled={!account}>
               <MoreVertical className="h-4 w-4" />
               <span className="sr-only">More</span>
             </Button>
@@ -207,7 +206,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
       </div>
       <Separator />
 
-      {mail ? (
+      {account ? (
         <div className="flex flex-1 flex-col">
           {/* Top bar with avatar, text, and badge */}
           <div className="flex items-center justify-between p-4">
@@ -219,24 +218,24 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
                   alt={mail.name}
                 /> */}
                 <AvatarFallback delayMs={600}>
-                  {mail.name
+                  {account.name
                     .split(" ")
                     .map((n) => n[0])
                     .join("")}
                 </AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm text-gray-500">
-                  {formatDistanceToNow(new Date(mail.date), {
+                {/* <p className="text-sm text-gray-500">
+                  {formatDistanceToNow(account.date, {
                     addSuffix: true,
                   })}
-                </p>
-                <h1 className="text-xl font-semibold">{mail.name}</h1>
+                </p> */}
+                <h1 className="text-xl font-semibold">{account.name}</h1>
               </div>
             </div>
 
             {/* Right section with badge */}
-            {mail.date && (
+            {/* {mail.date && (
               <div className="flex flex-col items-end">
                 <Badge
                   variant={mail.change >= 0 ? "default" : "destructive"}
@@ -255,13 +254,13 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
                   </span>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
 
           <div className="mx-6 h-[160px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
-                data={data}
+                // data={account}
                 margin={{ top: 5, right: 10, left: 10, bottom: 0 }}
               >
                 <Line
@@ -302,7 +301,7 @@ export function AccountsDisplay({ mail }: MailDisplayProps) {
           </div>
 
           <Separator className="" />
-          <AccountsReviewTable mailId={mail ? mail.id : null} />
+          <AccountsReviewTable mailId={account ? account.id : null} />
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">

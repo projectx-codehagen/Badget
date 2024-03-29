@@ -24,6 +24,17 @@ const generateMonthlyIncomeData = (baseIncome: number): MonthlyIncomeData[] => {
   return monthlyData;
 };
 
+export type Transaction = {
+  id: BigInt;
+  amount: number;
+  assetName: string | null;
+  accountName: string | null;
+  categoryId: BigInt | null;
+  date: Date;
+  description: string;
+  type: string;
+};
+
 export const mails = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",

@@ -97,7 +97,7 @@ export function SidebarNav({ isCollapsed }: { isCollapsed: boolean }) {
 
       {sideNavItems.map((group) => {
         return (
-          <>
+          <div key={group.group}>
             <Separator />
             <div className="flex flex-col gap-1 p-2" key={group.group}>
               {group.items.map((link, idx) => {
@@ -116,7 +116,7 @@ export function SidebarNav({ isCollapsed }: { isCollapsed: boolean }) {
                 );
               })}
             </div>
-          </>
+          </div>
         );
       })}
     </nav>

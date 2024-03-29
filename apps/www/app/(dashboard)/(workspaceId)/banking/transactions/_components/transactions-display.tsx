@@ -41,14 +41,14 @@ import {
 } from "@/components/ui/tooltip";
 import { TransactionsReviewTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/transaction-review-table";
 
-import { Mail } from "../data";
+import { Mail, Transaction } from "../data";
 import { PopoverBadgeTransaction } from "./popover-badge";
 
 // import { AccountsReviewTable } from "./accounts-review-table";
 // import { KeyMetricsTable } from "./key-metrics-table";
 
 interface MailDisplayProps {
-  mail: Mail | null;
+  data: Transaction | null;
 }
 
 const data2 = [
@@ -102,18 +102,17 @@ const data2 = [
   },
 ];
 
-export function TransactionsDisplay({ mail }: MailDisplayProps) {
+export function TransactionsDisplay({ data }: MailDisplayProps) {
   const today = new Date();
-  const data = mail ? mail.monthlyIncomeData : [];
-  console.log(mail);
+  // const data = data.monthlyIncomeData : [];
 
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center p-2">
         <div className="flex items-center gap-2">
-          <Tooltip>
+          {/* <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!data}>
                 <Archive className="h-4 w-4" />
                 <span className="sr-only">Archive</span>
               </Button>
@@ -122,7 +121,7 @@ export function TransactionsDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!data}>
                 <ArchiveX className="h-4 w-4" />
                 <span className="sr-only">Move to junk</span>
               </Button>
@@ -131,7 +130,7 @@ export function TransactionsDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!data}>
                 <Trash2 className="h-4 w-4" />
                 <span className="sr-only">Move to trash</span>
               </Button>
@@ -143,7 +142,7 @@ export function TransactionsDisplay({ mail }: MailDisplayProps) {
             <Popover>
               <PopoverTrigger asChild>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" disabled={!mail}>
+                  <Button variant="ghost" size="icon" disabled={!data}>
                     <Clock className="h-4 w-4" />
                     <span className="sr-only">Snooze</span>
                   </Button>
@@ -197,12 +196,12 @@ export function TransactionsDisplay({ mail }: MailDisplayProps) {
               </PopoverContent>
             </Popover>
             <TooltipContent>Snooze</TooltipContent>
-          </Tooltip>
+          </Tooltip> */}
         </div>
         <div className="ml-auto flex items-center gap-2">
-          <Tooltip>
+          {/* <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!data}>
                 <Reply className="h-4 w-4" />
                 <span className="sr-only">Reply</span>
               </Button>
@@ -211,7 +210,7 @@ export function TransactionsDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!data}>
                 <ReplyAll className="h-4 w-4" />
                 <span className="sr-only">Reply all</span>
               </Button>
@@ -220,18 +219,18 @@ export function TransactionsDisplay({ mail }: MailDisplayProps) {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!mail}>
+              <Button variant="ghost" size="icon" disabled={!data}>
                 <Forward className="h-4 w-4" />
                 <span className="sr-only">Forward</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>Forward</TooltipContent>
-          </Tooltip>
+          </Tooltip> */}
         </div>
         <Separator orientation="vertical" className="mx-2 h-6" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" disabled={!mail}>
+            <Button variant="ghost" size="icon" disabled={!data}>
               <MoreVertical className="h-4 w-4" />
               <span className="sr-only">More</span>
             </Button>
@@ -246,40 +245,31 @@ export function TransactionsDisplay({ mail }: MailDisplayProps) {
       </div>
       <Separator />
 
-      {mail ? (
+      {data ? (
         <div className="flex flex-1 flex-col">
           {/* Top bar with avatar, text, and badge */}
           <div className="flex items-center justify-between p-4">
             {/* Left section with avatar and text */}
             <div className="flex items-center gap-4">
-              <Avatar>
-                {/* <AvatarImage
-                  src="/path-to-your-avatar-image.png"
-                  alt={mail.name}
-                /> */}
-                <AvatarFallback delayMs={600}>
-                  {mail.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </AvatarFallback>
-              </Avatar>
               <div>
                 <p className="text-sm text-gray-500">
-                  {formatDistanceToNow(new Date(mail.date), {
+                  {formatDistanceToNow(data?.date ?? 0, {
                     addSuffix: true,
                   })}
                 </p>
-                <h1 className="text-xl font-semibold ">{mail.name}</h1>
+                <h1 className="text-xl font-semibold ">
+                  {(data?.accountName ? data?.accountName : data?.assetName) ??
+                    ""}
+                </h1>
               </div>
             </div>
 
             {/* Right section with badge */}
-            {mail.date && (
+            {data?.date && (
               <div className="flex flex-col items-end">
                 <div className="mt-2 flex items-baseline">
                   <span className="text-m font-semibold">
-                    {formatCurrency(mail.income as number)}
+                    {formatCurrency(data?.amount as number)}
                   </span>
                 </div>
                 {/* <div className="mt-1 text-sm text-gray-500">$1,240.00 over</div> */}
@@ -334,7 +324,7 @@ export function TransactionsDisplay({ mail }: MailDisplayProps) {
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">
-          No message selected
+          No transaction selected
         </div>
       )}
     </div>
