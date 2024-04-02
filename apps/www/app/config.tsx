@@ -82,7 +82,6 @@ export const sideNavItems: GroupedNavItems[] = [
       {
         href: "/investment",
         title: "Investments",
-        badge: "soon",
         icon: BarChart,
       },
       {
