@@ -29,6 +29,7 @@ import {
   ShoppingCartIcon,
 } from "lucide-react";
 
+import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -53,6 +54,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { Transaction } from "../../transactions/data";
 import { payments } from "../data";
 
 export type Payment = {
@@ -78,7 +80,7 @@ const getIconForLabel = (label: string) => {
   return labelToIconMap[label] || null; // Return null if no icon is found for the label
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Transaction>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -102,46 +104,46 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "description",
     header: "Description",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{row.getValue("description")}</div>
     ),
   },
-  {
-    accessorKey: "label",
-    header: "Label",
-    cell: ({ row }) => {
-      const label = row.getValue("label") as string;
-      const icon = getIconForLabel(label);
-      let badgeVariant;
+  // {
+  //   accessorKey: "label",
+  //   header: "Label",
+  //   cell: ({ row }) => {
+  //     const label = row.getValue("label") as string;
+  //     const icon = getIconForLabel(label);
+  //     let badgeVariant;
 
-      // Example logic to determine the badge variant based on the label
-      switch (label) {
-        case "Subscriptions":
-          badgeVariant = "default";
-          break;
-        case "Car":
-          badgeVariant = "secondary";
-          break;
-        case "House":
-          badgeVariant = "destructive";
-          break;
-        case "Food":
-        default:
-          badgeVariant = "outline";
-          break;
-      }
+  //     // Example logic to determine the badge variant based on the label
+  //     switch (label) {
+  //       case "Subscriptions":
+  //         badgeVariant = "default";
+  //         break;
+  //       case "Car":
+  //         badgeVariant = "secondary";
+  //         break;
+  //       case "House":
+  //         badgeVariant = "destructive";
+  //         break;
+  //       case "Food":
+  //       default:
+  //         badgeVariant = "outline";
+  //         break;
+  //     }
 
-      return (
-        // @ts-ignore
-        <Badge variant={badgeVariant}>
-          {icon && React.cloneElement(icon, { className: "h-4 w-4" })}
-          <span className="ml-2">{label}</span>
-        </Badge>
-      );
-    },
-  },
+  //     return (
+  //       // @ts-ignore
+  //       <Badge variant={badgeVariant}>
+  //         {icon && React.cloneElement(icon, { className: "h-4 w-4" })}
+  //         <span className="ml-2">{label}</span>
+  //       </Badge>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "amount",
     header: () => <div className="text-right">Amount</div>,
@@ -174,7 +176,9 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() =>
+                navigator.clipboard.writeText(payment.id.toString())
+              }
             >
               <Check className="mr-2 h-4 w-4" />
               <span>Review</span>
@@ -220,7 +224,11 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 // @ts-ignore
-export function AccountsReviewTable({ mailId }) {
+export function AccountsReviewTable({
+  transactions,
+}: {
+  transactions: Transaction[];
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -228,12 +236,9 @@ export function AccountsReviewTable({ mailId }) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const filteredPayments = React.useMemo(() => {
-    return payments.filter((payment) => payment.mailId === mailId);
-  }, [mailId]);
 
   const table = useReactTable({
-    data: filteredPayments,
+    data: transactions,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -253,14 +258,14 @@ export function AccountsReviewTable({ mailId }) {
 
   const groupedData = React.useMemo(() => {
     // First sort the items by date
-    const sortedItems = filteredPayments.sort((a, b) =>
-      compareAsc(parseISO(b.date), parseISO(a.date)),
+    const sortedItems = transactions.sort((a, b) =>
+      compareAsc(parseISO(b.date.toString()), parseISO(a.date.toString())),
     );
 
     // Then group items by month and year
     return sortedItems.reduce(
       (acc, item) => {
-        const monthYear = format(parseISO(item.date), "MMMM yyyy");
+        const monthYear = formatDate(item.date.toString()); // Use formatDate here
         if (!acc[monthYear]) {
           acc[monthYear] = [];
         }
@@ -268,9 +273,9 @@ export function AccountsReviewTable({ mailId }) {
         acc[monthYear].push(item);
         return acc;
       },
-      {} as Record<string, Payment[]>,
+      {} as Record<string, Transaction[]>,
     );
-  }, [filteredPayments]);
+  }, [transactions]);
 
   return (
     <div className="mt-4">

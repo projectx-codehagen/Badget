@@ -50,26 +50,9 @@ export function AccountsDashboard({
                   <Input placeholder="Search" className="pl-8" />
                 </div>
               </form>
-              <TabsList className="ml-auto">
-                <TabsTrigger
-                  value="all"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
-                  All accounts
-                </TabsTrigger>
-                <TabsTrigger
-                  value="unread"
-                  className="text-zinc-600 dark:text-zinc-200"
-                >
-                  New accounts
-                </TabsTrigger>
-              </TabsList>
             </div>
             <Separator />
             <TabsContent value="all" className="m-0">
-              <AccountsList items={accountList} />
-            </TabsContent>
-            <TabsContent value="unread" className="m-0">
               <AccountsList items={accountList} />
             </TabsContent>
           </Tabs>

@@ -36,7 +36,7 @@ export function AccountsList({ items }: MailListProps) {
       <div className="flex flex-col gap-4 p-4">
         {Object.entries(groupedItems).map(([category, items]) => (
           <React.Fragment key={category}>
-            <h2 className="text-lg font-semibold">{category}</h2>
+            {/* <h2 className="text-lg font-semibold">{category}</h2> */}
             {items.map((item) => (
               <Card
                 key={item.id.toString()}
@@ -56,16 +56,16 @@ export function AccountsList({ items }: MailListProps) {
                   </p> */}
                 </div>
                 <div className="flex items-center space-x-4">
-                  <Badge
+                  {/* <Badge
                     // variant={item.change >= 0 ? "default" : "destructive"}
                     className="self-start"
                   >
-                    {/* {item.change >= 0
+                    {item.change >= 0
                       ? `▲ ${item.change}%`
-                      : `▼ ${Math.abs(item.change)}%`} */}
-                  </Badge>
+                      : `▼ ${Math.abs(item.change)}%`}
+                  </Badge> */}
                   <p className="flex-1 truncate text-sm font-medium">
-                    {formatCurrency(item.amount)}
+                    {formatCurrency(item.amount ?? 0)}
                   </p>
                   <ChevronRight className="h-5 w-5 text-gray-400" />
                 </div>

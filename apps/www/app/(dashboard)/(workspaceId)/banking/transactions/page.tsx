@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
   const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined;
 
-  const listTransactions = await api.transaction.listTransactions.query();
+  const listTransactions = await api.transaction.listAllTransactions.query();
 
   return (
     <>

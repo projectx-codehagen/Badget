@@ -69,11 +69,11 @@ export const sideNavItems: GroupedNavItems[] = [
   {
     group: "primary",
     items: [
-      {
-        href: "/dashboard",
-        title: "Dashboard",
-        icon: LayoutDashboard,
-      },
+      // {
+      //   href: "/dashboard",
+      //   title: "Dashboard",
+      //   icon: LayoutDashboard,
+      // },
       {
         href: "/banking",
         title: "Banking",
