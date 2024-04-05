@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      framer-motion:
+        specifier: ^11.0.8
+        version: 11.0.8(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@projectx/prettier-config':
         specifier: ^0.1.0
