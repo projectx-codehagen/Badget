@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
-import { USD } from "@dinero.js/currencies";
+// import { USD } from "@dinero.js/currencies";
 import { dinero } from "dinero.js";
 import * as z from "zod";
 
@@ -82,19 +82,19 @@ export const stripeRouter = createTRPCRouter({
         PLANS.STANDARD
           ? {
               ...PLANS.STANDARD,
-              price: dinero({
-                amount: stdPrice.unit_amount || 0,
-                currency: USD,
-              }),
+              // price: dinero({
+              //   amount: stdPrice.unit_amount || 0,
+              //   currency: USD,
+              // }),
             }
           : undefined,
         PLANS.PRO
           ? {
               ...PLANS.PRO,
-              price: dinero({
-                amount: proPrice.unit_amount || 0,
-                currency: USD,
-              }),
+              // price: dinero({
+              //   amount: proPrice.unit_amount || 0,
+              //   currency: USD,
+              // }),
             }
           : undefined,
       ].filter(Boolean) as PlansResponse;
