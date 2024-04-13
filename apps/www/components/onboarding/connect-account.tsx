@@ -1,16 +1,30 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "../ui/button";
 import { STAGGER_CHILD_VARIANTS } from "./onboarding-constants";
+import { BankUploader } from "./bank-uploader";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 
 export default function ConnectAccount() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+
   return (
     <motion.div
       className="z-10 mx-5 flex flex-col items-center space-y-10 text-center sm:mx-auto"
@@ -37,19 +51,21 @@ export default function ConnectAccount() {
           Connect Accounts
         </h1>
         <h2 className="mt-4 text-sm font-light text-black dark:text-zinc-300">
-          Securely connect your bank accounts with Badget. Powered by{" "}
-          <Link href="https://plaid.com/">Plaid</Link>.
+          Securely connect your bank accounts with Badget.
+          {/* Powered by{" "}
+          <Link href="https://plaid.com/">Plaid</Link>. */}
         </h2>
       </motion.div>
       <motion.div
         variants={STAGGER_CHILD_VARIANTS}
         className="flex flex-row items-center space-x-5 text-center sm:space-x-10"
       >
-        <SecureCard className="w-1/3" text="Connect Bank Account" />
+        {/* <SecureCard className="w-1/3" text="Connect Bank Account" />
         <SecureCard className="w-1/3" text="Manually Add Account" />
-        <SecureCard className="w-1/3" text="Manually Add Asset" />
+        <SecureCard className="w-1/3" text="Manually Add Asset" /> */}
+        <SecureCard text="Import .csv Export" />
       </motion.div>
-    </motion.div>
+    </motion.div >
   );
 }
 
@@ -111,16 +127,7 @@ export const SecureCard = ({
         <div className="relative z-10 flex items-center justify-center">
           <div className="flex h-44 w-56 items-center justify-center rounded-full text-4xl font-bold text-white">
             <span className="z-20 text-black dark:text-white">
-              <Button
-                onClick={() =>
-                  router.push(
-                    "/onboarding" + "?" + createQueryString("step", "done"),
-                  )
-                }
-                className="h-20 w-48"
-              >
-                {text}
-              </Button>
+              <BankUploader />
             </span>
           </div>
         </div>

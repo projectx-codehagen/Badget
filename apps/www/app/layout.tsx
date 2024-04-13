@@ -22,7 +22,7 @@ export const metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["Badget keywords"],
+  keywords: ["badget", "open source", "tracker", "free", "budget", "finance"],
   authors: [
     {
       name: "christer",
