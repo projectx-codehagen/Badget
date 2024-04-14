@@ -30,6 +30,7 @@ import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
+import CSVParser from "./banks-data/parse-data/generic-csv-parser"
 
 export function BankUploader() {
   const [open, setOpen] = React.useState(false)
@@ -42,7 +43,7 @@ export function BankUploader() {
         <DialogTrigger asChild>
           <Button>Import File</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="h-screen max-w-screen-2xl">
           <DialogHeader>
             <DialogTitle>Import File</DialogTitle>
             <DialogDescription>
@@ -60,8 +61,9 @@ export function BankUploader() {
       <DrawerTrigger asChild>
         <Button>Import File</Button>
       </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
+      <DrawerContent className="px-4 pb-4">
+        We are still working on mobile support. Badget is currently best experienced on desktop.
+        {/* <DrawerHeader className="text-left">
           <DrawerTitle>Import File</DrawerTitle>
           <DrawerDescription>
             Export transactions data as a file from bank's website.
@@ -72,7 +74,7 @@ export function BankUploader() {
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
-        </DrawerFooter>
+        </DrawerFooter> */}
       </DrawerContent>
     </Drawer>
   )
@@ -80,6 +82,8 @@ export function BankUploader() {
 
 function UploadForm({ className, banks, setBanks }: { className: string, banks: string[], setBanks: React.Dispatch<React.SetStateAction<string[]>> }) {
   const [selectedBank, setSelectedBank] = React.useState<string>("");
+  const [file, setFile] = React.useState<File | null>(null);
+  const [uploading, setUploading] = React.useState(false);
 
   const handleBankSelect = (value: string) => {
     setSelectedBank(value);
@@ -102,20 +106,38 @@ function UploadForm({ className, banks, setBanks }: { className: string, banks: 
     [searchParams],
   );
 
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
+
+  const handleUpload = () => {
+    if (!selectedBank) {
+      return;
+    }
+
+    if (selectedBank == "American Express Credit Card") {
+      AmexCredit({ file });
+    }
+
+    setBanks(prevBanks => [...prevBanks, selectedBank]);
+    toast({
+      title: "File uploaded",
+      description: "Your file has been uploaded successfully.",
+    })
+  };
+
   return (
     <div className={cn("items-center py-4", className)}>
-      <BanksChooser onSelect={handleBankSelect} />
-      <div className="mt-4 flex justify-center">
-        <Input type="file" placeholder="File" className="mb-2" />
+      {/* <BanksChooser onSelect={handleBankSelect} /> */}
+      <CSVParser />
+      {/* <div className="mt-4 flex justify-center">
+        <Input type="file" placeholder="File" className="mb-2" onChange={handleFileChange} />
+
         <Button
           type="submit"
-          onClick={() => {
-            setBanks(prevBanks => [...prevBanks, selectedBank]);
-            toast({
-              title: "File uploaded",
-              description: "Your file has been uploaded successfully.",
-            })
-          }}
+          onClick={handleUpload}
         >
           Upload
         </Button>
@@ -126,7 +148,7 @@ function UploadForm({ className, banks, setBanks }: { className: string, banks: 
           <h2 className="mb-2 font-bold">Selected Banks:</h2>
           <ul className="space-y-2">
             {banks.map((bank, index) => (
-              <li key={index} className="flex justify-between items-center">
+              <li key={bank} className="flex justify-between items-center">
                 <span>{bank}</span>
                 <Button variant="destructive" onClick={() => handleDeleteBank(index)}>Delete</Button>
               </li>
@@ -145,7 +167,7 @@ function UploadForm({ className, banks, setBanks }: { className: string, banks: 
             </Button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   )
 }
