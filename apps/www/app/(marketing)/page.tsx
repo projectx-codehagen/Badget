@@ -5,9 +5,11 @@ import Balancer from "react-wrap-balancer";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { GetStartedButton } from "@/components/buttons/GetStartedButton";
+import BentoGridSection from "@/components/dashboard/bentogrid";
 import { BusinessLine } from "@/components/dashboard/businessline";
 import CallToActionComponent from "@/components/dashboard/calltoaction";
 import Featuressection from "@/components/dashboard/feautressection";
+import LampSection from "@/components/dashboard/lamp";
 import { Icons } from "@/components/shared/icons";
 
 export default async function IndexPage() {
@@ -71,8 +73,12 @@ export default async function IndexPage() {
           </div>
         </div>
       </section>
-      <BusinessLine />
+      <BentoGridSection />
+      {/* <BusinessLine /> */}
       <section>
+        <section>
+          <LampSection />
+        </section>
         <Featuressection />
       </section>
       <section>
