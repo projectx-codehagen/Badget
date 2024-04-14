@@ -56,7 +56,7 @@ export function BanksChooser({ onSelect }: { onSelect: (value: string) => void }
                   setOpen(false)
                   onSelect(bank.label);
                 }}
-                className="h-16"
+                className="h-16 pr-6"
               >
                 <Check
                   className={cn(

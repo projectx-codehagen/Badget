@@ -1,53 +1,49 @@
 const banks = [
   {
-    value: "amex",
-    label: "American Express",
+    value: "americanexpresscreditcard",
+    label: "American Express Credit Card",
+  },
+  {
+    value: "bankofamericachecking",
+    label: "Bank of America Checking",
     image: "boa.png",
   },
   {
-    value: "boa",
-    label: "Bank of America",
+    value: "bankofamericacreditcard",
+    label: "Bank of America Credit Card",
     image: "boa.png",
   },
   {
-    value: "bmo",
-    label: "BMO",
-    image: "boa.png",
+    value: "bmochecking",
+    label: "BMO Checking",
   },
   {
-    value: "chase",
-    label: "Chase",
-    image: "boa.png",
+    value: "chasecreditcard",
+    label: "Chase Credit Card",
   },
   {
-    value: "citi",
-    label: "Citibank",
-    image: "boa.png",
+    value: "citibankcreditcard",
+    label: "Citibank Credit Card",
   },
   {
-    value: "citizens",
-    label: "Citizens",
-    image: "boa.png",
+    value: "citizenschecking",
+    label: "Citizens Checking",
   },
   {
-    value: "flagstar",
-    label: "Flagstar",
-    image: "boa.png",
+    value: "flagstarchecking",
+    label: "Flagstar Checking",
   },
   {
-    value: "pnc",
-    label: "PNC",
-    image: "boa.png",
+    value: "pncchecking",
+    label: "PNC Checking",
   },
   {
     value: "usbank",
     label: "US Bank",
-    image: "boa.png",
   },
   {
-    value: "wellsfargo",
-    label: "Wells Fargo",
-    image: "boa.png",
+    value: "wellsfargocreditcard",
+    label: "Wells Fargo Credit Card",
   },
 ];
 

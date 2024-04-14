@@ -26,6 +26,10 @@ import { BanksChooser } from "./banks-chooser"
 import { toast } from "../ui/use-toast"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useCallback } from "react"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 
 export function BankUploader() {
   const [open, setOpen] = React.useState(false)
@@ -101,23 +105,21 @@ function UploadForm({ className, banks, setBanks }: { className: string, banks: 
   return (
     <div className={cn("items-center py-4", className)}>
       <BanksChooser onSelect={handleBankSelect} />
-      {selectedBank && (
-        <div className="mt-4 flex justify-center">
-          <Input type="file" placeholder="File" className="mb-2" />
-          <Button
-            type="submit"
-            onClick={() => {
-              setBanks(prevBanks => [...prevBanks, selectedBank]);
-              toast({
-                title: "File uploaded",
-                description: "Your file has been uploaded successfully.",
-              })
-            }}
-          >
-            Upload
-          </Button>
-        </div>
-      )}
+      <div className="mt-4 flex justify-center">
+        <Input type="file" placeholder="File" className="mb-2" />
+        <Button
+          type="submit"
+          onClick={() => {
+            setBanks(prevBanks => [...prevBanks, selectedBank]);
+            toast({
+              title: "File uploaded",
+              description: "Your file has been uploaded successfully.",
+            })
+          }}
+        >
+          Upload
+        </Button>
+      </div>
 
       {banks.length > 0 && (
         <div className="mt-4">
