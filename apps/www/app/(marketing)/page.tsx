@@ -1,20 +1,28 @@
+import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs";
 import Balancer from "react-wrap-balancer";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  MovingBorderImage,
+  MovingButton,
+} from "@/components/ui/moving-borders";
 import { GetStartedButton } from "@/components/buttons/GetStartedButton";
+import BentoGridSection from "@/components/dashboard/bentogrid";
 import { BusinessLine } from "@/components/dashboard/businessline";
 import CallToActionComponent from "@/components/dashboard/calltoaction";
 import Featuressection from "@/components/dashboard/feautressection";
+import { HeroHighlightSection } from "@/components/dashboard/hero-highlight-section";
+import LampSection from "@/components/dashboard/lamp";
 import { Icons } from "@/components/shared/icons";
 
 export default async function IndexPage() {
   const { userId } = auth();
   return (
     <>
-      <section className="space-y-6 pb-12 pt-16 lg:py-28">
+      <section className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] space-y-6  lg:py-28 ">
         <div className="container flex max-w-[64rem] flex-col items-center gap-5 text-center">
           <Link
             href="https://twitter.com/codehagen"
@@ -69,15 +77,28 @@ export default async function IndexPage() {
               </p>
             </Link>
           </div>
+          <div className="mt-40">
+            <MovingBorderImage
+              src="https://github.com/projectx-codehagen/Badget/assets/24507211/2c2b8e43-3d18-4b28-b8d0-5dc0cbdb530f"
+              alt="hero"
+            />
+          </div>
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="relative" aria-hidden="true">
+              <div className="absolute -inset-x-20 bottom-0 bg-gradient-to-t from-background pt-[7%]" />
+            </div>
+          </div>
         </div>
       </section>
-      <BusinessLine />
+
+      {/* <BusinessLine /> */}
+      <BentoGridSection />
+      <HeroHighlightSection />
       <section>
-        <Featuressection />
+        <LampSection />
       </section>
-      <section>
-        <CallToActionComponent />
-      </section>
+      <section>{/* <Featuressection /> */}</section>
+      <section>{/* <CallToActionComponent /> */}</section>
       {/* <section>
         <FeatureSection1 />
       </section> */}
