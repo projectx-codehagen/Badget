@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { LockClosedIcon } from "@radix-ui/react-icons";
+import { motion } from "framer-motion";
 import {
   ArrowUpIcon,
   CloudDownload,
@@ -50,3 +51,33 @@ export default function BentoGridSection() {
     </div>
   );
 }
+
+/////////////////////////////
+// If we want to make h1 like framer motion, we can use this code:
+// <motion.h1
+//   initial={{ opacity: 0, y: 50 }}  // Start with the element 50 pixels down and transparent
+//   whileInView={{ opacity: 1, y: 0 }}  // Animate to fully opaque and position y:0
+//   transition={{
+//     delay: 0.25,  // Delay the start of the animation
+//     duration: 0.8,  // Duration of the animation
+//     ease: "easeInOut"  // Type of easing
+//   }}
+//   className="animate-fade-up font-urban text-3xl font-extrabold tracking-tight opacity-0 sm:text-4xl md:text-5xl lg:text-6xl"
+//   viewport={{ once: true }}  // Ensures animation only happens once
+// >
+//   <Balancer>The new</Balancer>
+// </motion.h1>
+
+// <motion.h1
+//   initial={{ opacity: 0, y: 50 }}
+//   whileInView={{ opacity: 1, y: 0 }}
+//   transition={{
+//     delay: 0.25,
+//     duration: 0.8,
+//     ease: "easeInOut"
+//   }}
+//   className="relative bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text font-urban text-3xl font-extrabold tracking-tight text-transparent sm:text-4xl md:text-5xl lg:text-6xl"
+//   viewport={{ once: true }}
+// >
+//   <Balancer>Golden Standard</Balancer>
+// </motion.h1>

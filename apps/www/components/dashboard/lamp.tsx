@@ -10,8 +10,13 @@ import {
 import { Balancer } from "react-wrap-balancer";
 
 import { LampTemplate } from "../ui/lamp";
+import { MovingButton } from "../ui/moving-borders";
 import { BentoGridTemplate } from "./bentogrid/bentogrid";
 
 export default function LampSection() {
-  return <LampTemplate />;
+  return (
+    <div>
+      <LampTemplate />
+    </div>
+  );
 }

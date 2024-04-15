@@ -3,6 +3,18 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import {
+  Brain,
+  Calculator,
+  CheckCircle,
+  Frown,
+  Goal,
+  List,
+  Target,
+  TrendingUp,
+  User,
+  XCircle,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -18,7 +30,7 @@ export function BentoGridTemplate() {
           description={item.description}
           header={item.header}
           className={cn("[&>p:text-lg]", item.className)}
-          //   icon={item.icon}
+          icon={item.icon}
         />
       ))}
     </BentoGrid>
@@ -185,48 +197,30 @@ const SkeletonFour = () => {
         variants={first}
         className="flex h-full w-1/3 flex-col items-center justify-center rounded-2xl border border-neutral-200 bg-white p-4 dark:border-white/[0.1] dark:bg-black"
       >
-        <Image
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="h-10 w-10 rounded-full"
-        />
+        <XCircle className="h-10 w-10 rounded-full" />
         <p className="mt-4 text-center text-xs font-semibold text-neutral-500 sm:text-sm">
-          Just code in Vanilla Javascript
+          Your not going to meet your goal
         </p>
         <p className="mt-4 rounded-full border border-red-500 bg-red-100 px-2 py-0.5 text-xs text-red-600 dark:bg-red-900/20">
-          Delusional
+          Take action
         </p>
       </motion.div>
       <motion.div className="relative z-20 flex h-full w-1/3 flex-col items-center justify-center rounded-2xl border border-neutral-200 bg-white p-4 dark:border-white/[0.1] dark:bg-black">
-        <Image
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="h-10 w-10 rounded-full"
-        />
+        <CheckCircle className="h-10 w-10 rounded-full" />
         <p className="mt-4 text-center text-xs font-semibold text-neutral-500 sm:text-sm">
-          Tailwind CSS is cool, you know
+          On your way to meet your goal
         </p>
         <p className="mt-4 rounded-full border border-green-500 bg-green-100 px-2 py-0.5 text-xs text-green-600 dark:bg-green-900/20">
-          Sensible
+          On Track
         </p>
       </motion.div>
       <motion.div
         variants={second}
         className="flex h-full w-1/3 flex-col items-center justify-center rounded-2xl border border-neutral-200 bg-white p-4 dark:border-white/[0.1] dark:bg-black"
       >
-        <Image
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="h-10 w-10 rounded-full"
-        />
+        <Frown className="h-10 w-10 rounded-full" />
         <p className="mt-4 text-center text-xs font-semibold text-neutral-500 sm:text-sm">
-          I love angular, RSC, and Redux.
+          Your going to miss your goal this month
         </p>
         <p className="mt-4 rounded-full border border-orange-500 bg-orange-100 px-2 py-0.5 text-xs text-orange-600 dark:bg-orange-900/20">
           Helpless
@@ -271,23 +265,16 @@ const SkeletonFive = () => {
         variants={variants}
         className="flex flex-row items-start space-x-2 rounded-2xl border border-neutral-100  bg-white p-2 dark:border-white/[0.2] dark:bg-black"
       >
-        <Image
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="h-10 w-10 rounded-full"
-        />
+        <User className="h-10 w-10 rounded-full" />
         <p className="text-xs text-neutral-500">
-          There are a lot of cool framerworks out there like React, Angular,
-          Vue, Svelte that can make your life ....
+          What should i do to save more money?
         </p>
       </motion.div>
       <motion.div
         variants={variantsSecond}
         className="ml-auto flex w-3/4 flex-row items-center justify-end space-x-2 rounded-full border border-neutral-100 bg-white p-2 dark:border-white/[0.2] dark:bg-black"
       >
-        <p className="text-xs text-neutral-500">Use PHP.</p>
+        <p className="text-xs text-neutral-500">Use Badget. </p>
         <div className="h-6 w-6 flex-shrink-0 rounded-full bg-gradient-to-r from-pink-500 to-violet-500" />
       </motion.div>
     </motion.div>
@@ -295,59 +282,60 @@ const SkeletonFive = () => {
 };
 const items = [
   {
-    title: "AI Content Generation",
+    title: "Predictive Budgeting",
     description: (
       <span className="text-sm">
-        Experience the power of AI in generating unique content.
+        Get AI-powered suggestions based on your purchase history.
       </span>
     ),
     header: <SkeletonOne />,
     className: "md:col-span-1",
-    // icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
+    icon: <TrendingUp className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "Automated Proofreading",
+    title: "All your transactions",
     description: (
       <span className="text-sm">
-        Let AI handle the proofreading of your documents.
+        See all your transactions in one place, and get insights.
       </span>
     ),
     header: <SkeletonTwo />,
     className: "md:col-span-1",
-    // icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
+    icon: <List className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "Contextual Suggestions",
+    title: "Investment Simulator",
     description: (
       <span className="text-sm">
-        Get AI-powered suggestions based on your writing context.
+        Simulate your investments and see how they will grow over time.
       </span>
     ),
     header: <SkeletonThree />,
     className: "md:col-span-1",
-    // icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
+    icon: <Calculator className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "Sentiment Analysis",
+    title: "Goal-Setting and Tracking",
     description: (
       <span className="text-sm">
-        Understand the sentiment of your text with AI analysis.
+        Track your goals and get suggestions on how to achieve them faster. Let
+        Badget help you stay on track.
       </span>
     ),
     header: <SkeletonFour />,
     className: "md:col-span-2",
-    // icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    icon: <Goal className="h-4 w-4 text-neutral-500" />,
   },
 
   {
-    title: "Text Summarization",
+    title: "AI helper",
     description: (
       <span className="text-sm">
-        Summarize your lengthy documents with AI technology.
+        Let Badget help you with your financial decisions.
       </span>
     ),
     header: <SkeletonFive />,
     className: "md:col-span-1",
-    // icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
+    icon: <Brain className="h-4 w-4 text-neutral-500" />,
   },
 ];
