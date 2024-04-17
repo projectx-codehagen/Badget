@@ -13,9 +13,9 @@ export const env = createEnv({
    * This way you can ensure the app isn't built with invalid env vars.
    */
   server: {
-    DATABASE_HOST: z.string().min(1),
-    DATABASE_USERNAME: z.string().min(1),
-    DATABASE_PASSWORD: z.string().min(1),
+    // DATABASE_HOST: z.string().min(1),
+    // DATABASE_USERNAME: z.string().min(1),
+    // DATABASE_PASSWORD: z.string().min(1),
     STRIPE_API_KEY: z.string().min(1).optional(),
     STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
   },
