@@ -24,24 +24,80 @@ const main = async () => {
   const db = drizzle(client);
 
   console.log("Seed start");
-  await db.insert(schema.country).values(countries);
-  // .onDuplicateKeyUpdate({ set: { iso: sql`iso`, name: sql`name` } });
-  await db.insert(schema.currency).values(currencies);
-  // .onDuplicateKeyUpdate({
-  //   set: {
-  //     iso: sql`iso`,
-  //     symbol: sql`symbol`,
-  //     numericCode: sql`numeric_code`,
-  //   },
-  // });
-  await db.insert(schema.connectorConfig).values(connectorConfigs);
-  // .onDuplicateKeyUpdate({ set: { id: sql`id` } });
-  await db.insert(schema.connector).values(connectors);
-  // .onDuplicateKeyUpdate({ set: { id: sql`id` } });
-  await db.insert(schema.integration).values(integrations);
-  // .onDuplicateKeyUpdate({ set: { id: sql`id` } });
-  await db.insert(schema.resource).values(resources);
-  // .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+
+  // Log the number of unique and total entries for countries and currencies
+  console.log(
+    new Set(countries.map((country) => country.iso)).size,
+    countries.length,
+  );
+  console.log(
+    new Set(currencies.map((currency) => currency.iso)).size,
+    currencies.length,
+  );
+
+  await db
+    .insert(schema.country)
+    .values(countries)
+    .onConflictDoUpdate({
+      target: schema.country.iso, // Assuming 'iso' is a unique column
+      set: {
+        iso: sql`EXCLUDED.iso`,
+        name: sql`EXCLUDED.name`,
+      },
+    });
+
+  await db
+    .insert(schema.currency)
+    .values(currencies)
+    .onConflictDoUpdate({
+      target: schema.currency.iso, // Assuming 'iso' is a unique column
+      set: {
+        iso: sql`EXCLUDED.iso`,
+        symbol: sql`EXCLUDED.symbol`,
+        numericCode: sql`EXCLUDED.numeric_code`,
+      },
+    });
+
+  await db
+    .insert(schema.connectorConfig)
+    .values(connectorConfigs)
+    .onConflictDoUpdate({
+      target: schema.connectorConfig.id, // Assuming 'id' is the primary key
+      set: {
+        id: sql`EXCLUDED.id`,
+      },
+    });
+
+  await db
+    .insert(schema.connector)
+    .values(connectors)
+    .onConflictDoUpdate({
+      target: schema.connector.id, // Assuming 'id' is the primary key
+      set: {
+        id: sql`EXCLUDED.id`,
+      },
+    });
+
+  await db
+    .insert(schema.integration)
+    .values(integrations)
+    .onConflictDoUpdate({
+      target: schema.integration.id, // Assuming 'id' is the primary key
+      set: {
+        id: sql`EXCLUDED.id`,
+      },
+    });
+
+  await db
+    .insert(schema.resource)
+    .values(resources)
+    .onConflictDoUpdate({
+      target: schema.resource.id, // Assuming 'id' is the primary key
+      set: {
+        id: sql`EXCLUDED.id`,
+      },
+    });
+
   console.log("Seed done");
 };
 

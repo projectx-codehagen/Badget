@@ -37,6 +37,13 @@ export const assetRouter = createTRPCRouter({
             type: "AVAILABLE",
             originalPayload: createAssetSchema.parse(opts.input),
           })
+          // Do it like this for postgres?
+          // .onConflictDoUpdate({
+          //   target: schema.balance.assetId,
+          //   set: {
+          //     amount: sql`amount`,
+          //     date: sql`date`,
+          //   },
           .onDuplicateKeyUpdate({
             set: {
               amount: sql`amount`,

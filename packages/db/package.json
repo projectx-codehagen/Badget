@@ -28,7 +28,8 @@
     "@neondatabase/serverless": "^0.9.1",
     "@planetscale/database": "^1.16.0",
     "drizzle-orm": "^0.29.3",
-    "iso-country-currency": "^0.7.2"
+    "iso-country-currency": "^0.7.2",
+    "pg": "^8.11.5"
   },
   "devDependencies": {
     "@projectx/eslint-config": "workspace:^0.2.0",
