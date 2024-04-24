@@ -26,6 +26,7 @@ import {
   SunMedium,
   Trash,
   User,
+  Wallet,
   X,
 } from "lucide-react";
 
@@ -42,7 +43,7 @@ export const Icons = {
   ellipsis: MoreVertical,
   help: HelpCircle,
   laptop: Laptop,
-  logo: Puzzle,
+  logo: Wallet,
   media: Image,
   moon: Moon,
   page: File,
