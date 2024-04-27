@@ -7,7 +7,7 @@ import { NavItem, siteConfig } from "@/app/config";
 
 export const TopNav = ({ navItems }: { navItems: NavItem[] }) => {
   return (
-    <nav className="sticky top-0 z-10 flex h-16 items-center gap-10 border-b bg-background/60 px-4 backdrop-blur-xl transition-all">
+    <nav className="sticky top-0 z-30 flex h-16 items-center gap-10 border-b bg-background/60 px-4 backdrop-blur-xl transition-all">
       <Link href="/" className="flex items-center space-x-2">
         <Icons.logo />
         <span className="inline-block font-urban text-xl font-bold">
