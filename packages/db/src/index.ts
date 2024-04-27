@@ -35,9 +35,10 @@ export * from "./enum";
 
 export * from "drizzle-orm";
 
-//TODO FIX: This is a temporary solution to avoid runtime error with cannot find DB.
+import { env } from "../../../apps/www/env";
+
 export const db = drizzle(
-  neon(process.env.DATABASE_URL || "PASTE INN YOUR DATABASE URL HERE"),
+  neon(env.NEXT_PUBLIC_DATABASE_URL!),
 );
 
 // Use custom alphabet without special chars for less chaotic, copy-able URLs

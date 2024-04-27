@@ -29,6 +29,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID: z.string().min(1).optional(),
     NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID: z.string().min(1).optional(),
     NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID: z.string().min(1).optional(),
+    NEXT_PUBLIC_DATABASE_URL: z.string().url(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -45,6 +46,7 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID,
     NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID:
       process.env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
+    NEXT_PUBLIC_DATABASE_URL: process.env.NEXT_PUBLIC_DATABASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
