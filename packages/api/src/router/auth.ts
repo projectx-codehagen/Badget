@@ -14,7 +14,7 @@ export const authRouter = createTRPCRouter({
         paidUntil: schema.customer.paidUntil,
       })
       .from(schema.customer)
-      .where(eq(schema.customer.clerkUserId, opts.ctx.auth.userId));
+      .where(eq(schema.customer.userId, opts.ctx.auth.userId));
 
     if (!customer?.[0]) return null;
 
