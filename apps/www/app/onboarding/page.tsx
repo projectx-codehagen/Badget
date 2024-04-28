@@ -9,12 +9,27 @@ import { Toaster } from "@/components/ui/toaster";
 import ConnectAccount from "@/components/onboarding/connect-account";
 import FinancialGoals from "@/components/onboarding/financial-goals";
 import Welcome from "@/components/onboarding/welcome";
+import { db } from "@projectx/db";
+import { customer } from "../../../../packages/db/src/schema/customer";
+import { useUser } from "@clerk/nextjs";
 
 export default function Intro() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const user = useUser();
   const step = searchParams.get("step");
+
+  async function createUser() {
+    await db.insert(customer).values({
+      id: "placeholder", // the schema is set to a length of 30 but the id is 32
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      stripeId: "stripe_id",
+      userId: user.user?.id || "error",
+    });
+
+    return { message: "user created" };
+  }
 
   return (
     <div className="dark mx-auto flex h-screen w-screen flex-col items-center justify-center overflow-x-hidden bg-zinc-950 text-white">
@@ -37,7 +52,7 @@ export default function Intro() {
             <h1 className="font-display max-w-md text-3xl font-semibold transition-colors sm:text-4xl">
               Done!
             </h1>
-            <Link href="/dashboard" className="rounded-2xl">
+            <Link href="/dashboard" className="rounded-2xl" onClick={createUser}>
               Go to Dashboard
             </Link>
           </div>

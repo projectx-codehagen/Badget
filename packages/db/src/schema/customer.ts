@@ -13,7 +13,7 @@ export const planEnum = pgEnum("plan", [
 export const customer = pgTable(
   "customer",
   {
-    id: varchar("id", { length: 30 }).primaryKey(), // prefix_ + nanoid (16)
+    id: varchar("id", { length: 32 }).primaryKey(), // prefix_ + nanoid (16)
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
