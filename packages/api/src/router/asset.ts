@@ -20,7 +20,10 @@ export const assetRouter = createTRPCRouter({
           assetType: AssetType.REAL_ESTATE,
           originalPayload: createAssetSchema.parse(opts.input),
         })
-        .onDuplicateKeyUpdate({ set: { name: sql`name` } });
+        .onConflictDoUpdate({
+          target: schema.asset.id,
+          set: { name: sql`name` }
+        });
 
       if (assetQuery.rowsAffected === 0) {
         return { success: false };
@@ -37,14 +40,8 @@ export const assetRouter = createTRPCRouter({
             type: "AVAILABLE",
             originalPayload: createAssetSchema.parse(opts.input),
           })
-          // Do it like this for postgres?
-          // .onConflictDoUpdate({
-          //   target: schema.balance.assetId,
-          //   set: {
-          //     amount: sql`amount`,
-          //     date: sql`date`,
-          //   },
-          .onDuplicateKeyUpdate({
+          .onConflictDoUpdate({
+            target: schema.balance.id,
             set: {
               amount: sql`amount`,
               date: sql`date`,
@@ -61,7 +58,8 @@ export const assetRouter = createTRPCRouter({
             description: "Initial deposit",
             originalPayload: createAssetSchema.parse(opts.input),
           })
-          .onDuplicateKeyUpdate({
+          .onConflictDoUpdate({
+            target: schema.transaction.id,
             set: {
               amount: sql`amount`,
               date: sql`date`,

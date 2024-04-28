@@ -65,7 +65,10 @@ const upsertBankAccountData = async (data: BankingData) => {
     const accountQuery = await tx
       .insert(schema.account)
       .values(data.account)
-      .onDuplicateKeyUpdate({ set: { name: sql`name` } });
+      .onConflictDoUpdate({
+        target: schema.account.id,
+        set: { name: sql`name` }
+      });
 
     await tx
       .insert(schema.balance)
@@ -75,9 +78,10 @@ const upsertBankAccountData = async (data: BankingData) => {
             ...balance,
             accountId: BigInt(accountQuery.insertId),
           };
-        }),
+        }
       )
-      .onDuplicateKeyUpdate({
+      .onConflictDoUpdate({
+        target: schema.balance.id,
         set: {
           amount: sql`amount`,
           date: sql`date`,
@@ -93,7 +97,8 @@ const upsertBankAccountData = async (data: BankingData) => {
           };
         }),
       )
-      .onDuplicateKeyUpdate({
+      .onConflictDoUpdate({
+        target: schema.transaction.id,
         set: {
           amount: sql`amount`,
           date: sql`date`,

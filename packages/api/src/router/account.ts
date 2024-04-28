@@ -18,7 +18,12 @@ export const accountRouter = createTRPCRouter({
           userId,
           originalPayload: createAccountSchema.parse(opts.input),
         })
-        .onDuplicateKeyUpdate({ set: { name: sql`name` } });
+        .onConflictDoUpdate({
+          target: schema.account.id,
+          set: {
+            name: sql`name`,
+          },
+        });
 
       if (accountQuery.rowsAffected === 0) {
         return { success: false };
@@ -35,7 +40,8 @@ export const accountRouter = createTRPCRouter({
             type: "AVAILABLE",
             originalPayload: createAccountSchema.parse(opts.input),
           })
-          .onDuplicateKeyUpdate({
+          .onConflictDoUpdate({
+            target: schema.balance.id,
             set: {
               amount: sql`amount`,
               date: sql`date`,
@@ -45,6 +51,7 @@ export const accountRouter = createTRPCRouter({
         await tx
           .insert(schema.transaction)
           .values({
+            id: "BigInt(Date.now())",
             accountId: BigInt(accountQuery.insertId),
             amount: createAccountSchema.parse(opts.input).amount ?? 0,
             currencyIso: createAccountSchema.parse(opts.input).currencyIso,
@@ -52,7 +59,8 @@ export const accountRouter = createTRPCRouter({
             description: "Initial deposit",
             originalPayload: createAccountSchema.parse(opts.input),
           })
-          .onDuplicateKeyUpdate({
+          .onConflictDoUpdate({
+            target: schema.transaction.id,
             set: {
               amount: sql`amount`,
               date: sql`date`,
