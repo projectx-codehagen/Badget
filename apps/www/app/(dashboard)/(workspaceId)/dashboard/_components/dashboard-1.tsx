@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { HelpCircle, Settings } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -9,18 +8,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AddButton } from "@/components/buttons/AddButton";
-import { AddAssetFlow } from "@/components/modals/add-asset-flow";
-import { WorkspaceSwitcher } from "@/app/(dashboard)/_components/workspace-switcher";
 import { SidebarNav } from "@/app/(dashboard)/(workspaceId)/_components/sidebar-nav";
-
-import { Nav } from "./nav";
-import { CardsStats } from "./stats";
-import { TopCategoriesTable } from "./top-categories-table";
-import { TransactionsReviewTable } from "./transaction-review-table";
 
 interface DashboardProps {
   defaultLayout: number[] | undefined;
@@ -62,8 +51,8 @@ export function Dashboard({
           }}
           className={cn(
             isCollapsed &&
-            "min-w-[50px] transition-all duration-300 ease-in-out",
-            "hidden lg:block"
+              "min-w-[50px] transition-all duration-300 ease-in-out",
+            "hidden lg:block",
           )}
         >
           <SidebarNav isCollapsed={isCollapsed} />
