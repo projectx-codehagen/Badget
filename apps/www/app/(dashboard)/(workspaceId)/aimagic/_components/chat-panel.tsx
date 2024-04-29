@@ -39,16 +39,21 @@ const ChatPanel = (props: ChatPanelProps) => {
       subheading: "Save more money",
       message: "Based on my spending habits, how can i save more money?.",
     },
+    {
+      heading: "Make me a budget",
+      subheading: "Make me a predictive budget",
+      message: "Make me a budget table for next month",
+    },
   ];
 
   return (
-    <div className="fixed inset-x-0 bottom-12 flex w-full max-w-2xl flex-col justify-center">
+    <div className="fixed inset-x-0 bottom-12 mx-auto w-full max-w-2xl px-4 sm:px-0">
       <ButtonScrollToBottom
         isAtBottom={isAtBottom}
         scrollToBottom={scrollToBottom}
       />
 
-      <div className="w-full">
+      <div className="mb-4 grid grid-cols-2 gap-2">
         <div className="mb-4 grid grid-cols-2 gap-2 px-4 sm:px-0">
           {messages.length === 0 &&
             exampleMessages.map((example, index) => (
@@ -84,7 +89,7 @@ const ChatPanel = (props: ChatPanelProps) => {
         </div>
       </div>
 
-      <div className="border-t bg-background px-4 py-2  sm:rounded-t-xl sm:border md:py-4">
+      <div className="border-t bg-background py-2 sm:rounded-t-xl sm:border md:py-4">
         <PromptForm input={input} setInput={setInput} />
       </div>
     </div>
