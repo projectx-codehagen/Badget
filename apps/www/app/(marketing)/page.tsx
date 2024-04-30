@@ -22,7 +22,7 @@ export default async function IndexPage() {
   const { userId } = auth();
   return (
     <>
-      <section className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] space-y-6  lg:py-28 ">
+      <section className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] space-y-6 pt-8 lg:pb-28 lg:pt-28">
         <div className="container flex max-w-[64rem] flex-col items-center gap-5 text-center">
           <Link
             href="https://twitter.com/codehagen"

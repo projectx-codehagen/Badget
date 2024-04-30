@@ -45,7 +45,7 @@ export default function BentoGridSection() {
           </p>
         </div>
       </div>
-      <div className="relative overflow-hidden pt-16">
+      <div className="relative overflow-hidden py-16">
         <BentoGridTemplate />
       </div>
     </div>
