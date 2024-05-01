@@ -3,15 +3,12 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 
 import { AlignJustify } from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { sideNavItems, siteConfig } from "@/app/config";
 import { Icons } from "@/components/shared/icons";
 import { ExpandedItem } from "../(workspaceId)/_components/sidebar-nav";
@@ -43,9 +40,9 @@ export default function HamburgerMenu() {
 
           {sideNavItems.map((group) => {
             return (
-              <>
+              <div key={group.group}>
                 <Separator className="mb-2 mt-2" />
-                <div className="flex flex-col gap-1 p-2" key={group.group}>
+                <div className="flex flex-col gap-1 p-2">
                   {group.items.map((link, idx) => {
                     return (
                       <ExpandedItem
@@ -56,7 +53,7 @@ export default function HamburgerMenu() {
                     )
                   })}
                 </div>
-              </>
+              </div>
             );
           })}
         </SheetContent>
