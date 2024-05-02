@@ -1,16 +1,18 @@
 import { sql } from "drizzle-orm";
-import { bigint, int, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { integer, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 
-import { mySqlTable } from "./_table";
+import { pgTable } from "./_table";
 
-export const currency = mySqlTable("currency", {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+export const currency = pgTable("currency", {
+  id: serial("id").primaryKey(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updated_at").onUpdateNow(),
+  updatedAt: timestamp("updated_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 
   iso: varchar("iso", { length: 3 }).unique().notNull(),
   symbol: varchar("symbol", { length: 5 }).notNull(),
-  numericCode: int("numeric_code"),
+  numericCode: integer("numeric_code"),
 });
