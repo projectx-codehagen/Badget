@@ -12,6 +12,7 @@ import Welcome from "@/components/onboarding/welcome";
 import { db } from "@projectx/db";
 import { customer } from "../../../../packages/db/src/schema/customer";
 import { useUser } from "@clerk/nextjs";
+import { nanoid } from 'nanoid'
 
 export default function Intro() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function Intro() {
 
   async function createUser() {
     await db.insert(customer).values({
-      id: "placeholder", // the schema is set to a length of 30 but the id is 32
+      id: `prefix_${nanoid(16)}`,
       createdAt: new Date(),
       updatedAt: new Date(),
       stripeId: "stripe_id",

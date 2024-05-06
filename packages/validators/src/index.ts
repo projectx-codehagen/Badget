@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { AccountType, AssetType } from "@projectx/db";
+import { AccountType, AssetType, BalanceType } from "@projectx/db";
 import { PLANS, type PlanInfo } from "@projectx/stripe/plans";
 
 export const userAuthSchema = z.object({
@@ -82,7 +82,7 @@ export const createAccountSchema = z.object({
   accountType: z.nativeEnum(AccountType),
   amount: z.coerce.number().min(1),
 });
-export type CreateAccount = z.infer<typeof createAccountSchema>;
+export type CreateAccount = z.infer<typeof createAccountSchema>; 
 
 export const createAssetSchema = z.object({
   name: z.string().min(1),

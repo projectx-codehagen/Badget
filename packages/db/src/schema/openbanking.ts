@@ -69,7 +69,7 @@ export const accountRelations = relations(account, ({ many, one }) => ({
 export const balanceTypeEnum = pgEnum("type", [
   BalanceType.AVAILABLE,
   BalanceType.BOOKED,
-  BalanceType.EXPECTED,
+  BalanceType.EXPECTED
 ]);
 
 export const balance = pgTable(
@@ -89,7 +89,7 @@ export const balance = pgTable(
 
     amount: decimal("amount").notNull(),
     date: timestamp("date").notNull(),
-    type: balanceTypeEnum("type").notNull(),
+    type: balanceTypeEnum("type").default(BalanceType.AVAILABLE),
     originalPayload: json("original_payload"),
   },
   (table) => {

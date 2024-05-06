@@ -12,7 +12,7 @@ export default function Welcome() {
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params z= new URLSearchParams(searchParams.toString());
       params.set(name, value);
 
       return params.toString();

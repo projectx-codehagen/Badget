@@ -1,5 +1,6 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import { neon, Pool } from "@neondatabase/serverless";
+// import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from 'drizzle-orm/neon-serverless';
 import { customAlphabet } from "nanoid";
 
 import * as asset from "./schema/asset";
@@ -37,8 +38,12 @@ export * from "drizzle-orm";
 
 import { env } from "../../../apps/www/env";
 
+const pool = new Pool({
+  connectionString: env.NEXT_PUBLIC_DATABASE_URL!,
+});
+
 export const db = drizzle(
-  neon(env.NEXT_PUBLIC_DATABASE_URL!),
+  pool
 );
 
 // Use custom alphabet without special chars for less chaotic, copy-able URLs
