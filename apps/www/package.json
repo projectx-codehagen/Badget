@@ -71,6 +71,7 @@
     "@trpc/next": "^10.38.5",
     "@trpc/react-query": "^10.38.5",
     "@trpc/server": "^10.38.5",
+    "@types/react-syntax-highlighter": "^15.5.11",
     "@vercel/analytics": "^1.2.2",
     "@vercel/og": "^0.6.2",
     "ai": "^3.0.24",
