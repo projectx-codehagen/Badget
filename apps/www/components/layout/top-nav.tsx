@@ -33,7 +33,7 @@ export const TopNav = ({ navItems }: { navItems: NavItem[] }) => {
       </nav>
       <div className="ml-auto flex items-center space-x-4">
         {/* <Search /> */}
-        <UserNav />
+        {/* <UserNav /> */}
       </div>
     </nav>
   );

@@ -1,18 +1,19 @@
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 
+
+
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { NavItem, sideNavItems } from "@/app/config";
 
+
+
 import { WorkspaceSwitcher } from "../../_components/workspace-switcher";
+
 
 const CollapsedItem = ({
   item,

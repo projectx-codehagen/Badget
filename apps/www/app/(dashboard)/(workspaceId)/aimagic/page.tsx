@@ -1,6 +1,10 @@
 import { cookies } from "next/headers";
 
+
+
 import { AiMagicDashboard } from "../savings/_components/ai-magic-dashboard";
+import Chat from "./_components/chat";
+import { AI } from "./actions";
 import { accounts, mails } from "./data";
 
 export const metadata = {
@@ -17,14 +21,17 @@ export default async function AIMagicPage() {
 
   return (
     <>
-      <div className="flex flex-col">
-        <AiMagicDashboard
-          accounts={accounts}
-          mails={mails}
-          defaultLayout={defaultLayout}
-          defaultCollapsed={defaultCollapsed}
-          navCollapsedSize={4}
-        />
+      <div>
+        <AI>
+          <Chat />
+          {/* <AiMagicDashboard
+            accounts={accounts}
+            mails={mails}
+            defaultLayout={defaultLayout}
+            defaultCollapsed={defaultCollapsed}
+            navCollapsedSize={4}
+          /> */}
+        </AI>
       </div>
     </>
   );

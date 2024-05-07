@@ -6,9 +6,9 @@ export default async function DashboardLayout(props: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen rounded-[0.5rem]">
+    <div className="h-screen flex flex-col">
       <TopNav navItems={topNavItems} />
-      <main className="min-h-[calc(100vh-14rem)] flex-1 space-y-4">
+      <main className="flex-1 space-y-4">
         {props.children}
       </main>
       <SiteFooter />

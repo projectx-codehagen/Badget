@@ -1,16 +1,9 @@
 import type { Route } from "next";
-import {
-  BarChart,
-  Building,
-  CreditCard,
-  HelpCircle,
-  Layers,
-  LayoutDashboard,
-  LucideIcon,
-  Settings,
-  Sparkle,
-  Sprout,
-} from "lucide-react";
+import { BarChart, Building, CreditCard, HelpCircle, Layers, LayoutDashboard, LucideIcon, Settings, Sparkle, Sprout } from "lucide-react";
+
+
+
+
 
 export const siteConfig = {
   name: "Badget",
@@ -111,7 +104,6 @@ export const sideNavItems: GroupedNavItems[] = [
       {
         href: "/aimagic",
         title: "AI Magic",
-        badge: "soon",
         icon: Sparkle,
       },
     ],
