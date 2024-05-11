@@ -1,5 +1,6 @@
-import { Client } from "@planetscale/database";
-import { drizzle } from "drizzle-orm/planetscale-serverless";
+import { neon, Pool } from "@neondatabase/serverless";
+// import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from 'drizzle-orm/neon-serverless';
 import { customAlphabet } from "nanoid";
 
 import * as asset from "./schema/asset";
@@ -30,20 +31,20 @@ export type CanonicalAccount = typeof schema.account.$inferInsert;
 export type CanonicalBalance = typeof schema.balance.$inferInsert;
 export type CanonicalTransaction = typeof schema.transaction.$inferInsert;
 
-export { mySqlTable as tableCreator } from "./schema/_table";
+export { pgTable as tableCreator } from "./schema/_table";
 export * from "./enum";
 
 export * from "drizzle-orm";
 
+import { env } from "../../../apps/www/env";
+
+const pool = new Pool({
+  connectionString: env.NEXT_PUBLIC_DATABASE_URL!,
+});
+
 export const db = drizzle(
-  new Client({
-    host: process.env.DATABASE_HOST,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-  }).connection(),
-  { schema },
+  pool
 );
 
 // Use custom alphabet without special chars for less chaotic, copy-able URLs
-// Will not collide for a long long time: https://zelark.github.io/nano-id-cc/
 export const genId = customAlphabet("0123456789abcdefghijklmnopqrstuvwxyz", 16);

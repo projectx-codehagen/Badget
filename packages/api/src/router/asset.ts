@@ -3,8 +3,10 @@ import {
   createAssetSchema,
   createRealEstateSchema,
 } from "@projectx/validators";
-
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+
+import { nanoid } from 'nanoid'
+import { z } from "zod";
 
 export const assetRouter = createTRPCRouter({
   addGenericAsset: protectedProcedure
@@ -15,66 +17,82 @@ export const assetRouter = createTRPCRouter({
       const assetQuery = await opts.ctx.db
         .insert(schema.asset)
         .values({
+          id: `prefix_${nanoid(16)}`,
+          userId: userId,
           name: createAssetSchema.parse(opts.input).name,
-          userId,
-          assetType: AssetType.REAL_ESTATE,
-          originalPayload: createAssetSchema.parse(opts.input),
+          // assetType: createAssetSchema.parse(opts.input).assetType,
+          assetType: 'BANK',
+          originalPayload: opts.input,
         })
-        .onDuplicateKeyUpdate({ set: { name: sql`name` } });
+        .returning()
+        .onConflictDoUpdate({
+          target: schema.asset.id,
+          set: { name: sql`excluded.name` }
+        });
 
-      if (assetQuery.rowsAffected === 0) {
+      if (assetQuery.rowCount === 0) {
         return { success: false };
       }
 
       await db.transaction(async (tx) => {
+        const accountId = assetQuery[0].id;
         await tx
           .insert(schema.balance)
           .values({
-            assetId: BigInt(assetQuery.insertId),
+            id: `prefix_${nanoid(16)}`,
+            accountId: accountId,
             currencyIso: createAssetSchema.parse(opts.input).currencyIso,
-            amount: createAssetSchema.parse(opts.input).amount ?? 0,
+            amount: createAssetSchema.parse(opts.input).amount,
             date: new Date(),
-            type: "AVAILABLE",
             originalPayload: createAssetSchema.parse(opts.input),
+            type: 'DIRECT',
           })
-          .onDuplicateKeyUpdate({
+          .onConflictDoUpdate({
+            target: schema.balance.id,
             set: {
-              amount: sql`amount`,
-              date: sql`date`,
+              amount: sql`EXCLUDED.amount`,
+              date: sql`EXCLUDED.date`,
             },
           });
 
         await tx
           .insert(schema.transaction)
           .values({
-            assetId: BigInt(assetQuery.insertId),
-            amount: createAssetSchema.parse(opts.input).amount ?? 0,
+            id: `prefix_${nanoid(16)}`,
+            accountId: accountId,
             currencyIso: createAssetSchema.parse(opts.input).currencyIso,
+            amount: createAssetSchema.parse(opts.input).amount,
             date: new Date(),
             description: "Initial deposit",
             originalPayload: createAssetSchema.parse(opts.input),
           })
-          .onDuplicateKeyUpdate({
+          .onConflictDoUpdate({
+            target: schema.transaction.id,
             set: {
-              amount: sql`amount`,
-              date: sql`date`,
-              description: sql`description`,
+              amount: sql`EXCLUDED.amount`,
+              date: sql`EXCLUDED.date`,
+              description: sql`EXCLUDED.description`,
             },
           });
       });
 
-      return { success: true, assetId: assetQuery.insertId };
+      return { success: true, assetId: assetQuery[0].id };
     }),
   addRealEstate: protectedProcedure
-    .input(createRealEstateSchema)
+    .input(z.object({
+      data: createRealEstateSchema,
+      assetId: z.string(),
+    })
+    )
     .mutation(async (opts: any) => {
       const response = await opts.ctx.db.insert(schema.assetRealEstate).values({
-        assetId: createRealEstateSchema.parse(opts.input).assetId,
-        address: createRealEstateSchema.parse(opts.input).address,
-        city: createRealEstateSchema.parse(opts.input).city,
-        state: createRealEstateSchema.parse(opts.input).state,
-        postalCode: createRealEstateSchema.parse(opts.input).postalCode,
-        purchaseDate: createRealEstateSchema.parse(opts.input).purchaseDate,
+        id: `prefix_${nanoid(16)}`,
+        assetId: opts.input.assetId,
+        address: createRealEstateSchema.parse(opts.input.data).address,
+        city: createRealEstateSchema.parse(opts.input.data).city,
+        state: createRealEstateSchema.parse(opts.input.data).state,
+        postalCode: createRealEstateSchema.parse(opts.input.data).postalCode,
+        purchaseDate: createRealEstateSchema.parse(opts.input.data).purchaseDate,
       });
 
       if (response.insertId === 0) {

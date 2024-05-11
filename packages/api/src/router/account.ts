@@ -1,7 +1,10 @@
-import { db, schema, sql } from "@projectx/db";
-import { createAccountSchema } from "@projectx/validators";
+import { AccountType, BalanceType, db, schema, sql } from "@projectx/db";
+import { createAccountSchema, createEnumSchema } from "@projectx/validators";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { nanoid } from 'nanoid'
+import { bigint } from "zod";
+import { balanceTypeEnum } from "../../../db/src/schema/openbanking";
 
 export const accountRouter = createTRPCRouter({
   addAccount: protectedProcedure
@@ -12,51 +15,62 @@ export const accountRouter = createTRPCRouter({
       const accountQuery = await opts.ctx.db
         .insert(schema.account)
         .values({
+          id: `prefix_${nanoid(16)}`,
+          userId: userId,
           name: createAccountSchema.parse(opts.input).name,
           accountType:
             createAccountSchema.parse(opts.input).accountType ?? "BANK",
-          userId,
           originalPayload: createAccountSchema.parse(opts.input),
         })
-        .onDuplicateKeyUpdate({ set: { name: sql`name` } });
+        .returning()
+        .onConflictDoUpdate({
+          target: schema.account.id,
+          set: { name: sql`excluded.name` }
+        });
 
-      if (accountQuery.rowsAffected === 0) {
+      if (accountQuery.rowCount === 0) {
         return { success: false };
       }
 
       await db.transaction(async (tx) => {
+        const accountId = accountQuery[0].id;
+
         await tx
           .insert(schema.balance)
           .values({
-            accountId: BigInt(accountQuery.insertId),
+            id: `prefix_${nanoid(16)}`,
+            accountId: accountId,
             currencyIso: createAccountSchema.parse(opts.input).currencyIso,
-            amount: createAccountSchema.parse(opts.input).amount ?? 0,
+            amount: createAccountSchema.parse(opts.input).amount,
             date: new Date(),
-            type: "AVAILABLE",
             originalPayload: createAccountSchema.parse(opts.input),
+            type: 'DIRECT',
           })
-          .onDuplicateKeyUpdate({
+          .onConflictDoUpdate({
+            target: schema.balance.id,
             set: {
-              amount: sql`amount`,
-              date: sql`date`,
+              amount: sql`EXCLUDED.amount`,
+              date: sql`EXCLUDED.date`,
             },
           });
 
         await tx
           .insert(schema.transaction)
           .values({
-            accountId: BigInt(accountQuery.insertId),
-            amount: createAccountSchema.parse(opts.input).amount ?? 0,
+            id: `prefix_${nanoid(16)}`,
+            accountId: accountId,
             currencyIso: createAccountSchema.parse(opts.input).currencyIso,
+            amount: createAccountSchema.parse(opts.input).amount,
             date: new Date(),
             description: "Initial deposit",
             originalPayload: createAccountSchema.parse(opts.input),
           })
-          .onDuplicateKeyUpdate({
+          .onConflictDoUpdate({
+            target: schema.transaction.id,
             set: {
-              amount: sql`amount`,
-              date: sql`date`,
-              description: sql`description`,
+              amount: sql`EXCLUDED.amount`,
+              date: sql`EXCLUDED.date`,
+              description: sql`EXCLUDED.description`,
             },
           });
       });

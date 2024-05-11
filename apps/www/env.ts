@@ -13,9 +13,9 @@ export const env = createEnv({
    * This way you can ensure the app isn't built with invalid env vars.
    */
   server: {
-    DATABASE_HOST: z.string().min(1),
-    DATABASE_USERNAME: z.string().min(1),
-    DATABASE_PASSWORD: z.string().min(1),
+    // DATABASE_HOST: z.string().min(1),
+    // DATABASE_USERNAME: z.string().min(1),
+    // DATABASE_PASSWORD: z.string().min(1),
     STRIPE_API_KEY: z.string().min(1).optional(),
     STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
   },
@@ -29,6 +29,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_STD_MONTHLY_PRICE_ID: z.string().min(1).optional(),
     NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID: z.string().min(1).optional(),
     NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID: z.string().min(1).optional(),
+    NEXT_PUBLIC_DATABASE_URL: z.string().url(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -45,6 +46,7 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_STRIPE_PRO_PRODUCT_ID,
     NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID:
       process.env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID,
+    NEXT_PUBLIC_DATABASE_URL: process.env.NEXT_PUBLIC_DATABASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

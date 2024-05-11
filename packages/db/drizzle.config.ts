@@ -3,21 +3,17 @@ import type { Config } from "drizzle-kit";
 
 dotenv.config({ path: "../../.env.local" });
 
-const uri = [
-  "mysql://",
-  process.env.DATABASE_USERNAME,
-  ":",
-  process.env.DATABASE_PASSWORD,
-  "@",
-  process.env.DATABASE_HOST,
-  ":3306/",
-  process.env.DATABASE_NAME,
-  '?ssl={"rejectUnauthorized":true}',
-].join("");
+const uri = process.env.DATABASE_URL || "";
+
+if (!uri) {
+  throw new Error("DATABASE_URL is not set in the environment variables.");
+}
 
 export default {
   schema: "./src/schema",
-  driver: "mysql2",
-  dbCredentials: { uri },
+  driver: "pg",
+  dbCredentials: {
+    connectionString: uri,
+  },
   tablesFilter: ["projectx_*"],
 } satisfies Config;

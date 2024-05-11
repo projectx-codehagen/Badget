@@ -24,7 +24,7 @@ export const stripeRouter = createTRPCRouter({
             stripeId: schema.customer.stripeId,
           })
           .from(schema.customer)
-          .where(eq(schema.customer.clerkUserId, userId));
+          .where(eq(schema.customer.id, userId));
 
         const returnUrl = `${env.NEXTJS_URL}/dashboard`;
 
@@ -81,21 +81,21 @@ export const stripeRouter = createTRPCRouter({
       return [
         PLANS.STANDARD
           ? {
-              ...PLANS.STANDARD,
-              // price: dinero({
-              //   amount: stdPrice.unit_amount || 0,
-              //   currency: USD,
-              // }),
-            }
+            ...PLANS.STANDARD,
+            // price: dinero({
+            //   amount: stdPrice.unit_amount || 0,
+            //   currency: USD,
+            // }),
+          }
           : undefined,
         PLANS.PRO
           ? {
-              ...PLANS.PRO,
-              // price: dinero({
-              //   amount: proPrice.unit_amount || 0,
-              //   currency: USD,
-              // }),
-            }
+            ...PLANS.PRO,
+            // price: dinero({
+            //   amount: proPrice.unit_amount || 0,
+            //   currency: USD,
+            // }),
+          }
           : undefined,
       ].filter(Boolean) as PlansResponse;
     });

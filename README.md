@@ -105,19 +105,10 @@ To set up Stripe locally with environment variables:
 
 ## Database
 
-This project uses MySQL database on PlanetScale. To setup a DB for your local dev:
+This project uses Postgres database on Neon. To setup a DB for your local dev:
 
-1. Create a free account and a [new Database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database)
-2. From the dashboard, create a branch and click "Connect" button.
-3. Hit `Create password` and select `Drizzle` in `Connect with` dropdown
-4. Copy the entire list of params to `.env.local` file. Make sure to change the params under the section "Database (MySQL - PlanetScale)"
-5. run `pnpm run db:push`
+Create a free account and a [new Database](https://neon.tech/)
 
-You can also use `docker-compose` to have a Mysql database locally, instead of relying on PlanetScale:
-
-1. Enter `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` values in `.env.local`.
-2. run `docker-compose --env-file .env.local up` to start the DB.
-3. run `pnpm run db:push`.
 
 ## Roadmap
 

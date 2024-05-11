@@ -58,13 +58,14 @@ const handleEvent = async () => {
   await db
     .insert(schema.integration)
     .values(integrationList)
-    .onDuplicateKeyUpdate({
+    .onConflictDoUpdate({
+      target: schema.integration.id,
       set: {
         connectorProviderId: sql`connector_provider_id`,
         connectorId: sql`connector_id`,
-        name: sql`values(name)`,
-        logoUrl: sql`values(logo_url)`,
-        updatedAt: sql`values(updated_at)`,
+        name: sql`name`,
+        logoUrl: sql`logo_url`,
+        updatedAt: sql`updated_at`,
       },
     });
 };
