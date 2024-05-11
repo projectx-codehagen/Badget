@@ -82,7 +82,7 @@ export const createAccountSchema = z.object({
   accountType: z.nativeEnum(AccountType),
   amount: z.coerce.number().min(1),
 });
-export type CreateAccount = z.infer<typeof createAccountSchema>; 
+export type CreateAccount = z.infer<typeof createAccountSchema>;
 
 export const createAssetSchema = z.object({
   name: z.string().min(1),
@@ -93,7 +93,6 @@ export const createAssetSchema = z.object({
 export type CreateAsset = z.infer<typeof createAssetSchema>;
 
 export const createRealEstateSchema = z.object({
-  assetId: z.bigint().optional(),
   name: z.string().min(1),
   address: z.string().min(1),
   city: z.string().min(1),

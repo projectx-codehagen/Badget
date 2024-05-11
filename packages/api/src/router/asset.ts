@@ -3,9 +3,10 @@ import {
   createAssetSchema,
   createRealEstateSchema,
 } from "@projectx/validators";
-import { nanoid } from 'nanoid'
-
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+
+import { nanoid } from 'nanoid'
+import { z } from "zod";
 
 export const assetRouter = createTRPCRouter({
   addGenericAsset: protectedProcedure
@@ -75,18 +76,23 @@ export const assetRouter = createTRPCRouter({
           });
       });
 
-      return { success: true, assetId: assetQuery.insertId };
+      return { success: true, assetId: assetQuery[0].id };
     }),
   addRealEstate: protectedProcedure
-    .input(createRealEstateSchema)
+    .input(z.object({
+      data: createRealEstateSchema,
+      assetId: z.string(),
+    })
+    )
     .mutation(async (opts: any) => {
       const response = await opts.ctx.db.insert(schema.assetRealEstate).values({
-        assetId: createRealEstateSchema.parse(opts.input).assetId,
-        address: createRealEstateSchema.parse(opts.input).address,
-        city: createRealEstateSchema.parse(opts.input).city,
-        state: createRealEstateSchema.parse(opts.input).state,
-        postalCode: createRealEstateSchema.parse(opts.input).postalCode,
-        purchaseDate: createRealEstateSchema.parse(opts.input).purchaseDate,
+        id: `prefix_${nanoid(16)}`,
+        assetId: opts.input.assetId,
+        address: createRealEstateSchema.parse(opts.input.data).address,
+        city: createRealEstateSchema.parse(opts.input.data).city,
+        state: createRealEstateSchema.parse(opts.input.data).state,
+        postalCode: createRealEstateSchema.parse(opts.input.data).postalCode,
+        purchaseDate: createRealEstateSchema.parse(opts.input.data).purchaseDate,
       });
 
       if (response.insertId === 0) {
