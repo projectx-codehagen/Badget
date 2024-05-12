@@ -1,14 +1,15 @@
-import { neon, Pool } from "@neondatabase/serverless";
-// import { drizzle } from "drizzle-orm/neon-http";
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import { customAlphabet } from "nanoid";
-
 import * as asset from "./schema/asset";
 import * as countryCode from "./schema/country";
 import * as currency from "./schema/currency";
 import * as customer from "./schema/customer";
 import * as openbanking from "./schema/openbanking";
 import * as provider from "./schema/provider";
+
+import { Pool, neon } from "@neondatabase/serverless";
+
+import { customAlphabet } from "nanoid";
+// import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from 'drizzle-orm/neon-serverless';
 
 export const schema = {
   ...countryCode,
@@ -36,10 +37,8 @@ export * from "./enum";
 
 export * from "drizzle-orm";
 
-import { env } from "../../../apps/www/env";
-
 const pool = new Pool({
-  connectionString: env.NEXT_PUBLIC_DATABASE_URL!,
+  connectionString: process.env.DATABASE_URL,
 });
 
 export const db = drizzle(
