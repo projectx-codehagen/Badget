@@ -1,10 +1,11 @@
-import { AccountType, BalanceType, db, schema, sql } from "@projectx/db";
+import { nanoid } from "nanoid";
+import { bigint } from "zod";
+
+import { AccountType, BalanceType, db, eq, schema, sql } from "@projectx/db";
 import { createAccountSchema, createEnumSchema } from "@projectx/validators";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { nanoid } from 'nanoid'
-import { bigint } from "zod";
 import { balanceTypeEnum } from "../../../db/src/schema/openbanking";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const accountRouter = createTRPCRouter({
   addAccount: protectedProcedure
@@ -25,7 +26,7 @@ export const accountRouter = createTRPCRouter({
         .returning()
         .onConflictDoUpdate({
           target: schema.account.id,
-          set: { name: sql`excluded.name` }
+          set: { name: sql`excluded.name` },
         });
 
       if (accountQuery.rowCount === 0) {
@@ -44,7 +45,7 @@ export const accountRouter = createTRPCRouter({
             amount: createAccountSchema.parse(opts.input).amount,
             date: new Date(),
             originalPayload: createAccountSchema.parse(opts.input),
-            type: 'DIRECT',
+            type: "DIRECT",
           })
           .onConflictDoUpdate({
             target: schema.balance.id,
@@ -77,4 +78,38 @@ export const accountRouter = createTRPCRouter({
 
       return { success: true, assetId: accountQuery.insertId };
     }),
+
+  // Update getAllAccounts to filter by userId
+  getAllAccounts: protectedProcedure.query(async (opts) => {
+    const { userId } = opts.ctx.auth; // Get userId from the authentication context
+
+    try {
+      const accounts = await opts.ctx.db
+        .select({
+          id: schema.account.id,
+          createdAt: schema.account.createdAt,
+          updatedAt: schema.account.updatedAt,
+          userId: schema.account.userId,
+          name: schema.account.name,
+          accountType: schema.account.accountType,
+          originalPayload: schema.account.originalPayload,
+        })
+        .from(schema.account)
+        .where(eq(schema.account.userId, userId)) // Filter by userId
+        .execute();
+
+      return accounts.map((account) => ({
+        id: account.id,
+        createdAt: account.createdAt,
+        updatedAt: account.updatedAt,
+        userId: account.userId,
+        name: account.name,
+        accountType: account.accountType,
+        originalPayload: account.originalPayload,
+      }));
+    } catch (error) {
+      console.error("Failed to fetch accounts:", error);
+      return { success: false, message: "Failed to fetch accounts" };
+    }
+  }),
 });
