@@ -7,27 +7,11 @@ This project provides a set of API routes for managing assets and accounts. Thes
 
 ## Table of Contents
 
-1. [Creating New Routes](#creating-new-routes)
-   - [Example: Adding a New Route](#example-adding-a-new-route)
-2. [Using the Routes](#using-the-routes)
-   - [Example: Fetching Data](#example-fetching-data)
-3. [Error Handling](#error-handling)
-
-## Overview
-
-This project provides a set of API routes for managing assets and accounts. These routes allow authenticated users to add and retrieve their assets and accounts. This guide will explain how to create new routes and how to use the existing ones.
-
-## Table of Contents
-
 - [Badget Backend API](#badget-backend-api)
   - [Overview](#overview)
   - [Table of Contents](#table-of-contents)
-  - [Overview](#overview-1)
-  - [Table of Contents](#table-of-contents-1)
   - [Creating New Routes](#creating-new-routes)
     - [Example: Adding a New Route](#example-adding-a-new-route)
-
-
 
 ## Creating New Routes
 
@@ -37,6 +21,7 @@ To create a new route, follow these steps:
 2.  Specify the procedure type (`protectedProcedure` for authenticated routes or `publicProcedure` for public routes).
 3.  Implement the route logic to handle the request and interact with the database.
 4.  Return a response based on the outcome of the logic.
+
 
 ### Example: Adding a New Route
 
