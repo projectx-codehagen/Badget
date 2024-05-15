@@ -42,9 +42,30 @@ export const InvestmentFormFields = () => {
       name: "",
       accountType: AccountType.INVESTMENT,
       currencyIso: undefined,
-      amount: 0,
+      amount: "",
     },
   });
+
+  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove spaces and commas before setting the value
+    const valueWithoutSpaces = event.target.value
+      .replace(/[^\d.]/g, "") // Allow only digits and dots
+      .replace(/^\./, "") // Remove leading dot
+      .replace(/(\.\d*)\./g, "$1"); // Remove extra dots after a digit
+    form.setValue("amount", valueWithoutSpaces);
+  };
+
+  const formatNumberWithSpaces = (number: string) => {
+    // Handle decimal numbers
+    const numberParts = number.toString().split(".");
+    const formattedInteger = numberParts[0]?.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      " ",
+    );
+    return numberParts.length > 1
+      ? `${formattedInteger}.${numberParts[1]}`
+      : formattedInteger;
+  };
 
   const onSubmit = async (data: z.infer<typeof createAccountSchema>) => {
     const accountBalance = await api.account.addAccount
@@ -155,7 +176,9 @@ export const InvestmentFormFields = () => {
                 <Input
                   {...field}
                   placeholder="Current Value..."
-                  type="number"
+                  type="text"
+                  value={formatNumberWithSpaces(field.value)}
+                  onChange={handleAmountChange}
                 />
               </FormControl>
             </FormItem>
