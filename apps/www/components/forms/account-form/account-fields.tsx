@@ -50,30 +50,9 @@ export const AccountFields = () => {
       name: "",
       accountType: undefined,
       currencyIso: undefined,
-      amount: "",
+      amount: 0,
     },
   });
-
-  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Remove spaces and commas before setting the value
-    const valueWithoutSpaces = event.target.value
-      .replace(/[^\d.]/g, "") // Allow only digits and dots
-      .replace(/^\./, "") // Remove leading dot
-      .replace(/(\.\d*)\./g, "$1"); // Remove extra dots after a digit
-    form.setValue("amount", valueWithoutSpaces);
-  };
-
-  const formatNumberWithSpaces = (number: string) => {
-    // Handle decimal numbers
-    const numberParts = number.toString().split(".");
-    const formattedInteger = numberParts[0]?.replace(
-      /\B(?=(\d{3})+(?!\d))/g,
-      " ",
-    );
-    return numberParts.length > 1
-      ? `${formattedInteger}.${numberParts[1]}`
-      : formattedInteger;
-  };
 
   const onSubmit = async (data: z.infer<typeof createAccountSchema>) => {
     const accountBalance = await api.account.addAccount
@@ -223,14 +202,17 @@ export const AccountFields = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Current Value</FormLabel>
+              <FormLabel>
+                Initial Amount
+                {field.value
+                  ? ` (${Number(field.value).toLocaleString()})`
+                  : null}
+              </FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   placeholder="Current Value..."
-                  type="text"
-                  value={formatNumberWithSpaces(field.value)}
-                  onChange={handleAmountChange}
+                  type="number"
                 />
               </FormControl>
             </FormItem>

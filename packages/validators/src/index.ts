@@ -80,7 +80,7 @@ export const createAccountSchema = z.object({
   name: z.string().min(1),
   currencyIso: z.string().min(2).max(3),
   accountType: z.nativeEnum(AccountType),
-  amount: z.string().min(1),
+  amount: z.coerce.number().min(1),
 });
 export type CreateAccount = z.infer<typeof createAccountSchema>;
 
