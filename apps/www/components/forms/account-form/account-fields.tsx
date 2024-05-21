@@ -202,7 +202,12 @@ export const AccountFields = () => {
           control={form.control}
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Current Value</FormLabel>
+              <FormLabel>
+                Initial Amount
+                {field.value
+                  ? ` (${Number(field.value).toLocaleString()})`
+                  : null}
+              </FormLabel>
               <FormControl>
                 <Input
                   {...field}
