@@ -78,7 +78,7 @@ cp .env.example .env.local
 4. Input everything you need for the env.
 
    1. Create [Clerk](https://clerk.com) Account
-   2. Create [Planet Scale](https://planetscale.com/) Account
+   2. Create [Neon](https://neon.tech/) Account
    3. Create [Stripe](https://stripe.com) Account and download [Stripe CLI](https://docs.stripe.com/stripe-cli)
 
 5. Start the development server from either yarn or turbo:
@@ -113,9 +113,9 @@ Create a free account and a [new Database](https://neon.tech/)
 ## Roadmap
 
 - [x] ~Initial setup~
-- [ ] Start removing template
-- [ ] Update UI to match the product
-- [ ] XXXXXXXX
+- [x] Start removing template
+- [x] Update UI to match the product
+- [ ] Start stichting frontend with backend
 
 ## Tech Stack + Features
 
