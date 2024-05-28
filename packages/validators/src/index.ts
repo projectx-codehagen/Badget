@@ -84,6 +84,14 @@ export const createAccountSchema = z.object({
 });
 export type CreateAccount = z.infer<typeof createAccountSchema>;
 
+export const manualImportSchema = z.object({
+  amount: z.coerce.number(),
+  date: z.coerce.date(),
+  description: z.string().min(1),
+});
+
+export type manualImportSchema = z.infer<typeof manualImportSchema>;
+
 export const createAssetSchema = z.object({
   name: z.string().min(1),
   currencyIso: z.string().min(2).max(3),
