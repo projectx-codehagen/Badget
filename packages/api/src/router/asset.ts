@@ -1,12 +1,13 @@
+import { nanoid } from "nanoid";
+import { z } from "zod";
+
 import { AssetType, db, schema, sql } from "@projectx/db";
 import {
   createAssetSchema,
   createRealEstateSchema,
 } from "@projectx/validators";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-import { nanoid } from 'nanoid'
-import { z } from "zod";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const assetRouter = createTRPCRouter({
   addGenericAsset: protectedProcedure
@@ -21,13 +22,13 @@ export const assetRouter = createTRPCRouter({
           userId: userId,
           name: createAssetSchema.parse(opts.input).name,
           // assetType: createAssetSchema.parse(opts.input).assetType,
-          assetType: 'BANK',
+          assetType: "BANK",
           originalPayload: opts.input,
         })
         .returning()
         .onConflictDoUpdate({
           target: schema.asset.id,
-          set: { name: sql`excluded.name` }
+          set: { name: sql`excluded.name` },
         });
 
       if (assetQuery.rowCount === 0) {
@@ -45,7 +46,7 @@ export const assetRouter = createTRPCRouter({
             amount: createAssetSchema.parse(opts.input).amount,
             date: new Date(),
             originalPayload: createAssetSchema.parse(opts.input),
-            type: 'DIRECT',
+            type: "DIRECT",
           })
           .onConflictDoUpdate({
             target: schema.balance.id,
@@ -79,10 +80,11 @@ export const assetRouter = createTRPCRouter({
       return { success: true, assetId: assetQuery[0].id };
     }),
   addRealEstate: protectedProcedure
-    .input(z.object({
-      data: createRealEstateSchema,
-      assetId: z.string(),
-    })
+    .input(
+      z.object({
+        data: createRealEstateSchema,
+        assetId: z.string(),
+      }),
     )
     .mutation(async (opts: any) => {
       const response = await opts.ctx.db.insert(schema.assetRealEstate).values({
@@ -92,7 +94,8 @@ export const assetRouter = createTRPCRouter({
         city: createRealEstateSchema.parse(opts.input.data).city,
         state: createRealEstateSchema.parse(opts.input.data).state,
         postalCode: createRealEstateSchema.parse(opts.input.data).postalCode,
-        purchaseDate: createRealEstateSchema.parse(opts.input.data).purchaseDate,
+        purchaseDate: createRealEstateSchema.parse(opts.input.data)
+          .purchaseDate,
       });
 
       if (response.insertId === 0) {
@@ -101,4 +104,35 @@ export const assetRouter = createTRPCRouter({
 
       return { success: true };
     }),
+
+  // This is a protected procedure that fetches all assets
+  getAllAssets: protectedProcedure.query(async (opts) => {
+    try {
+      const assets = await opts.ctx.db
+        .select({
+          id: schema.asset.id,
+          createdAt: schema.asset.createdAt,
+          updatedAt: schema.asset.updatedAt,
+          userId: schema.asset.userId,
+          name: schema.asset.name,
+          assetType: schema.asset.assetType,
+          originalPayload: schema.asset.originalPayload,
+        })
+        .from(schema.asset)
+        .execute();
+
+      return assets.map((asset) => ({
+        id: asset.id,
+        createdAt: asset.createdAt,
+        updatedAt: asset.updatedAt,
+        userId: asset.userId,
+        name: asset.name,
+        assetType: asset.assetType,
+        originalPayload: asset.originalPayload,
+      }));
+    } catch (error) {
+      console.error("Failed to fetch assets:", error);
+      return { success: false, message: "Failed to fetch assets" };
+    }
+  }),
 });
