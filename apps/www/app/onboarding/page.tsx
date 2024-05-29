@@ -56,7 +56,7 @@ export default function Intro() {
 						<Link
 							href="/dashboard"
 							className="rounded-2xl"
-							onClick={createUser}
+							// onClick={createUser}
 						>
 							Go to Dashboard
 						</Link>
