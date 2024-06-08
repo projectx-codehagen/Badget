@@ -1,10 +1,10 @@
 import { AccountType, BalanceType, db, schema, sql } from "@projectx/db";
 import { createAccountSchema, createEnumSchema } from "@projectx/validators";
-
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { nanoid } from 'nanoid'
-import { bigint } from "zod";
+
 import { balanceTypeEnum } from "../../../db/src/schema/openbanking";
+import { bigint } from "zod";
+import { nanoid } from 'nanoid'
 
 export const accountRouter = createTRPCRouter({
   addAccount: protectedProcedure
@@ -77,4 +77,18 @@ export const accountRouter = createTRPCRouter({
 
       return { success: true, assetId: accountQuery.insertId };
     }),
+
+  fetchAll: protectedProcedure.query(async (opts) => {
+    const accountList = await opts.ctx.db
+      .select({
+        id: schema.account.id,
+        // name: schema.account.name,
+        // accountType: schema.account.accountType,
+      })
+      .from(schema.account)
+      .limit(1)
+      .execute();
+
+    return accountList;
+  }),
 });
