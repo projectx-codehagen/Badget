@@ -60,7 +60,6 @@ function getAuthorFromPost(name: string[]) {
       slug: filename.replace(".mdx", ""),
     };
   });
-
   return allAuthors.filter((author) => name.includes(author.meta.title));
 }
 
@@ -72,7 +71,6 @@ export default async function PostPage({ params }: PostPageProps) {
   }
 
   const authors = getAuthorFromPost(post.meta.authors);
-
   return (
     <article className="container relative max-w-3xl py-6 lg:py-10">
       <Link
