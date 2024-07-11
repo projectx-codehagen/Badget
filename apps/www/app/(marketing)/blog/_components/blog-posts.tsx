@@ -44,7 +44,7 @@ export function BlogPosts({ posts }) {
           {/* @ts-ignore */}
           {posts.slice(1).map((post) => (
             <article
-              key={post._id}
+              key={post.slug}
               className="group relative flex flex-col space-y-2"
             >
               {post.meta.image && (
@@ -64,7 +64,7 @@ export function BlogPosts({ posts }) {
                   {post.meta.description}
                 </p>
               )}
-              {post.date && (
+              {post.meta.date && (
                 <p className="text-sm text-muted-foreground">
                   {formatDate(post.meta.date)}
                 </p>
