@@ -172,3 +172,19 @@ export async function sendSlackNotification(webhookUrl, message) {
     console.error("Error sending notification to Slack:", error);
   }
 }
+
+export const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(value);
+};
+
+export function isValidJSONString(str: string) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}

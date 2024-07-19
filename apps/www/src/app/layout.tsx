@@ -22,18 +22,7 @@ export const metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: [
-    "Real-time monitoring",
-    "Business analytics",
-    "Event tracking",
-    "Journey tracking",
-    "Real-time alerts",
-    "Performance insights",
-    "Data-driven decisions",
-    "KPI tracking",
-    "Seamless monitoring",
-    "User journeys analytics",
-  ],
+  keywords: ["badget", "open source", "tracker", "free", "budget", "finance"],
   authors: [
     {
       name: "christer",
