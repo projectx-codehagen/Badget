@@ -1,0 +1,39 @@
+{
+	"name": "dingify",
+	"version": "0.1.0",
+	"private": true,
+	"author": {
+		"name": "Christer",
+		"url": "https://twitter.com/Codehagen"
+	},
+	"engines": {
+		"node": "20.10.0"
+	},
+	"packageManager": "pnpm@8.15.5",
+	"prettier": "@dingify/prettier-config",
+	"scripts": {
+		"build": "turbo build",
+		"clean": "git clean -xdf node_modules",
+		"clean:workspaces": "turbo clean",
+		"db:generate": "pnpm -F db db:generate",
+		"db:migrate:dev": "pnpm -F db db:migrate:dev",
+		"db:studio": "pnpm -F db db:studio",
+		"dev": "turbo dev --parallel",
+		"format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
+		"format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
+		"lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
+		"lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
+		"lint:ws": "pnpm dlx sherif@latest",
+		"postinstall": "pnpm lint:ws",
+		"typecheck": "turbo typecheck"
+	},
+	"devDependencies": {
+		"@dingify/prettier-config": "workspace:*",
+		"husky": "^8.0.3",
+		"prettier": "^3.2.5",
+		"turbo": "^1.13.2",
+		"typescript": "^5.4.5",
+		"@commitlint/cli": "^18.2.0",
+		"@commitlint/config-conventional": "^18.1.0"
+	}
+}

@@ -1,0 +1,171 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+  createdAt         DateTime @default(now()) @map(name: "created_at")
+  updatedAt         DateTime @default(now()) @map(name: "updated_at")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map(name: "sessions")
+}
+
+model User {
+  id                  String    @id @default(cuid())
+  name                String?
+  email               String?   @unique
+  emailVerified       DateTime?
+  apiKey              String?   @unique
+  plan                String    @default("basic")
+  credits             Int       @default(3)
+  image               String?
+  language            String?   @default("english")
+  onboardingEmailSent Boolean   @default(false)
+
+  accounts             Account[]
+  sessions             Session[]
+  projects             Project[]
+  notificationSettings NotificationSetting[]
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+
+  @@map(name: "users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map(name: "verification_tokens")
+}
+
+model Project {
+  id     String @id @default(cuid())
+  name   String
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  channels  Channel[]
+  metrics   Metrics[]
+  customers Customer[]
+
+  createdAt DateTime @default(now())
+
+  @@map(name: "projects")
+}
+
+model Channel {
+  id        String   @id @default(cuid())
+  name      String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  events    Event[]
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, name])
+  @@map(name: "channels")
+}
+
+model Event {
+  id         String    @id @default(cuid())
+  name       String
+  channelId  String
+  channel    Channel   @relation(fields: [channelId], references: [id])
+  userId     String
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  icon       String
+  notify     Boolean
+  tags       Json
+  createdAt  DateTime  @default(now())
+
+  @@map(name: "events")
+}
+
+model Metrics {
+  id            String  @id @default(cuid())
+  projectId     String  @unique
+  logsUsed      Int     @default(0)
+  logsLimit     Int     @default(1000)
+  channelsUsed  Int     @default(1)
+  channelsLimit Int     @default(3)
+  seatsUsed     Int     @default(1)
+  projectsUsed  Int     @default(1)
+  project       Project @relation(fields: [projectId], references: [id])
+
+  @@map(name: "metrics")
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  projectId String
+  userId    String
+  name      String?
+  email     String?
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  events    Event[]
+
+  @@unique([userId, projectId])
+  @@map(name: "customers")
+}
+
+model NotificationSetting {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id])
+  type      NotificationType @default(DISCORD)
+  details   Json // Details like webhook URL, mobile number, etc.
+  enabled   Boolean          @default(true)
+  createdAt DateTime         @default(now())
+
+  @@map(name: "notification_settings")
+}
+
+enum NotificationType {
+  DISCORD
+  SLACK
+  MOBILE
+}
+
+// if we need full reset : npx prisma db push --force-reset

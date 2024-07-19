@@ -1,0 +1,19 @@
+{
+  "extends": "@dingify/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
+    },
+    "plugins": [{ "name": "next" }],
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "module": "esnext",
+    "noImplicitAny": false, // TODO: Resolve errors when setting this to 'true'
+    "useUnknownInCatchVariables": false // TODO: Resolve errors when setting this to 'true'
+  },
+  "include": ["src", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", ".contentlayer/generated"]
+}

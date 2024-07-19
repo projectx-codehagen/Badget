@@ -1,0 +1,9 @@
+{
+  "extends": "@dingify/tsconfig/internal-package.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  },
+  "include": ["."],
+  "exclude": ["node_modules", "dist"]
+}

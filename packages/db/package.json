@@ -1,0 +1,45 @@
+{
+	"name": "@dingify/db",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./index.ts",
+			"default": "./index.ts"
+		}
+	},
+	"license": "MIT",
+	"scripts": {
+		"clean": "rm -rf .turbo node_modules",
+		"format": "prettier --check . --ignore-path ../../.gitignore",
+		"lint": "eslint .",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
+		"with-env": "dotenv -e ../../.env --",
+		"db:generate": "pnpm with-env prisma generate",
+		"db:push": "pnpm with-env prisma db push --skip-generate",
+		"db:migrate:dev": "pnpm with-env prisma migrate dev",
+		"db:migrate:reset": "pnpm with-env prisma migrate reset",
+		"db:migrate:deploy": "pnpm with-env prisma migrate deploy",
+		"db:studio": "pnpm with-env prisma studio",
+		"db:force": "pnpm with-env prisma db push --force-reset",
+		"postinstall": "pnpm db:generate"
+	},
+	"dependencies": {
+		"@neondatabase/serverless": "^0.9.3",
+		"@prisma/adapter-neon": "^5.13.0",
+		"@prisma/client": "^5.12.1",
+		"@t3-oss/env-core": "^0.9.2"
+	},
+	"devDependencies": {
+		"@dingify/eslint-config": "workspace:*",
+		"@dingify/prettier-config": "workspace:*",
+		"@dingify/tsconfig": "workspace:*",
+		"dotenv-cli": "^7.4.1",
+		"eslint": "^9.0.0",
+		"prettier": "^3.2.5",
+		"prisma": "^5.12.1",
+		"typescript": "^5.4.5"
+	},
+	"prettier": "@dingify/prettier-config"
+}
