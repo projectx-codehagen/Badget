@@ -23,6 +23,8 @@ export async function createNewAccount(data) {
       data: {
         name: data.name,
         userId: userId,
+        initialAmount: data.initialAmount,
+        accountType: data.accountType,
         originalPayload: {},
       },
     });

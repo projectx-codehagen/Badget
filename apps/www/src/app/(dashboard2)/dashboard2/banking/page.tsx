@@ -23,6 +23,7 @@ export default async function BankingPage() {
   }
 
   const bankAccounts = await getUserBankAccounts();
+  console.log(bankAccounts);
 
   return (
     <DashboardShell>

@@ -20,6 +20,8 @@ export async function getUserBankAccounts() {
       createdAt: true,
       updatedAt: true,
       resourceId: true,
+      initialAmount: true,
+      accountType: true,
     },
   });
 

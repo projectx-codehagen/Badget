@@ -105,6 +105,7 @@ model BankAccount {
   userId          String?
   name            String
   originalPayload Json?
+  initialAmount   Int?          @default(0)
   Balance         Balance[]
   Transaction     Transaction[]
   accountType     AccountType   @default(BANK)

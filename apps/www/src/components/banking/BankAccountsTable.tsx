@@ -41,7 +41,7 @@ const BankAccountsTable = ({ bankAccounts }) => {
             <TableHeader>
               <TableRow>
                 <TableHead>Account</TableHead>
-                <TableHead>Balance</TableHead>
+                <TableHead>Initial Amount</TableHead>
                 <TableHead>Type</TableHead>
                 <TableHead>Last Transaction</TableHead>
                 <TableHead>
@@ -60,8 +60,8 @@ const BankAccountsTable = ({ bankAccounts }) => {
                       </div>
                     </Link>
                   </TableCell>
-                  <TableCell>{account.balance || "$0.00"}</TableCell>
-                  <TableCell>{account.type || "Unknown"}</TableCell>
+                  <TableCell>{account.initialAmount || "$0.00"}</TableCell>
+                  <TableCell>{account.accountType || "Unknown"}</TableCell>
                   <TableCell>
                     <div>{account.lastTransactionDate || "N/A"}</div>
                     <div className="text-sm text-muted-foreground">
