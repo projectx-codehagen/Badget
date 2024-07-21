@@ -9,6 +9,53 @@ datasource db {
   directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
+enum AssetType {
+  STOCKS
+  CRYPTO
+  BONDS
+  ETF
+  OPTIONS
+  FUTURES
+  REAL_ESTATE
+  COMMODITIES
+}
+
+enum AccountType {
+  BANK
+  CRYPTO
+  INVESTMENT
+}
+
+enum BalanceType {
+  AVAILABLE
+  BOOKED
+  EXPECTED
+}
+
+enum ConnectorEnv {
+  DEVELOPMENT
+  SANDBOX
+  PRODUCTION
+}
+
+enum ConnectorStatus {
+  ACTIVE
+  BETA
+  DEV
+  INACTIVE
+}
+
+enum ConnectorType {
+  DIRECT
+  AGGREGATED
+}
+
+enum Plan {
+  FREE
+  STANDARD
+  PRO
+}
+
 model Account {
   id                String   @id @default(cuid())
   userId            String
@@ -47,17 +94,15 @@ model User {
   name                String?
   email               String?   @unique
   emailVerified       DateTime?
-  apiKey              String?   @unique
+  phone               String?
   plan                String    @default("basic")
   credits             Int       @default(3)
   image               String?
   language            String?   @default("english")
   onboardingEmailSent Boolean   @default(false)
 
-  accounts             Account[]
-  sessions             Session[]
-  projects             Project[]
-  notificationSettings NotificationSetting[]
+  accounts Account[]
+  sessions Session[]
 
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
@@ -79,93 +124,171 @@ model VerificationToken {
   @@map(name: "verification_tokens")
 }
 
-model Project {
-  id     String @id @default(cuid())
-  name   String
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  channels  Channel[]
-  metrics   Metrics[]
-  customers Customer[]
-
-  createdAt DateTime @default(now())
-
-  @@map(name: "projects")
+model Asset {
+  id              String           @id @default(uuid()) @db.VarChar(30)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now())
+  userId          String?
+  name            String
+  currencyIso     String?
+  assetType       AssetType
+  originalPayload Json?
+  AssetRealEstate AssetRealEstate?
+  Balance         Balance[]
+  Transaction     Transaction[]
 }
 
-model Channel {
-  id        String   @id @default(cuid())
+model AssetRealEstate {
+  id           String   @id @default(uuid()) @db.VarChar(30)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+  assetId      String   @unique @db.VarChar(30)
+  asset        Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  address      String
+  city         String
+  state        String
+  postalCode   String
+  purchaseDate DateTime
+}
+
+model Country {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  iso       String
   name      String
-  projectId String
-  project   Project  @relation(fields: [projectId], references: [id])
-  events    Event[]
-  createdAt DateTime @default(now())
-
-  @@unique([projectId, name])
-  @@map(name: "channels")
+  active    Boolean  @default(true)
 }
 
-model Event {
-  id         String    @id @default(cuid())
-  name       String
-  channelId  String
-  channel    Channel   @relation(fields: [channelId], references: [id])
-  userId     String
-  customerId String?
-  customer   Customer? @relation(fields: [customerId], references: [id])
-  icon       String
-  notify     Boolean
-  tags       Json
-  createdAt  DateTime  @default(now())
-
-  @@map(name: "events")
-}
-
-model Metrics {
-  id            String  @id @default(cuid())
-  projectId     String  @unique
-  logsUsed      Int     @default(0)
-  logsLimit     Int     @default(1000)
-  channelsUsed  Int     @default(1)
-  channelsLimit Int     @default(3)
-  seatsUsed     Int     @default(1)
-  projectsUsed  Int     @default(1)
-  project       Project @relation(fields: [projectId], references: [id])
-
-  @@map(name: "metrics")
+model Currency {
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+  iso         String        @unique
+  symbol      String
+  numericCode Int?
+  Balance     Balance[]
+  Transaction Transaction[]
 }
 
 model Customer {
-  id        String   @id @default(cuid())
-  projectId String
-  userId    String
-  name      String?
-  email     String?
-  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  events    Event[]
-
-  @@unique([userId, projectId])
-  @@map(name: "customers")
+  id             String    @id @default(uuid()) @db.VarChar(32)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now())
+  stripeId       String    @unique @db.VarChar(36)
+  subscriptionId String?
+  userId         String
+  orgId          String?
+  name           String?
+  plan           Plan?
+  paidUntil      DateTime?
+  endsAt         DateTime?
 }
 
-model NotificationSetting {
-  id        String           @id @default(cuid())
-  userId    String
-  user      User             @relation(fields: [userId], references: [id])
-  type      NotificationType @default(DISCORD)
-  details   Json // Details like webhook URL, mobile number, etc.
-  enabled   Boolean          @default(true)
-  createdAt DateTime         @default(now())
-
-  @@map(name: "notification_settings")
+model Bankaccount {
+  id              String        @id @default(uuid()) @db.VarChar(30)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now())
+  resourceId      String?
+  originalId      String?
+  orgId           String?
+  userId          String?
+  name            String
+  currencyIso     String?
+  amount          Int?
+  accountType     AccountType   @default(BANK)
+  originalPayload Json?
+  Balance         Balance[]
+  Transaction     Transaction[]
+  Resource        Resource?     @relation(fields: [resourceId], references: [id], onDelete: Cascade)
 }
 
-enum NotificationType {
-  DISCORD
-  SLACK
-  MOBILE
+model Balance {
+  id              String       @id @default(uuid()) @db.VarChar(30)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @default(now())
+  accountId       String?
+  assetId         String?
+  currencyIso     String
+  amount          Decimal
+  date            DateTime
+  type            BalanceType  @default(AVAILABLE)
+  originalPayload Json?
+  bankaccount     Bankaccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  asset           Asset?       @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  currency        Currency     @relation(fields: [currencyIso], references: [iso], onDelete: Cascade)
 }
 
-// if we need full reset : npx prisma db push --force-reset
+model Category {
+  id          String        @id @default(uuid()) @db.VarChar(30)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+  name        String
+  icon        String
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id              String       @id @default(uuid()) @db.VarChar(30)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @default(now())
+  accountId       String?
+  assetId         String?
+  categoryId      String?
+  currencyIso     String
+  originalId      String?      @unique @db.VarChar(36)
+  amount          Decimal
+  date            DateTime
+  description     String
+  originalPayload Json?
+  bankaccount     Bankaccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  asset           Asset?       @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  category        Category?    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  currency        Currency     @relation(fields: [currencyIso], references: [iso], onDelete: Cascade)
+}
+
+model ConnectorConfig {
+  id          String       @id @default(uuid()) @db.VarChar(30)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  orgId       String
+  secret      Json?
+  env         ConnectorEnv
+  connectorId String
+  connector   Connector    @relation(fields: [connectorId], references: [id], onDelete: Cascade)
+}
+
+model Connector {
+  id              String            @id @default(uuid()) @db.VarChar(30)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @default(now())
+  name            String
+  logoUrl         String?
+  status          ConnectorStatus
+  type            ConnectorType
+  connectorConfig ConnectorConfig[]
+  Integration     Integration[]
+}
+
+model Integration {
+  id                  String     @id @default(uuid()) @db.VarChar(30)
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @default(now())
+  name                String
+  logoUrl             String?
+  connectorProviderId String?    @unique @db.VarChar(127)
+  connectorId         String
+  connector           Connector  @relation(fields: [connectorId], references: [id], onDelete: Cascade)
+  Resource            Resource[]
+}
+
+model Resource {
+  id            String        @id @default(uuid()) @db.VarChar(30)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
+  integrationId String
+  originalId    String
+  userId        String
+  bankaccount   Bankaccount[]
+  integration   Integration   @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+}

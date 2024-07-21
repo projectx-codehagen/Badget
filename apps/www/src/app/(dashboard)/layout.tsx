@@ -8,7 +8,7 @@ export default async function DashboardLayout(props: {
 }) {
   return (
     <div className="min-h-screen rounded-[0.5rem]">
-      <TopNav navItems={topNavItems} />
+      {/* <TopNav navItems={topNavItems} /> */}
       <main className="min-h-[calc(100vh-14rem)] flex-1 space-y-4">
         {props.children}
       </main>

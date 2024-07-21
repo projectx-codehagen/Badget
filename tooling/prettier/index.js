@@ -39,7 +39,7 @@ const config = {
     "^@/config/(.*)$",
     "^@/lib/(.*)$",
     "^@/hooks/(.*)$",
-    "^@/components/ui/(.*)$",
+    "^@dingify/ui/components/(.*)$",
     "^@/components/(.*)$",
     "^@/styles/(.*)$",
     "^@/app/(.*)$",

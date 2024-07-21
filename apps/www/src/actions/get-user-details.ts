@@ -13,7 +13,6 @@ export async function getUserData() {
   const userData = await prisma.user.findUnique({
     where: { id: user.id },
     select: {
-      apiKey: true,
       name: true,
       email: true,
       // add other fields you might need

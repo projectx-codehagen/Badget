@@ -1,20 +1,21 @@
 "use client";
 
-import * as React from "react";
-import {
+import type {
   ColumnDef,
   ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+} from "@tanstack/react-table";
+import * as React from "react";
+import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
-  VisibilityState,
 } from "@tanstack/react-table";
 import {
-  BoltIcon,
   CarIcon,
   CoffeeIcon,
   HomeIcon,
@@ -99,20 +100,20 @@ const data: Category[] = [
   },
 ];
 
-export type Category = {
+export interface Category {
   id: string;
   name: string;
   icon: string;
   current: number;
   max: number;
   date: string; // Add date field
-};
+}
 
 const iconMap = {
   Home: <HomeIcon className="mr-2 h-5 w-5" />,
   Car: <CarIcon className="mr-2 h-5 w-5" />,
   Key: <KeyIcon className="mr-2 h-5 w-5" />,
-  Bolt: <BoltIcon className="mr-2 h-5 w-5" />,
+  Bolt: <HomeIcon className="mr-2 h-5 w-5" />,
   Star: <StarIcon className="mr-2 h-5 w-5" />,
   ShoppingBag: <ShoppingBagIcon className="mr-2 h-5 w-5" />,
   Coffee: <CoffeeIcon className="mr-2 h-5 w-5" />,
@@ -136,7 +137,7 @@ export const columns: ColumnDef<Category>[] = [
     accessorKey: "name",
     header: "Category",
     cell: ({ row }) => {
-      const name = row.getValue("name") as string;
+      const name = row.getValue("name");
       const icon = row.original.icon; // Assuming 'icon' is the key in your data for icon names
       return (
         <div className="flex items-center">
@@ -166,8 +167,8 @@ export const columns: ColumnDef<Category>[] = [
     id: "progress",
     header: "Progress",
     cell: ({ row }) => {
-      const current = row.getValue("current") as number;
-      const max = row.getValue("max") as number;
+      const current = row.getValue("current");
+      const max = row.getValue("max");
       const progressPercent = (current / max) * 100; // Calculate progress percentage
 
       return (
@@ -253,7 +254,7 @@ export function TopCategoriesTable() {
               ))}
             </TableHeader>
             <TableBody>
-              {table.getRowModel().rows?.length ? (
+              {table.getRowModel().rows.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}

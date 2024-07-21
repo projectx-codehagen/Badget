@@ -1,5 +1,6 @@
+// components/layout/DashboardLayout.tsx
 import { notFound } from "next/navigation";
-import { getUserChannels } from "@/actions/get-channels";
+import { getUserBankAccounts } from "@/actions/badget/get-bankaccounts";
 
 import { dashboardConfig } from "@/config/dashboard";
 import { getCurrentUser } from "@/lib/session";
@@ -20,13 +21,13 @@ export default async function DashboardLayout({
     return notFound();
   }
 
-  const userChannels = await getUserChannels();
+  const userBankAccounts = await getUserBankAccounts();
 
   const sidebarNavItems = [
     ...dashboardConfig.sidebarNav,
-    ...userChannels.map((channel) => ({
-      title: channel.name,
-      href: `/dashboard/channels/${channel.id}`, // Use ID instead of name
+    ...userBankAccounts.map((account) => ({
+      title: account.name,
+      href: `/dashboard/accounts/${account.id}`, // Use ID to create the URL
     })),
   ];
 

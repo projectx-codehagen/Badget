@@ -1,153 +1,55 @@
 import { redirect } from "next/navigation";
-import { getUserCredits } from "@/actions/get-credits";
-import { getEventStats } from "@/actions/stats/get-events-stats";
+import { getUserTransactions } from "@/actions/badget/get-transactions";
 
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
-import { AddChannelButton } from "@/components/buttons/AddChannelButton";
-import { AddProjectButton } from "@/components/buttons/AddProjectButton";
-import { AddPropertyButton } from "@/components/buttons/AddPropertyButton";
-import { StartOnbordaButton } from "@/components/buttons/StartOnbordaButton";
-import EventsDashboard from "@/components/dashboard/EventsDashboard";
+import { AddButton } from "@/components/buttons/AddButton";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
+import { AddAssetFlow } from "@/components/modals/add-asset-flow";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
+import { TransactionsReviewTable } from "@/app/(dashboard)/(workspaceId)/aimagic/_components/transaction-review-table";
 
 export const metadata = {
-  title: "Dingify Dashboard - Your Alerts Overview",
+  title: "Badget",
   description:
-    "Monitor and analyze all your critical events in real-time. Access key metrics, track important journeys, and make data-driven decisions to optimize your business performance on the Dingify Dashboard.",
+    "Badget is a platform that helps you track your transactions and analyze your spending.",
 };
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
-  const userCredits = await getUserCredits();
-  const eventStats = await getEventStats();
+  const transactions = await getUserTransactions();
 
   if (!user) {
-    redirect(authOptions.pages?.signIn || "/login");
+    redirect(authOptions.pages?.signIn ?? "/login");
   }
-
-  // Fetch projects associated with the user
-  const projects = await prisma.project.findMany({
-    where: {
-      userId: user.id,
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  // Extract project IDs
-  const projectIds = projects.map((project) => project.id);
-
-  // Fetch customers associated with the user's projects
-  const customers = await prisma.customer.findMany({
-    where: {
-      projectId: {
-        in: projectIds,
-      },
-    },
-  });
-  console.log(customers);
-
-  // Fetch channels for the user's projects
-  const channels = await prisma.channel.findMany({
-    where: {
-      projectId: {
-        in: projectIds,
-      },
-    },
-    select: {
-      id: true,
-      name: true,
-      createdAt: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-
-  // Extract channel IDs
-  const channelIds = channels.map((channel) => channel.id);
-
-  // Fetch events for the user's channels with project and channel names
-  const events = await prisma.event.findMany({
-    where: {
-      channelId: {
-        in: channelIds,
-      },
-    },
-    select: {
-      id: true,
-      name: true,
-      channelId: true,
-      userId: true,
-      icon: true,
-      tags: true,
-      notify: true,
-      createdAt: true,
-      customerId: true,
-      channel: {
-        select: {
-          name: true,
-          project: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-
-  // Ensure userCredits.credits is defined, default to 0 if undefined
-  const availableCredits = userCredits.credits ?? 0;
 
   return (
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
-        {userCredits.success && availableCredits > 0 ? (
-          <AddProjectButton />
-        ) : (
-          // <Button disabled variant="outline">
-          //   Add Credits to Add Channel
-          // </Button>
-          // <AddProjectButton />
-          <AddChannelButton />
-        )}
+        <AddButton triggerLabel="Add Asset">
+          <AddAssetFlow />
+        </AddButton>
       </DashboardHeader>
       <div>
-        {channels.length === 0 ? (
-          // Render EmptyPlaceholder if there are no channels
+        {transactions.length === 0 ? (
+          // Render EmptyPlaceholder if there are no transactions
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="post" />
             <EmptyPlaceholder.Title>
-              There are no channels
+              You have no transactions
             </EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You need to generate an API key first
+              Let's start with importing some transactions
             </EmptyPlaceholder.Description>
-            <AddApiKeyButton />
-            <div className="mt-4 space-y-4">
-              <StartOnbordaButton />
-
-              <div
-                id="onborda-step1"
-                className="flex items-center rounded-sm border border-border p-4 px-8"
-              >
-                This is the first step
-              </div>
-            </div>
+            <AddButton triggerLabel="Add Asset">
+              <AddAssetFlow />
+            </AddButton>
           </EmptyPlaceholder>
         ) : (
-          // Render EventsTable if there are Events
-          <EventsDashboard events={events} eventStats={eventStats} />
+          // Render TransactionsTable if there are transactions
+          <TransactionsReviewTable />
         )}
       </div>
     </DashboardShell>

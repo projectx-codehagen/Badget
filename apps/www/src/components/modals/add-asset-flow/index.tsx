@@ -1,6 +1,8 @@
+// components/AddAssetFlow.tsx
 "use client";
 
-import { useCallback, useMemo } from "react";
+import type { FlowStep } from "@/hooks/use-flow-control";
+import { useCallback, useEffect, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import {
@@ -9,12 +11,10 @@ import {
   DialogTitle,
 } from "@dingify/ui/components/dialog";
 
-import { FlowStep, useFlowControl } from "@/hooks/use-flow-control";
+import { useFlowControl } from "@/hooks/use-flow-control";
 import { useFlowModalState } from "@/hooks/use-flow-modal-state";
+import { AccountForm } from "@/components/forms/account-form";
 
-// import { AccountForm } from "@/components/forms/account-form";
-
-import { Footer } from "../parts/footer";
 import { AccountTypeSelection } from "./components/account-type-selection";
 import { HeaderControls } from "./components/header-controls";
 
@@ -32,27 +32,6 @@ export interface AccountTypeInfo {
 export const AddAssetFlow = () => {
   const { setAccountTypeInfo, accountTypeInfo, form } = useFlowModalState();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const handleSelectAccountType = useCallback(
-    (selectedAccountType: AccountTypeInfo) => {
-      if (form.formState.dirtyFields.name) {
-        form.resetField("name");
-      }
-      setAccountTypeInfo(selectedAccountType);
-      goToNextStep();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  const accountFormTitle = accountTypeInfo
-    ? `Add ${accountTypeInfo.title}`
-    : "Step 2";
-  const accountFormDescription = accountTypeInfo
-    ? accountTypeInfo.description
-    : "Description of Step 2";
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const steps = useMemo<FlowStep[]>(
     () => [
       {
@@ -60,42 +39,57 @@ export const AddAssetFlow = () => {
         title: "Add new account or asset",
         description: "Add the account or asset you want.",
         component: (
-          <AccountTypeSelection onSelectAccountType={handleSelectAccountType} />
+          <AccountTypeSelection
+            onSelectAccountType={(selectedAccountType) => {
+              console.log("Selected Account Type:", selectedAccountType);
+              if (form && form.formState.dirtyFields.name) {
+                form.resetField("name");
+              }
+              setAccountTypeInfo(selectedAccountType);
+              goToNextStep();
+            }}
+          />
         ),
       },
       {
         id: 1,
-        title: accountFormTitle,
-        description: accountFormDescription,
+        title: accountTypeInfo ? `Add ${accountTypeInfo.title}` : "Step 2",
+        description: accountTypeInfo
+          ? accountTypeInfo.description
+          : "Description of Step 2",
         component: accountTypeInfo ? (
-          <AccountTypeSelection onSelectAccountType={handleSelectAccountType} />
+          <AccountForm type={accountTypeInfo.type} />
         ) : null,
       },
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [handleSelectAccountType, accountFormTitle, accountFormDescription],
+    [accountTypeInfo, form, setAccountTypeInfo],
   );
 
   const { currentStepId, goToNextStep, goToPreviousStep } = useFlowControl({
     steps,
   });
 
-  const currentStep = useMemo(
-    () => steps.find((step) => step.id === currentStepId),
-    [steps, currentStepId],
-  );
+  useEffect(() => {
+    console.log("Current Step ID:", currentStepId);
+    console.log(
+      "Current Step:",
+      steps.find((step) => step.id === currentStepId),
+    );
+  }, [currentStepId, steps]);
 
   return (
     <>
       <HeaderControls
         currentStepId={currentStepId}
-        goToPreviousStep={() => {
-          goToPreviousStep();
-        }}
+        goToPreviousStep={goToPreviousStep}
       />
       <DialogHeader>
-        <DialogTitle>{currentStep?.title}</DialogTitle>
-        <DialogDescription>{currentStep?.description}</DialogDescription>
+        <DialogTitle>
+          {steps.find((step) => step.id === currentStepId)?.title}
+        </DialogTitle>
+        <DialogDescription>
+          {steps.find((step) => step.id === currentStepId)?.description}
+        </DialogDescription>
       </DialogHeader>
       <AnimatePresence mode="wait">
         <motion.div
@@ -105,7 +99,7 @@ export const AddAssetFlow = () => {
           exit={{ y: -10, opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
-          {currentStep?.component}
+          {steps.find((step) => step.id === currentStepId)?.component}
         </motion.div>
       </AnimatePresence>
     </>
