@@ -1,8 +1,11 @@
+import type { LucideIcon, LucideProps } from "lucide-react";
 import {
   AlertTriangle,
   ArrowRight,
+  BarChart,
   Bell,
   BrainCircuit,
+  Building,
   Check,
   ChevronDown,
   ChevronLeft,
@@ -14,9 +17,9 @@ import {
   Home,
   Image,
   Laptop,
+  Layers,
+  LayoutDashboard,
   Loader2,
-  LucideIcon,
-  LucideProps,
   Moon,
   MoreVertical,
   PartyPopper,
@@ -26,6 +29,7 @@ import {
   Rss,
   Search,
   Settings,
+  Sprout,
   SunMedium,
   Trash,
   Ungroup,
@@ -66,6 +70,13 @@ export const Icons = {
   party: PartyPopper,
   piecart: PieChart,
   bell: Bell,
+  LayoutDashboard: LayoutDashboard,
+  Layers: Layers,
+  BarChart: BarChart,
+  Building: Building,
+  Sprout: Sprout,
+  CreditCard: CreditCard,
+
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

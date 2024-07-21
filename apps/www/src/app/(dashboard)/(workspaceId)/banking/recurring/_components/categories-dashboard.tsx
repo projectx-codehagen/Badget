@@ -10,8 +10,8 @@ import {
 import { Separator } from "@dingify/ui/components/separator";
 import { TooltipProvider } from "@dingify/ui/components/tooltip";
 
-import { RecurringTableNext } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/allocation-table-next";
-import { TopCategoriesTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/top-categories-table";
+import { RecurringTableNext } from "@/app/(dashboard2)/(workspaceId)/banking/transactions/_components/allocation-table-next";
+import { TopCategoriesTable } from "@/app/(dashboard2)/(workspaceId)/dashboard/_components/top-categories-table";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";

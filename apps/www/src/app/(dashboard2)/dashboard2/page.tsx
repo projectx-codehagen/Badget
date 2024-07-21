@@ -3,18 +3,18 @@ import { getUserTransactions } from "@/actions/badget/get-transactions";
 
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
+import { AddAccountSheet } from "@/components/buttons/AddAccountSheeet";
 import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { AddButton } from "@/components/buttons/AddButton";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
-import { TransactionsReviewTable } from "@/app/(dashboard)/(workspaceId)/aimagic/_components/transaction-review-table";
 
 export const metadata = {
-  title: "Badget",
+  title: "Dashboard",
   description:
-    "Badget is a platform that helps you track your transactions and analyze your spending.",
+    "Dash Badget is a platform that helps you track your transactions and analyze your spending.",
 };
 
 export default async function DashboardPage() {
@@ -31,6 +31,7 @@ export default async function DashboardPage() {
         <AddButton triggerLabel="Add Asset">
           <AddAssetFlow />
         </AddButton>
+        <AddAccountSheet currentPath={undefined} />
       </DashboardHeader>
       <div>
         {transactions.length === 0 ? (
@@ -49,7 +50,7 @@ export default async function DashboardPage() {
           </EmptyPlaceholder>
         ) : (
           // Render TransactionsTable if there are transactions
-          <TransactionsReviewTable />
+          <div>asdad</div>
         )}
       </div>
     </DashboardShell>

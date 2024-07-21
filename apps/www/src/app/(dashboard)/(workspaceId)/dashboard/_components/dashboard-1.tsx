@@ -15,8 +15,8 @@ import { TooltipProvider } from "@dingify/ui/components/tooltip";
 import { cn } from "@/lib/utils";
 import { AddButton } from "@/components/buttons/AddButton";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
-import { WorkspaceSwitcher } from "@/app/(dashboard)/_components/workspace-switcher";
-import { SidebarNav } from "@/app/(dashboard)/(workspaceId)/_components/sidebar-nav";
+import { WorkspaceSwitcher } from "@/app/(dashboard2)/_components/workspace-switcher";
+import { SidebarNav } from "@/app/(dashboard2)/(workspaceId)/_components/sidebar-nav";
 
 import { Nav } from "./nav";
 import { CardsStats } from "./stats";

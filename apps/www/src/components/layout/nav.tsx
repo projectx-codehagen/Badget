@@ -24,7 +24,7 @@ export function DashboardNav({ items, slug }: DashboardNavProps) {
   return (
     <nav className="grid items-start gap-2">
       {items.map((item) => {
-        const Icon = Icons[item.icon || "arrowRight"];
+        const Icon = Icons[item.icon ?? "arrowRight"];
         return (
           <div key={item.href}>
             <Link
@@ -45,7 +45,7 @@ export function DashboardNav({ items, slug }: DashboardNavProps) {
                 <span>{item.title}</span>
               </span>
             </Link>
-            {item.title === "Settings" && (
+            {item.title === "Liabilities" && (
               <>
                 <Separator key={`separator-${item.href}`} />
                 <div
@@ -55,7 +55,7 @@ export function DashboardNav({ items, slug }: DashboardNavProps) {
                     "cursor-default px-3 py-2",
                   )}
                 >
-                  Your Channels
+                  Your Accounts
                 </div>
               </>
             )}

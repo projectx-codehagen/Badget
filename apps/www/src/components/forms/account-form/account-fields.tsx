@@ -1,8 +1,7 @@
-// components/AccountFields.tsx
 "use client";
 
 import { useEffect, useState } from "react";
-import { addAccount } from "@/actions/badget/create-account";
+import { createNewAccount } from "@/actions/badget/create-new-account";
 import { fetchCurrencies } from "@/actions/badget/get-currencies";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -79,7 +78,7 @@ export const AccountFields = () => {
 
   const onSubmit = async (data: CreateAccount) => {
     try {
-      await addAccount(data);
+      await createNewAccount(data); // Adjust the path as needed
       toast({
         title: "Account added successfully!",
         description: "Your account was added successfully.",

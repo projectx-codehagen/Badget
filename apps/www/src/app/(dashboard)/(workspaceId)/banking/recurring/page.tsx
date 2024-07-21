@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import {
   accounts,
   mails,
-} from "@/app/(dashboard)/(workspaceId)/investment/data";
+} from "@/app/(dashboard2)/(workspaceId)/investment/data";
 
 import { RecurringDashboard } from "./_components/categories-dashboard";
 

@@ -49,7 +49,7 @@ import {
 } from "@dingify/ui/components/tooltip";
 
 import { formatCurrency } from "@/lib/utils";
-import { TransactionsReviewTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/transaction-review-table";
+import { TransactionsReviewTable } from "@/app/(dashboard2)/(workspaceId)/dashboard/_components/transaction-review-table";
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";

@@ -11,7 +11,7 @@ import {
 import { ScrollArea, ScrollBar } from "@dingify/ui/components/scroll-area";
 
 import { formatCurrency } from "@/lib/utils";
-import { investmentData } from "@/app/(dashboard)/(workspaceId)/investment/data";
+import { investmentData } from "@/app/(dashboard2)/(workspaceId)/investment/data";
 
 import { useMail } from "../use-mail";
 

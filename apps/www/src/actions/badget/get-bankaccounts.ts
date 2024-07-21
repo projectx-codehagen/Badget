@@ -1,4 +1,3 @@
-// actions/get-bankaccounts.ts
 "use server";
 
 import { prisma } from "@/lib/db";
@@ -11,13 +10,16 @@ export async function getUserBankAccounts() {
   }
 
   // Fetch bank accounts associated with the user
-  const bankAccounts = await prisma.bankaccount.findMany({
+  const bankAccounts = await prisma.bankAccount.findMany({
     where: {
       userId: user.id,
     },
     select: {
       id: true,
       name: true,
+      createdAt: true,
+      updatedAt: true,
+      resourceId: true,
     },
   });
 

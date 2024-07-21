@@ -9,15 +9,221 @@ datasource db {
   directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
-enum AssetType {
-  STOCKS
-  CRYPTO
-  BONDS
-  ETF
-  OPTIONS
-  FUTURES
-  REAL_ESTATE
-  COMMODITIES
+model Account {
+  id                String     @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?    @db.Text
+  access_token      String?    @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?    @db.Text
+  session_state     String?
+  createdAt         DateTime   @default(now()) @map(name: "created_at")
+  updatedAt         DateTime   @default(now()) @map(name: "updated_at")
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Resource          Resource[]
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map(name: "sessions")
+}
+
+model User {
+  id                  String    @id @default(cuid())
+  name                String?
+  email               String?   @unique
+  emailVerified       DateTime?
+  phone               String?
+  plan                String    @default("basic")
+  credits             Int       @default(3)
+  image               String?
+  language            String?   @default("english")
+  onboardingEmailSent Boolean   @default(false)
+
+  accounts     Account[]
+  sessions     Session[]
+  bankAccounts BankAccount[]
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  stripeCustomerId       String?    @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?    @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?    @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime?  @map(name: "stripe_current_period_end")
+  workspaceId            String?
+  workspace              Workspace? @relation(fields: [workspaceId], references: [id])
+
+  @@map(name: "users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map(name: "verification_tokens")
+}
+
+model Workspace {
+  id           String        @id @default(cuid())
+  name         String
+  orgnr        Int?
+  address      String?
+  postalCode   String?
+  city         String?
+  users        User[]
+  bankAccounts BankAccount[]
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+}
+
+model BankAccount {
+  id              String        @id @default(cuid())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now())
+  resourceId      String?
+  originalId      String?
+  orgId           String?
+  userId          String?
+  name            String
+  originalPayload Json?
+  Balance         Balance[]
+  Transaction     Transaction[]
+  accountType     AccountType   @default(BANK)
+  resource        Resource?     @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  workspaceId     String?
+  workspace       Workspace?    @relation(fields: [workspaceId], references: [id])
+  user            User?         @relation(fields: [userId], references: [id])
+
+  @@map(name: "bank_accounts")
+}
+
+model Balance {
+  id              String       @id @default(cuid())
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @default(now())
+  accountId       String?
+  assetId         String?
+  currencyIso     String
+  amount          Decimal
+  date            DateTime
+  type            BalanceType  @default(AVAILABLE)
+  originalPayload Json?
+  bankAccount     BankAccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  asset           Asset?       @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  currency        Currency     @relation(fields: [currencyIso], references: [iso], onDelete: Cascade)
+}
+
+model Currency {
+  iso         String        @id
+  symbol      String
+  numericCode Int?
+  Balance     Balance[]
+  Transaction Transaction[]
+}
+
+model Asset {
+  id              String        @id @default(cuid())
+  name            String
+  originalPayload Json?
+  Balance         Balance[]
+  Transaction     Transaction[]
+}
+
+model Transaction {
+  id              String       @id @default(cuid())
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @default(now())
+  accountId       String?
+  assetId         String?
+  currencyIso     String
+  categoryId      String?
+  amount          Decimal
+  date            DateTime
+  description     String
+  originalPayload Json?
+  bankAccount     BankAccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  asset           Asset?       @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  category        Category?    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  currency        Currency     @relation(fields: [currencyIso], references: [iso], onDelete: Cascade)
+}
+
+model Category {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  name         String
+  icon         String
+  transactions Transaction[]
+
+  @@map(name: "categories")
+}
+
+model ConnectorConfig {
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  orgId       String
+  secret      Json?
+  env         ConnectorEnv
+  connectorId String
+  connector   Connector    @relation(fields: [connectorId], references: [id], onDelete: Cascade)
+}
+
+model Connector {
+  id              String            @id @default(cuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @default(now())
+  name            String
+  logoUrl         String?
+  status          ConnectorStatus
+  type            ConnectorType
+  connectorConfig ConnectorConfig[]
+  Integration     Integration[]
+}
+
+model Integration {
+  id                  String     @id @default(cuid())
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @default(now())
+  name                String
+  logoUrl             String?
+  connectorProviderId String?    @unique
+  connectorId         String
+  connector           Connector  @relation(fields: [connectorId], references: [id], onDelete: Cascade)
+  Resource            Resource[]
+}
+
+model Resource {
+  id            String        @id @default(cuid())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
+  integrationId String
+  originalId    String
+  userId        String
+  accounts      Account[]
+  integration   Integration   @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  bankAccounts  BankAccount[]
+
+  @@map(name: "resources")
 }
 
 enum AccountType {
@@ -50,245 +256,4 @@ enum ConnectorType {
   AGGREGATED
 }
 
-enum Plan {
-  FREE
-  STANDARD
-  PRO
-}
-
-model Account {
-  id                String   @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?  @db.Text
-  session_state     String?
-  createdAt         DateTime @default(now()) @map(name: "created_at")
-  updatedAt         DateTime @default(now()) @map(name: "updated_at")
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@index([userId])
-  @@map(name: "accounts")
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@map(name: "sessions")
-}
-
-model User {
-  id                  String    @id @default(cuid())
-  name                String?
-  email               String?   @unique
-  emailVerified       DateTime?
-  phone               String?
-  plan                String    @default("basic")
-  credits             Int       @default(3)
-  image               String?
-  language            String?   @default("english")
-  onboardingEmailSent Boolean   @default(false)
-
-  accounts Account[]
-  sessions Session[]
-
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
-
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
-
-  @@map(name: "users")
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-  @@map(name: "verification_tokens")
-}
-
-model Asset {
-  id              String           @id @default(uuid()) @db.VarChar(30)
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @default(now())
-  userId          String?
-  name            String
-  currencyIso     String?
-  assetType       AssetType
-  originalPayload Json?
-  AssetRealEstate AssetRealEstate?
-  Balance         Balance[]
-  Transaction     Transaction[]
-}
-
-model AssetRealEstate {
-  id           String   @id @default(uuid()) @db.VarChar(30)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now())
-  assetId      String   @unique @db.VarChar(30)
-  asset        Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
-  address      String
-  city         String
-  state        String
-  postalCode   String
-  purchaseDate DateTime
-}
-
-model Country {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  iso       String
-  name      String
-  active    Boolean  @default(true)
-}
-
-model Currency {
-  id          Int           @id @default(autoincrement())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @default(now())
-  iso         String        @unique
-  symbol      String
-  numericCode Int?
-  Balance     Balance[]
-  Transaction Transaction[]
-}
-
-model Customer {
-  id             String    @id @default(uuid()) @db.VarChar(32)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @default(now())
-  stripeId       String    @unique @db.VarChar(36)
-  subscriptionId String?
-  userId         String
-  orgId          String?
-  name           String?
-  plan           Plan?
-  paidUntil      DateTime?
-  endsAt         DateTime?
-}
-
-model Bankaccount {
-  id              String        @id @default(uuid()) @db.VarChar(30)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now())
-  resourceId      String?
-  originalId      String?
-  orgId           String?
-  userId          String?
-  name            String
-  currencyIso     String?
-  amount          Int?
-  accountType     AccountType   @default(BANK)
-  originalPayload Json?
-  Balance         Balance[]
-  Transaction     Transaction[]
-  Resource        Resource?     @relation(fields: [resourceId], references: [id], onDelete: Cascade)
-}
-
-model Balance {
-  id              String       @id @default(uuid()) @db.VarChar(30)
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @default(now())
-  accountId       String?
-  assetId         String?
-  currencyIso     String
-  amount          Decimal
-  date            DateTime
-  type            BalanceType  @default(AVAILABLE)
-  originalPayload Json?
-  bankaccount     Bankaccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  asset           Asset?       @relation(fields: [assetId], references: [id], onDelete: Cascade)
-  currency        Currency     @relation(fields: [currencyIso], references: [iso], onDelete: Cascade)
-}
-
-model Category {
-  id          String        @id @default(uuid()) @db.VarChar(30)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @default(now())
-  name        String
-  icon        String
-  Transaction Transaction[]
-}
-
-model Transaction {
-  id              String       @id @default(uuid()) @db.VarChar(30)
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @default(now())
-  accountId       String?
-  assetId         String?
-  categoryId      String?
-  currencyIso     String
-  originalId      String?      @unique @db.VarChar(36)
-  amount          Decimal
-  date            DateTime
-  description     String
-  originalPayload Json?
-  bankaccount     Bankaccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  asset           Asset?       @relation(fields: [assetId], references: [id], onDelete: Cascade)
-  category        Category?    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  currency        Currency     @relation(fields: [currencyIso], references: [iso], onDelete: Cascade)
-}
-
-model ConnectorConfig {
-  id          String       @id @default(uuid()) @db.VarChar(30)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @default(now())
-  orgId       String
-  secret      Json?
-  env         ConnectorEnv
-  connectorId String
-  connector   Connector    @relation(fields: [connectorId], references: [id], onDelete: Cascade)
-}
-
-model Connector {
-  id              String            @id @default(uuid()) @db.VarChar(30)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @default(now())
-  name            String
-  logoUrl         String?
-  status          ConnectorStatus
-  type            ConnectorType
-  connectorConfig ConnectorConfig[]
-  Integration     Integration[]
-}
-
-model Integration {
-  id                  String     @id @default(uuid()) @db.VarChar(30)
-  createdAt           DateTime   @default(now())
-  updatedAt           DateTime   @default(now())
-  name                String
-  logoUrl             String?
-  connectorProviderId String?    @unique @db.VarChar(127)
-  connectorId         String
-  connector           Connector  @relation(fields: [connectorId], references: [id], onDelete: Cascade)
-  Resource            Resource[]
-}
-
-model Resource {
-  id            String        @id @default(uuid()) @db.VarChar(30)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @default(now())
-  integrationId String
-  originalId    String
-  userId        String
-  bankaccount   Bankaccount[]
-  integration   Integration   @relation(fields: [integrationId], references: [id], onDelete: Cascade)
-}
+// if we need full reset : npx prisma db push --force-reset

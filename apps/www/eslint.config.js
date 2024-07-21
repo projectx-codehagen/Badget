@@ -19,7 +19,7 @@ export default [
       "@typescript-eslint/consistent-type-definitions": "warn",
       "@typescript-eslint/no-unnecessary-condition": "warn",
       "@typescript-eslint/prefer-nullish-coalescing": "warn",
-      "@typescript-eslint/no-unsafe-argument": "warn",
+      "@typescript-eslint/no-unsafe-argument": "off",
       "@typescript-eslint/no-unsafe-return": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/require-await": "warn",

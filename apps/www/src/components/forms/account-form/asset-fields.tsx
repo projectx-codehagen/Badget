@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { addAccount } from "@/actions/badget/create-account";
+import { createNewAccount } from "@/actions/badget/create-new-account";
 import { fetchCurrencies } from "@/actions/badget/get-currencies";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -79,7 +79,7 @@ export const AssetFields = () => {
 
   const onSubmit = async (data: CreateAsset) => {
     try {
-      await addAccount(data);
+      await createNewAccount(data);
       toast({
         title: "Asset added successfully!",
         description: "Your asset was added successfully.",

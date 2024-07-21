@@ -9,15 +9,15 @@ import {
 } from "@dingify/ui/components/resizable";
 import { TooltipProvider } from "@dingify/ui/components/tooltip";
 
-import { CategoriesTable } from "@/app/(dashboard)/(workspaceId)/banking/recurring/_components/allocation-table";
-import { CategoriesDisplay } from "@/app/(dashboard)/(workspaceId)/banking/recurring/_components/categories-display";
-import { Investmentcards } from "@/app/(dashboard)/(workspaceId)/banking/recurring/_components/investment-cards";
-import { RecurringSpentSoFarCard } from "@/app/(dashboard)/(workspaceId)/banking/recurring/_components/total-balance-card";
-import { mails } from "@/app/(dashboard)/(workspaceId)/banking/recurring/data";
-import { RecurringTableNext } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/allocation-table-next";
-import { Mail } from "@/app/(dashboard)/(workspaceId)/banking/transactions/data";
-import { useMail } from "@/app/(dashboard)/(workspaceId)/banking/transactions/use-mail";
-import { TopCategoriesTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/top-categories-table";
+import { CategoriesTable } from "@/app/(dashboard2)/(workspaceId)/banking/recurring/_components/allocation-table";
+import { CategoriesDisplay } from "@/app/(dashboard2)/(workspaceId)/banking/recurring/_components/categories-display";
+import { Investmentcards } from "@/app/(dashboard2)/(workspaceId)/banking/recurring/_components/investment-cards";
+import { RecurringSpentSoFarCard } from "@/app/(dashboard2)/(workspaceId)/banking/recurring/_components/total-balance-card";
+import { mails } from "@/app/(dashboard2)/(workspaceId)/banking/recurring/data";
+import { RecurringTableNext } from "@/app/(dashboard2)/(workspaceId)/banking/transactions/_components/allocation-table-next";
+import { Mail } from "@/app/(dashboard2)/(workspaceId)/banking/transactions/data";
+import { useMail } from "@/app/(dashboard2)/(workspaceId)/banking/transactions/use-mail";
+import { TopCategoriesTable } from "@/app/(dashboard2)/(workspaceId)/dashboard/_components/top-categories-table";
 
 interface MailProps {
   accounts: {

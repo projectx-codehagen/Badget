@@ -60,7 +60,7 @@ import {
   TableRow,
 } from "@dingify/ui/components/table";
 
-import { payments } from "@/app/(dashboard)/(workspaceId)/banking/transactions/data";
+import { payments } from "@/app/(dashboard2)/(workspaceId)/banking/transactions/data";
 
 export type Payment = {
   id: string;

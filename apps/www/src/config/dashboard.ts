@@ -1,4 +1,4 @@
-import { DashboardConfig } from "@/types";
+import type { DashboardConfig } from "@/types";
 
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
@@ -15,45 +15,33 @@ export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
     {
       title: "Dashboard",
-      href: "/dashboard",
-      icon: "home",
+      href: "/dashboard2",
+      icon: "LayoutDashboard",
     },
     {
-      title: "Analytics",
-      href: "/dashboard/analytics",
-      icon: "piechart",
+      href: "/dashboard2/banking",
+      title: "Banking",
+      icon: "Layers",
     },
     {
-      title: "Users",
-      href: "/dashboard/users",
-      icon: "user",
+      href: "/investment",
+      title: "Investments",
+      icon: "BarChart",
     },
     {
-      title: "Notifications",
-      href: "/dashboard/notifications",
-      icon: "bell",
+      href: "/assets",
+      title: "Assets",
+      icon: "Building",
     },
     {
-      title: "Billing",
-      href: "/dashboard/billing",
-      icon: "billing",
+      href: "/savings",
+      title: "Savings",
+      icon: "Sprout",
     },
     {
-      title: "Settings",
-      href: "/dashboard/settings",
-      icon: "settings",
+      href: "/liabilities",
+      title: "Liabilities",
+      icon: "CreditCard",
     },
-    // {
-    //   title: "Placeholder Names",
-    //   href: "/dashboard/channels",
-    // },
-    // {
-    //   title: "Marketing",
-    //   href: "/dashboard/channels/marketing",
-    // },
-    // {
-    //   title: "Sales",
-    //   href: "/dashboard/channels/sales",
-    // },
   ],
 };

@@ -49,8 +49,8 @@ import {
 } from "@dingify/ui/components/tooltip";
 
 import { formatCurrency } from "@/lib/utils";
-import { PositionsTable } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/positions-table";
-import { TransactionsReviewTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/transaction-review-table";
+import { PositionsTable } from "@/app/(dashboard2)/(workspaceId)/banking/transactions/_components/positions-table";
+import { TransactionsReviewTable } from "@/app/(dashboard2)/(workspaceId)/dashboard/_components/transaction-review-table";
 
 import { Mail } from "../data";
 import { AccountsReviewTable } from "./accounts-review-table";

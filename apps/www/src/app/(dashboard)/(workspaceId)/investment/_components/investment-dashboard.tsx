@@ -10,7 +10,7 @@ import {
 import { Separator } from "@dingify/ui/components/separator";
 import { TooltipProvider } from "@dingify/ui/components/tooltip";
 
-import { TopCategoriesTable } from "@/app/(dashboard)/(workspaceId)/dashboard/_components/top-categories-table";
+import { TopCategoriesTable } from "@/app/(dashboard2)/(workspaceId)/dashboard/_components/top-categories-table";
 
 import { Mail } from "../data";
 import { useMail } from "../use-mail";
