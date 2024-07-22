@@ -458,6 +458,9 @@ importers:
       react-resizable-panels:
         specifier: ^2.0.21
         version: 2.0.21(react-dom@18.2.0)(react@18.2.0)
+      recharts:
+        specifier: ^2.12.7
+        version: 2.12.7(react-dom@18.2.0)(react@18.2.0)
       sonner:
         specifier: ^1.4.41
         version: 1.4.41(react-dom@18.2.0)(react@18.2.0)

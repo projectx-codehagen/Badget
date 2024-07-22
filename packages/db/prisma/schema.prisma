@@ -68,6 +68,7 @@ model User {
   stripeCurrentPeriodEnd DateTime?  @map(name: "stripe_current_period_end")
   workspaceId            String?
   workspace              Workspace? @relation(fields: [workspaceId], references: [id])
+  Category               Category[]
 
   @@map(name: "users")
 }
@@ -173,8 +174,11 @@ model Category {
   updatedAt    DateTime      @default(now())
   name         String
   icon         String
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions Transaction[]
 
+  @@unique([name, userId])
   @@map(name: "categories")
 }
 
