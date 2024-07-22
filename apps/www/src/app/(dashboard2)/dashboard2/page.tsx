@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getUserTransactions } from "@/actions/badget/get-transactions";
+import { getTransactionsToReview } from "@/actions/badget/get-transactions-to-review";
 
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
@@ -10,6 +11,7 @@ import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
+import TransactionsToReview from "@/components/tables/TransactionsToReview";
 
 export const metadata = {
   title: "Dashboard",
@@ -20,6 +22,7 @@ export const metadata = {
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   const transactions = await getUserTransactions();
+  const reviewTransactions = await getTransactionsToReview();
 
   if (!user) {
     redirect(authOptions.pages?.signIn ?? "/login");
@@ -50,7 +53,7 @@ export default async function DashboardPage() {
           </EmptyPlaceholder>
         ) : (
           // Render TransactionsTable if there are transactions
-          <div>asdad</div>
+          <TransactionsToReview transactions={reviewTransactions} />
         )}
       </div>
     </DashboardShell>

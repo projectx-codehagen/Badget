@@ -76,6 +76,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       categoryId: categoryMap["Groceries"],
       accountId: bankAccountId,
       currencyIso: currencyIso,
+      review: true, // Mark as reviewed
     },
     {
       amount: 16.75,
@@ -84,6 +85,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       categoryId: categoryMap["Restaurants"],
       accountId: bankAccountId,
       currencyIso: currencyIso,
+      review: true, // Mark as reviewed
     },
     {
       amount: 9.99,

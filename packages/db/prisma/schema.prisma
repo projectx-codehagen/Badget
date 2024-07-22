@@ -162,6 +162,7 @@ model Transaction {
   date            DateTime
   description     String
   originalPayload Json?
+  review          Boolean      @default(false)
   bankAccount     BankAccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
   asset           Asset?       @relation(fields: [assetId], references: [id], onDelete: Cascade)
   category        Category?    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
