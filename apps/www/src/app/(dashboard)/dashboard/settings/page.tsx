@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { getMetricsForUser } from "@/actions/get-metrics-user";
 
 import {
   Card,
@@ -30,8 +29,6 @@ export default async function SettingsPage() {
     redirect(authOptions.pages?.signIn || "/login");
   }
 
-  const metrics = await getMetricsForUser();
-
   const formatNumber = (number) => {
     return new Intl.NumberFormat("en-US").format(number);
   };
@@ -47,11 +44,7 @@ export default async function SettingsPage() {
         <Card>
           <CardHeader className="relative pb-2">
             <CardDescription>Logs</CardDescription>
-            <CardTitle className="text-4xl">
-              {metrics
-                ? `${formatNumber(metrics.logsUsed)} / ${formatNumber(metrics.logsLimit)}`
-                : "N/A"}
-            </CardTitle>
+
             <LayersIcon className="absolute right-2 top-2 h-8 w-8" />
           </CardHeader>
           <CardContent className="text-xs text-muted-foreground">
@@ -61,9 +54,7 @@ export default async function SettingsPage() {
         <Card>
           <CardHeader className="relative pb-2">
             <CardDescription>Seats</CardDescription>
-            <CardTitle className="text-4xl">
-              {metrics ? `${formatNumber(metrics.seatsUsed)} / 1` : "N/A"}
-            </CardTitle>
+
             <UsersIcon className="absolute right-2 top-2 h-8 w-8" />
           </CardHeader>
           <CardContent className="text-xs text-muted-foreground">
@@ -73,9 +64,7 @@ export default async function SettingsPage() {
         <Card>
           <CardHeader className="relative pb-2">
             <CardDescription>Projects</CardDescription>
-            <CardTitle className="text-4xl">
-              {metrics ? `${formatNumber(metrics.projectsUsed)} / ∞` : "N/A"}
-            </CardTitle>
+
             <FolderIcon className="absolute right-2 top-2 h-8 w-8" />
           </CardHeader>
           <CardContent className="text-xs text-muted-foreground">
