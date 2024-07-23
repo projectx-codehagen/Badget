@@ -6,9 +6,7 @@ import BankingDashboardDetails from "@/components/banking/BankingDashboardDetail
 import { AddTransactionsButton } from "@/components/buttons/AddTransactionsButton";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
-import NoPhotoPlaceholder from "@/components/properties/NoPhotoPlaceholder copy";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
-import { TransactionsDashboard } from "@/app/(dashboard)/(workspaceId)/banking/transactions/_components/transactions-dashboard";
 
 export default async function BankAccountPage({
   params,
