@@ -18,10 +18,20 @@ import { cn } from "@/lib/utils";
 import CSVParser from "./generic-csv-parser";
 
 export function CSVUploader({ bankAccountId }: { bankAccountId: string }) {
-  const [open, setOpen] = React.useState(false);
-
   const handleTestFileImport = () => {
-    // Logic for importing a test file can be placed here
+    // Create a link element
+    const link = document.createElement("a");
+    // Set the URL to the test file
+    link.href = "/testing.csv";
+    // Set the download attribute to trigger download
+    link.download = "testing.csv";
+    // Append link to the body
+    document.body.appendChild(link);
+    // Trigger click event on the link
+    link.click();
+    // Remove link from body
+    document.body.removeChild(link);
+
     console.log("Test file import initiated");
   };
 
@@ -39,7 +49,7 @@ export function CSVUploader({ bankAccountId }: { bankAccountId: string }) {
         </DialogHeader>
         <UploadForm bankAccountId={bankAccountId} />
         <DialogFooter>
-          <Button onClick={handleTestFileImport}>Import Test File</Button>
+          <Button onClick={handleTestFileImport}>Download Test File</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

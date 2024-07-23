@@ -1,10 +1,11 @@
 "use client";
 
+// theme CSS for React CSV Importer
 import "react-csv-importer/dist/index.css";
 
 import React, { use, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { importTransactions } from "@/actions/import-transactions"; // Import the server action
+import { importTransactions } from "@/actions/import-transactions"; // Import your server action
 import { Importer, ImporterField } from "react-csv-importer";
 import { toast } from "sonner";
 
@@ -27,19 +28,12 @@ export default function CSVParser({
   );
 
   const handleData = async (rows) => {
-    const formattedRows = rows.map((row) => ({
-      date: row.date,
-      description: row.description,
-      amount: parseFloat(row.amount),
-    }));
-    const result = await importTransactions(bankAccountId, formattedRows);
+    // Import transactions using the server action
+    const result = await importTransactions(bankAccountId, rows);
     if (result.success) {
-      toast.success("Transactions imported successfully!");
-      router.push(
-        "/dashboard/banking/" + "?" + createQueryString("step", "done"),
-      );
+      toast.success("File imported with success!");
     } else {
-      toast.error("Failed to import transactions: " + result.error);
+      toast.error(`Failed to import transactions: ${result.error}`);
     }
   };
 
@@ -55,7 +49,6 @@ export default function CSVParser({
         }}
         onComplete={({ file, fields }) => {
           console.log("finished import of file", file, "with fields", fields);
-          toast.success("File imported with success!");
         }}
         onClose={() => {
           router.push(
