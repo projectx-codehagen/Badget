@@ -4,11 +4,22 @@ import fetch from "node-fetch";
 
 import { getAccessToken } from "./accsessToken";
 
+// Function to generate a random string
+function generateRandomString(length: number) {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 export async function createRequisition(
   institutionId: string,
   redirectUrl: string,
   connectorConfigId: string,
-  reference?: string,
   agreement?: string,
   userLanguage?: string,
 ) {
@@ -17,7 +28,7 @@ export async function createRequisition(
   const body = {
     institution_id: institutionId,
     redirect: redirectUrl,
-    reference,
+    reference: generateRandomString(10), // Generate a unique reference
     agreement,
     user_language: userLanguage,
   };

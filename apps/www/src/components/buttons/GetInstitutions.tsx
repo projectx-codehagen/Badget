@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { getBanks } from "@/actions/get-institutions";
 import { createEndUserAgreement } from "@/actions/gocardless/create-end-user-agreement";
 import { createRequisition } from "@/actions/gocardless/create-requisition";
+import { getTransactions } from "@/actions/gocardless/get-transactions";
 import { listAccounts } from "@/actions/gocardless/list-accounts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -85,7 +86,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
     setError(null);
     try {
       console.log("Fetching banks for language:", language);
-      const banksData = await getBanks(language, connectorConfigId); // Pass the selected language
+      const banksData = await getBanks(language); // Pass the selected language
       console.log("Fetched banks data:", banksData);
       setBanks(banksData);
       toast.success("Banks fetched successfully");
@@ -115,12 +116,14 @@ export function GetInstitutionsButton({ connectorConfigId }) {
           data.bank,
           "http://localhost:3000/dashboard/banking", // Replace with your actual redirect URL
           connectorConfigId,
-          "124151", // Replace with your actual reference
           agreement.id,
           data.language,
         );
         toast.success("Requisition created successfully");
         console.log("Requisition:", requisition);
+
+        // Save the requisition ID in local storage
+        localStorage.setItem("requisition_id", requisition.id);
 
         // Redirect the user to the GoCardless link
         window.location.href = requisition.link;
@@ -130,6 +133,34 @@ export function GetInstitutionsButton({ connectorConfigId }) {
       }
     }
   };
+  // Function to list accounts after redirection
+  const listUserAccounts = async (requisitionId: string) => {
+    try {
+      console.log("Requisition ID:", requisitionId);
+      const accounts = await listAccounts(requisitionId);
+      console.log("Accounts:", accounts);
+
+      // Get transactions for each account
+      if (accounts.accounts.length > 0) {
+        const accountId = accounts.accounts[0];
+        const transactions = await getTransactions(accountId);
+        console.log(`Transactions for account ${accountId}:`, transactions);
+      }
+    } catch (error) {
+      console.error("Error listing accounts:", error);
+      toast.error("An error occurred while listing accounts");
+    }
+  };
+
+  // Check if redirected back with requisition ID
+  useEffect(() => {
+    const requisitionId = localStorage.getItem("requisition_id");
+    if (requisitionId) {
+      console.log("Found requisition ID in local storage:", requisitionId);
+      listUserAccounts(requisitionId);
+      localStorage.removeItem("requisition_id"); // Clear the requisition ID from local storage
+    }
+  }, []);
 
   return (
     <Dialog>
