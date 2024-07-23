@@ -94,7 +94,7 @@ pnpm dev
 pnpm --filter=db db:push
 ```
 
-## REST-API Installation (optinal)
+## REST-API Installation (optional)
 
 If you want to use the REST-api you need to update the hono under `apps/api`
 
