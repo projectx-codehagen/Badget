@@ -36,7 +36,7 @@ export default async function SettingsPage() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Settings"
+        heading="Settings (Not Done)"
         text="Manage account and website settings."
       />
 
