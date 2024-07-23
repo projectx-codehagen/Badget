@@ -6,6 +6,7 @@ import { getCurrentUser } from "@/lib/session";
 import BankAccountsTable from "@/components/banking/BankAccountsTable";
 import { AddAccountSheet } from "@/components/buttons/AddAccountSheeet";
 import { AddButton } from "@/components/buttons/AddButton";
+import { GetInstitutionsButton } from "@/components/buttons/GetInstitutions";
 import { AreaChartBanking } from "@/components/charts/AreaChart";
 import { OverallUseageChart } from "@/components/charts/OverallUseageChart";
 import { DashboardHeader } from "@/components/dashboard/header";
@@ -32,6 +33,7 @@ export default async function BankingPage() {
     <DashboardShell>
       <DashboardHeader heading="Banking" text="Overview off all your accounts ">
         <AddAccountSheet currentPath="/banking" />
+        <GetInstitutionsButton />
       </DashboardHeader>
       <div>
         {bankAccounts.length === 0 ? (
