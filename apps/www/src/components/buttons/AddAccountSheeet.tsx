@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createNewAccount } from "@/actions/badget/create-new-account";
+import { createNewAccount } from "@/actions/create-new-account";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";

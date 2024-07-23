@@ -57,8 +57,8 @@ export default function EventsSectionLanding() {
         />
       </div>
       <p className="mb-12 mt-12 translate-y-[-1rem] animate-fade-in text-balance text-lg tracking-tight text-gray-400 opacity-0 [--animation-delay:400ms] md:text-xl">
-        Unlock the power of real-time alerts and monitoring
-        <br className="hidden md:block" /> Monitor potential issues and
+        With Badget, you´re going to save money
+        <br className="hidden md:block" /> Every day, week and month.
         opportunities
       </p>
     </section>

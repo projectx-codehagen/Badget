@@ -182,7 +182,7 @@ export default function CallToActionSection() {
               </div>
               <div className="z-10 mt-4 flex flex-col items-center text-center text-primary">
                 <h1 className="text-3xl font-bold lg:text-4xl">
-                  Track every user interaction with ease
+                  Make your Badget count
                 </h1>
                 <p className="mt-2">No credit card required.</p>
                 <Link

@@ -3,8 +3,8 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getCategories } from "@/actions/badget/get-categories";
-import { updateTransactionReview } from "@/actions/badget/update-transaction-review";
+import { getCategories } from "@/actions/get-categories";
+import { updateTransactionReview } from "@/actions/update-transaction-review";
 import {
   flexRender,
   getCoreRowModel,

@@ -53,7 +53,7 @@ const BankAccountsTable = ({ bankAccounts }) => {
               {bankAccounts.map((account) => (
                 <TableRow key={account.id}>
                   <TableCell className="font-medium">
-                    <Link href={`/dashboard2/banking/${account.id}`}>
+                    <Link href={`/dashboard/banking/${account.id}`}>
                       <div>{account.name}</div>
                       <div className="text-sm text-muted-foreground">
                         *{account.id.slice(-4)}

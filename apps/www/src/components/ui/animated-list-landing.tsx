@@ -12,38 +12,78 @@ interface Item {
   time: string;
 }
 
-let notifications = [
+const notifications = [
   {
-    name: "Payment received",
-    description: "User-123",
+    name: "Income",
+    description: "Salary received from Company XYZ",
     time: "15m ago",
-    icon: "💸",
+    icon: "💰",
     color: "#00C9A7",
   },
   {
-    name: "User signed up",
-    description: "User-867",
+    name: "Expense",
+    description: "Grocery shopping at Supermart",
     time: "10m ago",
-    icon: "👤",
+    icon: "🛒",
     color: "#FFB800",
   },
   {
-    name: "New message",
-    description: "User-456",
+    name: "Income",
+    description: "Freelance payment from ABC Corp",
     time: "5m ago",
-    icon: "💬",
+    icon: "💵",
+    color: "#00C9A7",
+  },
+  {
+    name: "Expense",
+    description: "Monthly rent payment",
+    time: "2m ago",
+    icon: "🏠",
     color: "#FF3D71",
   },
   {
-    name: "New event",
-    description: "User-789",
-    time: "2m ago",
-    icon: "🗞️",
+    name: "Expense",
+    description: "Dinner at Restaurant",
+    time: "30m ago",
+    icon: "🍽️",
+    color: "#FF3D71",
+  },
+  {
+    name: "Income",
+    description: "Investment dividends",
+    time: "45m ago",
+    icon: "📈",
     color: "#1E86FF",
   },
+  {
+    name: "Expense",
+    description: "Utilities payment",
+    time: "1h ago",
+    icon: "💡",
+    color: "#FF3D71",
+  },
+  {
+    name: "Income",
+    description: "Bonus from work",
+    time: "2h ago",
+    icon: "🎉",
+    color: "#00C9A7",
+  },
+  {
+    name: "Expense",
+    description: "Online shopping at E-Shop",
+    time: "3h ago",
+    icon: "🛍️",
+    color: "#FFB800",
+  },
+  {
+    name: "Income",
+    description: "Cashback from bank",
+    time: "4h ago",
+    icon: "🏦",
+    color: "#00C9A7",
+  },
 ];
-
-notifications = Array.from({ length: 10 }, () => notifications).flat();
 
 const Notification = ({ name, description, icon, color, time }: Item) => {
   return (

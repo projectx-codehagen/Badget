@@ -8,63 +8,65 @@ import {
   useAnimation,
   useInView,
 } from "framer-motion";
+import {
+  BookOpen,
+  Car,
+  Coffee,
+  DollarSign,
+  Film,
+  Gift,
+  Heart,
+  ShoppingCart,
+  Sun,
+} from "lucide-react";
 
 import { Confetti } from "../ui/confetti";
 
-const cardImage = [
+const cardData = [
   {
     id: 1,
-    title: "Tom",
-    link: "#",
-    image: "https://avatar.vercel.sh/tom",
+    title: "Groceries",
+    icon: ShoppingCart,
   },
   {
     id: 2,
-    title: "Emily",
-    link: "#",
-    image: "https://avatar.vercel.sh/emily",
+    title: "Transportation",
+    icon: Car,
   },
   {
     id: 3,
-    title: "Chris",
-    link: "#",
-    image: "https://avatar.vercel.sh/chris",
+    title: "Entertainment",
+    icon: Film,
   },
   {
     id: 4,
-    title: "Sophie",
-    link: "#",
-    image: "https://avatar.vercel.sh/sophie",
+    title: "Utilities",
+    icon: Sun,
   },
   {
     id: 5,
-    title: "Scott",
-    link: "#",
-    image: "https://avatar.vercel.sh/scott",
+    title: "Dining Out",
+    icon: Coffee,
   },
   {
     id: 6,
-    title: "Olivia",
-    link: "#",
-    image: "https://avatar.vercel.sh/olivia",
+    title: "Health & Wellness",
+    icon: Heart,
   },
   {
     id: 7,
-    title: "Evan",
-    link: "#",
-    image: "https://avatar.vercel.sh/evan",
+    title: "Education",
+    icon: BookOpen,
   },
   {
     id: 8,
-    title: "Grace",
-    link: "#",
-    image: "https://avatar.vercel.sh/grace",
+    title: "Gifts & Donations",
+    icon: Gift,
   },
   {
     id: 9,
-    title: "Van",
-    link: "#",
-    image: "https://avatar.vercel.sh/van",
+    title: "Savings",
+    icon: DollarSign,
   },
 ];
 
@@ -89,7 +91,7 @@ export function IntegrationsSectionLanding() {
     <div className="flex h-full transform-gpu  flex-col items-center justify-between gap-5 rounded-lg border border-neutral-200 bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] xl:flex-row">
       <div className="flex w-full flex-col items-start justify-between gap-y-10 p-10 xl:h-full xl:w-1/2">
         <h2 className="text-3xl font-semibold">
-          Dingify makes it easy to track the journey of your users
+          Budget Tracking Made Easy with Badget
         </h2>
         <a
           href="/dashboard"
@@ -105,7 +107,7 @@ export function IntegrationsSectionLanding() {
           className="relative -right-[50px] -top-[100px] grid max-h-[450px] grid-cols-3 gap-5 [transform:rotate(-15deg)translateZ(10px);]"
         >
           <AnimatePresence>
-            {cardImage.map((card, index) => (
+            {cardData.map((card, index) => (
               <motion.div
                 variants={{
                   hidden: { opacity: 0, scale: 0.96, y: 25 },
@@ -129,17 +131,13 @@ export function IntegrationsSectionLanding() {
                 key={card.id}
                 className="flex flex-col items-center gap-y-2 rounded-md border bg-white/5 p-5"
               >
-                <img
-                  src={card.image}
-                  alt={card.title}
-                  className="h-20 w-20 rounded-full object-cover"
-                />
+                <card.icon className="h-20 w-20 text-gray-700 dark:text-gray-300" />
                 <p className="text-sm dark:text-neutral-200/50">{card.title}</p>
                 <a
                   onClick={handleConfettiClick}
-                  className="rounded-md border border-neutral-700/50 bg-neutral-600 p-2 py-0.5 text-white shadow-xl drop-shadow-lg hover:bg-neutral-500 dark:border-neutral-400/20 dark:bg-gray-500"
+                  className="cursor-pointer rounded-md border border-neutral-700/50 bg-neutral-600 p-2 py-0.5 text-white shadow-xl drop-shadow-lg hover:bg-neutral-500 dark:border-neutral-400/20 dark:bg-gray-500"
                 >
-                  Website
+                  See more
                 </a>
               </motion.div>
             ))}

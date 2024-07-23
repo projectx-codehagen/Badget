@@ -56,7 +56,7 @@ export function BudgetVsCostChart() {
           size="sm"
           className="ml-auto gap-1 text-sm text-muted-foreground"
         >
-          <Link href="/dashboard2/banking">
+          <Link href="/dashboard/banking">
             <span className="flex items-center">
               Banking
               <ArrowUpRight className="ml-1 h-4 w-4" />

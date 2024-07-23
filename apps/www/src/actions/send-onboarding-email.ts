@@ -11,7 +11,7 @@ import { resend } from "@/lib/email";
 async function sendOnboardingEmail(email: string, name: string) {
   try {
     const emailResult = await resend.emails.send({
-      from: "Dingify <onboarding@dingify.io>",
+      from: "Badget <onboarding@dingify.io>",
       to: email,
       subject: "Unlock the Future of Real Estate with Dingify!",
       react: WelcomeEmail({

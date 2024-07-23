@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { updateCategory } from "@/actions/badget/update-category";
+import { updateCategory } from "@/actions/update-category";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { toast } from "sonner";
 

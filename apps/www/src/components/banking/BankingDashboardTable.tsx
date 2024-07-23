@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCategories } from "@/actions/badget/get-categories";
+import { getCategories } from "@/actions/get-categories";
 import { format, isToday, isYesterday } from "date-fns";
 import { toast } from "sonner";
 

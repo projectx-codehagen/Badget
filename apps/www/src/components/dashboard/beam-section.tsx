@@ -16,13 +16,13 @@ export function BeamSection() {
           </h4> */}
 
           <h2 className="text-5xl font-bold tracking-tight text-black dark:text-white sm:text-6xl">
-            Easy to integrate
+            Everything you need
           </h2>
 
           <p className="mt-6 text-xl leading-8 text-black/80 dark:text-white">
-            It only takes a <strong>single</strong> HTTP request to get started.
-            Integrate seamlessly with your our SDK and tools to simplify the
-            process.
+            Badget reimagines <strong>financial tracking</strong> and
+            optimization, offering a new era of precision and ease in personal
+            finance.
           </p>
         </div>
       </div>

@@ -23,18 +23,18 @@ export default function HeroSectionNew2() {
         className="backdrop-filter-[12px] group inline-flex h-7 translate-y-[-1rem] animate-fade-in items-center justify-between gap-1 rounded-full border border-white/5 bg-white/10 px-3 text-xs text-white opacity-0 transition-all ease-in hover:cursor-pointer hover:bg-white/20 dark:text-black"
       >
         <TextShimmer className="inline-flex items-center justify-center">
-          <span>✨ Introducing Dingify</span>{" "}
+          <span>✨ Introducing Badget</span>{" "}
           <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
         </TextShimmer>
       </div>
       <h1 className="translate-y-[-1rem] animate-fade-in text-balance bg-gradient-to-br from-black from-30% to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent opacity-0 [--animation-delay:200ms] dark:from-white dark:to-white/40 sm:text-6xl md:text-7xl lg:text-8xl">
-        Dingify is the new way
-        <br className="hidden md:block" /> to monitor you business.
+        Badget makes
+        <br className="hidden md:block" /> you save money
       </h1>
       <p className="mb-12 translate-y-[-1rem] animate-fade-in text-balance text-lg tracking-tight text-gray-400 opacity-0 [--animation-delay:400ms] md:text-xl">
-        Unlock the power of real-time alerts and monitoring
-        <br className="hidden md:block" /> Monitor potental issues and
-        opportunities
+        Empower your financial management with AI-driven insights
+        <br className="hidden md:block" /> making tracking and optimizing your
+        finances effortless.
       </p>
       <GetStartedButton />
       <div

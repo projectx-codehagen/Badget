@@ -19,24 +19,24 @@ import Marquee from "./marquee";
 
 const files = [
   {
-    name: "First seen",
-    body: "The first time a user was seen in the app. This is the first event that was recorded for the user.",
+    name: "Groceries",
+    body: "Your spending on groceries last month suggests a budget of $400 for this month.",
   },
   {
-    name: "Most used event",
-    body: "The event that the user has triggered the most. This is the event that the user has triggered the most.",
+    name: "Transportation",
+    body: "Considering last month's expenses, a budget of $150 for transportation seems reasonable.",
   },
   {
-    name: "Last Seen",
-    body: "The last time a user was seen in the app. This is the last event that was recorded for the user.",
+    name: "Entertainment",
+    body: "A good starting point for your entertainment budget this month could be $200.",
   },
   {
-    name: "Events over time",
-    body: "The number of events that the user has triggered over time. This is the number of events that the user has triggered over time.",
+    name: "Utilities",
+    body: "Your spending on utilities last month suggests a budget of $100 for this month.",
   },
   {
-    name: "Customer status",
-    body: "The status of the customer. How many time has the customer used your application",
+    name: "Dining Out",
+    body: "Considering last month's expenses, a budget of $250 for dining out seems reasonable.",
   },
 ];
 
@@ -51,8 +51,8 @@ interface Item {
 const features = [
   {
     Icon: MapIcon,
-    name: "See users journey",
-    description: "Understand how users interact with your app.",
+    name: "Predictive Budgeting",
+    description: "Get AI-powered suggestions based on your purchase history.",
     href: "/",
     cta: "Learn more",
     className: "col-span-3 lg:col-span-1",
@@ -87,7 +87,7 @@ const features = [
   {
     Icon: InputIcon,
     name: "Get the information you need",
-    description: "Search through all your events fast",
+    description: "Search through all your transactionsfast",
     href: "/",
     cta: "Learn more",
     className: "col-span-3 lg:col-span-2",
@@ -111,7 +111,7 @@ const features = [
   {
     Icon: Share2Icon,
     name: "Integrations",
-    description: "Supports 100+ integrations and counting.",
+    description: "Supports soon 100+ integrations and counting.",
     href: "/",
     cta: "Learn more",
     className: "col-span-3 lg:col-span-2",

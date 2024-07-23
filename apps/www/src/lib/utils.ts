@@ -110,13 +110,13 @@ export function getGreeting() {
 export async function fetchGithubData() {
   try {
     const githubInfoResponse = await fetch(
-      "https://api.github.com/repos/Codehagen/Dingify",
+      "https://api.github.com/repos/projectx-codehagen/badget",
     );
     if (!githubInfoResponse.ok) throw new Error("Failed to fetch GitHub info");
     const data = await githubInfoResponse.json();
 
     const prsResponse = await fetch(
-      "https://api.github.com/search/issues?q=repo:Codehagen/Dingify+type:pr+is:merged",
+      "https://api.github.com/search/issues?q=repo:projectx-codehagen/badget+type:pr+is:merged",
     );
     if (!prsResponse.ok) throw new Error("Failed to fetch PRs info");
     const totalPR = await prsResponse.json();
@@ -130,46 +130,6 @@ export async function fetchGithubData() {
   } catch (error) {
     console.error("Error fetching GitHub data:", error);
     throw error;
-  }
-}
-
-export async function sendDiscordNotification(webhookUrl, message) {
-  try {
-    const response = await fetch(webhookUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        content: message,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to send Discord notification");
-    }
-  } catch (error) {
-    console.error("Error sending notification to Discord:", error);
-  }
-}
-
-export async function sendSlackNotification(webhookUrl, message) {
-  try {
-    const response = await fetch(webhookUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: message,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to send Slack notification");
-    }
-  } catch (error) {
-    console.error("Error sending notification to Slack:", error);
   }
 }
 

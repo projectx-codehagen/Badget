@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createPopulateTransactions } from "@/actions/badget/create-populate-transactions";
+import { createPopulateTransactions } from "@/actions/create-populate-transactions";
 import { toast } from "sonner";
 
 import { Button } from "@dingify/ui/components/button";

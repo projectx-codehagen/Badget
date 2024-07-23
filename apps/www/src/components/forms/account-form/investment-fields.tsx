@@ -2,8 +2,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { addInvestmentAccount } from "@/actions/badget/create-investment";
-import { fetchCurrencies } from "@/actions/badget/get-currencies";
+import { addInvestmentAccount } from "@/actions/create-investment";
+import { fetchCurrencies } from "@/actions/get-currencies";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";

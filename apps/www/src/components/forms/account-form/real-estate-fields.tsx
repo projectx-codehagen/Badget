@@ -2,8 +2,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { addRealEstate } from "@/actions/badget/create-realestate";
-import { fetchCurrencies } from "@/actions/badget/get-currencies";
+import { addRealEstate } from "@/actions/create-realestate";
+import { fetchCurrencies } from "@/actions/get-currencies";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
