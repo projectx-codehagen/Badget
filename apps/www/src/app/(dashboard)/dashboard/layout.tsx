@@ -27,7 +27,7 @@ export default async function DashboardLayout({
     ...dashboardConfig.sidebarNav,
     ...userBankAccounts.map((account) => ({
       title: account.name,
-      href: `/dashboard/accounts/${account.id}`, // Use ID to create the URL
+      href: `/dashboard/banking/${account.id}`, // Use ID to create the URL
     })),
   ];
 

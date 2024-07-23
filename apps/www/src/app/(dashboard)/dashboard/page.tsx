@@ -14,6 +14,8 @@ import { AddAssetFlow } from "@/components/modals/add-asset-flow";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 import TransactionsToReview from "@/components/tables/TransactionsToReview";
 
+import { AssetVsDebt } from "../../../components/charts/AssetVsDebt";
+
 export const metadata = {
   title: "Dashboard",
   description:
@@ -32,7 +34,7 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
-        <AddAccountSheet currentPath={undefined} />
+        <AddAccountSheet currentPath="/dashboard" />
       </DashboardHeader>
       <div>
         {transactions.length === 0 ? (
@@ -40,22 +42,20 @@ export default async function DashboardPage() {
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="post" />
             <EmptyPlaceholder.Title>
-              You have no transactions
+              You have no accounts
             </EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              Let's start with importing some transactions
+              Let's start with adding some accounts
             </EmptyPlaceholder.Description>
-            <AddButton triggerLabel="Add Asset">
-              <AddAssetFlow />
-            </AddButton>
+            <AddAccountSheet currentPath="/dashboard" />
           </EmptyPlaceholder>
         ) : (
           // Render TransactionsTable if there are transactions
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <BudgetVsCostChart />
-            <BudgetVsCostChart />
-            <div className="col-span-1 md:col-span-2">
-              <TransactionsToReview transactions={reviewTransactions} />
+            <AssetVsDebt />
+
+            <div className="col-span-1 lg:col-span-2">
               <TransactionsToReview transactions={reviewTransactions} />
             </div>
           </div>

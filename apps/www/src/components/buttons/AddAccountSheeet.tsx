@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { createNewAccount } from "@/actions/create-new-account";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -51,6 +52,7 @@ const createAccountSchema = z.object({
 type CreateAccount = z.infer<typeof createAccountSchema>;
 
 export function AddAccountSheet({ currentPath }) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -75,6 +77,7 @@ export function AddAccountSheet({ currentPath }) {
       toast.success(`Account "${data.name}" is added.`);
       form.reset();
       setIsOpen(false); // Close the sheet on success
+      router.push(`/dashboard/banking/${result.account?.id}`);
     } catch (error) {
       toast.error(error.message);
       console.error(error);

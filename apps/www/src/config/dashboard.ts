@@ -27,26 +27,31 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/categories",
       title: "Categories",
       icon: "piechart",
+      disabled: true,
     },
     {
       href: "/investment",
       title: "Investments",
       icon: "BarChart",
+      disabled: true,
     },
     {
       href: "/assets",
       title: "Assets",
       icon: "Building",
+      disabled: true,
     },
     {
       href: "/savings",
       title: "Savings",
       icon: "Sprout",
+      disabled: true,
     },
     {
       href: "/liabilities",
       title: "Liabilities",
       icon: "CreditCard",
+      disabled: true,
     },
   ],
 };
