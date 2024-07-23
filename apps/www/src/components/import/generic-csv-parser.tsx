@@ -1,14 +1,18 @@
 "use client";
 
-// theme CSS for React CSV Importer
 import "react-csv-importer/dist/index.css";
 
 import React, { use, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { importTransactions } from "@/actions/import-transactions"; // Import the server action
 import { Importer, ImporterField } from "react-csv-importer";
 import { toast } from "sonner";
 
-export default function CSVParser() {
+export default function CSVParser({
+  bankAccountId,
+}: {
+  bankAccountId: string;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -22,13 +26,27 @@ export default function CSVParser() {
     [searchParams],
   );
 
+  const handleData = async (rows) => {
+    const formattedRows = rows.map((row) => ({
+      date: row.date,
+      description: row.description,
+      amount: parseFloat(row.amount),
+    }));
+    const result = await importTransactions(bankAccountId, formattedRows);
+    if (result.success) {
+      toast.success("Transactions imported successfully!");
+      router.push(
+        "/dashboard/banking/" + "?" + createQueryString("step", "done"),
+      );
+    } else {
+      toast.error("Failed to import transactions: " + result.error);
+    }
+  };
+
   return (
     <div>
       <Importer
-        dataHandler={async (rows) => {
-          // mock timeout to simulate processing
-          await new Promise((resolve) => setTimeout(resolve, 500));
-        }}
+        dataHandler={handleData}
         chunkSize={10000}
         defaultNoHeader={false}
         restartable={true}
@@ -36,7 +54,6 @@ export default function CSVParser() {
           console.log("starting import of file", file, "with fields", fields);
         }}
         onComplete={({ file, fields }) => {
-          // optional, invoked right after import is done (but user did not dismiss/reset the widget yet)
           console.log("finished import of file", file, "with fields", fields);
           toast.success("File imported with success!");
         }}

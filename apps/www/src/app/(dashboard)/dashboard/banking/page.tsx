@@ -32,7 +32,6 @@ export default async function BankingPage() {
     <DashboardShell>
       <DashboardHeader heading="Banking" text="Overview off all your accounts ">
         <AddAccountSheet currentPath="/banking" />
-        <CSVUploader />
       </DashboardHeader>
       <div>
         {bankAccounts.length === 0 ? (

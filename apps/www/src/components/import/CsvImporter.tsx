@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -16,8 +17,13 @@ import { cn } from "@/lib/utils";
 
 import CSVParser from "./generic-csv-parser";
 
-export function CSVUploader() {
+export function CSVUploader({ bankAccountId }: { bankAccountId: string }) {
   const [open, setOpen] = React.useState(false);
+
+  const handleTestFileImport = () => {
+    // Logic for importing a test file can be placed here
+    console.log("Test file import initiated");
+  };
 
   return (
     <Dialog>
@@ -31,16 +37,25 @@ export function CSVUploader() {
             Export transactions data as a file from bank's website.
           </DialogDescription>
         </DialogHeader>
-        <UploadForm />
+        <UploadForm bankAccountId={bankAccountId} />
+        <DialogFooter>
+          <Button onClick={handleTestFileImport}>Import Test File</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-function UploadForm({ className }: { className?: string }) {
+function UploadForm({
+  className,
+  bankAccountId,
+}: {
+  className?: string;
+  bankAccountId: string;
+}) {
   return (
     <div className={cn("items-center py-4", className)}>
-      <CSVParser />
+      <CSVParser bankAccountId={bankAccountId} />
     </div>
   );
 }

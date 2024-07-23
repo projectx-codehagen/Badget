@@ -6,6 +6,7 @@ import BankingDashboardDetails from "@/components/banking/BankingDashboardDetail
 import { AddTransactionsButton } from "@/components/buttons/AddTransactionsButton";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
+import { CSVUploader } from "@/components/import/CsvImporter";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
 export default async function BankAccountPage({
@@ -30,7 +31,6 @@ export default async function BankAccountPage({
     const bankAccountDetails = await getBankAccountDetails(bankAccountId);
     const transactions = await getBankAccountTransactions(bankAccountId);
     console.log(transactions);
-    console.log(bankAccountDetails);
 
     if (!bankAccountDetails) {
       return (
@@ -48,7 +48,9 @@ export default async function BankAccountPage({
         <DashboardHeader
           heading={bankAccountDetails.name}
           text="Here are your recent transactions"
-        />
+        >
+          <CSVUploader bankAccountId={bankAccountId} />
+        </DashboardHeader>
         <div>
           {transactions.length === 0 ? (
             <EmptyPlaceholder>
