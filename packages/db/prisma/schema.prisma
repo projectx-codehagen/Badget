@@ -184,14 +184,17 @@ model Category {
 }
 
 model ConnectorConfig {
-  id          String       @id @default(cuid())
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @default(now())
-  orgId       String
-  secret      Json?
-  env         ConnectorEnv
-  connectorId String
-  connector   Connector    @relation(fields: [connectorId], references: [id], onDelete: Cascade)
+  id                String       @id @default(cuid())
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @default(now())
+  orgId             String
+  secret            Json?
+  env               ConnectorEnv
+  connectorId       String
+  connector         Connector    @relation(fields: [connectorId], references: [id], onDelete: Cascade)
+  accessToken       String?
+  refreshToken      String?
+  accessTokenExpiry DateTime?
 }
 
 model Connector {

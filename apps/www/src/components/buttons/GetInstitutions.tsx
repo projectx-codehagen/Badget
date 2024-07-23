@@ -3,9 +3,24 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getBanks } from "@/actions/get-institutions";
+import { createEndUserAgreement } from "@/actions/gocardless/create-end-user-agreement";
+import { createRequisition } from "@/actions/gocardless/create-requisition";
+import { listAccounts } from "@/actions/gocardless/list-accounts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
 
 import { Button } from "@dingify/ui/components/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@dingify/ui/components/command";
 import {
   Dialog,
   DialogContent,
@@ -15,163 +30,331 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@dingify/ui/components/dialog";
-import { Input } from "@dingify/ui/components/input";
-import { Label } from "@dingify/ui/components/label";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@dingify/ui/components/tooltip";
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@dingify/ui/components/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@dingify/ui/components/popover";
 
-export function GetInstitutionsButton() {
-  const [banks, setBanks] = useState(null);
+import { cn } from "@/lib/utils";
+
+const languages = [
+  { label: "English", value: "en" },
+  { label: "Norwegian", value: "no" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" },
+  { label: "Spanish", value: "es" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Chinese", value: "zh" },
+] as const;
+
+const FormSchema = z.object({
+  language: z.string({
+    required_error: "Please select a language.",
+  }),
+  bank: z.string().optional(),
+  maxHistoricalDays: z.number().optional(),
+  accessValidForDays: z.number().optional(),
+  accessScope: z.array(z.string()).optional(),
+});
+
+export function GetInstitutionsButton({ connectorConfigId }) {
+  const [banks, setBanks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
 
-  const fetchBanks = async () => {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
+
+  const fetchBanks = async (language: string) => {
     setIsLoading(true);
     setError(null);
     try {
-      const banksData = await getBanks("NO"); // Assuming 'NO' is the country code for Norway
+      console.log("Fetching banks for language:", language);
+      const banksData = await getBanks(language, connectorConfigId); // Pass the selected language
+      console.log("Fetched banks data:", banksData);
       setBanks(banksData);
+      toast.success("Banks fetched successfully");
     } catch (err) {
+      console.error("Error fetching banks:", err);
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    console.log("Form data submitted:", data);
+    await fetchBanks(data.language);
+    if (data.bank) {
+      try {
+        const agreement = await createEndUserAgreement(
+          data.bank,
+          data.maxHistoricalDays,
+          data.accessValidForDays,
+          data.accessScope,
+        );
+        toast.success("End user agreement created successfully");
+        console.log("Agreement:", agreement);
+
+        const requisition = await createRequisition(
+          data.bank,
+          "http://localhost:3000/dashboard/banking", // Replace with your actual redirect URL
+          connectorConfigId,
+          "124151", // Replace with your actual reference
+          agreement.id,
+          data.language,
+        );
+        toast.success("Requisition created successfully");
+        console.log("Requisition:", requisition);
+
+        // Redirect the user to the GoCardless link
+        window.location.href = requisition.link;
+      } catch (err) {
+        console.error("Error creating requisition:", err);
+        setError(err.message);
+      }
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default" disabled={isLoading} onClick={fetchBanks}>
+        <Button variant="default" disabled={isLoading}>
           {isLoading ? "Loading..." : "Fetch Banks"}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <form className="space-y-4">
-          <DialogHeader>
-            <DialogTitle>Fetch Institutions</DialogTitle>
-            <DialogDescription>
-              Fetch institutions data for a specific country.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="institutions">Institutions</Label>
-              <div className="relative">
-                <Input
-                  id="institutions"
-                  readOnly
-                  type="text"
-                  value={JSON.stringify(banks)}
-                />
-              </div>
-            </div>
-          </div>
-          <DialogFooter>
-            {error && <p>Error: {error}</p>}
-            {banks && (
-              <ul>
-                {banks.map((bank) => (
-                  <li key={bank.id}>
-                    {bank.name} - {bank.bic}
-                  </li>
-                ))}
-              </ul>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <DialogHeader>
+              <DialogTitle>Fetch Institutions</DialogTitle>
+              <DialogDescription>
+                Fetch institutions data for a specific country.
+              </DialogDescription>
+            </DialogHeader>
+            <FormField
+              control={form.control}
+              name="language"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Language</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-[200px] justify-between",
+                            !field.value && "text-muted-foreground",
+                          )}
+                        >
+                          {field.value
+                            ? languages.find(
+                                (language) => language.value === field.value,
+                              )?.label
+                            : "Select language"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Search language..." />
+                        <CommandList>
+                          <CommandEmpty>No language found.</CommandEmpty>
+                          <CommandGroup>
+                            {languages.map((language) => (
+                              <CommandItem
+                                value={language.label}
+                                key={language.value}
+                                onSelect={() => {
+                                  form.setValue("language", language.value);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    language.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0",
+                                  )}
+                                />
+                                {language.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    This is the language that will be used in the dashboard.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {banks.length > 0 && (
+              <FormField
+                control={form.control}
+                name="bank"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Bank</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-[200px] justify-between",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value
+                              ? banks.find((bank) => bank.id === field.value)
+                                  ?.name
+                              : "Select bank"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput placeholder="Search bank..." />
+                          <CommandList>
+                            <CommandEmpty>No bank found.</CommandEmpty>
+                            <CommandGroup>
+                              {banks.map((bank) => (
+                                <CommandItem
+                                  value={bank.name}
+                                  key={bank.id}
+                                  onSelect={() => {
+                                    form.setValue("bank", bank.id);
+                                  }}
+                                >
+                                  <img
+                                    src={bank.logo}
+                                    alt={bank.name}
+                                    className="mr-2 h-4 w-4"
+                                  />
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      bank.id === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                  {bank.name}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormDescription>
+                      Select a bank from the fetched list.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             )}
-          </DialogFooter>
-        </form>
+            <FormField
+              control={form.control}
+              name="maxHistoricalDays"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Max Historical Days</FormLabel>
+                  <FormControl>
+                    <input
+                      type="number"
+                      {...field}
+                      className="input"
+                      placeholder="e.g., 180"
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    The length of the transaction history to be retrieved.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="accessValidForDays"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Access Valid For Days</FormLabel>
+                  <FormControl>
+                    <input
+                      type="number"
+                      {...field}
+                      className="input"
+                      placeholder="e.g., 30"
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    The length of days while the access to account is valid.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="accessScope"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Access Scope</FormLabel>
+                  <FormControl>
+                    <select
+                      multiple
+                      {...field}
+                      className="input"
+                      placeholder="Select access scope"
+                    >
+                      <option value="balances">Balances</option>
+                      <option value="details">Details</option>
+                      <option value="transactions">Transactions</option>
+                    </select>
+                  </FormControl>
+                  <FormDescription>
+                    The scope of information to be accessed.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Loading..." : "Fetch Banks"}
+              </Button>
+            </DialogFooter>
+            {error && <p>Error: {error}</p>}
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
-  );
-}
-
-function CopyIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-    </svg>
-  );
-}
-
-function CheckIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m4.5 12.75 6 6 9-13.5"
-      />
-    </svg>
-  );
-}
-
-function EyeSlashIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="2"
-      stroke="currentColor"
-      width="24"
-      height="24"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
-      />
-    </svg>
-  );
-}
-
-function EyeIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="2"
-      stroke="currentColor"
-      width="24"
-      height="24"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-      />
-    </svg>
   );
 }
