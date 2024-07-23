@@ -23,46 +23,12 @@ export async function createPopulateTransactions(bankAccountId: string) {
     },
   });
 
-  // Categories to be created
-  const categories = [
-    { name: "Car", icon: "🚗" },
-    { name: "Transportation", icon: "🚌" },
-    { name: "Clothing", icon: "👗" },
-    { name: "Entertainment", icon: "🎬" },
-    { name: "Groceries", icon: "🥑" },
-    { name: "Other", icon: "🔧" },
-    { name: "Rent", icon: "🏠" },
-    { name: "Restaurants", icon: "🍽️" },
-    { name: "Shops", icon: "🛍️" },
-    { name: "Subscriptions", icon: "📺" },
-    { name: "Utilities", icon: "💡" },
-  ];
-
-  // Populate categories with userId
-  await Promise.all(
-    categories.map(async (category) => {
-      await prisma.category.upsert({
-        where: {
-          name_userId: {
-            name: category.name,
-            userId: user.id,
-          },
-        },
-        update: {},
-        create: {
-          name: category.name,
-          icon: category.icon,
-          userId: user.id,
-        },
-      });
-    }),
-  );
-
-  // Fetch category IDs
-  const createdCategories = await prisma.category.findMany({
+  // Fetch existing categories
+  const categories = await prisma.category.findMany({
     where: { userId: user.id },
   });
-  const categoryMap = createdCategories.reduce((acc, category) => {
+
+  const categoryMap = categories.reduce((acc, category) => {
     acc[category.name] = category.id;
     return acc;
   }, {});
@@ -70,7 +36,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
   // Sample transactions with various realistic descriptions, dates, and categories
   const transactions = [
     {
-      amount: 45.99,
+      amount: 46,
       date: new Date(),
       description: "Groceries at Walmart",
       categoryId: categoryMap["Groceries"],
@@ -79,7 +45,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       review: true, // Mark as reviewed
     },
     {
-      amount: 16.75,
+      amount: 17,
       date: subDays(new Date(), 1), // Yesterday
       description: "Lunch at Chipotle",
       categoryId: categoryMap["Restaurants"],
@@ -88,7 +54,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       review: true, // Mark as reviewed
     },
     {
-      amount: 9.99,
+      amount: 10,
       date: subDays(new Date(), 2),
       description: "Netflix Subscription",
       categoryId: categoryMap["Subscriptions"],
@@ -96,7 +62,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       currencyIso: currencyIso,
     },
     {
-      amount: 55.2,
+      amount: 55,
       date: subDays(new Date(), 3),
       description: "Gas at Chevron",
       categoryId: categoryMap["Car"],
@@ -104,7 +70,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       currencyIso: currencyIso,
     },
     {
-      amount: 120.0,
+      amount: 120,
       date: subDays(new Date(), 4),
       description: "New Shoes from Nike",
       categoryId: categoryMap["Shops"],
@@ -112,7 +78,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       currencyIso: currencyIso,
     },
     {
-      amount: 2000.0,
+      amount: 2000,
       date: subDays(new Date(), 5),
       description: "Monthly Salary",
       categoryId: categoryMap["Income"],
@@ -120,7 +86,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       currencyIso: currencyIso,
     },
     {
-      amount: 35.5,
+      amount: 36,
       date: subDays(new Date(), 6),
       description: "Dinner at Olive Garden",
       categoryId: categoryMap["Restaurants"],
@@ -128,7 +94,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       currencyIso: currencyIso,
     },
     {
-      amount: 15.0,
+      amount: 15,
       date: subDays(new Date(), 7),
       description: "Movie Ticket",
       categoryId: categoryMap["Entertainment"],
@@ -136,7 +102,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       currencyIso: currencyIso,
     },
     {
-      amount: 89.99,
+      amount: 90,
       date: subDays(new Date(), 8),
       description: "Electricity Bill",
       categoryId: categoryMap["Utilities"],
@@ -144,7 +110,7 @@ export async function createPopulateTransactions(bankAccountId: string) {
       currencyIso: currencyIso,
     },
     {
-      amount: 50.0,
+      amount: 50,
       date: subDays(new Date(), 9),
       description: "Gym Membership",
       categoryId: categoryMap["Fitness"],

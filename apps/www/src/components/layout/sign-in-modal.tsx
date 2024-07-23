@@ -23,7 +23,7 @@ export const SignInModal = () => {
           </a>
           <h3 className="font-urban text-2xl font-bold">Sign In</h3>
           <p className="text-sm text-gray-500">
-            Join our community and unlock the full potential of Dingify. Sign in
+            Join our community and unlock the full potential of Badget. Sign in
             effortlessly with Google to start managing your alerts.
           </p>
         </div>

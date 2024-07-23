@@ -10,6 +10,7 @@ import { AreaChartBanking } from "@/components/charts/AreaChart";
 import { OverallUseageChart } from "@/components/charts/OverallUseageChart";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
+import { CSVUploader } from "@/components/import/CsvImporter";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
 export const metadata = {

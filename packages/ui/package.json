@@ -57,7 +57,8 @@
     "react-resizable-panels": "^2.0.21",
     "recharts": "^2.12.7",
     "sonner": "^1.4.41",
-    "tailwind-merge": "^2.0.0"
+    "tailwind-merge": "^2.0.0",
+    "vaul": "^0.7.7"
   },
   "devDependencies": {
     "@dingify/eslint-config": "workspace:*",
