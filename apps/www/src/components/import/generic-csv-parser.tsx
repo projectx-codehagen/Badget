@@ -51,9 +51,7 @@ export default function CSVParser({
           console.log("finished import of file", file, "with fields", fields);
         }}
         onClose={() => {
-          router.push(
-            "/dashboard/banking/" + "?" + createQueryString("step", "done"),
-          );
+          router.push(`/dashboard/banking/${bankAccountId}`);
         }}
       >
         <ImporterField name="date" label="date" />

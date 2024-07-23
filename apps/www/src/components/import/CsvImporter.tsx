@@ -31,8 +31,6 @@ export function CSVUploader({ bankAccountId }: { bankAccountId: string }) {
     link.click();
     // Remove link from body
     document.body.removeChild(link);
-
-    console.log("Test file import initiated");
   };
 
   return (

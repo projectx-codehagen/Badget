@@ -158,7 +158,7 @@ model Transaction {
   assetId         String?
   currencyIso     String
   categoryId      String?
-  amount          Int
+  amount          Decimal
   date            DateTime
   description     String
   originalPayload Json?

@@ -39,7 +39,7 @@ All seamlessly integrated with the Badget to accelerate the development.
 
 ## Directory Structure
 
-Dingify is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
+Badget is a monorepo managed by [Turborepo](https://turbo.build/repo). The monorepo is split between `apps` and `packages` directories.
 
     .
     ├── apps                         # Its app workspace which contains

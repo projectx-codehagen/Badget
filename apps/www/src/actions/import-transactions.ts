@@ -21,7 +21,41 @@ export async function importTransactions(
 
   const currencyIso = "USD"; // Set the currency ISO code according to your requirements
 
-  // Fetch existing categories for the user
+  // Ensure default categories are created
+  const defaultCategories = [
+    { name: "Car", icon: "🚗" },
+    { name: "Transportation", icon: "🚌" },
+    { name: "Clothing", icon: "👗" },
+    { name: "Entertainment", icon: "🎬" },
+    { name: "Groceries", icon: "🥑" },
+    { name: "Other", icon: "🔧" },
+    { name: "Rent", icon: "🏠" },
+    { name: "Restaurants", icon: "🍽️" },
+    { name: "Shops", icon: "🛍️" },
+    { name: "Subscriptions", icon: "📺" },
+    { name: "Utilities", icon: "💡" },
+  ];
+
+  await Promise.all(
+    defaultCategories.map(async (category) => {
+      await prisma.category.upsert({
+        where: {
+          name_userId: {
+            name: category.name,
+            userId: user.id,
+          },
+        },
+        update: {},
+        create: {
+          name: category.name,
+          icon: category.icon,
+          userId: user.id,
+        },
+      });
+    }),
+  );
+
+  // Fetch or create categories
   const categories = await prisma.category.findMany({
     where: { userId: user.id },
   });
@@ -31,15 +65,12 @@ export async function importTransactions(
     return acc;
   }, {});
 
-  // Ensure the "Other" category is available
-  const otherCategoryId = categoryMap["Other"];
-
   // Prepare transactions for insertion
   const transactionsData = transactions.map((transaction) => ({
     amount: transaction.amount,
     date: new Date(transaction.date),
     description: transaction.description,
-    categoryId: categoryMap[transaction.category] || otherCategoryId,
+    categoryId: categoryMap[transaction.category] || categoryMap["Other"],
     accountId: bankAccountId,
     currencyIso: currencyIso,
   }));
