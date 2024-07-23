@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/session";
 import { AddAccountSheet } from "@/components/buttons/AddAccountSheeet";
 import { AddApiKeyButton } from "@/components/buttons/AddApiKeyButton";
 import { AddButton } from "@/components/buttons/AddButton";
+import { BudgetVsCostChart } from "@/components/charts/BudgetVsCostChart";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { AddAssetFlow } from "@/components/modals/add-asset-flow";
@@ -31,9 +32,6 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
-        <AddButton triggerLabel="Add Asset">
-          <AddAssetFlow />
-        </AddButton>
         <AddAccountSheet currentPath={undefined} />
       </DashboardHeader>
       <div>
@@ -53,7 +51,14 @@ export default async function DashboardPage() {
           </EmptyPlaceholder>
         ) : (
           // Render TransactionsTable if there are transactions
-          <TransactionsToReview transactions={reviewTransactions} />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <BudgetVsCostChart />
+            <BudgetVsCostChart />
+            <div className="col-span-1 md:col-span-2">
+              <TransactionsToReview transactions={reviewTransactions} />
+              <TransactionsToReview transactions={reviewTransactions} />
+            </div>
+          </div>
         )}
       </div>
     </DashboardShell>

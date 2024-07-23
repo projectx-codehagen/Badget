@@ -24,6 +24,11 @@ export const dashboardConfig: DashboardConfig = {
       icon: "Layers",
     },
     {
+      href: "/dashboard2/categories",
+      title: "Categories",
+      icon: "piechart",
+    },
+    {
       href: "/investment",
       title: "Investments",
       icon: "BarChart",

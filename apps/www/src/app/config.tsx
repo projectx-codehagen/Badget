@@ -7,6 +7,7 @@ import {
   HelpCircle,
   Layers,
   LayoutDashboard,
+  PieChart,
   Settings,
   Sparkle,
   Sprout,
@@ -78,6 +79,11 @@ export const sideNavItems: GroupedNavItems[] = [
         href: "/banking",
         title: "Banking",
         icon: Layers,
+      },
+      {
+        href: "/categories",
+        title: "categories",
+        icon: PieChart,
       },
       {
         href: "/investment",

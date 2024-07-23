@@ -125,7 +125,7 @@ model Balance {
   accountId       String?
   assetId         String?
   currencyIso     String
-  amount          Decimal
+  amount          Int?
   date            DateTime
   type            BalanceType  @default(AVAILABLE)
   originalPayload Json?
