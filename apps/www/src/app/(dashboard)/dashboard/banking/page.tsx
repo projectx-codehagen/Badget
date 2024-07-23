@@ -10,6 +10,7 @@ import { AreaChartBanking } from "@/components/charts/AreaChart";
 import { OverallUseageChart } from "@/components/charts/OverallUseageChart";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
+import { CSVUploader } from "@/components/import/CsvImporter";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
 export const metadata = {
@@ -31,6 +32,7 @@ export default async function BankingPage() {
     <DashboardShell>
       <DashboardHeader heading="Banking" text="Overview off all your accounts ">
         <AddAccountSheet currentPath="/banking" />
+        <CSVUploader />
       </DashboardHeader>
       <div>
         {bankAccounts.length === 0 ? (
