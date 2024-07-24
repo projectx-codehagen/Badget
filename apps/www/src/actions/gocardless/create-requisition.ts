@@ -24,6 +24,7 @@ export async function createRequisition(
   userLanguage?: string,
 ) {
   const accessToken = await getAccessToken();
+  console.log("Access token:", accessToken);
 
   const body = {
     institution_id: institutionId,

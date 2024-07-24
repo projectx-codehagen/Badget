@@ -68,14 +68,11 @@ export async function getBanks(countryCode: string) {
       },
     );
 
-    console.log("Banks response status:", banksResponse.status);
-
     if (!banksResponse.ok) {
       throw new Error("Failed to fetch banks");
     }
 
     const banksData = await banksResponse.json();
-    console.log("Banks response data:", banksData);
     return banksData;
   } catch (error) {
     console.error("Error fetching banks:", error);

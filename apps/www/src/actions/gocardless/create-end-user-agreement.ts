@@ -6,8 +6,8 @@ import { getAccessToken } from "./accsessToken";
 
 export async function createEndUserAgreement(
   institutionId: string,
-  maxHistoricalDays: number = 90,
-  accessValidForDays: number = 90,
+  maxHistoricalDays = 90,
+  accessValidForDays = 90,
   accessScope: string[] = ["balances", "details", "transactions"],
 ) {
   const accessToken = await getAccessToken();

@@ -7,6 +7,7 @@ import { createEndUserAgreement } from "@/actions/gocardless/create-end-user-agr
 import { createRequisition } from "@/actions/gocardless/create-requisition";
 import { getTransactions } from "@/actions/gocardless/get-transactions";
 import { listAccounts } from "@/actions/gocardless/list-accounts";
+import { initializeTokens } from "@/sdk/gocardless";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -81,13 +82,19 @@ export function GetInstitutionsButton({ connectorConfigId }) {
     resolver: zodResolver(FormSchema),
   });
 
+  useEffect(() => {
+    initializeTokens().catch((error) => {
+      console.error("Failed to initialize tokens:", error);
+      setError(error.message);
+    });
+  }, []);
+
   const fetchBanks = async (language: string) => {
     setIsLoading(true);
     setError(null);
     try {
       console.log("Fetching banks for language:", language);
       const banksData = await getBanks(language); // Pass the selected language
-      console.log("Fetched banks data:", banksData);
       setBanks(banksData);
       toast.success("Banks fetched successfully");
     } catch (err) {
@@ -133,6 +140,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
       }
     }
   };
+
   // Function to list accounts after redirection
   const listUserAccounts = async (requisitionId: string) => {
     try {
@@ -173,9 +181,9 @@ export function GetInstitutionsButton({ connectorConfigId }) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <DialogHeader>
-              <DialogTitle>Fetch Institutions</DialogTitle>
+              <DialogTitle>Import transactions</DialogTitle>
               <DialogDescription>
-                Fetch institutions data for a specific country.
+                Import your transactions from your bank.
               </DialogDescription>
             </DialogHeader>
             <FormField
@@ -183,7 +191,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
               name="language"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Language</FormLabel>
+                  <FormLabel>Land</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -191,7 +199,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                           variant="outline"
                           role="combobox"
                           className={cn(
-                            "w-[200px] justify-between",
+                            " justify-between",
                             !field.value && "text-muted-foreground",
                           )}
                         >
@@ -199,16 +207,16 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                             ? languages.find(
                                 (language) => language.value === field.value,
                               )?.label
-                            : "Select language"}
+                            : "Select land"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
+                    <PopoverContent className=" p-0">
                       <Command>
-                        <CommandInput placeholder="Search language..." />
+                        <CommandInput placeholder="Search land..." />
                         <CommandList>
-                          <CommandEmpty>No language found.</CommandEmpty>
+                          <CommandEmpty>No land found.</CommandEmpty>
                           <CommandGroup>
                             {languages.map((language) => (
                               <CommandItem
@@ -235,7 +243,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                     </PopoverContent>
                   </Popover>
                   <FormDescription>
-                    This is the language that will be used in the dashboard.
+                    This is the land that will be used in the dashboard.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -255,7 +263,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "w-[200px] justify-between",
+                              "justify-between",
                               !field.value && "text-muted-foreground",
                             )}
                           >
@@ -267,7 +275,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
+                      <PopoverContent className="p-0">
                         <Command>
                           <CommandInput placeholder="Search bank..." />
                           <CommandList>
@@ -310,73 +318,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                 )}
               />
             )}
-            <FormField
-              control={form.control}
-              name="maxHistoricalDays"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Max Historical Days</FormLabel>
-                  <FormControl>
-                    <input
-                      type="number"
-                      {...field}
-                      className="input"
-                      placeholder="e.g., 180"
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    The length of the transaction history to be retrieved.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="accessValidForDays"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Access Valid For Days</FormLabel>
-                  <FormControl>
-                    <input
-                      type="number"
-                      {...field}
-                      className="input"
-                      placeholder="e.g., 30"
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    The length of days while the access to account is valid.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="accessScope"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Access Scope</FormLabel>
-                  <FormControl>
-                    <select
-                      multiple
-                      {...field}
-                      className="input"
-                      placeholder="Select access scope"
-                    >
-                      <option value="balances">Balances</option>
-                      <option value="details">Details</option>
-                      <option value="transactions">Transactions</option>
-                    </select>
-                  </FormControl>
-                  <FormDescription>
-                    The scope of information to be accessed.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <DialogFooter>
               <Button type="submit" disabled={isLoading}>
                 {isLoading ? "Loading..." : "Fetch Banks"}
