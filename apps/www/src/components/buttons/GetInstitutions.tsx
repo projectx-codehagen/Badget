@@ -312,13 +312,6 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                   )}
                 />
               )}
-              {/* {showAccounts && accounts.length > 0 && ( */}
-              {/* <div className="mt-8">
-                <h2 className="mb-4 text-2xl font-bold">Your Accounts</h2>
-                <AccountsToSelectTable data={accounts} />
-              </div> */}
-              {/* )} */}
-
               <DialogFooter>
                 <Button type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Fetch Banks"}

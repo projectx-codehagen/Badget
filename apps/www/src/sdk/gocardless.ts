@@ -40,9 +40,13 @@ async function getAccessToken(): Promise<string> {
 }
 
 async function getAccountDetails(accountId: string) {
+  if (!accountId) {
+    throw new Error("Account ID is undefined");
+  }
+
   await initializeTokens();
   const token = await getAccessToken();
-  const response = await apiClient.get(`/accounts/${accountId}/`, {
+  const response = await apiClient.get(`/accounts/${accountId}/details`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

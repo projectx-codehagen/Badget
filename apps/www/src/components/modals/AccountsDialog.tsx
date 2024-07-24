@@ -1,22 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { importBankAccounts } from "@/actions/gocardless/create-imported-transactions";
+import {
+  getAccountBalances,
+  getAccountDetails,
+  listAccounts,
+} from "@/sdk/gocardless";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
+import { Button } from "@dingify/ui/components/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@dingify/ui/components/dialog";
-import { Button } from "@dingify/ui/components/button";
 
 import type { Account } from "../tables/AccountsToSelectTable";
+
 import { AccountsToSelectTable } from "../tables/AccountsToSelectTable";
-import { listAccounts, getAccountDetails, getAccountBalances } from "@/sdk/gocardless";
 
 export function AccountsDialog() {
   const [open, setOpen] = useState(false);
@@ -40,20 +46,28 @@ export function AccountsDialog() {
       console.log("Fetching accounts for requisition ID:", requisitionId);
       const requisitionData = await listAccounts(requisitionId);
       console.log("Fetched requisition data:", requisitionData);
-      
+
       if (requisitionData.accounts && Array.isArray(requisitionData.accounts)) {
         const accountsWithDetails = await Promise.all(
           requisitionData.accounts.map(async (accountId) => {
             const details = await getAccountDetails(accountId);
             const balances = await getAccountBalances(accountId);
             return { ...details, balances: balances.balances };
-          })
+          }),
         );
-        console.log("Fetched account details with balances:", accountsWithDetails);
+        console.log(
+          "Fetched account details with balances:",
+          accountsWithDetails,
+        );
         setAccounts(accountsWithDetails);
-        toast.success(`${accountsWithDetails.length} accounts fetched successfully`);
+        toast.success(
+          `${accountsWithDetails.length} accounts fetched successfully`,
+        );
       } else {
-        console.error("Unexpected accounts data structure:", requisitionData.accounts);
+        console.error(
+          "Unexpected accounts data structure:",
+          requisitionData.accounts,
+        );
         toast.error("Unexpected data structure received for accounts");
       }
     } catch (error) {
@@ -64,11 +78,27 @@ export function AccountsDialog() {
     }
   };
 
-  const handleImportAccounts = () => {
-    // Implement the logic to import selected accounts
-    console.log("Importing accounts:", selectedAccounts);
-    toast.success(`Importing ${selectedAccounts.length} accounts`);
-    setOpen(false);
+  const handleImportAccounts = async () => {
+    const importPromise = importBankAccounts(selectedAccounts);
+
+    toast.promise(importPromise, {
+      loading: "Importing accounts...",
+      success: (results: { success: boolean }[]) => {
+        const successCount = results.filter((r) => r.success).length;
+        setOpen(false);
+        return `Successfully imported ${successCount} out of ${selectedAccounts.length} accounts`;
+      },
+      error: (error) => {
+        console.error("Error importing accounts:", error);
+        return "Failed to import accounts. Please try again.";
+      },
+    });
+
+    try {
+      await importPromise;
+    } catch (error) {
+      toast.error("Failed to import accounts. Please try again.");
+    }
   };
 
   return (
@@ -83,11 +113,13 @@ export function AccountsDialog() {
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-8">
             <Loader2 className="h-8 w-8 animate-spin" />
-            <p className="mt-2 text-sm text-gray-500">Fetching your accounts...</p>
+            <p className="mt-2 text-sm text-gray-500">
+              Fetching your accounts...
+            </p>
           </div>
         ) : accounts.length > 0 ? (
-          <AccountsToSelectTable 
-            data={accounts} 
+          <AccountsToSelectTable
+            data={accounts}
             onSelectionChange={setSelectedAccounts}
           />
         ) : (
@@ -104,7 +136,7 @@ export function AccountsDialog() {
                 Please wait
               </>
             ) : (
-              `Import ${selectedAccounts.length} account${selectedAccounts.length !== 1 ? 's' : ''}`
+              `Import ${selectedAccounts.length} account${selectedAccounts.length !== 1 ? "s" : ""}`
             )}
           </Button>
         </DialogFooter>

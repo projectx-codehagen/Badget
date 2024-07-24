@@ -105,6 +105,7 @@ model BankAccount {
   orgId           String?
   userId          String?
   name            String
+  iban            String?
   originalPayload Json?
   initialAmount   Int?          @default(0)
   Balance         Balance[]

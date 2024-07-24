@@ -22,16 +22,20 @@ import {
 } from "@dingify/ui/components/table";
 
 export interface Account {
-  id: string;
-  iban: string;
-  owner_name: string;
+  account: {
+    resourceId: string;
+    iban: string;
+    currency: string;
+    ownerName: string;
+    name: string;
+    bic: string;
+  };
   balances: {
     balanceAmount: {
       amount: string;
       currency: string;
     };
     balanceType: string;
-    referenceDate: string;
   }[];
 }
 
@@ -64,34 +68,34 @@ export const columns: ColumnDef<Account>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "iban",
+    accessorFn: (row) => row.account.iban,
     header: "IBAN",
-    cell: ({ row }) => <div>{row.getValue("iban")}</div>,
+    cell: ({ getValue }) => <div>{getValue() as string}</div>,
   },
   {
-    accessorKey: "owner_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div>{row.getValue("owner_name")}</div>,
+    accessorFn: (row) => row.account.ownerName,
+    header: "Owner Name",
+    cell: ({ getValue }) => <div>{getValue() as string}</div>,
   },
   {
-    accessorKey: "balances",
+    accessorFn: (row) => row.account.name,
+    header: "Account Name",
+    cell: ({ getValue }) => <div>{getValue() as string}</div>,
+  },
+  {
+    accessorFn: (row) => row.account.currency,
+    header: "Currency",
+    cell: ({ getValue }) => <div>{getValue() as string}</div>,
+  },
+  {
+    id: "balance",
     header: "Balance",
     cell: ({ row }) => {
-      const balances = row.getValue("balances") as Account["balances"];
+      const balances = row.original.balances;
       const mainBalance = balances.find(
         (b) =>
           b.balanceType === "interimAvailable" ||
-          b.balanceType === "closingBooked",
+          b.balanceType === "openingBooked",
       );
       return mainBalance ? (
         <div>{`${mainBalance.balanceAmount.amount} ${mainBalance.balanceAmount.currency}`}</div>
@@ -106,6 +110,7 @@ export function AccountsToSelectTable({
   data,
   onSelectionChange,
 }: AccountsToSelectTableProps) {
+  console.log("Received data in AccountsToSelectTable:", data);
   const [rowSelection, setRowSelection] = React.useState({});
 
   React.useEffect(() => {
