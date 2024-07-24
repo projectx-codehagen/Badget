@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { getBanks } from "@/actions/gocardless/get-institutions";
 import {
   createEndUserAgreement,
   createRequisition,
+  getBanks,
   getTransactions,
   listAccounts,
 } from "@/sdk/gocardless";
-// Updated import
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -51,6 +51,12 @@ import {
 
 import { cn } from "@/lib/utils";
 
+interface Bank {
+  id: string;
+  name: string;
+  logo: string;
+}
+
 const languages = [
   { label: "English", value: "en" },
   { label: "Norwegian", value: "no" },
@@ -75,9 +81,9 @@ const FormSchema = z.object({
 });
 
 export function GetInstitutionsButton({ connectorConfigId }) {
-  const [banks, setBanks] = useState([]);
+  const [banks, setBanks] = useState<Bank[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -88,20 +94,17 @@ export function GetInstitutionsButton({ connectorConfigId }) {
     setIsLoading(true);
     setError(null);
     try {
-      console.log("Fetching banks for language:", language);
-      const banksData = await getBanks(language); // Pass the selected language
+      const banksData: Bank[] = await getBanks(language); // Pass the selected language
       setBanks(banksData);
       toast.success("Banks fetched successfully");
     } catch (err) {
-      console.error("Error fetching banks:", err);
-      setError(err.message);
+      setError((err as Error).message);
     } finally {
       setIsLoading(false);
     }
   };
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log("Form data submitted:", data);
     await fetchBanks(data.language);
     if (data.bank) {
       try {
@@ -112,7 +115,6 @@ export function GetInstitutionsButton({ connectorConfigId }) {
           data.accessScope,
         );
         toast.success("End user agreement created successfully");
-        console.log("Agreement:", agreement);
 
         const requisition = await createRequisition(
           data.bank,
@@ -122,45 +124,35 @@ export function GetInstitutionsButton({ connectorConfigId }) {
           data.language,
         );
         toast.success("Requisition created successfully");
-        console.log("Requisition:", requisition);
 
-        // Save the requisition ID in local storage
         localStorage.setItem("requisition_id", requisition.id);
 
-        // Redirect the user to the GoCardless link
         window.location.href = requisition.link;
       } catch (err) {
-        console.error("Error creating requisition:", err);
-        setError(err.message);
+        setError((err as Error).message);
       }
     }
   };
-  // Function to list accounts after redirection
+
   const listUserAccounts = async (requisitionId: string) => {
     try {
-      console.log("Requisition ID:", requisitionId);
       const accounts = await listAccounts(requisitionId);
-      console.log("Accounts:", accounts);
 
-      // Get transactions for each account
       if (accounts.accounts.length > 0) {
         const accountId = accounts.accounts[0];
         const transactions = await getTransactions(accountId);
         console.log(`Transactions for account ${accountId}:`, transactions);
       }
     } catch (error) {
-      console.error("Error listing accounts:", error);
       toast.error("An error occurred while listing accounts");
     }
   };
 
-  // Check if redirected back with requisition ID
   useEffect(() => {
     const requisitionId = localStorage.getItem("requisition_id");
     if (requisitionId) {
-      console.log("Found requisition ID in local storage:", requisitionId);
       listUserAccounts(requisitionId);
-      localStorage.removeItem("requisition_id"); // Clear the requisition ID from local storage
+      localStorage.removeItem("requisition_id");
     }
   }, []);
 
@@ -283,7 +275,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                                     form.setValue("bank", bank.id);
                                   }}
                                 >
-                                  <img
+                                  <Image
                                     src={bank.logo}
                                     alt={bank.name}
                                     className="mr-2 h-4 w-4"

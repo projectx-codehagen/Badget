@@ -1,4 +1,4 @@
-"use server";
+"use server"
 
 import axios from "axios";
 
@@ -16,31 +16,24 @@ let accessTokenExpiry: number | null = null;
 let initializationPromise: Promise<void> | null = null;
 
 async function getAccessToken(): Promise<string> {
-  console.log("getAccessToken called");
   if (initializationPromise) {
-    console.log("Waiting for initializationPromise");
     await initializationPromise;
   }
 
   if (accessToken && accessTokenExpiry && Date.now() < accessTokenExpiry) {
-    console.log("Access token is valid:", accessToken);
     return accessToken;
   }
 
   if (refreshToken) {
-    console.log("Access token expired, refreshing...");
     await refreshAccessToken();
-    console.log("Access token refreshed:", accessToken);
     return accessToken!;
   }
 
-  console.error("No valid access token available");
   throw new Error("No valid access token available");
 }
 
 async function refreshAccessToken() {
   try {
-    console.log("Refreshing access token...");
     const response = await apiClient.post("/token/refresh/", {
       refresh: refreshToken,
     });
@@ -52,9 +45,7 @@ async function refreshAccessToken() {
     accessToken = response.data.access;
     accessTokenExpiry = Date.now() + response.data.access_expires * 1000;
     refreshToken = response.data.refresh;
-    console.log("Access token refreshed:", accessToken);
   } catch (error) {
-    console.error("Error refreshing access token:", error);
     throw new Error("Failed to refresh access token");
   }
 }
@@ -63,7 +54,6 @@ async function initializeTokens() {
   if (!initializationPromise) {
     initializationPromise = (async () => {
       try {
-        console.log("Initializing tokens...");
         const response = await apiClient.post("/token/new/", {
           secret_id: process.env.GOCARDLESS_SECRET_ID,
           secret_key: process.env.GOCARDLESS_SECRET_KEY,
@@ -76,9 +66,7 @@ async function initializeTokens() {
         accessToken = response.data.access;
         accessTokenExpiry = Date.now() + response.data.access_expires * 1000;
         refreshToken = response.data.refresh;
-        console.log("Tokens initialized:", { accessToken, refreshToken });
       } catch (error) {
-        console.error("Error initializing tokens:", error);
         throw new Error("Failed to initialize tokens");
       }
     })();
@@ -95,7 +83,6 @@ async function createEndUserAgreement(
 ) {
   await initializeTokens();
   const token = await getAccessToken();
-  console.log("createEndUserAgreement called with token:", token);
   const response = await apiClient.post(
     "/agreements/enduser/",
     {
@@ -182,10 +169,9 @@ async function getTransactions(accountId: string) {
   return response.data;
 }
 
-async function getInstitutions(countryCode: string) {
+async function getBanks(countryCode: string) {
   await initializeTokens();
   const token = await getAccessToken();
-  console.log("getInstitutions called with token:", token);
   const response = await apiClient.get(
     `/institutions/?country=${countryCode}`,
     {
@@ -196,7 +182,7 @@ async function getInstitutions(countryCode: string) {
   );
 
   if (!response.data) {
-    throw new Error("Failed to fetch institutions");
+    throw new Error("Failed to fetch banks");
   }
 
   return response.data;
@@ -219,4 +205,5 @@ export {
   createRequisition,
   listAccounts,
   getTransactions,
+  getBanks,
 };
