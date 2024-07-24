@@ -1,7 +1,8 @@
-"use server"
+"use server";
 
 import axios from "axios";
 
+// Create an Axios instance for API requests
 const apiClient = axios.create({
   baseURL: "https://bankaccountdata.gocardless.com/api/v2",
   headers: {
@@ -10,11 +11,17 @@ const apiClient = axios.create({
   },
 });
 
+// Token variables
 let accessToken: string | null = null;
 let refreshToken: string | null = null;
 let accessTokenExpiry: number | null = null;
 let initializationPromise: Promise<void> | null = null;
 
+/**
+ * Get the current access token, refreshing it if necessary.
+ * @returns {Promise<string>} The access token.
+ * @throws Will throw an error if no valid access token is available.
+ */
 async function getAccessToken(): Promise<string> {
   if (initializationPromise) {
     await initializationPromise;
@@ -32,6 +39,26 @@ async function getAccessToken(): Promise<string> {
   throw new Error("No valid access token available");
 }
 
+async function getAccountDetails(accountId: string) {
+  await initializeTokens();
+  const token = await getAccessToken();
+  const response = await apiClient.get(`/accounts/${accountId}/`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.data) {
+    throw new Error("Failed to get account details");
+  }
+
+  return response.data;
+}
+
+/**
+ * Refresh the access token using the refresh token.
+ * @throws Will throw an error if the refresh token is invalid or the request fails.
+ */
 async function refreshAccessToken() {
   try {
     const response = await apiClient.post("/token/refresh/", {
@@ -50,6 +77,11 @@ async function refreshAccessToken() {
   }
 }
 
+/**
+ * Initialize the tokens by fetching new ones from the API.
+ * @returns {Promise<void>} A promise that resolves when the tokens are initialized.
+ * @throws Will throw an error if the request fails.
+ */
 async function initializeTokens() {
   if (!initializationPromise) {
     initializationPromise = (async () => {
@@ -75,6 +107,15 @@ async function initializeTokens() {
   return initializationPromise;
 }
 
+/**
+ * Create an end user agreement.
+ * @param {string} institutionId - The ID of the institution.
+ * @param {number} [maxHistoricalDays=90] - The maximum number of historical days.
+ * @param {number} [accessValidForDays=90] - The number of days the access is valid for.
+ * @param {string[]} [accessScope=["balances", "details", "transactions"]] - The access scope.
+ * @returns {Promise<any>} The response data.
+ * @throws Will throw an error if the request fails.
+ */
 async function createEndUserAgreement(
   institutionId: string,
   maxHistoricalDays = 90,
@@ -105,6 +146,16 @@ async function createEndUserAgreement(
   return response.data;
 }
 
+/**
+ * Create a requisition.
+ * @param {string} institutionId - The ID of the institution.
+ * @param {string} redirectUrl - The redirect URL.
+ * @param {string} connectorConfigId - The connector configuration ID.
+ * @param {string} [agreement] - The agreement ID.
+ * @param {string} [userLanguage] - The user language.
+ * @returns {Promise<any>} The response data.
+ * @throws Will throw an error if the request fails.
+ */
 async function createRequisition(
   institutionId: string,
   redirectUrl: string,
@@ -137,6 +188,12 @@ async function createRequisition(
   return response.data;
 }
 
+/**
+ * List accounts for a given requisition.
+ * @param {string} requisitionId - The ID of the requisition.
+ * @returns {Promise<any>} The response data.
+ * @throws Will throw an error if the request fails.
+ */
 async function listAccounts(requisitionId: string) {
   await initializeTokens();
   const token = await getAccessToken();
@@ -153,6 +210,12 @@ async function listAccounts(requisitionId: string) {
   return response.data;
 }
 
+/**
+ * Get transactions for a given account.
+ * @param {string} accountId - The ID of the account.
+ * @returns {Promise<any>} The response data.
+ * @throws Will throw an error if the request fails.
+ */
 async function getTransactions(accountId: string) {
   await initializeTokens();
   const token = await getAccessToken();
@@ -169,6 +232,12 @@ async function getTransactions(accountId: string) {
   return response.data;
 }
 
+/**
+ * Get banks for a given country.
+ * @param {string} countryCode - The country code.
+ * @returns {Promise<any>} The response data.
+ * @throws Will throw an error if the request fails.
+ */
 async function getBanks(countryCode: string) {
   await initializeTokens();
   const token = await getAccessToken();
@@ -188,6 +257,27 @@ async function getBanks(countryCode: string) {
   return response.data;
 }
 
+async function getAccountBalances(accountId: string) {
+  await initializeTokens();
+  const token = await getAccessToken();
+  const response = await apiClient.get(`/accounts/${accountId}/balances/`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.data) {
+    throw new Error("Failed to get account balances");
+  }
+
+  return response.data;
+}
+
+/**
+ * Generate a random string of a given length.
+ * @param {number} length - The length of the string.
+ * @returns {string} The generated string.
+ */
 function generateRandomString(length: number) {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -199,11 +289,14 @@ function generateRandomString(length: number) {
   return result;
 }
 
+// Export functions for external use
 export {
   initializeTokens,
   createEndUserAgreement,
   createRequisition,
   listAccounts,
   getTransactions,
+  getAccountDetails,
   getBanks,
+  getAccountBalances,
 };

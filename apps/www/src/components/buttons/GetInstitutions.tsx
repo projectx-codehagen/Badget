@@ -51,6 +51,9 @@ import {
 
 import { cn } from "@/lib/utils";
 
+import { AccountsDialog } from "../modals/AccountsDialog";
+import { AccountsToSelectTable } from "../tables/AccountsToSelectTable";
+
 interface Bank {
   id: string;
   name: string;
@@ -84,6 +87,8 @@ export function GetInstitutionsButton({ connectorConfigId }) {
   const [banks, setBanks] = useState<Bank[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [accounts, setAccounts] = useState([]);
+  const [showAccounts, setShowAccounts] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -118,7 +123,7 @@ export function GetInstitutionsButton({ connectorConfigId }) {
 
         const requisition = await createRequisition(
           data.bank,
-          "http://localhost:3000/dashboard/banking", // Replace with your actual redirect URL
+          "http://localhost:3000/dashboard/banking",
           connectorConfigId,
           agreement.id,
           data.language,
@@ -137,6 +142,8 @@ export function GetInstitutionsButton({ connectorConfigId }) {
   const listUserAccounts = async (requisitionId: string) => {
     try {
       const accounts = await listAccounts(requisitionId);
+      setAccounts(accounts.accounts);
+      setShowAccounts(true);
 
       if (accounts.accounts.length > 0) {
         const accountId = accounts.accounts[0];
@@ -157,91 +164,28 @@ export function GetInstitutionsButton({ connectorConfigId }) {
   }, []);
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="default" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Fetch Banks"}
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <DialogHeader>
-              <DialogTitle>Import transactions</DialogTitle>
-              <DialogDescription>
-                Import your transactions from your bank.
-              </DialogDescription>
-            </DialogHeader>
-            <FormField
-              control={form.control}
-              name="language"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Land</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            " justify-between",
-                            !field.value && "text-muted-foreground",
-                          )}
-                        >
-                          {field.value
-                            ? languages.find(
-                                (language) => language.value === field.value,
-                              )?.label
-                            : "Select land"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className=" p-0">
-                      <Command>
-                        <CommandInput placeholder="Search land..." />
-                        <CommandList>
-                          <CommandEmpty>No land found.</CommandEmpty>
-                          <CommandGroup>
-                            {languages.map((language) => (
-                              <CommandItem
-                                value={language.label}
-                                key={language.value}
-                                onSelect={() => {
-                                  form.setValue("language", language.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    language.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0",
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormDescription>
-                    This is the land that will be used in the dashboard.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {banks.length > 0 && (
+    <>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="default" disabled={isLoading}>
+            {isLoading ? "Loading..." : "Fetch Banks"}
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <DialogHeader>
+                <DialogTitle>Import transactions</DialogTitle>
+                <DialogDescription>
+                  Import your transactions from your bank.
+                </DialogDescription>
+              </DialogHeader>
               <FormField
                 control={form.control}
-                name="bank"
+                name="language"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Bank</FormLabel>
+                    <FormLabel>Land</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -249,46 +193,42 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              "justify-between",
+                              " justify-between",
                               !field.value && "text-muted-foreground",
                             )}
                           >
                             {field.value
-                              ? banks.find((bank) => bank.id === field.value)
-                                  ?.name
-                              : "Select bank"}
+                              ? languages.find(
+                                  (language) => language.value === field.value,
+                                )?.label
+                              : "Select land"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="p-0">
+                      <PopoverContent className=" p-0">
                         <Command>
-                          <CommandInput placeholder="Search bank..." />
+                          <CommandInput placeholder="Search land..." />
                           <CommandList>
-                            <CommandEmpty>No bank found.</CommandEmpty>
+                            <CommandEmpty>No land found.</CommandEmpty>
                             <CommandGroup>
-                              {banks.map((bank) => (
+                              {languages.map((language) => (
                                 <CommandItem
-                                  value={bank.name}
-                                  key={bank.id}
+                                  value={language.label}
+                                  key={language.value}
                                   onSelect={() => {
-                                    form.setValue("bank", bank.id);
+                                    form.setValue("language", language.value);
                                   }}
                                 >
-                                  <Image
-                                    src={bank.logo}
-                                    alt={bank.name}
-                                    className="mr-2 h-4 w-4"
-                                  />
                                   <Check
                                     className={cn(
                                       "mr-2 h-4 w-4",
-                                      bank.id === field.value
+                                      language.value === field.value
                                         ? "opacity-100"
                                         : "opacity-0",
                                     )}
                                   />
-                                  {bank.name}
+                                  {language.label}
                                 </CommandItem>
                               ))}
                             </CommandGroup>
@@ -297,23 +237,99 @@ export function GetInstitutionsButton({ connectorConfigId }) {
                       </PopoverContent>
                     </Popover>
                     <FormDescription>
-                      Select a bank from the fetched list.
+                      This is the land that will be used in the dashboard.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            )}
+              {banks.length > 0 && (
+                <FormField
+                  control={form.control}
+                  name="bank"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Bank</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "justify-between",
+                                !field.value && "text-muted-foreground",
+                              )}
+                            >
+                              {field.value
+                                ? banks.find((bank) => bank.id === field.value)
+                                    ?.name
+                                : "Select bank"}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="p-0">
+                          <Command>
+                            <CommandInput placeholder="Search bank..." />
+                            <CommandList>
+                              <CommandEmpty>No bank found.</CommandEmpty>
+                              <CommandGroup>
+                                {banks.map((bank) => (
+                                  <CommandItem
+                                    value={bank.name}
+                                    key={bank.id}
+                                    onSelect={() => {
+                                      form.setValue("bank", bank.id);
+                                    }}
+                                  >
+                                    <img
+                                      src={bank.logo}
+                                      alt={bank.name}
+                                      className="mr-2 h-4 w-4"
+                                    />
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        bank.id === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0",
+                                      )}
+                                    />
+                                    {bank.name}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                      <FormDescription>
+                        Select a bank from the fetched list.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+              {/* {showAccounts && accounts.length > 0 && ( */}
+              {/* <div className="mt-8">
+                <h2 className="mb-4 text-2xl font-bold">Your Accounts</h2>
+                <AccountsToSelectTable data={accounts} />
+              </div> */}
+              {/* )} */}
 
-            <DialogFooter>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Loading..." : "Fetch Banks"}
-              </Button>
-            </DialogFooter>
-            {error && <p>Error: {error}</p>}
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+              <DialogFooter>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? "Loading..." : "Fetch Banks"}
+                </Button>
+              </DialogFooter>
+              {error && <p>Error: {error}</p>}
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+      <AccountsDialog />
+    </>
   );
 }
