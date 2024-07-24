@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getBanks } from "@/actions/get-institutions";
-import { createEndUserAgreement } from "@/actions/gocardless/create-end-user-agreement";
-import { createRequisition } from "@/actions/gocardless/create-requisition";
-import { getTransactions } from "@/actions/gocardless/get-transactions";
-import { listAccounts } from "@/actions/gocardless/list-accounts";
-import { initializeTokens } from "@/sdk/gocardless";
+import { getBanks } from "@/actions/gocardless/get-institutions";
+import {
+  createEndUserAgreement,
+  createRequisition,
+  getTransactions,
+  listAccounts,
+} from "@/sdk/gocardless";
+// Updated import
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -82,13 +84,6 @@ export function GetInstitutionsButton({ connectorConfigId }) {
     resolver: zodResolver(FormSchema),
   });
 
-  useEffect(() => {
-    initializeTokens().catch((error) => {
-      console.error("Failed to initialize tokens:", error);
-      setError(error.message);
-    });
-  }, []);
-
   const fetchBanks = async (language: string) => {
     setIsLoading(true);
     setError(null);
@@ -140,7 +135,6 @@ export function GetInstitutionsButton({ connectorConfigId }) {
       }
     }
   };
-
   // Function to list accounts after redirection
   const listUserAccounts = async (requisitionId: string) => {
     try {

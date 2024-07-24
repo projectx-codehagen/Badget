@@ -4,7 +4,7 @@ import fetch from "node-fetch"; // Import node-fetch for making HTTP requests
 
 import { getCurrentUser } from "@/lib/session";
 
-import { getAccessToken, initializeTokens } from "./gocardless/accsessToken";
+import { getAccessToken, initializeTokens } from "./accsessToken";
 
 export async function getInstitutions(countryCode: string): Promise<string> {
   const user = await getCurrentUser();

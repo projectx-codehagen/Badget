@@ -1,3 +1,5 @@
+"use server";
+
 import axios from "axios";
 
 const apiClient = axios.create({
@@ -91,6 +93,7 @@ async function createEndUserAgreement(
   accessValidForDays = 90,
   accessScope: string[] = ["balances", "details", "transactions"],
 ) {
+  await initializeTokens();
   const token = await getAccessToken();
   console.log("createEndUserAgreement called with token:", token);
   const response = await apiClient.post(
@@ -122,6 +125,7 @@ async function createRequisition(
   agreement?: string,
   userLanguage?: string,
 ) {
+  await initializeTokens();
   const token = await getAccessToken();
   const response = await apiClient.post(
     "/requisitions/",
@@ -147,6 +151,7 @@ async function createRequisition(
 }
 
 async function listAccounts(requisitionId: string) {
+  await initializeTokens();
   const token = await getAccessToken();
   const response = await apiClient.get(`/requisitions/${requisitionId}/`, {
     headers: {
@@ -162,6 +167,7 @@ async function listAccounts(requisitionId: string) {
 }
 
 async function getTransactions(accountId: string) {
+  await initializeTokens();
   const token = await getAccessToken();
   const response = await apiClient.get(`/accounts/${accountId}/transactions/`, {
     headers: {
@@ -171,6 +177,26 @@ async function getTransactions(accountId: string) {
 
   if (!response.data) {
     throw new Error("Failed to get transactions");
+  }
+
+  return response.data;
+}
+
+async function getInstitutions(countryCode: string) {
+  await initializeTokens();
+  const token = await getAccessToken();
+  console.log("getInstitutions called with token:", token);
+  const response = await apiClient.get(
+    `/institutions/?country=${countryCode}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  if (!response.data) {
+    throw new Error("Failed to fetch institutions");
   }
 
   return response.data;
