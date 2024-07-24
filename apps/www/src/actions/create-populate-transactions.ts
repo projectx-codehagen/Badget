@@ -23,12 +23,46 @@ export async function createPopulateTransactions(bankAccountId: string) {
     },
   });
 
-  // Fetch existing categories
-  const categories = await prisma.category.findMany({
+  // Categories to be created
+  const categories = [
+    { name: "Car", icon: "🚗" },
+    { name: "Transportation", icon: "🚌" },
+    { name: "Clothing", icon: "👗" },
+    { name: "Entertainment", icon: "🎬" },
+    { name: "Groceries", icon: "🥑" },
+    { name: "Other", icon: "🔧" },
+    { name: "Rent", icon: "🏠" },
+    { name: "Restaurants", icon: "🍽️" },
+    { name: "Shops", icon: "🛍️" },
+    { name: "Subscriptions", icon: "📺" },
+    { name: "Utilities", icon: "💡" },
+  ];
+
+  // Populate categories with userId
+  await Promise.all(
+    categories.map(async (category) => {
+      await prisma.category.upsert({
+        where: {
+          name_userId: {
+            name: category.name,
+            userId: user.id,
+          },
+        },
+        update: {},
+        create: {
+          name: category.name,
+          icon: category.icon,
+          userId: user.id,
+        },
+      });
+    }),
+  );
+
+  // Fetch category IDs
+  const createdCategories = await prisma.category.findMany({
     where: { userId: user.id },
   });
-
-  const categoryMap = categories.reduce((acc, category) => {
+  const categoryMap = createdCategories.reduce((acc, category) => {
     acc[category.name] = category.id;
     return acc;
   }, {});
