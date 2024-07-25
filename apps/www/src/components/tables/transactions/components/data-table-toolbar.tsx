@@ -2,6 +2,7 @@
 
 import type { Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
+import { getUserBankAccounts } from "@/actions/get-bankaccounts";
 import { getCategories } from "@/actions/get-categories";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
@@ -22,6 +23,7 @@ export function DataTableToolbar<TData>({
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     [],
   );
+  const [accounts, setAccounts] = useState<{ id: string; name: string }[]>([]);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -33,6 +35,18 @@ export function DataTableToolbar<TData>({
       }
     }
     fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    async function fetchAccounts() {
+      try {
+        const fetchedAccounts = await getUserBankAccounts();
+        setAccounts(fetchedAccounts);
+      } catch (error) {
+        console.error("Failed to fetch accounts:", error);
+      }
+    }
+    fetchAccounts();
   }, []);
 
   return (
@@ -71,6 +85,16 @@ export function DataTableToolbar<TData>({
                 value: cat.name,
               })),
             ]}
+          />
+        )}
+        {table.getColumn("bankAccount") && (
+          <DataTableFacetedFilter
+            column={table.getColumn("bankAccount")}
+            title="Account"
+            options={accounts.map((account) => ({
+              label: account.name,
+              value: account.id,
+            }))}
           />
         )}
         {isFiltered && (

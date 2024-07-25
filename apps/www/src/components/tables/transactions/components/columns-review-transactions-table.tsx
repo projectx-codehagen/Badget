@@ -75,6 +75,9 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "bankAccount",
     header: "Account",
     cell: ({ row }) => row.original.bankAccount.name,
+    filterFn: (row, id, value) => {
+      return value.includes(row.original.bankAccount.id);
+    },
   },
   {
     accessorKey: "review",
