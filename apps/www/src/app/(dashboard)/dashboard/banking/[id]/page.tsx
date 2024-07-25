@@ -1,8 +1,10 @@
 import { getBankAccountDetails } from "@/actions/get-bank-account-details";
 import { getBankAccountTransactions } from "@/actions/get-bank-account-transactions";
 
+import { AccountDropdownMenu } from "@/components/banking/AccountDropdownMenu";
 import BankingDashboard from "@/components/banking/BankingDashboard";
 import BankingDashboardDetails from "@/components/banking/BankingDashboardDetails";
+import { BankingDropdownMenu } from "@/components/banking/BankingDropdownMenu";
 import { AddTransactionsButton } from "@/components/buttons/AddTransactionsButton";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
@@ -49,8 +51,11 @@ export default async function BankAccountPage({
           heading={bankAccountDetails.name}
           text="Here are your recent transactions"
         >
-          <CSVUploader bankAccountId={bankAccountId} />
+          {/* <CSVUploader bankAccountId={bankAccountId} /> */}
         </DashboardHeader>
+        <div className=" -mb-4 flex justify-end space-x-2">
+          <AccountDropdownMenu bankAccountId={bankAccountId} />
+        </div>
         <div>
           {transactions.length === 0 ? (
             <EmptyPlaceholder>

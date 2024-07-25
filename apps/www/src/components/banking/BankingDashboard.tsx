@@ -40,7 +40,7 @@ export default function BankingDashboard({ transactions }) {
           </EmptyPlaceholder>
         )}
       </div>
-      <div>
+      <div className="mt-2">
         <BankingDashboardDetails transaction={selectedTransaction} />
       </div>
     </main>

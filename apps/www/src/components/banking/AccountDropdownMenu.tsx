@@ -11,8 +11,13 @@ import {
 } from "@dingify/ui/components/dropdown-menu";
 
 import { AddAccountSheet } from "../buttons/AddAccountSheeet";
+import { CSVUploader } from "../import/CsvImporter";
 
-export function BankingDropdownMenu() {
+export function AccountDropdownMenu({
+  bankAccountId,
+}: {
+  bankAccountId: string;
+}) {
   return (
     <div className="flex items-center gap-2">
       <DropdownMenu>
@@ -39,12 +44,14 @@ export function BankingDropdownMenu() {
         </span>
       </Button>
       <AddAccountSheet currentPath="/banking">
-        <Button size="sm" className="h-8 gap-1">
-          <PlusCircle className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Add Account
-          </span>
-        </Button>
+        <CSVUploader bankAccountId={bankAccountId}>
+          <Button size="sm" className="h-8 gap-1">
+            <PlusCircle className="h-3.5 w-3.5" />
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+              Import file
+            </span>
+          </Button>
+        </CSVUploader>
       </AddAccountSheet>
     </div>
   );

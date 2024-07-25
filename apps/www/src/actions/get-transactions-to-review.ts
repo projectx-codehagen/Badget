@@ -13,6 +13,9 @@ export async function getTransactionsToReview() {
     const transactions = await prisma.transaction.findMany({
       where: {
         review: false,
+        bankAccount: {
+          userId: user.id,
+        },
       },
       include: {
         category: true,

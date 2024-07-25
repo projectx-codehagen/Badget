@@ -17,7 +17,13 @@ import { cn } from "@/lib/utils";
 
 import CSVParser from "./generic-csv-parser";
 
-export function CSVUploader({ bankAccountId }: { bankAccountId: string }) {
+export function CSVUploader({
+  children,
+  bankAccountId,
+}: {
+  children: React.ReactNode;
+  bankAccountId: string;
+}) {
   const handleTestFileImport = () => {
     // Create a link element
     const link = document.createElement("a");
@@ -35,9 +41,7 @@ export function CSVUploader({ bankAccountId }: { bankAccountId: string }) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Import File</Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>Import File</DialogTitle>

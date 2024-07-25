@@ -41,7 +41,7 @@ const remainingBudget = budget - totalSpent;
 
 export function OverallUseageChart() {
   return (
-    <Card className="lg:max-w-md">
+    <Card className="">
       <CardHeader className="space-y-0 pb-2">
         <CardTitle>Weekly Spending</CardTitle>
         <CardDescription>
