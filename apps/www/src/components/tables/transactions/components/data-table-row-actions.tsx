@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Button } from "@dingify/ui/components/button";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -22,6 +23,8 @@ import {
 } from "@dingify/ui/components/dropdown-menu";
 
 import type { Transaction } from "./columns-review-transactions-table";
+
+import { EditTransactionSheet } from "@/components/buttons/EditTransactionSheet";
 
 interface Category {
   id: string;
@@ -81,29 +84,41 @@ export function DataTableRowActions<TData>({
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Categories</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup
-              value={selectedCategory}
-              onValueChange={handleUpdateCategory}
-            >
-              {categories && categories.length > 0 ? (
-                categories.map((category) => (
-                  <DropdownMenuRadioItem key={category.id} value={category.id}>
-                    {category.icon} {category.name}
-                    {selectedCategory === category.id && (
-                      <Check className="ml-2 h-4 w-4" />
-                    )}
-                  </DropdownMenuRadioItem>
-                ))
-              ) : (
-                <DropdownMenuItem disabled>
-                  No categories available
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuRadioGroup>
+            {categories.length > 0 ? (
+              categories.map((category) => (
+                <DropdownMenuCheckboxItem
+                  key={category.id}
+                  checked={selectedCategory === category.id}
+                  onCheckedChange={(checked) =>
+                    handleUpdateCategory(category.id)
+                  }
+                >
+                  {category.icon} {category.name}
+                </DropdownMenuCheckboxItem>
+              ))
+            ) : (
+              <DropdownMenuItem disabled>
+                No categories available
+              </DropdownMenuItem>
+            )}
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Edit transaction</DropdownMenuItem>
+        <EditTransactionSheet
+          transaction={{
+            id: transaction.id,
+            description: transaction.description,
+            // amount: transaction.amount,
+            date: new Date(transaction.date),
+            categoryId: transaction.categoryId,
+            // review: transaction.review,
+          }}
+          categories={categories}
+        >
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            Edit transaction
+          </DropdownMenuItem>
+        </EditTransactionSheet>
         <DropdownMenuItem>View details</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -2,19 +2,10 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { MoreHorizontal } from "lucide-react";
 
-import { Button } from "@dingify/ui/components/button";
 import { Checkbox } from "@dingify/ui/components/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@dingify/ui/components/dropdown-menu";
 
+import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 
 // Define your data type
@@ -63,18 +54,24 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "date",
-    header: "Date",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Date" />
+    ),
     cell: ({ row }) => {
       return format(new Date(row.getValue("date")), "dd MMMM yyyy");
     },
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Description" />
+    ),
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Category" />
+    ),
     cell: ({ row }) => {
       const category = row.original.category;
       return category ? `${category.icon} ${category.name}` : "Uncategorized";
@@ -87,7 +84,9 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "bankAccount",
-    header: "Account",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Account" />
+    ),
     cell: ({ row }) => row.original.bankAccount.name,
     filterFn: (row, id, value) => {
       return value.includes(row.original.bankAccount.id);
@@ -95,7 +94,9 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Amount" />
+    ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
       const formatted = new Intl.NumberFormat("en-US", {
@@ -108,11 +109,13 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "review",
-    header: "Review",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Review" />
+    ),
     cell: ({ row }) => (row.getValue("review") ? "Yes" : "No"),
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions row={row} categories={[]} />,
   },
 ];

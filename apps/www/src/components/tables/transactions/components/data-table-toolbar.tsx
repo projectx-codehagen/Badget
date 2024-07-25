@@ -3,7 +3,6 @@
 import type { Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { getUserBankAccounts } from "@/actions/get-bankaccounts";
-import { getCategories } from "@/actions/get-categories";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 import { Button } from "@dingify/ui/components/button";
@@ -12,32 +11,24 @@ import { Input } from "@dingify/ui/components/input";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { DataTableViewOptions } from "./data-table-view-options";
 
+interface Category {
+  name: string;
+  id: string;
+}
+
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   handleReviewSelectedTransactions: () => Promise<void>;
+  categories: Category[];
 }
 
 export function DataTableToolbar<TData>({
   table,
   handleReviewSelectedTransactions,
+  categories,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
-  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
-    [],
-  );
   const [accounts, setAccounts] = useState<{ id: string; name: string }[]>([]);
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const fetchedCategories = await getCategories();
-        setCategories(fetchedCategories);
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-      }
-    }
-    fetchCategories();
-  }, []);
 
   useEffect(() => {
     async function fetchAccounts() {
