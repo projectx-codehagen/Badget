@@ -7,7 +7,9 @@ import type {
   VisibilityState,
 } from "@tanstack/react-table";
 import * as React from "react";
+import { getCategories } from "@/actions/get-categories";
 import { updateMultipleTransactionReviews } from "@/actions/update-multiple-transactions-review";
+import { Category } from "@prisma/client";
 import {
   flexRender,
   getCoreRowModel,
@@ -31,11 +33,11 @@ import {
 
 import { DataTablePagination } from "../components/data-table-pagination";
 import { DataTableToolbar } from "../components/data-table-toolbar";
+import { DataTableRowActions } from "./data-table-row-actions";
 
 interface ReviewTransactionsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  handleReviewSelectedTransactions: () => Promise<void>;
 }
 
 export function ReviewTransactionsTable<TData, TValue>({
@@ -49,6 +51,15 @@ export function ReviewTransactionsTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [categories, setCategories] = React.useState<Category[]>([]);
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      const fetchedCategories = await getCategories();
+      setCategories(fetchedCategories);
+    };
+    fetchCategories();
+  }, []);
 
   const handleReviewSelectedTransactions = async () => {
     const selectedTransactionIds = Object.keys(rowSelection).map(
@@ -75,7 +86,17 @@ export function ReviewTransactionsTable<TData, TValue>({
 
   const table = useReactTable({
     data,
-    columns,
+    columns: columns.map((col) => {
+      if (col.id === "actions") {
+        return {
+          ...col,
+          cell: ({ row }) => (
+            <DataTableRowActions row={row} categories={categories} />
+          ),
+        };
+      }
+      return col;
+    }),
     state: {
       sorting,
       columnVisibility,
@@ -100,6 +121,7 @@ export function ReviewTransactionsTable<TData, TValue>({
       <DataTableToolbar
         table={table}
         handleReviewSelectedTransactions={handleReviewSelectedTransactions}
+        categories={categories}
       />
       <div className="rounded-md border">
         <Table>

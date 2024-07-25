@@ -2,7 +2,6 @@
 
 import type { Row } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { getCategories } from "@/actions/get-categories";
 import { updateCategoryReviewTable } from "@/actions/update-category-review-table";
 import { Check, MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
@@ -32,24 +31,17 @@ interface Category {
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
+  categories: Category[];
 }
 
 export function DataTableRowActions<TData>({
   row,
+  categories,
 }: DataTableRowActionsProps<TData>) {
   const transaction = row.original as Transaction;
-  const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>(
     transaction.categoryId || "",
   );
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const fetchedCategories = await getCategories();
-      setCategories(fetchedCategories);
-    };
-    fetchCategories();
-  }, []);
 
   const handleUpdateCategory = async (categoryId: string) => {
     try {
@@ -93,14 +85,20 @@ export function DataTableRowActions<TData>({
               value={selectedCategory}
               onValueChange={handleUpdateCategory}
             >
-              {categories.map((category) => (
-                <DropdownMenuRadioItem key={category.id} value={category.id}>
-                  {category.icon} {category.name}
-                  {selectedCategory === category.id && (
-                    <Check className="ml-2 h-4 w-4" />
-                  )}
-                </DropdownMenuRadioItem>
-              ))}
+              {categories && categories.length > 0 ? (
+                categories.map((category) => (
+                  <DropdownMenuRadioItem key={category.id} value={category.id}>
+                    {category.icon} {category.name}
+                    {selectedCategory === category.id && (
+                      <Check className="ml-2 h-4 w-4" />
+                    )}
+                  </DropdownMenuRadioItem>
+                ))
+              ) : (
+                <DropdownMenuItem disabled>
+                  No categories available
+                </DropdownMenuItem>
+              )}
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
