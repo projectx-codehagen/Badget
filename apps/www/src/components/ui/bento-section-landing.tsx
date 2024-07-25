@@ -122,7 +122,7 @@ const features = [
   {
     Icon: BellIcon,
     name: "Notifications",
-    description: "Get notified when somone uses your SDK",
+    description: "Get notified when something happens in your accounts.",
     className: "col-span-3 lg:col-span-1",
     href: "/",
     cta: "Learn more",
