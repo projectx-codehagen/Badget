@@ -7,6 +7,7 @@ import type {
   VisibilityState,
 } from "@tanstack/react-table";
 import * as React from "react";
+import { updateMultipleTransactionReviews } from "@/actions/update-multiple-transactions-review";
 import {
   flexRender,
   getCoreRowModel,
@@ -17,6 +18,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { toast } from "sonner";
 
 import {
   Table,
@@ -33,6 +35,7 @@ import { DataTableToolbar } from "../components/data-table-toolbar";
 interface ReviewTransactionsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  handleReviewSelectedTransactions: () => Promise<void>;
 }
 
 export function ReviewTransactionsTable<TData, TValue>({
@@ -46,6 +49,29 @@ export function ReviewTransactionsTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+
+  const handleReviewSelectedTransactions = async () => {
+    const selectedTransactionIds = Object.keys(rowSelection).map(
+      (index) => (data[parseInt(index)] as any).id,
+    );
+
+    if (selectedTransactionIds.length === 0) {
+      toast.error("No transactions selected");
+      return;
+    }
+
+    const response = await updateMultipleTransactionReviews(
+      selectedTransactionIds,
+    );
+    if (response.success) {
+      toast.success(
+        `${selectedTransactionIds.length} transaction(s) marked as reviewed`,
+      );
+      setRowSelection({});
+    } else {
+      toast.error("Failed to mark transactions as reviewed");
+    }
+  };
 
   const table = useReactTable({
     data,
@@ -71,7 +97,10 @@ export function ReviewTransactionsTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      <DataTableToolbar
+        table={table}
+        handleReviewSelectedTransactions={handleReviewSelectedTransactions}
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

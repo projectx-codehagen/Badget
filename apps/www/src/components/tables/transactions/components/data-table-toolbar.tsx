@@ -14,10 +14,12 @@ import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  handleReviewSelectedTransactions: () => Promise<void>;
 }
 
 export function DataTableToolbar<TData>({
   table,
+  handleReviewSelectedTransactions,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
@@ -108,7 +110,17 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+
       <DataTableViewOptions table={table} />
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={handleReviewSelectedTransactions}
+        disabled={table.getFilteredSelectedRowModel().rows.length === 0}
+        className="ml-2  h-8 lg:flex"
+      >
+        Mark {table.getFilteredSelectedRowModel().rows.length} as reviewed
+      </Button>
     </div>
   );
 }

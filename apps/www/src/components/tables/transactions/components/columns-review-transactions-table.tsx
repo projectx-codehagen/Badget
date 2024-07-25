@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@dingify/ui/components/button";
+import { Checkbox } from "@dingify/ui/components/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +36,28 @@ export interface Transaction {
 
 export const columns: ColumnDef<Transaction>[] = [
   {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => {
@@ -59,6 +82,14 @@ export const columns: ColumnDef<Transaction>[] = [
     },
   },
   {
+    accessorKey: "bankAccount",
+    header: "Account",
+    cell: ({ row }) => row.original.bankAccount.name,
+    filterFn: (row, id, value) => {
+      return value.includes(row.original.bankAccount.id);
+    },
+  },
+  {
     accessorKey: "amount",
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
@@ -69,14 +100,6 @@ export const columns: ColumnDef<Transaction>[] = [
       }).format(amount);
 
       return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "bankAccount",
-    header: "Account",
-    cell: ({ row }) => row.original.bankAccount.name,
-    filterFn: (row, id, value) => {
-      return value.includes(row.original.bankAccount.id);
     },
   },
   {
