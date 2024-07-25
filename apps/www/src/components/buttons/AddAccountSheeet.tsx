@@ -51,7 +51,7 @@ const createAccountSchema = z.object({
 // Type definition for the form data
 type CreateAccount = z.infer<typeof createAccountSchema>;
 
-export function AddAccountSheet({ currentPath }) {
+export function AddAccountSheet({ children, currentPath }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -89,7 +89,8 @@ export function AddAccountSheet({ currentPath }) {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline">Add New Account</Button>
+        {/* <Button variant="outline">Add New Account</Button> */}
+        {children}
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

@@ -34,7 +34,7 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
-        <AddAccountSheet currentPath="/dashboard" />
+        <AddAccountSheet currentPath="/dashboard" children={undefined} />
       </DashboardHeader>
       <div>
         {transactions.length === 0 ? (
@@ -47,7 +47,7 @@ export default async function DashboardPage() {
             <EmptyPlaceholder.Description>
               Let's start with adding some accounts
             </EmptyPlaceholder.Description>
-            <AddAccountSheet currentPath="/dashboard" />
+            <AddAccountSheet currentPath="/dashboard" children={undefined} />
           </EmptyPlaceholder>
         ) : (
           // Render TransactionsTable if there are transactions
@@ -55,7 +55,7 @@ export default async function DashboardPage() {
             <BudgetVsCostChart />
             <AssetVsDebt />
 
-            <div className="col-span-1 lg:col-span-2">
+            <div className="col-span-full lg:col-span-2">
               <TransactionsToReview transactions={reviewTransactions} />
             </div>
           </div>
