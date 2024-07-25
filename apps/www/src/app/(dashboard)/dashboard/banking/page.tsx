@@ -37,8 +37,6 @@ export default async function BankingPage() {
 
   const bankAccounts = await getUserBankAccounts();
   const reviewTransactions = await getTransactionsToReview();
-  console.log(reviewTransactions);
-  console.log(bankAccounts);
 
   return (
     <DashboardShell>

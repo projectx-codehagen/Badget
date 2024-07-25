@@ -64,18 +64,6 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("status") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options={[
-              { label: "Pending", value: "pending" },
-              { label: "Processing", value: "processing" },
-              { label: "Success", value: "success" },
-              { label: "Failed", value: "failed" },
-            ]}
-          />
-        )}
         {table.getColumn("category") && (
           <DataTableFacetedFilter
             column={table.getColumn("category")}

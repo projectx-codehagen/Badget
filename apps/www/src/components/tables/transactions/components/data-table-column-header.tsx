@@ -1,10 +1,10 @@
+import type { Column } from "@tanstack/react-table";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   CaretSortIcon,
   EyeNoneIcon,
 } from "@radix-ui/react-icons";
-import { Column } from "@tanstack/react-table";
 
 import { Button } from "@dingify/ui/components/button";
 import {
