@@ -52,6 +52,11 @@ export const columns: ColumnDef<Transaction>[] = [
       const category = row.original.category;
       return category ? `${category.icon} ${category.name}` : "Uncategorized";
     },
+    filterFn: (row, id, value) => {
+      const category = row.original.category;
+      const categoryName = category ? category.name : "Uncategorized";
+      return value.includes(categoryName);
+    },
   },
   {
     accessorKey: "amount",

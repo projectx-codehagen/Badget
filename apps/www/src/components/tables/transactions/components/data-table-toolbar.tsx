@@ -39,10 +39,12 @@ export function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter transactions..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter descriptions..."
+          value={
+            (table.getColumn("description")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("description")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
@@ -62,10 +64,13 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("category")}
             title="Category"
-            options={categories.map((cat) => ({
-              label: cat.name,
-              value: cat.id,
-            }))}
+            options={[
+              { label: "Uncategorized", value: "Uncategorized" },
+              ...categories.map((cat) => ({
+                label: cat.name,
+                value: cat.name,
+              })),
+            ]}
           />
         )}
         {isFiltered && (
