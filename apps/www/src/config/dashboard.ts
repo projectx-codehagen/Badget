@@ -27,7 +27,6 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/categories",
       title: "Categories",
       icon: "piechart",
-      disabled: true,
     },
     {
       href: "/investment",

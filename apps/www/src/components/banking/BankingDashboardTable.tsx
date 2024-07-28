@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCategories } from "@/actions/get-categories";
+import { getUserCategories } from "@/actions/get-categories";
 import { format, isToday, isYesterday } from "date-fns";
 import { toast } from "sonner";
 
@@ -41,7 +41,8 @@ export default function BankingDashboardTable({
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const fetchedCategories = await getCategories();
+        const fetchedCategories = await getUserCategories();
+        console.log("fetchedCategories", fetchedCategories);
         setCategories(fetchedCategories as any);
       } catch (error) {
         console.error("Failed to fetch categories", error);
