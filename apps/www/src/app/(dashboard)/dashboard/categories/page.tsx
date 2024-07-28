@@ -1,11 +1,15 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserBankAccounts } from "@/actions/get-bankaccounts"; // Adjust the import path as needed
-
 import { getUserCategories } from "@/actions/get-categories";
+import { getUserBudget } from "@/actions/get-user-budget";
+
+import { Button } from "@dingify/ui/components/button";
 
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
 import { AddAccountSheet } from "@/components/buttons/AddAccountSheeet";
+import { BudgetCreationDialog } from "@/components/categories/BudgetCreationDialog";
 import { CategoriesContent } from "@/components/categories/CategoriesContent";
 import { CategoryChart } from "@/components/charts/CategoryChart";
 import { DashboardHeader } from "@/components/dashboard/header";
@@ -18,38 +22,51 @@ export const metadata = {
     "See all your categories in one place and track your finances with ease with Badget",
 };
 
-export default async function BankingPage() {
+export default async function CategoriesPage() {
   const user = await getCurrentUser();
   if (!user) {
     redirect(authOptions.pages?.signIn ?? "/login");
   }
 
-  const bankAccounts = await getUserBankAccounts();
-  const categories = await getUserCategories();
+  const [categories, budget, bankAccounts] = await Promise.all([
+    getUserCategories(),
+    getUserBudget(),
+    getUserBankAccounts(),
+  ]);
 
   return (
     <DashboardShell>
       <DashboardHeader
         heading="Categories"
         text="See your budget and how you spend your money"
-      ></DashboardHeader>
+      />
       <div>
         {bankAccounts.length === 0 ? (
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="post" />
             <EmptyPlaceholder.Title>
-              You dont have a budget
+              You don't have any bank accounts set up
             </EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              Lets make a budget
+              Add a bank account to start tracking your expenses
             </EmptyPlaceholder.Description>
+            <Button asChild>
+              <Link href="/dashboard/accounts">Add Bank Account</Link>
+            </Button>
+          </EmptyPlaceholder>
+        ) : !budget ? (
+          <EmptyPlaceholder>
+            <EmptyPlaceholder.Icon name="user" />
+            <EmptyPlaceholder.Title>
+              You don't have a budget set up
+            </EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Description>
+              Create a budget to start managing your finances
+            </EmptyPlaceholder.Description>
+            <BudgetCreationDialog />
           </EmptyPlaceholder>
         ) : (
-          // <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div className="">
-            {/* <CategoryChart categories={categories} /> */}
-            <CategoriesContent initialCategories={categories} />
-          </div>
+          <CategoriesContent initialCategories={categories} budget={budget} />
         )}
       </div>
     </DashboardShell>

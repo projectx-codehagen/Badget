@@ -3,7 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getCategories } from "@/actions/get-categories";
+import { getCategoriesReview } from "@/actions/get-categories-review";
 import { updateMultipleTransactionReviews } from "@/actions/update-multiple-transactions-review";
 import { updateTransactionReview } from "@/actions/update-transaction-review";
 import {
@@ -51,7 +51,7 @@ export default function TransactionsToReview({ transactions }) {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const fetchedCategories = await getCategories();
+        const fetchedCategories = await getCategoriesReview();
         setCategories(fetchedCategories as any);
       } catch (error) {
         console.error("Failed to fetch categories", error);

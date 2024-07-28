@@ -7,7 +7,7 @@ import type {
   VisibilityState,
 } from "@tanstack/react-table";
 import * as React from "react";
-import { getCategories } from "@/actions/get-categories";
+import { getCategoriesReview } from "@/actions/get-categories-review";
 import { updateMultipleTransactionReviews } from "@/actions/update-multiple-transactions-review";
 import { Category } from "@prisma/client";
 import {
@@ -55,7 +55,7 @@ export function ReviewTransactionsTable<TData, TValue>({
 
   React.useEffect(() => {
     const fetchCategories = async () => {
-      const fetchedCategories = await getCategories();
+      const fetchedCategories = await getCategoriesReview();
       setCategories(fetchedCategories);
     };
     fetchCategories();

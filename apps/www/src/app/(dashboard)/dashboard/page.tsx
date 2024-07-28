@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import { getUserTransactions } from "@/actions/get-transactions";
 import { getTransactionsToReview } from "@/actions/get-transactions-to-review";
 
+import { Button } from "@dingify/ui/components/button";
+
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
 import { AddAccountSheet } from "@/components/buttons/AddAccountSheeet";
@@ -34,7 +36,9 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Your analytics dashboard">
-        <AddAccountSheet currentPath="/dashboard" children={undefined} />
+        <AddAccountSheet currentPath="/dashboard">
+          <Button variant="outline">Add New Account</Button>
+        </AddAccountSheet>
       </DashboardHeader>
       <div>
         {transactions.length === 0 ? (
@@ -47,7 +51,9 @@ export default async function DashboardPage() {
             <EmptyPlaceholder.Description>
               Let's start with adding some accounts
             </EmptyPlaceholder.Description>
-            <AddAccountSheet currentPath="/dashboard" children={undefined} />
+            <AddAccountSheet currentPath="/dashboard">
+              <Button variant="outline">Add New Account</Button>
+            </AddAccountSheet>
           </EmptyPlaceholder>
         ) : (
           // Render TransactionsTable if there are transactions

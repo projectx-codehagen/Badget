@@ -189,10 +189,10 @@ model Budget {
   id         String           @id @default(cuid())
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
-  name       String
-  startDate  DateTime
-  endDate    DateTime
-  amount     Decimal
+  name       String?
+  startDate  DateTime?
+  endDate    DateTime?
+  amount     Decimal?
   userId     String
   user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   categories CategoryBudget[]

@@ -24,8 +24,23 @@ interface Category {
   subCategories?: Category[];
 }
 
+interface Budget {
+  id: string;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  amount: number;
+  categories: {
+    id: string;
+    name: string;
+    icon: string;
+    budget: number;
+  }[];
+}
+
 interface CategoriesContentProps {
   initialCategories: Category[];
+  budget: Budget | null;
 }
 
 interface Transaction {
@@ -38,6 +53,7 @@ interface Transaction {
 
 export function CategoriesContent({
   initialCategories,
+  budget,
 }: CategoriesContentProps) {
   const [categories, setCategories] = useState(initialCategories);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
@@ -54,7 +70,7 @@ export function CategoriesContent({
       setTransactions(
         categoryTransactions.map((transaction) => ({
           ...transaction,
-          category: transaction.category ?? "Uncategorized", // Provide a default value if category is undefined
+          category: transaction.category ?? "Uncategorized",
         })),
       );
     } catch (error) {
@@ -76,6 +92,20 @@ export function CategoriesContent({
         />
       </div>
       <div className="space-y-6">
+        {budget && (
+          <Card>
+            <CardHeader>
+              <CardTitle>{budget.name}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Total Budget: ${budget.amount.toFixed(2)}</p>
+              <p>
+                Period: {new Date(budget.startDate).toLocaleDateString()} -{" "}
+                {new Date(budget.endDate).toLocaleDateString()}
+              </p>
+            </CardContent>
+          </Card>
+        )}
         {selectedCategory && (
           <Card>
             <CardHeader>
