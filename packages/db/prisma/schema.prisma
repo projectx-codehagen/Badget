@@ -58,6 +58,7 @@ model User {
   accounts     Account[]
   sessions     Session[]
   bankAccounts BankAccount[]
+  budgets      Budget[]
 
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
@@ -170,17 +171,47 @@ model Transaction {
 }
 
 model Category {
-  id           String        @id @default(cuid())
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @default(now())
+  id           String           @id @default(cuid())
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
   name         String
   icon         String
   userId       String
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions Transaction[]
+  budgets      CategoryBudget[]
 
   @@unique([name, userId])
   @@map(name: "categories")
+}
+
+model Budget {
+  id         String           @id @default(cuid())
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  name       String
+  startDate  DateTime
+  endDate    DateTime
+  amount     Decimal
+  userId     String
+  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categories CategoryBudget[]
+
+  @@map(name: "budgets")
+}
+
+model CategoryBudget {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  amount     Decimal
+  budgetId   String
+  categoryId String
+  budget     Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([budgetId, categoryId])
+  @@map(name: "category_budgets")
 }
 
 model ConnectorConfig {

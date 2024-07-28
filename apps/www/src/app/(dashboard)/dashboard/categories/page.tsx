@@ -31,7 +31,7 @@ export default async function BankingPage() {
     <DashboardShell>
       <DashboardHeader
         heading="Categories"
-        text="See your budget and how you spend ypur money"
+        text="See your budget and how you spend your money"
       ></DashboardHeader>
       <div>
         {bankAccounts.length === 0 ? (

@@ -23,6 +23,8 @@ interface CategoryData {
   id: string;
   name: string;
   icon: string;
+  spent: number;
+  budget: number;
   _count: { transactions: number };
 }
 
@@ -43,6 +45,14 @@ export function CategoryChart({ categories }: CategoryChartProps) {
     return chartData.reduce((acc, curr) => acc + curr.value, 0);
   }, [chartData]);
 
+  const totalSpent = React.useMemo(() => {
+    return categories.reduce((sum, cat) => sum + cat.spent, 0);
+  }, [categories]);
+
+  const totalBudget = React.useMemo(() => {
+    return categories.reduce((sum, cat) => sum + cat.budget, 0);
+  }, [categories]);
+
   const chartConfig = React.useMemo(() => {
     const config: ChartConfig = {
       value: { label: "Transactions" },
@@ -57,15 +67,25 @@ export function CategoryChart({ categories }: CategoryChartProps) {
   }, [categories]);
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Category Distribution</CardTitle>
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">Category Distribution</CardTitle>
         <CardDescription>Transaction count per category</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="pb-2">
+        <div className="flex justify-between">
+          <div>
+            <p className="text-sm text-muted-foreground">Total Spent</p>
+            <p className="text-2xl font-semibold">${totalSpent.toFixed(2)}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-muted-foreground">Total Budget</p>
+            <p className="text-2xl font-semibold">${totalBudget.toFixed(2)}</p>
+          </div>
+        </div>
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square h-[200px]"
         >
           <PieChart>
             <ChartTooltip
@@ -99,7 +119,7 @@ export function CategoryChart({ categories }: CategoryChartProps) {
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
+                          className="fill-muted-foreground text-sm"
                         >
                           Transactions
                         </tspan>
@@ -112,11 +132,11 @@ export function CategoryChart({ categories }: CategoryChartProps) {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
+      <CardFooter className="flex-col items-center gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
           You have X% left in your budget <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
+        <div className="text-center text-xs text-muted-foreground">
           Showing transaction distribution across categories
         </div>
       </CardFooter>

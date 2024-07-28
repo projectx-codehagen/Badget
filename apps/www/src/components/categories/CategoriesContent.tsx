@@ -51,7 +51,12 @@ export function CategoriesContent({
       const categoryTransactions = await getTransactionsForCategory(
         category.id,
       );
-      setTransactions(categoryTransactions);
+      setTransactions(
+        categoryTransactions.map((transaction) => ({
+          ...transaction,
+          category: transaction.category ?? "Uncategorized", // Provide a default value if category is undefined
+        })),
+      );
     } catch (error) {
       console.error("Failed to fetch transactions:", error);
       setTransactions([]);
@@ -65,38 +70,18 @@ export function CategoriesContent({
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       <div className="space-y-6">
         <CategoryChart categories={categories} />
-
         <RegularCategoriesTable
           categories={categories}
           onCategorySelect={handleCategorySelect}
         />
       </div>
       <div className="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Summary</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm text-muted-foreground">Total Spent</p>
-                <p className="text-2xl font-semibold">
-                  ${totalSpent.toFixed(2)}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Total Budget</p>
-                <p className="text-2xl font-semibold">
-                  ${totalBudget.toFixed(2)}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
         {selectedCategory && (
           <Card>
             <CardHeader>
-              <CardTitle>{selectedCategory.name}</CardTitle>
+              <CardTitle>
+                {selectedCategory.icon} {selectedCategory.name}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
