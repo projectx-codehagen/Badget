@@ -1,23 +1,20 @@
 import { Edit, File, ListFilter, PlusCircle } from "lucide-react";
 
 import { Button } from "@dingify/ui/components/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@dingify/ui/components/dropdown-menu";
 
 import { BudgetDialog } from "./BudgetCreationDialog";
 
-interface Budget {
+export interface Budget {
   id: string;
-  name: string;
+  name: string | null;
+  startDate: Date | null;
+  endDate: Date | null;
+  amount: number;
   categories: {
     id: string;
-    amount: number;
+    name: string;
+    icon: string;
+    budget: number;
   }[];
 }
 

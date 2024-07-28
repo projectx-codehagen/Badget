@@ -81,16 +81,18 @@ export function CategorySpendingChart({
             <Tooltip
               cursor={false}
               content={({ active, payload }) => {
-                if (active && payload && payload.length) {
+                if (active && payload?.length) {
+                  const data = payload[0]?.payload;
                   return (
                     <div className="rounded-lg bg-background p-2 shadow-md">
                       <p className="font-semibold">
-                        {new Date(payload[0].payload.date).toLocaleDateString(
-                          "en-US",
-                          { month: "long", day: "numeric", year: "numeric" },
-                        )}
+                        {new Date(data.date).toLocaleDateString("en-US", {
+                          month: "long",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
                       </p>
-                      <p>${payload[0].value.toFixed(2)}</p>
+                      <p>${data.amount.toFixed(2)}</p>
                     </div>
                   );
                 }

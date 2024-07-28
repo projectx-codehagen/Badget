@@ -27,9 +27,9 @@ interface Category {
 
 interface Budget {
   id: string;
-  name: string;
-  startDate: Date;
-  endDate: Date;
+  name: string | null;
+  startDate: Date | null;
+  endDate: Date | null;
   amount: number;
   categories: {
     id: string;
@@ -106,7 +106,10 @@ export function CategoriesContent({
   // Effect to select the first category by default
   useEffect(() => {
     if (categories.length > 0 && !selectedCategory) {
-      handleCategorySelect(categories[0]);
+      const firstCategory = categories[0];
+      if (firstCategory) {
+        handleCategorySelect(firstCategory);
+      }
     }
   }, [categories, selectedCategory, handleCategorySelect]);
 

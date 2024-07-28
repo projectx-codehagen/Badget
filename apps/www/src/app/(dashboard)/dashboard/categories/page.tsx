@@ -9,7 +9,7 @@ import { Button } from "@dingify/ui/components/button";
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
 import { AddAccountSheet } from "@/components/buttons/AddAccountSheeet";
-import { BudgetCreationDialog } from "@/components/categories/BudgetCreationDialog";
+import { BudgetDialog } from "@/components/categories/BudgetCreationDialog";
 import { CategoriesContent } from "@/components/categories/CategoriesContent";
 import { CategoriesDropdownMenu } from "@/components/categories/CategoriesDropdownMenu";
 import { CategoryChart } from "@/components/charts/CategoryChart";
@@ -61,14 +61,16 @@ export default async function CategoriesPage() {
           </EmptyPlaceholder>
         ) : !budget ? (
           <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="user" />
+            <EmptyPlaceholder.Icon name="Coins" />
             <EmptyPlaceholder.Title>
               You don't have a budget set up
             </EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
               Create a budget to start managing your finances
             </EmptyPlaceholder.Description>
-            <BudgetCreationDialog />
+            <BudgetDialog existingBudget={undefined}>
+              <Button>Create Budget</Button>
+            </BudgetDialog>
           </EmptyPlaceholder>
         ) : (
           <CategoriesContent initialCategories={categories} budget={budget} />

@@ -38,7 +38,9 @@ interface Category {
 
 interface Budget {
   id: string;
-  name: string;
+  name: string | null;
+  startDate: Date | null;
+  endDate: Date | null;
   categories: {
     id: string;
     amount: number;
@@ -70,7 +72,7 @@ export function BudgetDialog({ existingBudget, children }: BudgetDialogProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      budgetName: existingBudget?.name || "",
+      budgetName: existingBudget?.name ?? "",
       categories:
         existingBudget?.categories.reduce(
           (acc, cat) => {
@@ -78,7 +80,7 @@ export function BudgetDialog({ existingBudget, children }: BudgetDialogProps) {
             return acc;
           },
           {} as Record<string, number>,
-        ) || {},
+        ) ?? {},
     },
   });
 

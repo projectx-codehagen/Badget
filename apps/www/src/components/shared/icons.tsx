@@ -10,6 +10,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  Coins,
   CreditCard,
   File,
   FileText,
@@ -76,6 +77,7 @@ export const Icons = {
   Building: Building,
   Sprout: Sprout,
   CreditCard: CreditCard,
+  Coins: Coins,
 
   gitHub: ({ ...props }: LucideProps) => (
     <svg
