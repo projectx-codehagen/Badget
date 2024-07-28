@@ -26,11 +26,13 @@ interface Category {
 interface RegularCategoriesTableProps {
   categories: Category[];
   onCategorySelect: (category: Category) => void;
+  selectedCategoryId?: string;
 }
 
 export function RegularCategoriesTable({
   categories,
   onCategorySelect,
+  selectedCategoryId,
 }: RegularCategoriesTableProps) {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(),
@@ -63,6 +65,10 @@ export function RegularCategoriesTable({
           onClick={() => {
             onCategorySelect(category);
             if (hasSubCategories) toggleCategory(category.id);
+          }}
+          style={{
+            backgroundColor:
+              selectedCategoryId === category.id ? "var(--muted)" : "",
           }}
         >
           <TableCell

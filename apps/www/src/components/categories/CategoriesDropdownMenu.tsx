@@ -30,7 +30,7 @@ export function CategoriesDropdownMenu({
 }: CategoriesDropdownMenuProps) {
   return (
     <div className="flex items-center gap-2">
-      <DropdownMenu>
+      {/* <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm" className="h-8 gap-1">
             <ListFilter className="h-3.5 w-3.5" />
@@ -54,7 +54,7 @@ export function CategoriesDropdownMenu({
         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
           Export
         </span>
-      </Button>
+      </Button> */}
       <BudgetDialog existingBudget={budget}>
         <Button size="sm" className="h-8 gap-1">
           {budget ? (

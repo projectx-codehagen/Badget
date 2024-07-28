@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getTransactionsForCategory } from "@/actions/get-transactions-for-category";
 
 import {
@@ -103,6 +103,13 @@ export function CategoriesContent({
     }
   }, []);
 
+  // Effect to select the first category by default
+  useEffect(() => {
+    if (categories.length > 0 && !selectedCategory) {
+      handleCategorySelect(categories[0]);
+    }
+  }, [categories, selectedCategory, handleCategorySelect]);
+
   // Merge budget information with categories
   const categoriesWithBudget = categories.map((category) => {
     const budgetCategory = budget?.categories.find(
@@ -130,6 +137,7 @@ export function CategoriesContent({
         <RegularCategoriesTable
           categories={categoriesWithBudget}
           onCategorySelect={handleCategorySelect}
+          selectedCategoryId={selectedCategory?.id}
         />
       </div>
       <div className="space-y-6">
