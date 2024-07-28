@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { calculateSuggestedBudget } from "@/actions/calculate-suggested-budget";
 import { createBudget } from "@/actions/create-budget";
 import { getCategoriesReview } from "@/actions/get-categories-review";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -49,6 +50,7 @@ export function BudgetCreationDialog() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -101,6 +103,28 @@ export function BudgetCreationDialog() {
     }
   };
 
+  const handleAutomaticBudget = async () => {
+    setIsCalculating(true);
+    try {
+      const suggestedBudget = await calculateSuggestedBudget();
+      const categoryBudgets = suggestedBudget.reduce(
+        (acc, category) => {
+          acc[category.id] = category.suggestedAmount;
+          return acc;
+        },
+        {} as Record<string, number>,
+      );
+
+      form.setValue("categories", categoryBudgets);
+      toast.success("Automatic budget calculated and applied!");
+    } catch (error) {
+      console.error("Error calculating automatic budget:", error);
+      toast.error("Failed to calculate automatic budget. Please try again.");
+    } finally {
+      setIsCalculating(false);
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -113,6 +137,17 @@ export function BudgetCreationDialog() {
             Set up your budget based on your categories.
           </DialogDescription>
         </DialogHeader>
+        <div className="mb-4 text-sm text-gray-500">
+          {/* <p>
+            You can manually set your budget for each category or use the
+            "Automatic Budget" feature.
+          </p> */}
+          <p className="mt-2">
+            The automatic budget will analyze your transactions from the last
+            month and suggest budget amounts for each category based on your
+            spending habits.
+          </p>
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
@@ -128,6 +163,7 @@ export function BudgetCreationDialog() {
                 </FormItem>
               )}
             />
+
             {isLoading ? (
               <p>Loading categories...</p>
             ) : (
@@ -164,6 +200,14 @@ export function BudgetCreationDialog() {
               </div>
             )}
             <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleAutomaticBudget}
+                disabled={isCalculating}
+              >
+                {isCalculating ? "Calculating..." : "Automatic Budget"}
+              </Button>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Creating..." : "Create Budget"}
               </Button>

@@ -21,42 +21,34 @@ export async function createBudget(data: BudgetData) {
   endDate.setFullYear(endDate.getFullYear() + 5);
 
   try {
-    // Start a transaction
-    const result = await prisma.$transaction(async (prisma) => {
-      // Create the budget
-      const budget = await prisma.budget.create({
-        data: {
-          name: data.budgetName,
-          startDate,
-          endDate,
-          amount: Object.values(data.categories).reduce(
-            (sum, amount) => sum + amount,
-            0,
-          ),
-          userId: user.id,
-        },
-      });
-
-      // Create category budgets
-      const categoryBudgets = await Promise.all(
-        Object.entries(data.categories).map(([categoryId, amount]) =>
-          prisma.categoryBudget.create({
-            data: {
-              amount,
-              budgetId: budget.id,
-              categoryId,
-            },
-          }),
+    const budget = await prisma.budget.create({
+      data: {
+        name: data.budgetName,
+        startDate,
+        endDate,
+        amount: Object.values(data.categories).reduce(
+          (sum, amount) => sum + amount,
+          0,
         ),
-      );
-
-      return { budget, categoryBudgets };
+        userId: user.id,
+        categories: {
+          create: Object.entries(data.categories).map(
+            ([categoryId, amount]) => ({
+              amount,
+              categoryId,
+            }),
+          ),
+        },
+      },
+      include: {
+        categories: true,
+      },
     });
 
     // Revalidate the categories page to reflect the new budget
     revalidatePath("/dashboard/categories");
 
-    return { success: true, data: result };
+    return { success: true, data: budget };
   } catch (error) {
     console.error("Error creating budget:", error);
     return { success: false, error: "Failed to create budget" };
