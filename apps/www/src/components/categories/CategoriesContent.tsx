@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import { getTransactionsForCategory } from "@/actions/get-transactions-for-category";
 
 import {
   Card,
@@ -11,6 +12,7 @@ import {
 
 import { CategoryChart } from "../charts/CategoryChart";
 import { RegularCategoriesTable } from "./RegularCategoriesTable";
+import { TransactionTable } from "./TransactionTable";
 
 interface Category {
   id: string;
@@ -26,6 +28,14 @@ interface CategoriesContentProps {
   initialCategories: Category[];
 }
 
+interface Transaction {
+  id: string;
+  date: Date;
+  description: string;
+  category: string;
+  amount: number;
+}
+
 export function CategoriesContent({
   initialCategories,
 }: CategoriesContentProps) {
@@ -33,10 +43,20 @@ export function CategoriesContent({
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null,
   );
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  const handleCategorySelect = (category: Category) => {
+  const handleCategorySelect = useCallback(async (category: Category) => {
     setSelectedCategory(category);
-  };
+    try {
+      const categoryTransactions = await getTransactionsForCategory(
+        category.id,
+      );
+      setTransactions(categoryTransactions);
+    } catch (error) {
+      console.error("Failed to fetch transactions:", error);
+      setTransactions([]);
+    }
+  }, []);
 
   const totalSpent = categories.reduce((sum, cat) => sum + cat.spent, 0);
   const totalBudget = categories.reduce((sum, cat) => sum + cat.budget, 0);
@@ -45,6 +65,7 @@ export function CategoriesContent({
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       <div className="space-y-6">
         <CategoryChart categories={categories} />
+
         <RegularCategoriesTable
           categories={categories}
           onCategorySelect={handleCategorySelect}
@@ -78,20 +99,33 @@ export function CategoriesContent({
               <CardTitle>{selectedCategory.name}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
-                <p>
-                  <span className="font-semibold">Spent:</span> $
-                  {selectedCategory.spent.toFixed(2)}
-                </p>
-                <p>
-                  <span className="font-semibold">Budget:</span> $
-                  {selectedCategory.budget.toFixed(2)}
-                </p>
-                <p>
-                  <span className="font-semibold">Transactions:</span>{" "}
-                  {selectedCategory._count.transactions}
-                </p>
-                {/* Add more details here as needed */}
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Spent</p>
+                    <p className="text-xl font-semibold">
+                      ${selectedCategory.spent.toFixed(2)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Budget</p>
+                    <p className="text-xl font-semibold">
+                      ${selectedCategory.budget.toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Transactions</p>
+                  <p className="text-xl font-semibold">
+                    {selectedCategory._count.transactions}
+                  </p>
+                </div>
+                <div>
+                  <h3 className="mb-2 text-lg font-semibold">
+                    Recent Transactions
+                  </h3>
+                  <TransactionTable transactions={transactions} />
+                </div>
               </div>
             </CardContent>
           </Card>
