@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { TrendingUp } from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 
 import type { ChartConfig } from "@dingify/ui/components/chart";
@@ -52,6 +52,23 @@ export function CategoryChart({ categories }: CategoryChartProps) {
   const totalBudget = React.useMemo(() => {
     return categories.reduce((sum, cat) => sum + cat.budget, 0);
   }, [categories]);
+
+  const budgetRemaining = React.useMemo(() => {
+    return totalBudget - totalSpent;
+  }, [totalBudget, totalSpent]);
+
+  const percentRemaining = React.useMemo(() => {
+    return totalBudget > 0 ? (budgetRemaining / totalBudget) * 100 : 0;
+  }, [budgetRemaining, totalBudget]);
+
+  const formattedBudgetRemaining = React.useMemo(() => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(budgetRemaining);
+  }, [budgetRemaining]);
 
   const chartConfig = React.useMemo(() => {
     const config: ChartConfig = {
@@ -134,10 +151,15 @@ export function CategoryChart({ categories }: CategoryChartProps) {
       </CardContent>
       <CardFooter className="flex-col items-center gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-          You have X% left in your budget <TrendingUp className="h-4 w-4" />
+          You have {formattedBudgetRemaining} left in your budget{" "}
+          {percentRemaining > 0 ? (
+            <TrendingUp className="h-4 w-4 text-green-500" />
+          ) : (
+            <TrendingDown className="h-4 w-4 text-red-500" />
+          )}
         </div>
         <div className="text-center text-xs text-muted-foreground">
-          Showing transaction distribution across categories
+          {percentRemaining.toFixed(1)}% of budget remaining
         </div>
       </CardFooter>
     </Card>

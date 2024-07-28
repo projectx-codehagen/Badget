@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 
@@ -12,7 +14,7 @@ interface UpdateBudgetData {
 export async function updateBudget(data: UpdateBudgetData) {
   const user = await getCurrentUser();
   if (!user) {
-    throw new Error("User not authenticated");
+    return { success: false, error: "User not authenticated" };
   }
 
   try {
@@ -34,6 +36,8 @@ export async function updateBudget(data: UpdateBudgetData) {
         categories: true,
       },
     });
+
+    revalidatePath("/dashboard/categories");
 
     return { success: true, data: updatedBudget };
   } catch (error) {

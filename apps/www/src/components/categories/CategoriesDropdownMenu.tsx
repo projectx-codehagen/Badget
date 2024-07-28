@@ -1,4 +1,4 @@
-import { File, ListFilter, PlusCircle } from "lucide-react";
+import { Edit, File, ListFilter, PlusCircle } from "lucide-react";
 
 import { Button } from "@dingify/ui/components/button";
 import {
@@ -10,12 +10,27 @@ import {
   DropdownMenuTrigger,
 } from "@dingify/ui/components/dropdown-menu";
 
-import { BudgetCreationDialog } from "./BudgetCreationDialog";
+import { BudgetDialog } from "./BudgetCreationDialog";
 
-export function CategoriesDropdownMenu() {
+interface Budget {
+  id: string;
+  name: string;
+  categories: {
+    id: string;
+    amount: number;
+  }[];
+}
+
+interface CategoriesDropdownMenuProps {
+  budget: Budget | null;
+}
+
+export function CategoriesDropdownMenu({
+  budget,
+}: CategoriesDropdownMenuProps) {
   return (
     <div className="flex items-center gap-2">
-      {/* <DropdownMenu>
+      <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm" className="h-8 gap-1">
             <ListFilter className="h-3.5 w-3.5" />
@@ -33,20 +48,25 @@ export function CategoriesDropdownMenu() {
           <DropdownMenuCheckboxItem>Budgeted</DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem>Unbudgeted</DropdownMenuCheckboxItem>
         </DropdownMenuContent>
-      </DropdownMenu> */}
+      </DropdownMenu>
       <Button size="sm" variant="outline" className="h-8 gap-1">
         <File className="h-3.5 w-3.5" />
         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          Edit
+          Export
         </span>
       </Button>
-      <Button size="sm" className="h-8 gap-1">
-        <PlusCircle className="h-3.5 w-3.5" />
-        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          Create Budget
-        </span>
-      </Button>
-      {/* <BudgetCreationDialog /> */}
+      <BudgetDialog existingBudget={budget}>
+        <Button size="sm" className="h-8 gap-1">
+          {budget ? (
+            <Edit className="h-3.5 w-3.5" />
+          ) : (
+            <PlusCircle className="h-3.5 w-3.5" />
+          )}
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            {budget ? "Edit Budget" : "Create Budget"}
+          </span>
+        </Button>
+      </BudgetDialog>
     </div>
   );
 }

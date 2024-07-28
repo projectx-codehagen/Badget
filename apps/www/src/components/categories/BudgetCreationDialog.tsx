@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { calculateSuggestedBudget } from "@/actions/calculate-suggested-budget";
 import { createBudget } from "@/actions/create-budget";
 import { getCategoriesReview } from "@/actions/get-categories-review";
+import { updateBudget } from "@/actions/update-budget";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -35,6 +36,15 @@ interface Category {
   icon: string;
 }
 
+interface Budget {
+  id: string;
+  name: string;
+  categories: {
+    id: string;
+    amount: number;
+  }[];
+}
+
 const FormSchema = z.object({
   budgetName: z
     .string()
@@ -45,7 +55,12 @@ const FormSchema = z.object({
   ),
 });
 
-export function BudgetCreationDialog() {
+interface BudgetDialogProps {
+  existingBudget?: Budget;
+  children: React.ReactNode;
+}
+
+export function BudgetDialog({ existingBudget, children }: BudgetDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,8 +70,15 @@ export function BudgetCreationDialog() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      budgetName: "",
-      categories: {},
+      budgetName: existingBudget?.name || "",
+      categories:
+        existingBudget?.categories.reduce(
+          (acc, cat) => {
+            acc[cat.id] = cat.amount;
+            return acc;
+          },
+          {} as Record<string, number>,
+        ) || {},
     },
   });
 
@@ -66,14 +88,16 @@ export function BudgetCreationDialog() {
       getCategoriesReview()
         .then((fetchedCategories) => {
           setCategories(fetchedCategories);
-          const categoryDefaults = fetchedCategories.reduce(
-            (acc, category) => {
-              acc[category.id] = 0;
-              return acc;
-            },
-            {} as Record<string, number>,
-          );
-          form.reset({ ...form.getValues(), categories: categoryDefaults });
+          if (!existingBudget) {
+            const categoryDefaults = fetchedCategories.reduce(
+              (acc, category) => {
+                acc[category.id] = 0;
+                return acc;
+              },
+              {} as Record<string, number>,
+            );
+            form.reset({ ...form.getValues(), categories: categoryDefaults });
+          }
         })
         .catch((error) => {
           console.error("Failed to fetch categories:", error);
@@ -81,22 +105,36 @@ export function BudgetCreationDialog() {
         })
         .finally(() => setIsLoading(false));
     }
-  }, [isOpen, categories.length, form]);
+  }, [isOpen, categories.length, form, existingBudget]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsSubmitting(true);
     try {
-      const result = await createBudget(data);
+      let result;
+      if (existingBudget) {
+        result = await updateBudget({ ...data, id: existingBudget.id });
+      } else {
+        result = await createBudget(data);
+      }
+
       if (result.success) {
-        toast.success("Budget created successfully!");
+        toast.success(
+          existingBudget
+            ? "Budget updated successfully!"
+            : "Budget created successfully!",
+        );
         setIsOpen(false);
       } else {
         toast.error(
-          result.error ?? "Failed to create budget. Please try again.",
+          result.error ??
+            `Failed to ${existingBudget ? "update" : "create"} budget. Please try again.`,
         );
       }
     } catch (error) {
-      console.error("Error creating budget:", error);
+      console.error(
+        `Error ${existingBudget ? "updating" : "creating"} budget:`,
+        error,
+      );
       toast.error("An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -127,21 +165,19 @@ export function BudgetCreationDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">Create Budget</Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
-          <DialogTitle>Create New Budget</DialogTitle>
+          <DialogTitle>
+            {existingBudget ? "Edit Budget" : "Create New Budget"}
+          </DialogTitle>
           <DialogDescription>
-            Set up your budget based on your categories.
+            {existingBudget
+              ? "Modify your existing budget."
+              : "Set up your budget based on your categories."}
           </DialogDescription>
         </DialogHeader>
         <div className="mb-4 text-sm text-gray-500">
-          {/* <p>
-            You can manually set your budget for each category or use the
-            "Automatic Budget" feature.
-          </p> */}
           <p className="mt-2">
             The automatic budget will analyze your transactions from the last
             month and suggest budget amounts for each category based on your
@@ -209,7 +245,13 @@ export function BudgetCreationDialog() {
                 {isCalculating ? "Calculating..." : "Automatic Budget"}
               </Button>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Creating..." : "Create Budget"}
+                {isSubmitting
+                  ? existingBudget
+                    ? "Updating..."
+                    : "Creating..."
+                  : existingBudget
+                    ? "Update Budget"
+                    : "Create Budget"}
               </Button>
             </DialogFooter>
           </form>

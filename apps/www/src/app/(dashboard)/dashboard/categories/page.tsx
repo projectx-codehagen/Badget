@@ -43,7 +43,7 @@ export default async function CategoriesPage() {
       />
       <div className="-mb-4 flex items-center justify-between">
         <div></div>
-        <CategoriesDropdownMenu />
+        <CategoriesDropdownMenu budget={budget} />
       </div>
       <div>
         {bankAccounts.length === 0 ? (
