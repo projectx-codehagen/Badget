@@ -43,7 +43,7 @@ interface Budget {
   endDate: Date | null;
   categories: {
     id: string;
-    amount: number;
+    budget: number;
   }[];
 }
 
@@ -73,14 +73,7 @@ export function BudgetDialog({ existingBudget, children }: BudgetDialogProps) {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       budgetName: existingBudget?.name ?? "",
-      categories:
-        existingBudget?.categories.reduce(
-          (acc, cat) => {
-            acc[cat.id] = cat.amount;
-            return acc;
-          },
-          {} as Record<string, number>,
-        ) ?? {},
+      categories: {},
     },
   });
 
@@ -90,16 +83,21 @@ export function BudgetDialog({ existingBudget, children }: BudgetDialogProps) {
       getCategoriesReview()
         .then((fetchedCategories) => {
           setCategories(fetchedCategories);
-          if (!existingBudget) {
-            const categoryDefaults = fetchedCategories.reduce(
-              (acc, category) => {
-                acc[category.id] = 0;
-                return acc;
-              },
-              {} as Record<string, number>,
-            );
-            form.reset({ ...form.getValues(), categories: categoryDefaults });
-          }
+          const categoryValues = fetchedCategories.reduce(
+            (acc, category) => {
+              const existingCategory = existingBudget?.categories.find(
+                (c) => c.id === category.id,
+              );
+              acc[category.id] = existingCategory?.budget ?? 0;
+              return acc;
+            },
+            {} as Record<string, number>,
+          );
+
+          form.reset({
+            budgetName: existingBudget?.name ?? "",
+            categories: categoryValues,
+          });
         })
         .catch((error) => {
           console.error("Failed to fetch categories:", error);

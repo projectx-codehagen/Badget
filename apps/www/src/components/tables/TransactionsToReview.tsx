@@ -2,6 +2,7 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getCategoriesReview } from "@/actions/get-categories-review";
 import { updateMultipleTransactionReviews } from "@/actions/update-multiple-transactions-review";
@@ -13,7 +14,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Check } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@dingify/ui/components/button";
@@ -178,9 +179,24 @@ export default function TransactionsToReview({ transactions }) {
   return (
     <div className="flex items-center">
       <Card>
-        <CardHeader className="px-7">
-          <CardTitle>Transactions to Review</CardTitle>
-          <CardDescription>Review your recent transactions.</CardDescription>
+        <CardHeader className="flex flex-row items-center px-7">
+          <div>
+            <CardTitle>Transactions to Review</CardTitle>
+            <CardDescription>Review your recent transactions.</CardDescription>
+          </div>
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="ml-auto gap-1 text-sm text-muted-foreground"
+          >
+            <Link href="/dashboard/banking">
+              <span className="flex items-center">
+                Review
+                <ArrowUpRight className="ml-1 h-4 w-4" />
+              </span>
+            </Link>
+          </Button>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
