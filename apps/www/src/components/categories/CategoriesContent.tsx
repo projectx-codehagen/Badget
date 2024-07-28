@@ -11,6 +11,7 @@ import {
 } from "@dingify/ui/components/card";
 
 import { CategoryChart } from "../charts/CategoryChart";
+import { CategorySpendingChart } from "./CategorySpendingChart";
 import { RegularCategoriesTable } from "./RegularCategoriesTable";
 import { TransactionTable } from "./TransactionTable";
 
@@ -60,6 +61,9 @@ export function CategoriesContent({
     null,
   );
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [categorySpendingData, setCategorySpendingData] = useState<
+    { month: string; amount: number }[]
+  >([]);
 
   const handleCategorySelect = useCallback(async (category: Category) => {
     setSelectedCategory(category);
@@ -73,77 +77,109 @@ export function CategoriesContent({
           category: transaction.category ?? "Uncategorized",
         })),
       );
+
+      // Calculate monthly spending data
+      const monthlySpending = categoryTransactions.reduce(
+        (acc, transaction) => {
+          const month = new Date(transaction.date)
+            .toLocaleString("default", { month: "short" })
+            .charAt(0);
+          acc[month] = (acc[month] || 0) + transaction.amount;
+          return acc;
+        },
+        {} as Record<string, number>,
+      );
+
+      setCategorySpendingData(
+        Object.entries(monthlySpending).map(([month, amount]) => ({
+          month,
+          amount,
+        })),
+      );
     } catch (error) {
       console.error("Failed to fetch transactions:", error);
       setTransactions([]);
+      setCategorySpendingData([]);
     }
   }, []);
 
-  const totalSpent = categories.reduce((sum, cat) => sum + cat.spent, 0);
-  const totalBudget = categories.reduce((sum, cat) => sum + cat.budget, 0);
+  // Merge budget information with categories
+  const categoriesWithBudget = categories.map((category) => {
+    const budgetCategory = budget?.categories.find(
+      (bc) => bc.id === category.id,
+    );
+    return {
+      ...category,
+      budget: budgetCategory?.budget ?? 0,
+    };
+  });
+
+  const totalSpent = categoriesWithBudget.reduce(
+    (sum, cat) => sum + cat.spent,
+    0,
+  );
+  const totalBudget = categoriesWithBudget.reduce(
+    (sum, cat) => sum + cat.budget,
+    0,
+  );
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       <div className="space-y-6">
-        <CategoryChart categories={categories} />
+        <CategoryChart categories={categoriesWithBudget} />
         <RegularCategoriesTable
-          categories={categories}
+          categories={categoriesWithBudget}
           onCategorySelect={handleCategorySelect}
         />
       </div>
       <div className="space-y-6">
-        {budget && (
-          <Card>
-            <CardHeader>
-              <CardTitle>{budget.name}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>Total Budget: ${budget.amount.toFixed(2)}</p>
-              <p>
-                Period: {new Date(budget.startDate).toLocaleDateString()} -{" "}
-                {new Date(budget.endDate).toLocaleDateString()}
-              </p>
-            </CardContent>
-          </Card>
-        )}
         {selectedCategory && (
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                {selectedCategory.icon} {selectedCategory.name}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+          <>
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  {selectedCategory.icon} {selectedCategory.name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Spent</p>
+                      <p className="text-xl font-semibold">
+                        ${selectedCategory.spent.toFixed(2)}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Budget</p>
+                      <p className="text-xl font-semibold">
+                        ${selectedCategory.budget.toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Spent</p>
+                    <p className="text-sm text-muted-foreground">
+                      Transactions
+                    </p>
                     <p className="text-xl font-semibold">
-                      ${selectedCategory.spent.toFixed(2)}
+                      {selectedCategory._count.transactions}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Budget</p>
-                    <p className="text-xl font-semibold">
-                      ${selectedCategory.budget.toFixed(2)}
-                    </p>
+                    <h3 className="mb-2 text-lg font-semibold">
+                      Recent Transactions
+                    </h3>
+                    <TransactionTable transactions={transactions} />
                   </div>
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Transactions</p>
-                  <p className="text-xl font-semibold">
-                    {selectedCategory._count.transactions}
-                  </p>
-                </div>
-                <div>
-                  <h3 className="mb-2 text-lg font-semibold">
-                    Recent Transactions
-                  </h3>
-                  <TransactionTable transactions={transactions} />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+            {/* <CategorySpendingChart
+              categoryName={selectedCategory.name}
+              spendingData={categorySpendingData}
+              budget={selectedCategory.budget}
+            /> */}
+          </>
         )}
       </div>
     </div>

@@ -11,6 +11,7 @@ import { getCurrentUser } from "@/lib/session";
 import { AddAccountSheet } from "@/components/buttons/AddAccountSheeet";
 import { BudgetCreationDialog } from "@/components/categories/BudgetCreationDialog";
 import { CategoriesContent } from "@/components/categories/CategoriesContent";
+import { CategoriesDropdownMenu } from "@/components/categories/CategoriesDropdownMenu";
 import { CategoryChart } from "@/components/charts/CategoryChart";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
@@ -40,6 +41,10 @@ export default async function CategoriesPage() {
         heading="Categories"
         text="See your budget and how you spend your money"
       />
+      <div className="-mb-4 flex items-center justify-between">
+        <div></div>
+        <CategoriesDropdownMenu />
+      </div>
       <div>
         {bankAccounts.length === 0 ? (
           <EmptyPlaceholder>
@@ -51,7 +56,7 @@ export default async function CategoriesPage() {
               Add a bank account to start tracking your expenses
             </EmptyPlaceholder.Description>
             <Button asChild>
-              <Link href="/dashboard/accounts">Add Bank Account</Link>
+              <Link href="/dashboard/banking">Add Bank Account</Link>
             </Button>
           </EmptyPlaceholder>
         ) : !budget ? (

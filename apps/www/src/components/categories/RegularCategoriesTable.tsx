@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
+import { Progress } from "@dingify/ui/components/progress";
 import {
   Table,
   TableBody,
@@ -52,6 +53,9 @@ export function RegularCategoriesTable({
     const hasSubCategories =
       category.subCategories && category.subCategories.length > 0;
 
+    const progress =
+      category.budget > 0 ? (category.spent / category.budget) * 100 : 0;
+
     return (
       <React.Fragment key={category.id}>
         <TableRow
@@ -76,9 +80,17 @@ export function RegularCategoriesTable({
           <TableCell className="text-right">
             ${category.spent.toFixed(2)}
           </TableCell>
+          <TableCell>
+            <Progress value={progress} className="w-full" />
+            <span className="text-xs text-gray-500">{`${progress.toFixed(2)}%`}</span>
+          </TableCell>
           <TableCell className="text-right">
             ${category.budget.toFixed(2)}
           </TableCell>
+
+          {/* <TableCell className="text-right">
+            {category._count.transactions}
+          </TableCell> */}
         </TableRow>
         {isExpanded &&
           category.subCategories?.map((subCategory) =>
@@ -94,6 +106,7 @@ export function RegularCategoriesTable({
         <TableRow>
           <TableHead>Regular Categories</TableHead>
           <TableHead className="text-right">SPENT</TableHead>
+          <TableHead className="text-right">PROGRESS</TableHead>
           <TableHead className="text-right">BUDGET</TableHead>
         </TableRow>
       </TableHeader>
